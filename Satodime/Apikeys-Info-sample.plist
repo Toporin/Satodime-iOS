@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>API_KEY_OPENSEA</key>
+    <string>xxxx</string>
+    <key>API_KEY_BSCSCAN</key>
+    <string>xxxx</string>
+    <key>API_KEY_ETHPLORER</key>
+    <string>xxxx</string>
+    <key>API_KEY_ETHERSCAN</key>
+    <string>xxxx</string>
+</dict>
+</plist>
+

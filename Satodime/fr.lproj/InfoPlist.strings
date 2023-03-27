@@ -1,0 +1,12 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Satodime";
+
+/* Bundle name */
+"CFBundleName" = "Satodime";
+
+/* Privacy - NFC Scan Usage Description */
+"NFCReaderUsageDescription" = "Permet la communication avec une carte Satodime";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Permet de scanner un QR code";
+

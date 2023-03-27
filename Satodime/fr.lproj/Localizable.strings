@@ -1,0 +1,167 @@
+/*
+  Localizable.strings
+  Satodime
+
+  Created by Satochip on 13/02/2023.
+  
+*/
+
+// generic
+"Cancel" = "Annuler";
+
+// Settings.swift
+//"English" = "English";
+//"Français" = "French";
+//"Use dark mode" = "Use dark mode";
+//"Select language:" = "Select language:";
+//"Please choose a language" = "Please choose a language";
+"Select currency:" = "Sélectionnez votre devise";
+"Please choose currency" = "Devise:";
+"Settings" = "Paramètres";
+"Show app logs" = "Afficher les logs";
+
+// ContentView.swift
+"Refresh to scan a card" = "Rafraichir pour scanner une carte";
+"Vault #%lld" = "Coffre #%lld";
+"Asset Type: %@" = "Actif: %@";
+"List of vaults" = "Liste des coffres";
+
+// AcceptCard.swift
+"_question_accept" = "Devenir propriétaire de la carte?";
+"_msg_accept" = "Cette carte ne possède actuellement pas de propriétaire. \nÊtre propriétaire de la carte permet d'effectuer des opérations sensibles (sceller-désceller-réinitialiser un coffre ou transférer la carte). \n\nClickez sur ***Accepter*** pour continuer, ou sur ***Annuler*** pour abandonner";
+"Accept" = "Accepter";
+"_title_accept" = "Transférer la carte";
+
+// TransferCard.swift
+"_transfer_msg" = "**Attention!** \n\nCeci initiera le transfert de la carte vers un nouveau propriétaire. \nSeul le propriétaire de la carte peut effectuer des opérations sensibles (sceller-désceller-réinitialiser un coffre ou transférer la carte) sur son propre appareil. \n\nClickez sur ***Transferer*** pour continuer, ou sur ***Annuler*** pour abandonner";
+"Transfer card ownership ?" = "⚠️ Transférer la carte?";
+"Transfer card ownership" = "Transférer la carte";
+"Transfer card!" = "Transferer la carte!";
+
+// CardInfo.swift
+"Ownership status:" = "Statut de propriété de la carte:";
+"You are the card owner" = "Vous êtes propriétaire de la carte";
+"You are NOT the card owner!" = "Vous n'êtes PAS propriétaire de la carte!";
+"Card version:" = "Version de la carte:";
+"Authenticity status:" = "Authenticité de la carte:";
+"This card is authentic!" = "Cette carte est authentique!";
+"This card is NOT authentic!" = "Cette carte n'est PAS authentique!";
+"Show certificate details" = "Montrer le détail des certificats";
+
+// ResetSlot.swift
+"_reset_msg" = "**Attention!** \n\nCeci va réinitialiser le coffre correspondant. Une fois réinitialisé, toutes les données correspondantes seront effacées. \n\nVeuillez vous assurer que vous avez sauvegardé en toute sécurité la clé privée avant de continuer. \n\nCliquez sur ***Réinitialiser*** pour continuer, ou sur ***Annuler*** pour abandonner" ;
+"Reset vault #%lld?" = "Réinitialiser le coffre #%lld?";
+"Reset vault #%lld" = "Réinitialiser le coffre #%lld";
+"Reset" = "Réinitialiser";
+
+// SealSlot.swift
+"_seal_msg" = "Ceci va sceller le coffre et générer une nouvelle clé privée. \Cliquez sur ***Sceller*** pour continuer ou sur ***Annuler*** pour abandonner." ;
+"Use expert mode" = "Utiliser le mode expert";
+"Select blockchain:" = "Selectionner une blockchain:";
+"Choose a blockchain" = "Selectionner une blockchain";
+"Use testnet"= "Utiliser la version testnet";
+"Select asset type:" = "Selectionner le type d'actif:";
+"Choose an asset" = "Selectionner  un actif";
+"Enter contract adress:" = "Entrer l'addresse de contrat:";
+"Enter your contract adress:" = "Entrer l'addresse de contrat:";
+"Wrong contract format: %@" = "Mauvais format de contrat: %@";
+//"Error: %@" = "Erreur: %@";
+"OK!" = "OK!";
+"Enter tokenid:" = "Entrer tokenid:";
+"Enter your tokenid:" = "Entrer tokenid:";
+"Wrong tokenid format: %@" = "Mauvais format pour le tokenid: %@";
+"Entropy" = "Entropie";
+"Enter random data:" = "Entrer des données aléatoires:";
+"Extracted entropy: %@" = "Entropie extraite: %@";
+"Seal" = "Sceller";
+"Seal vault slot #%lld?" = "Sceller le coffre #%lld?";
+
+// UnsealSlot.swift
+"_unseal_msg" = "**Attention!** \n\nCeci va désceller le coffre correspondant. Une fois déscellé, la clé privée correspondante sera révélée et disponible. Cette action ne peut pas être annulée. \n\nCliquez sur ***Désceller*** pour continuer, ou sur ***Annuler*** pour abandonner" ;
+"Unseal vault #%lld?" = "Désceller le coffre #%lld?";
+"Unseal vault #%lld" = "Désceller le coffre #%lld";
+"Unseal" = "Désceller";
+
+// UnknownAction.swift
+"Ooops, unknown operation %@ at vault: %lld!" = "Oups, opération non supportée %@ sur le coffre: %lld!";
+
+// ShowDetails.swift
+"Details for vault #%lld" ="Détails pour le coffre #%lld";
+"Key info" = "Info sur la clé";
+"Status: %@" = "**Statut:** %@";
+"Asset type: %@" = "**Type d'actif:** %@";
+"Pubkey: %@" = "**Clé publique:** %@";
+"Coin info" = "Info sur la monnaie";
+"Blockchain: %@" = "**Blockchain:** %@";
+"Address: %@" = "**Addresse:** %@";
+"Balance: %@" = "**Solde:** %@";
+"Token info" = "Info sur le token";
+"Contract: %@" = "**Contrat:** %@";
+"Balance: %@" = "**Solde:** %@";
+"NFT info" = "Info sur le NFT";
+"Token ID: %@" = "**Token ID:** %@";
+"Name: %@" = "**Nom:** %@";
+"Description: %@" = "**Description:** %@";
+"Private info" = "Info privée";
+"Hide private key" = "Cacher les infos privées";
+"Show private key" = "Montrer les infos privées";
+"Privkey is not available! \nAre you owner?" = "La clé privée n'est pas disponible! \nÊtes-vous le propriétaire de la carte?";
+"Privkey: %@" = "**Clé privée:** %@";
+"WIF: %@" = "**WIF:** %@";
+"Entropy: %@" = "**Entropie:** %@";
+
+// ShowCertificates.swift
+"Device authenticated successfully!" = "Carte authentifiée avec succès!";
+"_certificates_warning" = "**Attention:** Impossible d'authentifier l'émetteur de cette carte! Si vous n'avez pas chargé le code de la carte vous-même, soyez extrêmement prudent ! \n\nContactez support(at)satochip.io pour signaler une carte suspecte." ;
+"Device info:" = "Info sur la carte";
+"Subca info:" = "Info subca";
+"_reason_wrong_sig" = "Raison: la signature du certificat de la carte ne correspond pas au certificat de l'émetteur";
+"_reason_wrong_challenge" = "Raison: la carte n'a pas fourni une réponse valide au challenge soumis";
+"_reason_unknown" = "La raison est inconnue";
+"Reason: %@" = "Raison: ‰@";
+"Pubkey: ‰@" = "**Clé publique:**\n ‰@ \n\n";
+"Signature: ‰@" = "**Signature:**\n ‰@ \n\n";
+"PEM: ‰@" = "**Certificat:**\n ‰@ \n";
+
+// SideMenu.swift
+"Home" = "Home";
+"Card info" = "Info carte";
+"Transfer card" = "Transférer la carte";
+"Settings" = "Paramètres";
+"Tell a friend" = "Partagez!";
+"FAQ" = "FAQ";
+"[Satodime FAQ](https://satochip.io/faq/)" = "[Satodime FAQ](https://satochip.io/faq/)";
+"Satodime: the secure bearer crypto card! Exchange cryptos physically, easily and securely" = "Satodime : la carte crypto au porteur sécurisée! Échangez des cryptos physiquement, facilement et en toute sécurité." ;
+
+// NfcReader.swift
+"Hold your Satodime near iPhone" = "Tenez votre Satodime près de votre iPhone";
+"Hold your Satodime near iPhone to perform action: %@" = "Tenez votre Satodime près de votre iPhone pour effectuer l'action : %@";
+"Satodime needs setup!" = "Votre Satodime nécessite configuration!";
+"Listed vaults successfully!" = "Coffres listés avec succès";
+"There was an issue while listing vaults: %@" = "Il y a eu un problème lors du listing des coffres: %@";
+"Card ownership accepted successfully!" = "Transfert de carte accepté avec succès!";
+"Failed to accept card ownership with error: %@" ="Echec lors du transfert de la carte: %@";
+"Card transfer already done!" = "Le transfert de carte a déjà été effectué!";
+"Card mismatch! \nIs this the correct card?" = "Carte mismatch! \nEst-ce bien la carte correcte?";
+"Vault sealed successfully!" = "Coffre scellé avec succès!";
+"Failed to seal vault with error: %@" = "Echec lors du scellement du coffre: %@";
+"Vault unsealed successfully!" = "Coffre déscellé avec succès!";
+"Failed to unseal vault with error: %@" = "Echec lors du déscellement du coffre: %@";
+"Vault reset successfully!" = "Coffre réinitialisé avec succès!";
+"Failed to reset vault slot with error: %@" = "Echec lors de la réinitialisation du coffre: %@";
+"Vault privkey recovered successfully!" = "Clé privée récupérée avec succès!";
+"Failed to get vault private key with error: %@" = "Echec lors de la récupération de la clé privée: %@";
+"Ownership transfer initiated successfully!" = "Transfert de propriété initié avec succès!";
+"Failed to transfer ownership with error: %@" = "Echec lors du transfert: %@";
+"Satodime disconnected" = "Satodime déconnectée";
+"An error occured: %@" = "Une erreur s'est produite: %@";
+
+// VaultItem.swift
+"Empty" = "Vide";
+"Coin" = "Monnaie";
+"Token" = "Token";
+"NFT" = "NFT";
+"Other" = "Autre";
+"Uninitialized" = "Vierge";
+"Sealed" = "Scellé";
+"Unsealed" = "Déscellé";

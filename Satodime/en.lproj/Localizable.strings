@@ -1,0 +1,157 @@
+/* 
+  Localizable.strings
+  Satodime
+
+  Created by Satochip on 13/02/2023.
+  
+*/
+
+// generic
+"Cancel" = "Cancel";
+
+// Settings.swift
+//"English" = "English";
+//"Français" = "French";
+//"Use dark mode" = "Use dark mode";
+//"Select language:" = "Select language:";
+//"Please choose a language" = "Please choose a language";
+"Select currency:" = "Select currency:";
+"Please choose currency" = "Please choose currency";
+"Settings" = "Settings";
+"Show app logs" = "Show app logs";
+
+// ContentView.swift
+"Refresh to scan a card" = "Refresh to scan a card";
+"Vault #%lld" = "Vault #%lld";
+"Asset Type: %@" = "Asset: %@";
+"List of vaults" = "List of vaults";
+
+// AcceptCard.swift
+"_question_accept" = "Accept card ownership?";
+"_msg_accept" = "This card has currently no owner. \nCard ownership allows to perform sensitive operations (seal-unseal-reset-transfer). \n\nClick on \'Accept\' to continue, or\n\n \'Cancel\' to abort";
+"Accept" = "Accept";
+"_title_accept" = "Transfer card ownership";
+
+// TransferCard.swift
+"_transfer_msg" = "Warning! \n\nThis will initiate the transfer of the card ownership from you to a new owner. \nCard transfer allows to perform sensitive operations (seal-unseal-reset-transfer) on a new device. \n\nClick on *Transfer* to continue, or *Cancel* to abort";
+"Transfer card ownership ?" = "⚠️ Transfer card ownership ?";
+"Transfer card ownership" = "Transfer card ownership";
+"Transfer card!" = "Transfer card!";
+
+// CardInfo.swift
+"Ownership status:" = "Ownership status:";
+"You are the card owner" = "You are the card owner";
+"You are NOT the card owner!" = "You are NOT the card owner!";
+"Card version:" = "Card version:";
+"Authenticity status:" = "Authenticity status:";
+"This card is authentic!" = "This card is authentic!";
+"This card is NOT authentic!" = "This card is NOT authentic!";
+"Show certificate details" = "Show certificate details";
+
+// ResetSlot.swift
+"_reset_msg" = "**Warning!** \n\nThis will reset the corresponding key. Once reset, all the corresponding data will be wiped. \n\nPlease ensure that you securely saved the private key before proceeding. \n\nClick on 'Reset' to continue, or 'Cancel' to abort";
+"Reset vault #%lld?" = "Reset vault #%lld?";
+"Reset vault #%lld" = "Reset vault #%lld";
+"Reset" = "Reset";
+
+// SealSlot.swift
+"_seal_msg" = "This will seal the vault and generate a fresh private key. \n\nClick on ***Seal*** to continue, or ***Cancel*** to abort.";
+"Use expert mode" = "Use expert mode";
+"Select blockchain:" = "Select blockchain:";
+"Choose a blockchain" = "Choose a blockchain";
+"Use testnet"= "Use testnet";
+"Select asset type:" = "Select asset type:";
+"Choose an asset" = "Choose an asset";
+"Enter contract adress:" = "Enter contract adress:";
+"Enter your contract adress:" = "Enter your contract adress:";
+"Wrong contract format: %@" = "Wrong contract format: %@";
+"Error: %@" = "Error: %@";
+"OK!" = "OK!";
+"Enter tokenid:" = "Enter tokenid:";
+"Enter your tokenid:" = "Enter your tokenid:";
+"Wrong tokenid format: %@" = "Wrong tokenid format: %@";
+"Entropy" = "Entropy";
+"Enter random data:" = "Enter random data:";
+"Extracted entropy: %@" = "Extracted entropy: %@";
+"Seal" = "Seal";
+"Seal vault slot #%@?" = "Seal vault slot #%@?";
+
+// UnsealSlot.swift
+"_unseal_msg" = "**Warning!** \n\nThis will unseal the corresponding vault. Once unsealed, the corresponding private key will be revealed and available. This action cannot be undone. \n\nClick on 'Unseal' to continue, or 'Cancel' to abort";
+"Unseal vault #%lld?" = "Unseal vault #%lld?";
+"Unseal vault #%lld" = "Unseal vault #%lld";
+"Unseal" = "Unseal";
+
+// UnknownAction.swift
+"Ooops, unknown operation %@ at vault: %lld!" = "Ooops, unknown operation %@ at vault: %lld!";
+
+// ShowDetails.swift
+"Details for vault #%lld" ="Details for vault #%lld";
+"Key info" = "Key info";
+"Status: %@" = "**Status:** %@";
+"Asset type: %@" = "**Asset type:** %@";
+"Pubkey: %@" = "**Pubkey:** %@";
+"Coin info" = "Coin info";
+"Blockchain: %@" = "**Blockchain:** %@";
+"Address: %@" = "**Address:** %@";
+"Balance: %@" = "**Balance:** %@";
+"Token info" = "Token info";
+"Contract: %@" = "**Contract:** %@";
+"Balance: %@" = "**Balance:** %@";
+"NFT info" = "NFT info";
+"Token ID: %@" = "**Token ID:** %@";
+"Name: %@" = "**Name:** %@";
+"Description: %@" = "**Description:** %@";
+"Private info" = "Private info";
+"Hide private key" = "Hide private key";
+"Show private key" = "Show private key";
+"Privkey is not available! \nAre you owner?" = "Privkey is not available! \nAre you owner?";
+"Privkey: %@" = "**Privkey:** %@";
+"WIF: %@" = "**WIF:** %@";
+"Entropy: %@" = "**Entropy:** %@";
+
+// ShowCertificates.swift
+"Device authenticated successfully!" = "Device authenticated successfully!";
+"_certificates_warning" = "**Warning:** could not authenticate the issuer of this card! If you did not load the card yourself, be extremely careful! \nContact support(at)satochip.io to report a suspicious device. ";
+"Device info:" = "Device info:";
+"Subca info:" = "Subca info:";
+"_reason_wrong_sig" = "Reason: the device certificate signature does not match the subca issuer";
+"_reason_wrong_challenge" = "Reason: the card failed to provide a valid challenge-response";
+"_reason_unknown" = "Reason is unknown";
+"Reason: %@" = "Reason: ‰@";
+"Pubkey: ‰@" = "**Pubkey:**\n ‰@ \n";
+"Signature: ‰@" = "**Signature:**\n ‰@ \n";
+"PEM: ‰@" = "**Certificate:**\n ‰@ \n";
+
+// SideMenu.swift
+"Home" = "Home";
+"Card info" = "Card info";
+"Transfer card" = "Transfer card";
+"Settings" = "Settings";
+"Tell a friend" = "Tell a friend";
+"FAQ" = "FAQ";
+"[Satodime FAQ](https://satochip.io/faq/)" = "[Satodime FAQ](https://satochip.io/faq/)";
+"Satodime: the secure bearer crypto card! Exchange cryptos physically, easily and securely" = "Satodime: the secure bearer crypto card! Exchange cryptos physically, easily and securely";
+
+// NfcReader.swift
+"Hold your Satodime near iPhone" = "Hold your Satodime near iPhone";
+"Hold your Satodime near iPhone to perform action: %@" = "Hold your Satodime near iPhone to perform action: %@";
+"Satodime needs setup!" = "Satodime needs setup!";
+"Listed vaults successfully!" = "Listed vaults successfully!";
+"There was an issue while listing vaults: %@" = "There was an issue while listing vaults: %@";
+"Card ownership accepted successfully!" = "Card ownership accepted successfully!";
+"Failed to accept card ownership with error: %@" ="Failed to accept card ownership with error: %@";
+"Card transfer already done!" = "Card transfer already done!";
+"Card mismatch! \nIs this the correct card?" = "Card mismatch! \nIs this the correct card?";
+"Vault sealed successfully!" = "Vault sealed successfully!";
+"Failed to seal vault with error: %@" = "Failed to seal vault with error: %@";
+"Vault unsealed successfully!" = "Vault unsealed successfully!";
+"Failed to unseal vault with error: %@" = "Failed to unseal vault with error: %@";
+"Vault reset successfully!" = "Vault reset successfully!";
+"Failed to reset vault slot with error: %@" = "Failed to reset vault slot with error: %@";
+"Vault privkey recovered successfully!" = "Vault privkey recovered successfully!";
+"Failed to get vault private key with error: %@" = "Failed to get vault private key with error: %@";
+"Ownership transfer initiated successfully!" = "Ownership transfer initiated successfully!";
+"Failed to transfer ownership with error: %@" = "Failed to transfer ownership with error: %@";
+"Satodime disconnected" = "Satodime disconnected";
+"An error occured: %@" = "An error occured: %@";

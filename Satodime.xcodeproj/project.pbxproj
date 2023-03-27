@@ -1,0 +1,820 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45A299A365900CEE722 /* SatodimeApp.swift */; };
+		0DA7B45D299A365900CEE722 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45C299A365900CEE722 /* ContentView.swift */; };
+		0DA7B45F299A366200CEE722 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B45E299A366200CEE722 /* Assets.xcassets */; };
+		0DA7B46D299A366300CEE722 /* SatodimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B46C299A366300CEE722 /* SatodimeTests.swift */; };
+		0DA7B477299A366300CEE722 /* SatodimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B476299A366300CEE722 /* SatodimeUITests.swift */; };
+		0DA7B479299A366300CEE722 /* SatodimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B478299A366300CEE722 /* SatodimeUITestsLaunchTests.swift */; };
+		0DA7B495299A37B500CEE722 /* ActionParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B485299A37B200CEE722 /* ActionParams.swift */; };
+		0DA7B496299A37B500CEE722 /* SealSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B486299A37B200CEE722 /* SealSlot.swift */; };
+		0DA7B497299A37B500CEE722 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B487299A37B200CEE722 /* Util.swift */; };
+		0DA7B498299A37B500CEE722 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B488299A37B200CEE722 /* Settings.swift */; };
+		0DA7B499299A37B500CEE722 /* ShowDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B489299A37B300CEE722 /* ShowDetails.swift */; };
+		0DA7B49B299A37B500CEE722 /* ResetSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48B299A37B300CEE722 /* ResetSlot.swift */; };
+		0DA7B49C299A37B500CEE722 /* ShowCertificates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */; };
+		0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */; };
+		0DA7B49E299A37B500CEE722 /* UnknownAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48E299A37B300CEE722 /* UnknownAction.swift */; };
+		0DA7B49F299A37B500CEE722 /* NfcReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48F299A37B400CEE722 /* NfcReader.swift */; };
+		0DA7B4A0299A37B500CEE722 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B490299A37B400CEE722 /* SideMenu.swift */; };
+		0DA7B4A1299A37B500CEE722 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B491299A37B400CEE722 /* CardInfo.swift */; };
+		0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B492299A37B400CEE722 /* AcceptCard.swift */; };
+		0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B493299A37B400CEE722 /* VaultItem.swift */; };
+		0DA7B4A4299A37B500CEE722 /* TransferCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B494299A37B400CEE722 /* TransferCard.swift */; };
+		0DA7B4B1299A4D6D00CEE722 /* SatochipSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA7B4B0299A4D6D00CEE722 /* SatochipSwift */; };
+		0DA7B4B3299A4D7E00CEE722 /* SwiftCryptoTools in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA7B4B2299A4D7E00CEE722 /* SwiftCryptoTools */; };
+		0DA7B4B6299A4E6400CEE722 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA7B4B5299A4E6400CEE722 /* QRCode */; };
+		0DA7B4B7299A589E00CEE722 /* Apikeys-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */; };
+		0DA7B4BC299A81D900CEE722 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B4BE299A81D900CEE722 /* Localizable.strings */; };
+		0DA7B4C2299A8ADA00CEE722 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */; };
+		0DB03FCA29A7F813002E56BD /* ShowLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FC929A7F813002E56BD /* ShowLogs.swift */; };
+		0DB03FD429BB70AA002E56BD /* contracts_ETH_Token in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */; };
+		0DB03FD629BB7192002E56BD /* ContractsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FD529BB7192002E56BD /* ContractsFile.swift */; };
+		0DB03FD829BB7204002E56BD /* ContractsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FD729BB7204002E56BD /* ContractsCache.swift */; };
+		0DB03FDA29BB94C0002E56BD /* ContractsAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FD929BB94C0002E56BD /* ContractsAutocomplete.swift */; };
+		0DB03FDC29BCCA9C002E56BD /* contracts_ETH_NFT in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDB29BCCA9B002E56BD /* contracts_ETH_NFT */; };
+		0DB03FDE29BF5A62002E56BD /* contracts_XCP_NFT in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */; };
+		0DB03FE029BF62E7002E56BD /* contracts_XCP_Token in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */; };
+		0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0DA7B469299A366300CEE722 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0DA7B44F299A365900CEE722 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0DA7B456299A365900CEE722;
+			remoteInfo = Satodime;
+		};
+		0DA7B473299A366300CEE722 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0DA7B44F299A365900CEE722 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0DA7B456299A365900CEE722;
+			remoteInfo = Satodime;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0DA7B457299A365900CEE722 /* Satodime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Satodime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DA7B45A299A365900CEE722 /* SatodimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeApp.swift; sourceTree = "<group>"; };
+		0DA7B45C299A365900CEE722 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0DA7B45E299A366200CEE722 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0DA7B460299A366200CEE722 /* Satodime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Satodime.entitlements; sourceTree = "<group>"; };
+		0DA7B462299A366200CEE722 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0DA7B468299A366300CEE722 /* SatodimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SatodimeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DA7B46C299A366300CEE722 /* SatodimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeTests.swift; sourceTree = "<group>"; };
+		0DA7B472299A366300CEE722 /* SatodimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SatodimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DA7B476299A366300CEE722 /* SatodimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeUITests.swift; sourceTree = "<group>"; };
+		0DA7B478299A366300CEE722 /* SatodimeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0DA7B485299A37B200CEE722 /* ActionParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionParams.swift; sourceTree = "<group>"; };
+		0DA7B486299A37B200CEE722 /* SealSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SealSlot.swift; sourceTree = "<group>"; };
+		0DA7B487299A37B200CEE722 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		0DA7B488299A37B200CEE722 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		0DA7B489299A37B300CEE722 /* ShowDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDetails.swift; sourceTree = "<group>"; };
+		0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Apikeys-Info.plist"; sourceTree = "<group>"; };
+		0DA7B48B299A37B300CEE722 /* ResetSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSlot.swift; sourceTree = "<group>"; };
+		0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCertificates.swift; sourceTree = "<group>"; };
+		0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsealSlot.swift; sourceTree = "<group>"; };
+		0DA7B48E299A37B300CEE722 /* UnknownAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownAction.swift; sourceTree = "<group>"; };
+		0DA7B48F299A37B400CEE722 /* NfcReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NfcReader.swift; sourceTree = "<group>"; };
+		0DA7B490299A37B400CEE722 /* SideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
+		0DA7B491299A37B400CEE722 /* CardInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
+		0DA7B492299A37B400CEE722 /* AcceptCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptCard.swift; sourceTree = "<group>"; };
+		0DA7B493299A37B400CEE722 /* VaultItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaultItem.swift; sourceTree = "<group>"; };
+		0DA7B494299A37B400CEE722 /* TransferCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferCard.swift; sourceTree = "<group>"; };
+		0DA7B4A7299A38B500CEE722 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DA7B4AC299A4B1B00CEE722 /* SatochipSwift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SatochipSwift; path = ../SatochipSwift; sourceTree = "<group>"; };
+		0DA7B4AE299A4CF500CEE722 /* SwiftCryptoTools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftCryptoTools; path = "../../keycard-xcode14/SwiftCryptoTools"; sourceTree = "<group>"; };
+		0DA7B4BD299A81D900CEE722 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0DA7B4BF299A821000CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0DA7B4C1299A8ADA00CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0DB03FC929A7F813002E56BD /* ShowLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogs.swift; sourceTree = "<group>"; };
+		0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_ETH_Token; sourceTree = "<group>"; };
+		0DB03FD529BB7192002E56BD /* ContractsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsFile.swift; sourceTree = "<group>"; };
+		0DB03FD729BB7204002E56BD /* ContractsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsCache.swift; sourceTree = "<group>"; };
+		0DB03FD929BB94C0002E56BD /* ContractsAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsAutocomplete.swift; sourceTree = "<group>"; };
+		0DB03FDB29BCCA9B002E56BD /* contracts_ETH_NFT */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_ETH_NFT; sourceTree = "<group>"; };
+		0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_XCP_NFT; sourceTree = "<group>"; };
+		0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_XCP_Token; sourceTree = "<group>"; };
+		0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Apikeys-Info-sample.plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0DA7B454299A365900CEE722 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DA7B4B1299A4D6D00CEE722 /* SatochipSwift in Frameworks */,
+				0DA7B4B3299A4D7E00CEE722 /* SwiftCryptoTools in Frameworks */,
+				0DA7B4B6299A4E6400CEE722 /* QRCode in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DA7B465299A366300CEE722 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DA7B46F299A366300CEE722 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0DA7B44E299A365900CEE722 = {
+			isa = PBXGroup;
+			children = (
+				0DA7B4AA299A412B00CEE722 /* Packages */,
+				0DA7B459299A365900CEE722 /* Satodime */,
+				0DA7B46B299A366300CEE722 /* SatodimeTests */,
+				0DA7B475299A366300CEE722 /* SatodimeUITests */,
+				0DA7B458299A365900CEE722 /* Products */,
+				0DA7B4AF299A4D6D00CEE722 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		0DA7B458299A365900CEE722 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0DA7B457299A365900CEE722 /* Satodime.app */,
+				0DA7B468299A366300CEE722 /* SatodimeTests.xctest */,
+				0DA7B472299A366300CEE722 /* SatodimeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0DA7B459299A365900CEE722 /* Satodime */ = {
+			isa = PBXGroup;
+			children = (
+				0DA7B4A7299A38B500CEE722 /* Info.plist */,
+				0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */,
+				0DA7B4BE299A81D900CEE722 /* Localizable.strings */,
+				0DA7B492299A37B400CEE722 /* AcceptCard.swift */,
+				0DA7B485299A37B200CEE722 /* ActionParams.swift */,
+				0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */,
+				0DA7B491299A37B400CEE722 /* CardInfo.swift */,
+				0DA7B48F299A37B400CEE722 /* NfcReader.swift */,
+				0DA7B48B299A37B300CEE722 /* ResetSlot.swift */,
+				0DA7B486299A37B200CEE722 /* SealSlot.swift */,
+				0DA7B488299A37B200CEE722 /* Settings.swift */,
+				0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */,
+				0DA7B489299A37B300CEE722 /* ShowDetails.swift */,
+				0DA7B490299A37B400CEE722 /* SideMenu.swift */,
+				0DA7B494299A37B400CEE722 /* TransferCard.swift */,
+				0DA7B48E299A37B300CEE722 /* UnknownAction.swift */,
+				0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */,
+				0DA7B487299A37B200CEE722 /* Util.swift */,
+				0DA7B493299A37B400CEE722 /* VaultItem.swift */,
+				0DA7B45A299A365900CEE722 /* SatodimeApp.swift */,
+				0DA7B45C299A365900CEE722 /* ContentView.swift */,
+				0DA7B45E299A366200CEE722 /* Assets.xcassets */,
+				0DA7B460299A366200CEE722 /* Satodime.entitlements */,
+				0DA7B461299A366200CEE722 /* Preview Content */,
+				0DB03FC929A7F813002E56BD /* ShowLogs.swift */,
+				0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */,
+				0DB03FD529BB7192002E56BD /* ContractsFile.swift */,
+				0DB03FD729BB7204002E56BD /* ContractsCache.swift */,
+				0DB03FD929BB94C0002E56BD /* ContractsAutocomplete.swift */,
+				0DB03FDB29BCCA9B002E56BD /* contracts_ETH_NFT */,
+				0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */,
+				0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */,
+				0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */,
+			);
+			path = Satodime;
+			sourceTree = "<group>";
+		};
+		0DA7B461299A366200CEE722 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				0DA7B462299A366200CEE722 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0DA7B46B299A366300CEE722 /* SatodimeTests */ = {
+			isa = PBXGroup;
+			children = (
+				0DA7B46C299A366300CEE722 /* SatodimeTests.swift */,
+			);
+			path = SatodimeTests;
+			sourceTree = "<group>";
+		};
+		0DA7B475299A366300CEE722 /* SatodimeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0DA7B476299A366300CEE722 /* SatodimeUITests.swift */,
+				0DA7B478299A366300CEE722 /* SatodimeUITestsLaunchTests.swift */,
+			);
+			path = SatodimeUITests;
+			sourceTree = "<group>";
+		};
+		0DA7B4AA299A412B00CEE722 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				0DA7B4AC299A4B1B00CEE722 /* SatochipSwift */,
+				0DA7B4AE299A4CF500CEE722 /* SwiftCryptoTools */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		0DA7B4AF299A4D6D00CEE722 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0DA7B456299A365900CEE722 /* Satodime */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DA7B47C299A366400CEE722 /* Build configuration list for PBXNativeTarget "Satodime" */;
+			buildPhases = (
+				0DA7B453299A365900CEE722 /* Sources */,
+				0DA7B454299A365900CEE722 /* Frameworks */,
+				0DA7B455299A365900CEE722 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Satodime;
+			packageProductDependencies = (
+				0DA7B4B0299A4D6D00CEE722 /* SatochipSwift */,
+				0DA7B4B2299A4D7E00CEE722 /* SwiftCryptoTools */,
+				0DA7B4B5299A4E6400CEE722 /* QRCode */,
+			);
+			productName = Satodime;
+			productReference = 0DA7B457299A365900CEE722 /* Satodime.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0DA7B467299A366300CEE722 /* SatodimeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DA7B47F299A366400CEE722 /* Build configuration list for PBXNativeTarget "SatodimeTests" */;
+			buildPhases = (
+				0DA7B464299A366300CEE722 /* Sources */,
+				0DA7B465299A366300CEE722 /* Frameworks */,
+				0DA7B466299A366300CEE722 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0DA7B46A299A366300CEE722 /* PBXTargetDependency */,
+			);
+			name = SatodimeTests;
+			productName = SatodimeTests;
+			productReference = 0DA7B468299A366300CEE722 /* SatodimeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0DA7B471299A366300CEE722 /* SatodimeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0DA7B482299A366400CEE722 /* Build configuration list for PBXNativeTarget "SatodimeUITests" */;
+			buildPhases = (
+				0DA7B46E299A366300CEE722 /* Sources */,
+				0DA7B46F299A366300CEE722 /* Frameworks */,
+				0DA7B470299A366300CEE722 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0DA7B474299A366300CEE722 /* PBXTargetDependency */,
+			);
+			name = SatodimeUITests;
+			productName = SatodimeUITests;
+			productReference = 0DA7B472299A366300CEE722 /* SatodimeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0DA7B44F299A365900CEE722 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					0DA7B456299A365900CEE722 = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					0DA7B467299A366300CEE722 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 0DA7B456299A365900CEE722;
+					};
+					0DA7B471299A366300CEE722 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 0DA7B456299A365900CEE722;
+					};
+				};
+			};
+			buildConfigurationList = 0DA7B452299A365900CEE722 /* Build configuration list for PBXProject "Satodime" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				fr,
+			);
+			mainGroup = 0DA7B44E299A365900CEE722;
+			packageReferences = (
+				0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */,
+			);
+			productRefGroup = 0DA7B458299A365900CEE722 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0DA7B456299A365900CEE722 /* Satodime */,
+				0DA7B467299A366300CEE722 /* SatodimeTests */,
+				0DA7B471299A366300CEE722 /* SatodimeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0DA7B455299A365900CEE722 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DA7B4B7299A589E00CEE722 /* Apikeys-Info.plist in Resources */,
+				0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */,
+				0DB03FD429BB70AA002E56BD /* contracts_ETH_Token in Resources */,
+				0DA7B4C2299A8ADA00CEE722 /* InfoPlist.strings in Resources */,
+				0DB03FDE29BF5A62002E56BD /* contracts_XCP_NFT in Resources */,
+				0DB03FE029BF62E7002E56BD /* contracts_XCP_Token in Resources */,
+				0DA7B4BC299A81D900CEE722 /* Localizable.strings in Resources */,
+				0DB03FDC29BCCA9C002E56BD /* contracts_ETH_NFT in Resources */,
+				0DA7B45F299A366200CEE722 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DA7B466299A366300CEE722 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DA7B470299A366300CEE722 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0DA7B453299A365900CEE722 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DA7B49F299A37B500CEE722 /* NfcReader.swift in Sources */,
+				0DB03FDA29BB94C0002E56BD /* ContractsAutocomplete.swift in Sources */,
+				0DA7B499299A37B500CEE722 /* ShowDetails.swift in Sources */,
+				0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */,
+				0DA7B498299A37B500CEE722 /* Settings.swift in Sources */,
+				0DA7B49E299A37B500CEE722 /* UnknownAction.swift in Sources */,
+				0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */,
+				0DA7B49C299A37B500CEE722 /* ShowCertificates.swift in Sources */,
+				0DA7B496299A37B500CEE722 /* SealSlot.swift in Sources */,
+				0DA7B45D299A365900CEE722 /* ContentView.swift in Sources */,
+				0DB03FD829BB7204002E56BD /* ContractsCache.swift in Sources */,
+				0DA7B4A0299A37B500CEE722 /* SideMenu.swift in Sources */,
+				0DA7B4A4299A37B500CEE722 /* TransferCard.swift in Sources */,
+				0DA7B497299A37B500CEE722 /* Util.swift in Sources */,
+				0DA7B495299A37B500CEE722 /* ActionParams.swift in Sources */,
+				0DB03FCA29A7F813002E56BD /* ShowLogs.swift in Sources */,
+				0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */,
+				0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */,
+				0DA7B49B299A37B500CEE722 /* ResetSlot.swift in Sources */,
+				0DA7B4A1299A37B500CEE722 /* CardInfo.swift in Sources */,
+				0DB03FD629BB7192002E56BD /* ContractsFile.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DA7B464299A366300CEE722 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DA7B46D299A366300CEE722 /* SatodimeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DA7B46E299A366300CEE722 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0DA7B479299A366300CEE722 /* SatodimeUITestsLaunchTests.swift in Sources */,
+				0DA7B477299A366300CEE722 /* SatodimeUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0DA7B46A299A366300CEE722 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0DA7B456299A365900CEE722 /* Satodime */;
+			targetProxy = 0DA7B469299A366300CEE722 /* PBXContainerItemProxy */;
+		};
+		0DA7B474299A366300CEE722 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0DA7B456299A365900CEE722 /* Satodime */;
+			targetProxy = 0DA7B473299A366300CEE722 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0DA7B4BE299A81D900CEE722 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0DA7B4BD299A81D900CEE722 /* en */,
+				0DA7B4BF299A821000CEE722 /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0DA7B4C1299A8ADA00CEE722 /* fr */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0DA7B47A299A366400CEE722 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/satochip/Documents/github/app-ios/Satodime/Satodime/Info.plist";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		0DA7B47B299A366400CEE722 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/satochip/Documents/github/app-ios/Satodime/Satodime/Info.plist";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		0DA7B47D299A366400CEE722 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
+				DEVELOPMENT_TEAM = F75Z9LY9DQ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Satodime/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Satodime;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0DA7B47E299A366400CEE722 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
+				DEVELOPMENT_TEAM = F75Z9LY9DQ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Satodime/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Satodime;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		0DA7B480299A366400CEE722 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F7NK36K3VQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.SatodimeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Satodime.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Satodime";
+			};
+			name = Debug;
+		};
+		0DA7B481299A366400CEE722 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F7NK36K3VQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.SatodimeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Satodime.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Satodime";
+			};
+			name = Release;
+		};
+		0DA7B483299A366400CEE722 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F7NK36K3VQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.SatodimeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Satodime;
+			};
+			name = Debug;
+		};
+		0DA7B484299A366400CEE722 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F7NK36K3VQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.SatodimeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Satodime;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0DA7B452299A365900CEE722 /* Build configuration list for PBXProject "Satodime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DA7B47A299A366400CEE722 /* Debug */,
+				0DA7B47B299A366400CEE722 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DA7B47C299A366400CEE722 /* Build configuration list for PBXNativeTarget "Satodime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DA7B47D299A366400CEE722 /* Debug */,
+				0DA7B47E299A366400CEE722 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DA7B47F299A366400CEE722 /* Build configuration list for PBXNativeTarget "SatodimeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DA7B480299A366400CEE722 /* Debug */,
+				0DA7B481299A366400CEE722 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0DA7B482299A366400CEE722 /* Build configuration list for PBXNativeTarget "SatodimeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0DA7B483299A366400CEE722 /* Debug */,
+				0DA7B484299A366400CEE722 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dagronf/QRCode.git";
+			requirement = {
+				kind = exactVersion;
+				version = 12.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0DA7B4B0299A4D6D00CEE722 /* SatochipSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SatochipSwift;
+		};
+		0DA7B4B2299A4D7E00CEE722 /* SwiftCryptoTools */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftCryptoTools;
+		};
+		0DA7B4B5299A4E6400CEE722 /* QRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */;
+			productName = QRCode;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 0DA7B44F299A365900CEE722 /* Project object */;
+}

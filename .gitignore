@@ -1,0 +1,15 @@
+.DS_Store
+### Xcode ###
+## User settings
+*.xcodeproj/xcuserdata/
+UserInterfaceState.xcuserstate
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+# api keys
+Satodime/Apikeys-Info.plist
