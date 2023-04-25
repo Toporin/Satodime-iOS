@@ -337,6 +337,9 @@ class NfcReader: ObservableObject {
                     let rapdu = try cmdSet.satodimeInitiateOwnershipTransfer().checkOK()
                     print("TransferCard rapdu: \(rapdu)")
                     isOwner = false
+                    // remove pairing secret from user defaults
+                    unlockSecretDict[authentikeyHex] = nil
+                    defaults.set(unlockSecretDict, forKey: "unlockSecretDict")
                     sessionForAction?.stop(alertMessage: String(localized: "Ownership transfer initiated successfully!"))
                     return
                 } catch {

@@ -13,21 +13,12 @@ struct ShowDetails: View {
     
     @EnvironmentObject var reader: NfcReader
     @State private var showPrivkey = false
-    @State private var privkeyAvailable = false
     var item: VaultItem
     var index: Int
     
     static var gradiantArray = [[Color("Color_gold"), Color("Color_gold")], [.cyan, .green], [.orange, .red]]
     
     var body: some View {
-//        Text("Details for vault #\(index)")
-//            .padding()
-//            .font(.title)
-//            .overlay(
-//                RoundedRectangle(cornerRadius: 16)
-//                    .stroke(Color(getColorFromStatus(status: item.keyslotStatus.status)), lineWidth: 4)
-//                    //.background(Color(getColorFromStatus(status: item.keyslotStatus.status)))
-//            )
         
         Text("Details for vault #\(index)")
             .foregroundColor(.black)
@@ -113,20 +104,15 @@ struct ShowDetails: View {
                     Button(action:{
                         print("Button show privkey")
                         print("showPrivkey: \(showPrivkey)")
-                        print("privkeyAvailable: \(privkeyAvailable)")
                         if showPrivkey {
                             showPrivkey = false
                         } else {
                             showPrivkey = true
                             // fetch private info from card if not already available
                             // also todo: check if isOwner?
-                            privkeyAvailable = (reader.vaultArray[index].privkey != nil)
-                            if !privkeyAvailable {
+                            if (reader.vaultArray[index].privkey == nil) {
                                 let actionParams = ActionParams(index: UInt8(index), action: "private")
                                 reader.scanForAction(actionParams: actionParams)
-                                privkeyAvailable = (reader.vaultArray[index].privkey != nil)
-                                // todo: scanForAction is async so update to privkeyAvailable is always false. it should be done only after scanForAction is finished...
-                                // print("After scan() privkeyAvailable: \(privkeyAvailable)")
                             }
                         }
                     }){
@@ -138,7 +124,7 @@ struct ShowDetails: View {
                         }
                     }
                     if showPrivkey {
-                        if privkeyAvailable {
+                        if (reader.vaultArray[index].privkey != nil) {
                             Text("Privkey: \(reader.vaultArray[index].getPrivateKeyString())")
                             ClickablesIcons(textClipboard: reader.vaultArray[index].getPrivateKeyString(), textQR: reader.vaultArray[index].getPrivateKeyString(), linkURL: nil)
                             Text("WIF: \(reader.vaultArray[index].getWifString())")
