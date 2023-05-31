@@ -24,182 +24,198 @@ struct ContentView: View {
     @State private var isFirstAppearance: Bool = true
     @State private var needsRefresh: Bool = true
     
+    @AppStorage("needsAppOnboarding") var needsAppOnboarding: Bool = true
+    var data = OnboardingDataModel.data
+    
     var body: some View {
         ZStack {
             NavigationView {
-                VStack {
+                
+                if needsAppOnboarding {
+                    OnboardingViewPure(data: data, doneFunction: {
+                        /// Update your state here
+                        needsAppOnboarding = false
+                        print("done onboarding")
+                    })
+                } else {
                     
-                    // top image and buttons
-                    HStack {
-                        Button (action: {
-                            reader.operationType = "ShowCertificates";
-                            reader.operationIndex = 0;
-                            reader.operationRequested = true;
-                        }){
-                            // todo: image depending on certificate status: ok, nok or n/a (no card)
-                            // checkmark.seal, xmark.seal, seal
-                            if (reader.certificateCode == PkiReturnCode.success){
-                                //Image("card_authentic_ok")
-                                Image(systemName: "checkmark.shield")
+                    VStack {
+                        
+                        // top image and buttons
+                        HStack {
+                            Button (action: {
+                                reader.operationType = "ShowCertificates";
+                                reader.operationIndex = 0;
+                                reader.operationRequested = true;
+                            }){
+                                // todo: image depending on certificate status: ok, nok or n/a (no card)
+                                // checkmark.seal, xmark.seal, seal
+                                if (reader.certificateCode == PkiReturnCode.success){
+                                    //Image("card_authentic_ok")
+                                    Image(systemName: "checkmark.shield")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 50)
+                                        .foregroundColor(Color("Color_gold"))
+                                    //.scaledToFit()
+                                } else {
+                                    Image(systemName: "xmark.shield")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 50)
+                                        .foregroundColor(.red)
+                                }
+                            }
+                            Image("logo_horizontal")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 200)
+                            //.scaledToFit()
+                            Button (action: {
+                                isSideBarOpened.toggle()
+                            }){
+                                Image(systemName: "line.3.horizontal.circle")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 50)
                                     .foregroundColor(Color("Color_gold"))
                                 //.scaledToFit()
-                            } else {
-                                Image(systemName: "xmark.shield")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 50)
-                                    .foregroundColor(.red)
                             }
+                        } // HStack
+                        
+                        if (reader.vaultArray.count == 0){
+                            Spacer()
+                            Text("Refresh to scan a card")
+                            Spacer()
                         }
-                        Image("logo_horizontal")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 200)
-                            //.scaledToFit()
-                        Button (action: {
-                            isSideBarOpened.toggle()
-                        }){
-                            Image(systemName: "line.3.horizontal.circle")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 50)
-                                .foregroundColor(Color("Color_gold"))
-                            //.scaledToFit()
-                        }
-                    } // HStack
-                    
-                    if (reader.vaultArray.count == 0){
-                        Spacer()
-                        Text("Refresh to scan a card")
-                        Spacer()
-                    }
-                    
-                    // for each vault
-                    List {
-                        ForEach(reader.vaultArray, id: \.index) { item in
-                            VStack {
-                                
-                                // vault #, asset & action button
-                                HStack {
-                                    //Capsule()
-                                    RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                        .foregroundColor(ContentView.colorArray[Int(item.keyslotStatus.status)])
-                                        .frame(width: 100, height: 44)
-                                        .overlay(Text("Vault #\(Int64(item.index))"))
-//                                    Text("Vault #\(item.index)")
-//                                        .font(.headline)
+                        
+                        // for each vault
+                        List {
+                            ForEach(reader.vaultArray, id: \.index) { item in
+                                VStack {
                                     
-                                    Spacer()
-                                    
-                                    //Text("Asset Type: \(item.getAssetString())")
-                                    Text("Asset Type: \(String(localized: String.LocalizationValue(stringLiteral: item.getAssetString())))")
-                                    
-                                    Spacer()
-                                    
-                                    Button(action: {
-                                        reader.operationType = "Action";
-                                        reader.operationIndex = item.index;
-                                        reader.operationRequested = true;
-                                        print("Button Action for \(item.index)")}) {
-                                        VStack {
-                                            Image(systemName: ContentView.statusImageDict[item.keyslotStatus.status] ?? "arrow.triangle.2.circlepath")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 30)
-                                                .foregroundColor(Color("Color_foreground"))
-                                            //Text("\(item.getStatusString())")
-                                            Text(LocalizedStringKey(item.getStatusString()))
-                                        }
-                                    }
-                                    .buttonStyle(.borderless)
-                                } // HStack
-                                
-                                // coin image, address, balance
-                                HStack {
-                                    Image(item.iconPath)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 100)
-                                    VStack {
-                                        //Text("Adress: \(item.address)")
-                                        HStack {
-                                            //Text("Adress: ")
-                                            Image(systemName: "scope")
-                                                .foregroundColor(Color("Color_foreground"))
-                                            Text("\(item.address)")
-                                                .font(.footnote)
-                                        }
-                                        HStack {
-                                            Image(systemName: "banknote")
-                                                .foregroundColor(Color("Color_foreground"))
-                                            VStack {
-                                                Text("\(item.getBalanceString())")
-                                                    .font(.footnote)
-                                                if item.isToken() {
-                                                    Text("\(item.getTokenBalanceString())")
-                                                        .font(.footnote)
+                                    // vault #, asset & action button
+                                    HStack {
+                                        //Capsule()
+                                        RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                            .foregroundColor(ContentView.colorArray[Int(item.keyslotStatus.status)])
+                                            .frame(width: 100, height: 44)
+                                            .overlay(Text("Vault #\(Int64(item.index))"))
+                                        //                                    Text("Vault #\(item.index)")
+                                        //                                        .font(.headline)
+                                        
+                                        Spacer()
+                                        
+                                        //Text("Asset Type: \(item.getAssetString())")
+                                        Text("Asset Type: \(String(localized: String.LocalizationValue(stringLiteral: item.getAssetString())))")
+                                        
+                                        Spacer()
+                                        
+                                        Button(action: {
+                                            reader.operationType = "Action";
+                                            reader.operationIndex = item.index;
+                                            reader.operationRequested = true;
+                                            print("Button Action for \(item.index)")}) {
+                                                VStack {
+                                                    Image(systemName: ContentView.statusImageDict[item.keyslotStatus.status] ?? "arrow.triangle.2.circlepath")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 30)
+                                                        .foregroundColor(Color("Color_foreground"))
+                                                    //Text("\(item.getStatusString())")
+                                                    Text(LocalizedStringKey(item.getStatusString()))
                                                 }
                                             }
+                                            .buttonStyle(.borderless)
+                                    } // HStack
+                                    
+                                    // coin image, address, balance
+                                    HStack {
+                                        Image(item.iconPath)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 100)
+                                        VStack {
+                                            //Text("Adress: \(item.address)")
+                                            HStack {
+                                                //Text("Adress: ")
+                                                Image(systemName: "scope")
+                                                    .foregroundColor(Color("Color_foreground"))
+                                                Text("\(item.address)")
+                                                    .font(.footnote)
+                                            }
+                                            HStack {
+                                                Image(systemName: "banknote")
+                                                    .foregroundColor(Color("Color_foreground"))
+                                                VStack {
+                                                    Text("\(item.getBalanceString())")
+                                                        .font(.footnote)
+                                                    if item.isToken() {
+                                                        Text("\(item.getTokenBalanceString())")
+                                                            .font(.footnote)
+                                                    }
+                                                }
+                                            }
+                                            
                                         }
-                                        
                                     }
-                                }
-                                
-                                HStack {
-                                    Spacer()
-                                    Button(action: {
-                                        reader.operationType = "Details";
-                                        reader.operationIndex = item.index;
-                                        reader.operationRequested = true;
-                                        print("Button Details for \(item.index)")}) {
-                                        Image(systemName: "chevron.right.circle")
-                                                .foregroundColor(Color("Color_foreground"))
+                                    
+                                    HStack {
+                                        Spacer()
+                                        Button(action: {
+                                            reader.operationType = "Details";
+                                            reader.operationIndex = item.index;
+                                            reader.operationRequested = true;
+                                            print("Button Details for \(item.index)")}) {
+                                                Image(systemName: "chevron.right.circle")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 30)
+                                                    .foregroundColor(Color("Color_foreground"))
+                                            }
+                                        //                                    .padding()
+                                        //                                    .foregroundColor(Color("Color_foreground"))
+                                        //                                    .background(Color.gray)
+                                        //                                    .cornerRadius(.infinity)
+                                            .buttonStyle(.borderless)
                                     }
-//                                    .padding()
-//                                    .foregroundColor(Color("Color_foreground"))
-//                                    .background(Color.gray)
-//                                    .cornerRadius(.infinity)
-                                    .buttonStyle(.borderless)
-                                }
+                                    
+                                } // VStack
+                                .padding()
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(ContentView.colorArray[Int(item.keyslotStatus.status)], lineWidth: 4)
+                                )
                                 
-                            } // VStack
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(ContentView.colorArray[Int(item.keyslotStatus.status)], lineWidth: 4)
-                            )
+                                
+                            } // foreach
                             
-                            
-                        } // foreach
-                        
-                    }// List
-                    .listStyle(.grouped)
-                    //.toolbar(.hidden, for: .navigationBar) // hide title on iOS 16 ?
-                    .navigationTitle("List of vaults")
-                    .navigationBarHidden(true) // hide title on iOS<16 ?
-                    .onAppear {
-                        // only scan when needed, i.e. on start or when a vault changes  
-                        //if isFirstAppearance {
-                        if reader.needsRefresh {
-                            Task {
-                                await reader.executeQuery()
-                                reader.needsRefresh.toggle()
-                                isFirstAppearance.toggle()
+                        }// List
+                        .listStyle(.grouped)
+                        //.toolbar(.hidden, for: .navigationBar) // hide title on iOS 16 ?
+                        .navigationTitle("List of vaults")
+                        .navigationBarHidden(true) // hide title on iOS<16 ?
+                        .onAppear {
+                            // only scan when needed, i.e. on start or when a vault changes
+                            //if isFirstAppearance {
+                            if reader.needsRefresh {
+                                Task {
+                                    await reader.executeQuery()
+                                    reader.needsRefresh.toggle()
+                                    isFirstAppearance.toggle()
+                                }
                             }
                         }
-                    }
-                    .refreshable {
-                        Task {
-                            await reader.executeQuery()
+                        .refreshable {
+                            Task {
+                                await reader.executeQuery()
+                            }
                         }
-                    }
-                    .background(
-                        NavigationLink(destination: getDestination(operation: reader.operationType, from: reader.operationIndex), isActive: $reader.operationRequested){EmptyView()}
-                    )
-                } // Vstack
+                        .background(
+                            NavigationLink(destination: getDestination(operation: reader.operationType, from: reader.operationIndex), isActive: $reader.operationRequested){EmptyView()}
+                        )
+                    } // Vstack
+                } // else onboardingDone !needsAppOnboarding
             }// navigationview
             SideMenu(isSidebarVisible: $isSideBarOpened)
         }// ZStack

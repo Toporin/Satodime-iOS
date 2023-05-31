@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D8B4AA42A2632DC00E9E429 /* OnboardingViewPure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */; };
+		0D8B4AA52A2632DC00E9E429 /* OnboardingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */; };
+		0D8B4AA62A2632DC00E9E429 /* OnboardingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */; };
 		0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45A299A365900CEE722 /* SatodimeApp.swift */; };
 		0DA7B45D299A365900CEE722 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45C299A365900CEE722 /* ContentView.swift */; };
 		0DA7B45F299A366200CEE722 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B45E299A366200CEE722 /* Assets.xcassets */; };
@@ -63,6 +66,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewPure.swift; sourceTree = "<group>"; };
+		0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataModel.swift; sourceTree = "<group>"; };
+		0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingStepView.swift; sourceTree = "<group>"; };
 		0DA7B457299A365900CEE722 /* Satodime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Satodime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA7B45A299A365900CEE722 /* SatodimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeApp.swift; sourceTree = "<group>"; };
 		0DA7B45C299A365900CEE722 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -135,6 +141,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D8B4AA02A2632B500E9E429 /* onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */,
+				0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */,
+				0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */,
+			);
+			path = onboarding;
+			sourceTree = "<group>";
+		};
 		0DA7B44E299A365900CEE722 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +176,7 @@
 		0DA7B459299A365900CEE722 /* Satodime */ = {
 			isa = PBXGroup;
 			children = (
+				0D8B4AA02A2632B500E9E429 /* onboarding */,
 				0DA7B4A7299A38B500CEE722 /* Info.plist */,
 				0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */,
 				0DA7B4BE299A81D900CEE722 /* Localizable.strings */,
@@ -388,6 +405,7 @@
 				0DB03FDA29BB94C0002E56BD /* ContractsAutocomplete.swift in Sources */,
 				0DA7B499299A37B500CEE722 /* ShowDetails.swift in Sources */,
 				0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */,
+				0D8B4AA52A2632DC00E9E429 /* OnboardingDataModel.swift in Sources */,
 				0DA7B498299A37B500CEE722 /* Settings.swift in Sources */,
 				0DA7B49E299A37B500CEE722 /* UnknownAction.swift in Sources */,
 				0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */,
@@ -403,6 +421,8 @@
 				0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */,
 				0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */,
 				0DA7B49B299A37B500CEE722 /* ResetSlot.swift in Sources */,
+				0D8B4AA42A2632DC00E9E429 /* OnboardingViewPure.swift in Sources */,
+				0D8B4AA62A2632DC00E9E429 /* OnboardingStepView.swift in Sources */,
 				0DA7B4A1299A37B500CEE722 /* CardInfo.swift in Sources */,
 				0DB03FD629BB7192002E56BD /* ContractsFile.swift in Sources */,
 			);
@@ -581,7 +601,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -623,7 +643,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;

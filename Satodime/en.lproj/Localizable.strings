@@ -16,7 +16,7 @@
 //"Select language:" = "Select language:";
 //"Please choose a language" = "Please choose a language";
 "Select currency:" = "Select currency:";
-"Please choose currency" = "Please choose currency";
+"Please choose currency:" = "Please choose currency";
 "Settings" = "Settings";
 "Show app logs" = "Show app logs";
 
@@ -155,3 +155,5 @@
 "Failed to transfer ownership with error: %@" = "Failed to transfer ownership with error: %@";
 "Satodime disconnected" = "Satodime disconnected";
 "An error occured: %@" = "An error occured: %@";
+
+// OnboardingDataModel.swift
