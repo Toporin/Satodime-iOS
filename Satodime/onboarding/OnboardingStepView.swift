@@ -22,11 +22,13 @@ struct OnboardingStepView: View {
                 .font(.system(size: 25, design: .rounded))
                 .fontWeight(.bold)
                 .padding(.bottom, 20)
+                .foregroundColor(Color("Color_gold"))
             
             Text(data.text)
                 .font(.system(size: 17, design: .rounded))
                 .fontWeight(.medium)
                 .multilineTextAlignment(.center)
+                .foregroundColor(Color("Color_gold"))
             
             Image(data.image)
                 .resizable()

@@ -33,7 +33,8 @@ struct OnboardingViewPure: View {
     
     var body: some View {
         ZStack {
-            Color(.systemBackground).edgesIgnoringSafeArea(.all)
+            //Color(.systemBackground).edgesIgnoringSafeArea(.all)
+            Color("Color_white").edgesIgnoringSafeArea(.all)
             
             ZStack(alignment: .center) {
                 ForEach(0..<data.count) { i in
@@ -85,15 +86,18 @@ struct OnboardingViewPure: View {
                 HStack {
                     Text("Start")
                         .font(.system(size: 27, weight: .medium, design: .rounded))
-                        .foregroundColor(Color(.systemBackground))
+                        //.foregroundColor(Color(.systemBackground))
+                        .foregroundColor(Color("Color_gold"))
                 }
                 .frame(width: 120, height: 50)
-                .background(Color(.label))
+                //.background(Color(.label))
+                .background(Color("Color_white"))
                 .cornerRadius(25)
             } else {
                 Image(systemName: "arrow.right.circle.fill")
                     .resizable()
-                    .foregroundColor(Color(.label))
+                    //.foregroundColor(Color(.label))
+                    .foregroundColor(Color("Color_gold"))
                     .scaledToFit()
                     .frame(width: 50)
             }
@@ -106,7 +110,7 @@ struct OnboardingViewPure: View {
                 Circle()
                     .scaledToFit()
                     .frame(width: 10)
-                    .foregroundColor(self.curSlideIndex >= i ? Color(.systemIndigo) : Color(.systemGray))
+                    .foregroundColor(self.curSlideIndex >= i ? Color("Color_gold") : Color(.systemGray))
             }
         }
     }
