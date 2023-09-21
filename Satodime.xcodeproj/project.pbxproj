@@ -46,6 +46,7 @@
 		0DB03FDE29BF5A62002E56BD /* contracts_XCP_NFT in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */; };
 		0DB03FE029BF62E7002E56BD /* contracts_XCP_Token in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */; };
 		0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */; };
+		0DC4B0492ABC8114004B8E3B /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = 0DC4B0482ABC8114004B8E3B /* BigInt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,7 @@
 				0DA7B4B1299A4D6D00CEE722 /* SatochipSwift in Frameworks */,
 				0DA7B4B3299A4D7E00CEE722 /* SwiftCryptoTools in Frameworks */,
 				0DA7B4B6299A4E6400CEE722 /* QRCode in Frameworks */,
+				0DC4B0492ABC8114004B8E3B /* BigInt in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +277,7 @@
 				0DA7B4B0299A4D6D00CEE722 /* SatochipSwift */,
 				0DA7B4B2299A4D7E00CEE722 /* SwiftCryptoTools */,
 				0DA7B4B5299A4E6400CEE722 /* QRCode */,
+				0DC4B0482ABC8114004B8E3B /* BigInt */,
 			);
 			productName = Satodime;
 			productReference = 0DA7B457299A365900CEE722 /* Satodime.app */;
@@ -351,6 +354,7 @@
 			mainGroup = 0DA7B44E299A365900CEE722;
 			packageReferences = (
 				0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */,
+				0DC4B0472ABC810B004B8E3B /* XCRemoteSwiftPackageReference "BigInt" */,
 			);
 			productRefGroup = 0DA7B458299A365900CEE722 /* Products */;
 			projectDirPath = "";
@@ -818,6 +822,14 @@
 				version = 12.1.1;
 			};
 		};
+		0DC4B0472ABC810B004B8E3B /* XCRemoteSwiftPackageReference "BigInt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/attaswift/BigInt.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -833,6 +845,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */;
 			productName = QRCode;
+		};
+		0DC4B0482ABC8114004B8E3B /* BigInt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DC4B0472ABC810B004B8E3B /* XCRemoteSwiftPackageReference "BigInt" */;
+			productName = BigInt;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

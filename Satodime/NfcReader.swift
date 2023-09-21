@@ -418,51 +418,51 @@ class NfcReader: ObservableObject {
             }
         }
     
-        // for tokens (including NFTs)
-        do {
-            if coinInfo.isToken() {
-                let contractString = coinInfo.coin.contractBytesToString(contractBytes: coinInfo.keyslotStatus.contract)
-                print ("contractString: \(contractString)")
-                let tokenBalance = try await coinInfo.coin.getTokenBalance(addr: coinInfo.address, contract: contractString)
-                print("tokenBalance: \(tokenBalance)")
-                let tokenInfo = try await coinInfo.coin.getTokenInfo(contract: contractString)
-                print ("tokenInfo: \(tokenInfo)")
-                let tokenExchangeRate = try await coinInfo.coin.getTokenExchangeRateBetween(contract: contractString, otherCoin: selectedCurrency)
-                print("tokenExchangeRate: \(tokenExchangeRate)")
-                let tokenUrl = URL(string: coinInfo.coin.getTokenWebLink(contract: contractString) ?? "")
-                print ("tokenUrl: \(tokenUrl)")
-                DispatchQueue.main.async {
-                    self.vaultArray[index].tokenBalance = tokenBalance
-                    self.vaultArray[index].tokenInfo = tokenInfo
-                    self.vaultArray[index].tokenExchangeRate = tokenExchangeRate
-                    self.vaultArray[index].tokenUrl = tokenUrl
-                }
-            }
-        } catch {
-            print("Token Request failed with error: \(error)")
-            logArrayTmp.append("#\(index): token error: \(error)")
-        }
+//        // for tokens (including NFTs)
+//        do {
+//            if coinInfo.isToken() {
+//                let contractString = coinInfo.coin.contractBytesToString(contractBytes: coinInfo.keyslotStatus.contract)
+//                print ("contractString: \(contractString)")
+//                let tokenBalance = try await coinInfo.coin.getTokenBalance(addr: coinInfo.address, contract: contractString)
+//                print("tokenBalance: \(tokenBalance)")
+//                let tokenInfo = try await coinInfo.coin.getTokenInfo(contract: contractString)
+//                print ("tokenInfo: \(tokenInfo)")
+//                let tokenExchangeRate = try await coinInfo.coin.getTokenExchangeRateBetween(contract: contractString, otherCoin: selectedCurrency)
+//                print("tokenExchangeRate: \(tokenExchangeRate)")
+//                let tokenUrl = URL(string: coinInfo.coin.getTokenWebLink(contract: contractString) ?? "")
+//                print ("tokenUrl: \(tokenUrl)")
+//                DispatchQueue.main.async {
+//                    self.vaultArray[index].tokenBalance = tokenBalance
+//                    self.vaultArray[index].tokenInfo = tokenInfo
+//                    self.vaultArray[index].tokenExchangeRate = tokenExchangeRate
+//                    self.vaultArray[index].tokenUrl = tokenUrl
+//                }
+//            }
+//        } catch {
+//            print("Token Request failed with error: \(error)")
+//            logArrayTmp.append("#\(index): token error: \(error)")
+//        }
 
-        // for NFT
-        do {
-            if coinInfo.isNft() {
-                let contractString = coinInfo.coin.contractBytesToString(contractBytes: coinInfo.keyslotStatus.contract)
-                let tokenidString = coinInfo.coin.tokenidBytesToString(tokenidBytes: coinInfo.keyslotStatus.tokenid)
-                print ("tokenidString: \(tokenidString)")
-                let nftInfo = try await coinInfo.coin.getNftInfo(contract: contractString, tokenid: tokenidString)
-                print ("nftInfo: \(nftInfo)")
-                logArrayTmp.append("#\(index): nftInfo: \(nftInfo)")
-                let nftUrl = URL(string: coinInfo.coin.getNftWebLink(contract: contractString, tokenid: tokenidString) )
-                print ("nftUrl: \(nftUrl)")
-                DispatchQueue.main.async {
-                    self.vaultArray[index].nftInfo = nftInfo
-                    self.vaultArray[index].nftUrl = nftUrl
-                }
-            }
-        } catch {
-            print("NFT Request failed with error: \(error)")
-            logArrayTmp.append("#\(index): NFT error: \(error)")
-        }
+//        // for NFT
+//        do {
+//            if coinInfo.isNft() {
+//                let contractString = coinInfo.coin.contractBytesToString(contractBytes: coinInfo.keyslotStatus.contract)
+//                let tokenidString = coinInfo.coin.tokenidBytesToString(tokenidBytes: coinInfo.keyslotStatus.tokenid)
+//                print ("tokenidString: \(tokenidString)")
+//                let nftInfo = try await coinInfo.coin.getNftInfo(contract: contractString, tokenid: tokenidString)
+//                print ("nftInfo: \(nftInfo)")
+//                logArrayTmp.append("#\(index): nftInfo: \(nftInfo)")
+//                let nftUrl = URL(string: coinInfo.coin.getNftWebLink(contract: contractString, tokenid: tokenidString) )
+//                print ("nftUrl: \(nftUrl)")
+//                DispatchQueue.main.async {
+//                    self.vaultArray[index].nftInfo = nftInfo
+//                    self.vaultArray[index].nftUrl = nftUrl
+//                }
+//            }
+//        } catch {
+//            print("NFT Request failed with error: \(error)")
+//            logArrayTmp.append("#\(index): NFT error: \(error)")
+//        }
         
         //for debug purpose
         if coinInfo.coin.coinSymbol == "XCP" {

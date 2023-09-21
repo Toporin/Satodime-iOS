@@ -107,7 +107,7 @@ struct ContentView: View {
                                         Spacer()
                                         
                                         //Text("Asset Type: \(item.getAssetString())")
-                                        Text("Asset Type: \(String(localized: String.LocalizationValue(stringLiteral: item.getAssetString())))")
+                                        //Text("Asset Type: \(String(localized: String.LocalizationValue(stringLiteral: item.getAssetString())))")
                                         
                                         Spacer()
                                         
@@ -150,10 +150,10 @@ struct ContentView: View {
                                                 VStack {
                                                     Text("\(item.getBalanceString())")
                                                         .font(.footnote)
-                                                    if item.isToken() {
-                                                        Text("\(item.getTokenBalanceString())")
-                                                            .font(.footnote)
-                                                    }
+//                                                    if item.isToken() {
+//                                                        Text("\(item.getTokenBalanceString())")
+//                                                            .font(.footnote)
+//                                                    }
                                                 }
                                             }
                                             
