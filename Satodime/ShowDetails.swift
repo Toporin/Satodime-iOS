@@ -73,7 +73,7 @@ struct ShowDetails: View {
                         }
                     }
                 }
-            }
+            }//token
             
             // NFT
             if let nftList = item.nftList {
@@ -125,46 +125,7 @@ struct ShowDetails: View {
                         }//if
                     }
                 }
-                
-            }
-            
-//            if item.isNft() {
-//                CustomGroup(title: "NFT info") {
-//                    Text("Contract: \(item.getContractString())")
-//                    Text("Token ID: \(item.getNftTokenidString())")
-//                    Text("Balance: \(item.getTokenBalanceString())")
-//                    Text("Name: \(item.getNftNameString())")
-//                    Text("Description: \(item.getNftDescriptionString())")
-//
-//                    HStack {
-//                        Spacer()
-//                        AsyncImage(
-//                            url: URL(string: item.getNftImageUrlString()),
-//                            transaction: Transaction(animation: .easeInOut)
-//                        ) { phase in
-//                            switch phase {
-//                            case .empty:
-//                                ProgressView()
-//                            case .success(let image):
-//                                image
-//                                    .resizable()
-//                                    .aspectRatio(contentMode: .fit)
-//                                    .transition(.scale(scale: 0.1, anchor: .center))
-//                            case .failure:
-//                                Image(systemName: "wifi.slash")
-//                            @unknown default:
-//                                EmptyView()
-//                            }
-//                        }
-//                        .frame(width: 250, height: 250)
-//                        //.background(Color.white)
-//                        //.clipShape(Circle())
-//                        Spacer()
-//                    }
-//
-//                    ClickablesIcons(textClipboard: "\(item.getContractString()):\(item.getNftTokenidString())", textQR: "\(item.getContractString()):\(item.getNftTokenidString())", linkURL: item.nftUrl)
-//                }
-//            }
+            }//NFT
             
             if item.keyslotStatus.status == 0x02 {
                 CustomGroup(title: "Private info") {

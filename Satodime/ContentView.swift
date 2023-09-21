@@ -106,11 +106,6 @@ struct ContentView: View {
                                         
                                         Spacer()
                                         
-                                        //Text("Asset Type: \(item.getAssetString())")
-                                        //Text("Asset Type: \(String(localized: String.LocalizationValue(stringLiteral: item.getAssetString())))")
-                                        
-                                        Spacer()
-                                        
                                         Button(action: {
                                             reader.operationType = "Action";
                                             reader.operationIndex = item.index;
@@ -150,10 +145,6 @@ struct ContentView: View {
                                                 VStack {
                                                     Text("\(item.getBalanceString())")
                                                         .font(.footnote)
-//                                                    if item.isToken() {
-//                                                        Text("\(item.getTokenBalanceString())")
-//                                                            .font(.footnote)
-//                                                    }
                                                 }
                                             }
                                             
