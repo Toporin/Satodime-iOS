@@ -39,6 +39,7 @@ public struct VaultItem: Hashable {
         }
     }
 
+    // todo: deprecate
     public static let assetDict: [UInt8 : String] =
                                    [0x00 : "Empty",
                                     0x01 : "Coin",
@@ -49,12 +50,11 @@ public struct VaultItem: Hashable {
                                     0x41 : "ERC721",
                                     0x42 : "BEP721",
                                     0xFF : "Other",]
-    
     public static let statusDict: [UInt8 : String] =
                                    [0x00 : "Uninitialized",
                                     0x01 : "Sealed",
                                     0x02 : "Unsealed",]
-    
+    // todo: deprecate
     public static let nftSet: Set<UInt8> = [0x40, 0x41, 0x42]
     public static let tokenSet: Set<UInt8> = nftSet.union([0x10, 0x11, 0x12]) // a NFT is also a token
     
@@ -69,15 +69,24 @@ public struct VaultItem: Hashable {
     public var address: String = "(undefined)"
     public var addressUrl: URL? = nil
     
+    // asset list
+    public var assetList: [String:[[String:String]]]? = nil
+    public var tokenList: [[String:String]]? = nil
+    public var nftList: [[String:String]]? = nil
+    //public var tokenList: [AssetInfo] = []
+    
     // token
+    // todo: deprecate
     public var tokenBalance: Double? = nil // async value
     public var tokenInfo: [String:String] = [:] // async value
     public var tokenUrl: URL? = nil
     // NFT
+    // todo: deprecate
     public var nftInfo: [String:String] = [:] // async value
     public var nftUrl: URL? = nil
     
     // fiat value
+    // todo: deprecate
     public var exchangeRate: Double? = nil
     public var tokenExchangeRate: Double? = nil
     public var otherCoinSymbol: String? = nil
@@ -149,12 +158,14 @@ public struct VaultItem: Hashable {
         return statusString
     }
     
+    // todo: deprecate
     public func getAssetString() -> String {
         let assetByte: UInt8 = keyslotStatus.asset
         let assetString: String = VaultItem.assetDict[assetByte] ?? String(assetByte) //"Undefined"
         return assetString
     }
     
+    // todo: deprecate
     public func isNft() -> Bool {
         let assetByte: UInt8 = keyslotStatus.asset
         if VaultItem.nftSet.contains(assetByte) {
@@ -164,6 +175,7 @@ public struct VaultItem: Hashable {
         }
     }
     
+    // todo: deprecate
     public func isToken() -> Bool {
         let assetByte: UInt8 = keyslotStatus.asset
         if VaultItem.tokenSet.contains(assetByte) {
@@ -229,6 +241,7 @@ public struct VaultItem: Hashable {
         return self.coin.tokenidBytesToString(tokenidBytes: self.keyslotStatus.tokenid)
     }
     
+    
     public func getNftNameString() -> String {
         let name = nftInfo["nftName"] ?? ""
         return name
@@ -244,6 +257,25 @@ public struct VaultItem: Hashable {
         if nftImageUrlString.hasPrefix("ipfs://ipfs/") {
             // ipfs://ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png
             // https://ipfs.io/ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png
+            nftImageUrlString = String(nftImageUrlString.dropFirst(6)) // remove "ipfs:/"
+            nftImageUrlString = "https://ipfs.io" + nftImageUrlString
+        } else if nftImageUrlString.hasPrefix("ipfs://")  {
+            // ipfs://QmZ2ddtVUV1brVGjpq6vgrG6jEgEK3CqH19VURKzdwCSRf
+            // https://ipfs.io/ipfs/QmZ2ddtVUV1brVGjpq6vgrG6jEgEK3CqH19VURKzdwCSRf
+            nftImageUrlString = String(nftImageUrlString.dropFirst(6)) // remove "ipfs:/"
+            nftImageUrlString = "https://ipfs.io/ipfs" + nftImageUrlString
+        }
+        print("nftImageUrlString: \(nftImageUrlString)")
+        return nftImageUrlString
+    }
+    
+    public func getNftImageUrlString(link: String) -> String {
+        var nftImageUrlString = link
+        // check if IPFS? => use ipfs.io gateway
+        // todo: support ipfs protocol
+        if nftImageUrlString.hasPrefix("ipfs://ipfs/") {
+            //ipfs://ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png
+            //https://ipfs.io/ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png
             nftImageUrlString = String(nftImageUrlString.dropFirst(6)) // remove "ipfs:/"
             nftImageUrlString = "https://ipfs.io" + nftImageUrlString
         } else if nftImageUrlString.hasPrefix("ipfs://")  {

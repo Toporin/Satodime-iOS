@@ -371,87 +371,144 @@ class NfcReader: ObservableObject {
     // WEB APIs
     //
     
-    func fetchDataFromWeb() async -> [VaultItem] {
+    func fetchDataFromWeb(index: Int) async {
         print("in fetchDataFromWeb START")
         logArrayTmp.append("ApiKeys count: \(VaultItem.apiKeys.count)")
-        //logArrayTmp.append("ApiKeys: \(VaultItem.apiKeys)") // TODO: remove
-        let nbKeys = vaultArray.count
-        print("in fetchDataFromWeb nbKeys: \(nbKeys)")
-        var coinInfoArray = [VaultItem]()
-        coinInfoArray.reserveCapacity(nbKeys)
-        for index in 0 ..< nbKeys {
 
-            print("Start task index: \(index)")
-            var coinInfo = vaultArray[index]
-            
-            // fetch balance
-            print("fetching balance...")
-            do {
-                print ("address: \(coinInfo.address)")
-                coinInfo.balance = try await coinInfo.coin.getBalance(addr: coinInfo.address)
-                print ("balance: \(coinInfo.balance)")
-                coinInfo.addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: coinInfo.address) ?? "")
-                print ("addressUrl: \(coinInfo.addressUrl)")
-            } catch {
-                coinInfo.balance = nil
-                print("Request failed with error: \(error)")
-                print("Coin: \(coinInfo.coin.coinSymbol)")
-                //logArrayTmp.append("Coin: \(coinInfo.coin.coinSymbol)")
-                logArrayTmp.append("#\(index): balance request error: \(error)")
-            }
-            
-            // fetch exchange rate
-            do {
-                coinInfo.exchangeRate = try await coinInfo.coin.getExchangeRateBetween(otherCoin: selectedCurrency)
-                coinInfo.otherCoinSymbol = selectedCurrency
-                print ("exchangeRate: \(coinInfo.exchangeRate) \(coinInfo.otherCoinSymbol)")
-            } catch {
-                coinInfo.exchangeRate = nil
-                coinInfo.otherCoinSymbol = selectedCurrency
-                print ("Failed to get exchange rate with error: \(error)")
-                logArrayTmp.append("#\(index): exchange rate error: \(error)")
-            }
+        print("Start task index: \(index)")
+        let coinInfo = vaultArray[index]
+        var address = coinInfo.address
         
-            // for tokens (including NFTs)
-            do {
-                if coinInfo.isToken() {
-                    let contractString = coinInfo.coin.contractBytesToString(contractBytes: coinInfo.keyslotStatus.contract)
-                    print ("contractString: \(contractString)")
-                    coinInfo.tokenBalance = try await coinInfo.coin.getTokenBalance(addr: coinInfo.address, contract: contractString)
-                    print("tokenBalance: \(coinInfo.tokenBalance)")
-                    coinInfo.tokenInfo = try await coinInfo.coin.getTokenInfo(contract: contractString)
-                    coinInfo.tokenExchangeRate = try await coinInfo.coin.getTokenExchangeRateBetween(contract: contractString, otherCoin: selectedCurrency)
-                    print("tokenExchangeRate: \(coinInfo.tokenExchangeRate)")
-                    coinInfo.tokenUrl = URL(string: coinInfo.coin.getTokenWebLink(contract: contractString) ?? "")
-                    print ("tokenUrl: \(coinInfo.tokenUrl)")
-                }
-            } catch {
-                coinInfo.tokenExchangeRate = nil
-                print("Token Request failed with error: \(error)")
-                logArrayTmp.append("#\(index): token error: \(error)")
+        // fetch balance
+        print("fetching balance...")
+        do {
+            print ("address: \(coinInfo.address)")
+            let balance = try await coinInfo.coin.getBalance(addr: coinInfo.address)
+            print ("balance: \(balance)")
+            let addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: coinInfo.address) ?? "")
+            print ("addressUrl: \(addressUrl)")
+            DispatchQueue.main.async {
+                self.vaultArray[index].balance = balance
+                self.vaultArray[index].addressUrl = addressUrl
             }
-
-            // for NFT
-            do {
-                if coinInfo.isNft() {
-                    let contractString = coinInfo.coin.contractBytesToString(contractBytes: coinInfo.keyslotStatus.contract)
-                    let tokenidString = coinInfo.coin.tokenidBytesToString(tokenidBytes: coinInfo.keyslotStatus.tokenid)
-                    print ("tokenidString: \(tokenidString)")
-                    coinInfo.nftInfo = try await coinInfo.coin.getNftInfo(contract: contractString, tokenid: tokenidString)
-                    print ("nftInfo: \(coinInfo.nftInfo)")
-                    logArrayTmp.append("#\(index): nftInfo: \(coinInfo.nftInfo)")
-                    coinInfo.nftUrl = URL(string: coinInfo.coin.getNftWebLink(contract: contractString, tokenid: tokenidString) ?? "")
-                    print ("nftUrl: \(coinInfo.nftUrl)")
-                }
-            } catch {
-                print("NFT Request failed with error: \(error)")
-                logArrayTmp.append("#\(index): NFT error: \(error)")
+        } catch {
+            print("Request failed with error: \(error)")
+            print("Coin: \(coinInfo.coin.coinSymbol)")
+            logArrayTmp.append("#\(index): balance request error: \(error)")
+            DispatchQueue.main.async {
+                self.vaultArray[index].balance = nil
             }
+        }
+        
+        // fetch exchange rate
+        do {
+            let exchangeRate = try await coinInfo.coin.getExchangeRateBetween(otherCoin: selectedCurrency)
+            let otherCoinSymbol = selectedCurrency
+            print ("exchangeRate: \(coinInfo.exchangeRate) \(otherCoinSymbol)")
+            DispatchQueue.main.async {
+                self.vaultArray[index].exchangeRate = exchangeRate
+                self.vaultArray[index].otherCoinSymbol = otherCoinSymbol
+            }
+        } catch {
+            print ("Failed to get exchange rate with error: \(error)")
+            logArrayTmp.append("#\(index): exchange rate error: \(error)")
+            DispatchQueue.main.async { [selectedCurrency] in
+                self.vaultArray[index].exchangeRate = nil
+                self.vaultArray[index].otherCoinSymbol = selectedCurrency
+            }
+        }
+    
+        // for tokens (including NFTs)
+        do {
+            if coinInfo.isToken() {
+                let contractString = coinInfo.coin.contractBytesToString(contractBytes: coinInfo.keyslotStatus.contract)
+                print ("contractString: \(contractString)")
+                let tokenBalance = try await coinInfo.coin.getTokenBalance(addr: coinInfo.address, contract: contractString)
+                print("tokenBalance: \(tokenBalance)")
+                let tokenInfo = try await coinInfo.coin.getTokenInfo(contract: contractString)
+                print ("tokenInfo: \(tokenInfo)")
+                let tokenExchangeRate = try await coinInfo.coin.getTokenExchangeRateBetween(contract: contractString, otherCoin: selectedCurrency)
+                print("tokenExchangeRate: \(tokenExchangeRate)")
+                let tokenUrl = URL(string: coinInfo.coin.getTokenWebLink(contract: contractString) ?? "")
+                print ("tokenUrl: \(tokenUrl)")
+                DispatchQueue.main.async {
+                    self.vaultArray[index].tokenBalance = tokenBalance
+                    self.vaultArray[index].tokenInfo = tokenInfo
+                    self.vaultArray[index].tokenExchangeRate = tokenExchangeRate
+                    self.vaultArray[index].tokenUrl = tokenUrl
+                }
+            }
+        } catch {
+            print("Token Request failed with error: \(error)")
+            logArrayTmp.append("#\(index): token error: \(error)")
+        }
 
-            coinInfoArray.append(coinInfo)
-            print("End for async index: \(index)")
-        }// end for async
-        return coinInfoArray
+        // for NFT
+        do {
+            if coinInfo.isNft() {
+                let contractString = coinInfo.coin.contractBytesToString(contractBytes: coinInfo.keyslotStatus.contract)
+                let tokenidString = coinInfo.coin.tokenidBytesToString(tokenidBytes: coinInfo.keyslotStatus.tokenid)
+                print ("tokenidString: \(tokenidString)")
+                let nftInfo = try await coinInfo.coin.getNftInfo(contract: contractString, tokenid: tokenidString)
+                print ("nftInfo: \(nftInfo)")
+                logArrayTmp.append("#\(index): nftInfo: \(nftInfo)")
+                let nftUrl = URL(string: coinInfo.coin.getNftWebLink(contract: contractString, tokenid: tokenidString) )
+                print ("nftUrl: \(nftUrl)")
+                DispatchQueue.main.async {
+                    self.vaultArray[index].nftInfo = nftInfo
+                    self.vaultArray[index].nftUrl = nftUrl
+                }
+            }
+        } catch {
+            print("NFT Request failed with error: \(error)")
+            logArrayTmp.append("#\(index): NFT error: \(error)")
+        }
+        
+        //for debug purpose
+        if coinInfo.coin.coinSymbol == "XCP" {
+            address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
+        } else if coinInfo.coin.coinSymbol == "ETH" {
+            address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
+            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
+        }
+        
+        // get token
+        let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
+        print("NfcReader: simpleAssetList: \(assetList)")
+        DispatchQueue.main.async {
+            self.vaultArray[index].tokenList = assetList
+        }
+        
+        // get nfts
+        var nftList: [[String:String]]=[]
+        var tokenList: [[String:String]]=[]
+        for asset in assetList {
+            if let contract = asset["contract"]{
+                var nftListByContract = try await coinInfo.coin.getNftList(addr: address, contract: contract)
+                
+                if nftListByContract.count>0 {
+                    for nft in nftListByContract {
+                        var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
+                        nftMerged["type"] = "nft"
+                        nftList.append(nftMerged)
+                        print("NfcReader: added nftMerged: \(nftMerged)")
+                    }
+                } else {
+                    var assetCopy = asset
+                    assetCopy["type"] = "token"
+                    tokenList.append(assetCopy)
+                    print("NfcReader: added assetCopy: \(assetCopy)")
+                }
+            }
+        }
+        DispatchQueue.main.async {[tokenList, nftList] in
+            self.vaultArray[index].tokenList = tokenList
+            self.vaultArray[index].nftList = nftList
+        }
+        print("NfcReader: tokenList: \(tokenList)")
+        print("NfcReader: nftList: \(nftList)")
+        
+        // todo: get price for token & nft
     }
     
     @MainActor
@@ -461,7 +518,16 @@ class NfcReader: ObservableObject {
         self.scan()
         dispatchGroup.notify(queue: DispatchQueue.global()){
             Task {
-                self.vaultArray = await self.fetchDataFromWeb()
+                // fetching assets info for each vault from the web in parallel
+                await withTaskGroup(of: Void.self) { group in
+                    // adding tasks to the group and fetching movies
+                    for index in 0..<self.vaultArray.count {
+                        group.addTask {
+                             await self.fetchDataFromWeb(index: index)
+                        }
+                    }
+                    return
+                }
                 self.syncLogs()
             }
         }

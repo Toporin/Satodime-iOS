@@ -8,8 +8,16 @@
 
 import SwiftUI
 import QRCode
+import SwiftCryptoTools
 
 struct ShowDetails: View {
+    
+    //debug
+//    @State private var fullAssetList = [String:[[String:String]]]()
+//    @State private var simpleAssetList = [[String:String]]()
+//    @State private var tokenList = [[String:String]]()
+//    @State private var nftList = [[String:String]]()
+//    @State private var coinList = [[String:String]]()
     
     @EnvironmentObject var reader: NfcReader
     @State private var showPrivkey = false
@@ -33,16 +41,38 @@ struct ShowDetails: View {
             )
             .cornerRadius(20)
         
+        //debug
+//        Text("DEBUG LIST START")
+//        Text("simpleAssetList size: \(simpleAssetList.count)")
+//        List(simpleAssetList, id: \.self) { asset in
+//            VStack(alignment: .leading) {
+//                Text(asset["contract"] ?? "??")
+//                    .font(.headline)
+//                Text(asset["balance"] ?? "??")
+//            }
+//        }.task {
+//                await loadData(coin: item.coin, address: item.address)
+//        }
+//
+//        List(tokenList, id: \.self) { token in
+//            VStack(alignment: .leading) {
+//                Text(token["contract"] ?? "??")
+//                    .font(.headline)
+//                Text(token["balance"] ?? "??")
+//            }
+//        }.task {
+//            await loadData(coin: item.coin, address: item.address)
+//        }
         
         ScrollView {
             
-            CustomGroup(title: "Key info") {
-                //Text("Status: \(item.getStatusString())")
-                Text("Status: \(String(localized: String.LocalizationValue(stringLiteral: item.getStatusString())))")
-                //Text("Asset type: \(item.getAssetString())")
-                Text("Asset type: \(String(localized: String.LocalizationValue(stringLiteral: item.getAssetString())))")
-                Text("Pubkey: \(item.getPublicKeyString())")
-            }
+//            CustomGroup(title: "Key info") {
+//                //Text("Status: \(item.getStatusString())")
+//                Text("Status: \(String(localized: String.LocalizationValue(stringLiteral: item.getStatusString())))")
+//                //Text("Asset type: \(item.getAssetString())")
+//                Text("Asset type: \(String(localized: String.LocalizationValue(stringLiteral: item.getAssetString())))")
+//                Text("Pubkey: \(item.getPublicKeyString())")
+//            }
             
             CustomGroup(title: "Coin info") {
                 Text("Blockchain: \(item.coin.displayName)")
@@ -51,14 +81,232 @@ struct ShowDetails: View {
                 // buttons
                 ClickablesIcons(textClipboard: item.address, textQR: item.address, linkURL: item.addressUrl)
             }
+//            .task {
+//                await loadData(coin: item.coin, address: item.address)
+//            }
             
-            if item.isToken() && !item.isNft() {
-                CustomGroup(title: "Token info") {
-                    Text("Contract: \(item.getContractString())")
-                    Text("Balance: \(item.getTokenBalanceString())")
-                    ClickablesIcons(textClipboard: item.getContractString(), textQR: item.getContractString(), linkURL: item.tokenUrl)
+//            if let tokenList = item.tokenList {
+//            if let tokenList = item.simpleAssetList {
+//                Text("tokenList count: \(tokenList.count)")
+//                CustomGroup(title: "Token list") {
+//                    ForEach(item.tokenList, id: \.self) { token in
+//                    ForEach(tokenList, id: \.self) { token in
+//                        if token.type == AssetType.token {
+//                            if let name = token.name {
+//                                Text("Asset name: \(name)")
+//                            }
+//                            if let contract = token.contract {
+//                                Text("Asset contract: \(contract)")
+//                            }
+//                            if let balance = token["balance"] {
+//                                Text("Balance: \(balance)")
+//                            }
+//                            if let decimals = token["decimals"] {
+//                                Text("Decimals: \(decimals)")
+//                            }
+//                        }
+//                    } // for
+//                } // custom
+//            } //if
+//            else {
+//                Text("tokenList is nil")
+//            }
+
+            
+//            Text("DEBUG LIST START")
+//            Text("simpleAssetList size: \(simpleAssetList.count)")
+//            //List(simpleAssetList, id: \.self) { asset in
+//            ForEach(simpleAssetList, id: \.self) { asset in
+//                VStack(alignment: .leading) {
+//                    Text(asset["contract"] ?? "??")
+//                        .font(.headline)
+//                    Text(asset["balance"] ?? "??")
+//                }
+//            }
+//
+//            List(tokenList, id: \.self) { token in
+//                VStack(alignment: .leading) {
+//                    Text(token["contract"] ?? "??")
+//                        .font(.headline)
+//                    Text(token["balance"] ?? "??")
+//                }
+//            }.task {
+//                await loadData(coin: item.coin, address: item.address)
+//            }
+                        
+            
+            // token
+            if let tokenList = item.tokenList {
+                CustomGroup(title: "token list") {
+                    //Text("token list size: \(tokenList.count)")
+                    ForEach(tokenList, id: \.self) { token in
+                        //if let type = token["type"]{
+                            if token["type"]=="token"{
+                                if let name = token["name"] {
+                                    Text("Asset name: \(name)")
+                                }
+                                if let contract = token["contract"] {
+                                    Text("Asset contract: \(contract)")
+                                }
+                                if let balance = token["balance"] {
+                                    Text("Balance: \(balance)")
+                                }
+                                //                        if let decimals = coin["decimals"] {
+                                //                            Text("Decimals: \(decimals)")
+                                //                        }
+                            }
+                        //}
+                    }
                 }
             }
+            
+            // NFT
+            if let nftList = item.nftList {
+                CustomGroup(title: "nft list") {
+                    ForEach(nftList, id: \.self) { nft in
+                        //if let type = token["type"] {
+                            //if token["type"] == "nft" {
+                                if let name = nft["name"] {
+                                    Text("Asset name: \(name)")
+                                }
+                                if let contract = nft["contract"] {
+                                    Text("Asset contract: \(contract)")
+                                }
+                                if let balance = nft["balance"] {
+                                    Text("Balance: \(balance)")
+                                }
+//                                if let decimals = coin["decimals"] {
+//                                    Text("Decimals: \(decimals)")
+//                                }
+//                                if let nftDescription = token["nftDescription"] {
+//                                    Text("nftDescription: \(nftDescription)")
+//                                }
+                                if let nftImageUrl = nft["nftImageUrl"] {
+                                    HStack {
+                                        Spacer()
+                                        AsyncImage(
+                                            url: URL(string: item.getNftImageUrlString(link: nftImageUrl)),
+                                            transaction: Transaction(animation: .easeInOut)
+                                        )
+                                        { phase in
+                                            switch phase {
+                                            case .empty:
+                                                ProgressView()
+                                            case .success(let image):
+                                                image
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .transition(.scale(scale: 0.1, anchor: .center))
+                                            case .failure:
+                                                Image(systemName: "wifi.slash")
+                                            @unknown default:
+                                                EmptyView()
+                                            }
+                                        }
+                                        .frame(width: 250, height: 250)
+                                        Spacer()
+                                    }
+                                }//if
+                            //}
+                        //}
+                    }
+                }
+                
+            }
+            
+            // asset List
+            //if let coinList = item.assetList?["coin"] {
+//            if let coinList = item.simpleAssetList {
+//                CustomGroup(title: "Coin list") {
+//                    ForEach(coinList, id: \.self) { coin in
+//                        if let name = coin["name"] {
+//                            Text("Asset name: \(name)")
+//                        }
+//                        if let balance = coin["balance"] {
+//                            Text("Balance: \(balance)")
+//                        }
+//                        if let decimals = coin["decimals"] {
+//                            Text("Decimals: \(decimals)")
+//                        }
+//                    }
+//                }
+//            }
+                
+//            if let tokenList = item.assetList?["token"] {
+//                CustomGroup(title: "Token list") {
+//                    ForEach(tokenList, id: \.self) { token in
+//                        if let name = token["name"] {
+//                            Text("Asset name: \(name)")
+//                        }
+//                        if let balance = token["balance"] {
+//                            Text("Balance: \(balance)")
+//                        }
+//                        if let decimals = token["decimals"] {
+//                            Text("Decimals: \(decimals)")
+//                        }
+//                    }
+//                }
+//            }
+//
+//            if let nftList = item.assetList?["nft"] {
+//                CustomGroup(title: "NFT list") {
+//                    ForEach(nftList, id: \.self) { asset in
+//                        VStack {
+//                            if let name = asset["name"] {
+//                                Text("Asset name: \(name)")
+//                            }
+//                            if let balance = asset["balance"] {
+//                                Text("Balance: \(balance)")
+//                            }
+//                            if let decimals = asset["decimals"] {
+//                                Text("Decimals: \(decimals)")
+//                            }
+//                            if let nftDescription = asset["nftDescription"] {
+//                                Text("nftDescription: \(nftDescription)")
+//                            }
+//                            if let nftImageUrl = asset["nftImageUrl"] {
+//                                HStack {
+//                                    Spacer()
+//                                    AsyncImage(
+//                                        url: URL(string: item.getNftImageUrlString(link: nftImageUrl)),
+//                                        transaction: Transaction(animation: .easeInOut)
+//                                    )
+//                                    { phase in
+//                                        switch phase {
+//                                        case .empty:
+//                                            ProgressView()
+//                                        case .success(let image):
+//                                            image
+//                                                .resizable()
+//                                                .aspectRatio(contentMode: .fit)
+//                                                .transition(.scale(scale: 0.1, anchor: .center))
+//                                        case .failure:
+//                                            Image(systemName: "wifi.slash")
+//                                        @unknown default:
+//                                            EmptyView()
+//                                        }
+//                                    }
+//                                    .frame(width: 250, height: 250)
+//                                    Spacer()
+//                                }
+//                            }//if
+//                        }//vstack
+//                    }//for
+//                }// customGroup
+//            } else{
+//                CustomGroup(title: "Asset list") {
+//                    Text("Asset list is nil!")
+//                }
+//            }
+            
+            
+//            if item.isToken() && !item.isNft() {
+//                CustomGroup(title: "Token info") {
+//                    Text("Contract: \(item.getContractString())")
+//                    Text("Balance: \(item.getTokenBalanceString())")
+//                    ClickablesIcons(textClipboard: item.getContractString(), textQR: item.getContractString(), linkURL: item.tokenUrl)
+//                }
+//            }
             
             if item.isNft() {
                 CustomGroup(title: "NFT info") {
@@ -139,6 +387,44 @@ struct ShowDetails: View {
             }
         }
     }
+    
+    //debug
+//    func loadData(coin: BaseCoin, address: String ) async {
+//
+//        if coin.coinSymbol == "XCP" {
+//            let addressDebug = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"//debug purpose
+//            do {
+//                simpleAssetList = try await coin.getSimpleAssetList(addr: addressDebug)
+//                print("Debug Asset Listing: \(simpleAssetList)")
+//            } catch {
+//                print("SIMPLEASSETLIST ERROR: \(error)")
+//                simpleAssetList = []
+//            }
+//            // tokenInfo
+//            for asset in simpleAssetList {
+//                do {
+//                    if let contract = asset["contract"] {
+//                        if contract == "XCP" {
+//                            // skip
+//                            continue
+//                        }
+//                        var tokenInfo = try await coin.getTokenInfo(contract: contract)
+//                        tokenInfo = tokenInfo.merging(asset, uniquingKeysWith: { (_, second) in second })
+//                        tokenList.append(tokenInfo)
+//
+//                        // nft?
+//                        var nftListByContract = try await coin.getNftList(addr: addressDebug, contract: contract)
+//                        nftList += nftListByContract
+//                    } // if contract
+//
+//                } catch {
+//                    print("failed to fetch info for token: \(asset)")
+//                }
+//            }
+//        } // if xcp
+//
+//        //simpleAssetList =
+//    }
     
     func getColorFromStatus(status: UInt8) -> String {
         switch status {
