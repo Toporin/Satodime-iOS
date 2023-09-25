@@ -419,12 +419,12 @@ class NfcReader: ObservableObject {
         }
         
         //for debug purpose
-        if coinInfo.coin.coinSymbol == "XCP" {
-            address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
-        } else if coinInfo.coin.coinSymbol == "ETH" {
-            address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
-            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
-        }
+//        if coinInfo.coin.coinSymbol == "XCP" {
+//            address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
+//        } else if coinInfo.coin.coinSymbol == "ETH" {
+//            address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
+//            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
+//        }
         
         // get token
         let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
