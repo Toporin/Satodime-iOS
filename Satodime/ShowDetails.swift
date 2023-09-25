@@ -64,12 +64,47 @@ struct ShowDetails: View {
                             if let contract = token["contract"] {
                                 Text("Asset contract: \(contract)")
                             }
-                            if let balance = token["balance"] {
-                                Text("Balance: \(balance)")
-                            }
+//                            if let balance = token["balance"] {
+//                                Text("Balance: \(balance)")
+//                            }
+                            Text("Balance: \(item.getTokenBalanceString(tokenData: token))")
 //                            if let decimals = coin["decimals"] {
 //                                Text("Decimals: \(decimals)")
 //                            }
+                            
+                            if let tokenIconUrl = token["tokenIconUrl"] {
+                                HStack {
+                                    Spacer()
+                                    AsyncImage(
+                                        url: URL(string: tokenIconUrl),
+                                        transaction: Transaction(animation: .easeInOut)
+                                    )
+                                    { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .transition(.scale(scale: 0.1, anchor: .center))
+                                        case .failure:
+                                            Image(systemName: "wifi.slash")
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
+                                    .frame(width: 100, height: 100)
+                                    Spacer()
+                                }
+                            } else {
+                                Image(systemName: "dollarsign.circle")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100, height: 100)
+                                    //.foregroundColor(Color("Color_foreground"))
+                            }
+                            
                         }
                     }
                 }
