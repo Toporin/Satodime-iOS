@@ -200,7 +200,7 @@ public struct VaultItem: Hashable {
             
             if let balanceDouble = Double(balanceString),
                let decimalsDouble = Double(decimalsString) {
-                let balance = balanceDouble / pow(Double(2),decimalsDouble)
+                let balance = balanceDouble / pow(Double(10),decimalsDouble)
                 return balance
             } else {
                 return nil
