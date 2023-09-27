@@ -47,7 +47,7 @@ struct ShowDetails: View {
             CustomGroup(title: "Coin info") {
                 Text("Blockchain: \(item.coin.displayName)")
                 Text("Address: \(item.address)")
-                Text("Balance: \(item.getBalanceString())")
+                Text("Balance: \(item.getCoinBalanceString())")
                 // buttons
                 ClickablesIcons(textClipboard: item.address, textQR: item.address, linkURL: item.addressUrl)
             }
@@ -56,6 +56,11 @@ struct ShowDetails: View {
             if let tokenList = item.tokenList {
                 CustomGroup(title: "token list") {
                     //Text("token list size: \(tokenList.count)")
+                    if let tokenValue = item.totalTokenValueInSecondCurrency {
+                        if let currency = item.selectedSecondCurrency {
+                            Text("token value: \(tokenValue) \(currency)")
+                        }
+                    }
                     ForEach(tokenList, id: \.self) { token in
                         if token["type"]=="token"{
                             if let name = token["name"] {
@@ -64,14 +69,7 @@ struct ShowDetails: View {
                             if let contract = token["contract"] {
                                 Text("Asset contract: \(contract)")
                             }
-//                            if let balance = token["balance"] {
-//                                Text("Balance: \(balance)")
-//                            }
                             Text("Balance: \(item.getTokenBalanceString(tokenData: token))")
-//                            if let decimals = coin["decimals"] {
-//                                Text("Decimals: \(decimals)")
-//                            }
-                            
                             if let tokenIconUrl = token["tokenIconUrl"] {
                                 HStack {
                                     Spacer()

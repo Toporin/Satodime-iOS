@@ -143,8 +143,13 @@ struct ContentView: View {
                                                 Image(systemName: "banknote")
                                                     .foregroundColor(Color("Color_foreground"))
                                                 VStack {
-                                                    Text("\(item.getBalanceString())")
+                                                    //Text("\(item.getCoinBalanceString())")
+                                                    //    .font(.footnote)
+                                                    Text("\(item.getTotalValueInFirstCurrencyString())")
                                                         .font(.footnote)
+                                                    Text("\(item.getTotalValueInSecondCurrencyString())")
+                                                        .font(.footnote)
+                                                    
                                                 }
                                             }
                                             

@@ -35,7 +35,9 @@ class NfcReader: ObservableObject {
     @Published var isOwner = false
     
     // settings
-    @Published var selectedCurrency: String = "USD"
+    @Published var selectedCurrency: String = "USD" // deprecated
+    //@Published var selectedFirstCurrency: String = "USD"
+    @Published var selectedSecondCurrency: String = "USD"
     @Published var logArray: [String] = [String]()
     var logArrayTmp: [String] = [String]()
     //@Published var selectedLanguage: String = "English"
@@ -377,21 +379,34 @@ class NfcReader: ObservableObject {
 
         print("Start task index: \(index)")
         let coinInfo = vaultArray[index]
+        let selectedFirstCurrency: String = coinInfo.coin.coinSymbol
         var address = coinInfo.address
+        
+        //for debug purpose
+//        if coinInfo.coin.coinSymbol == "XCP" {
+//            address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
+//        } else if coinInfo.coin.coinSymbol == "ETH" {
+//            //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
+//            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
+//            //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
+//            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+//        }
         
         // fetch balance
         print("fetching balance...")
+        let balance: Double
         do {
-            print ("address: \(coinInfo.address)")
-            let balance = try await coinInfo.coin.getBalance(addr: coinInfo.address)
+            print ("address: \(address)")
+            balance = try await coinInfo.coin.getBalance(addr: address)
             print ("balance: \(balance)")
-            let addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: coinInfo.address) ?? "")
+            let addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: address) ?? "")
             print ("addressUrl: \(addressUrl)")
             DispatchQueue.main.async {
                 self.vaultArray[index].balance = balance
                 self.vaultArray[index].addressUrl = addressUrl
             }
         } catch {
+            balance = 0
             print("Request failed with error: \(error)")
             print("Coin: \(coinInfo.coin.coinSymbol)")
             logArrayTmp.append("#\(index): balance request error: \(error)")
@@ -401,30 +416,26 @@ class NfcReader: ObservableObject {
         }
         
         // fetch exchange rate
-        do {
-            let exchangeRate = try await coinInfo.coin.getExchangeRateBetween(otherCoin: selectedCurrency)
-            let otherCoinSymbol = selectedCurrency
-            print ("exchangeRate: \(coinInfo.exchangeRate) \(otherCoinSymbol)")
+        if let exchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: coinInfo.coin.coinSymbol, otherCoin: selectedFirstCurrency){
+            print ("exchangeRate: \(exchangeRate1) \(selectedFirstCurrency)")
+            let coinValue = balance * exchangeRate1
+            print("in fetchDataFromWeb [\(index)] totalValueInFirstCurrency: \(coinValue)")
             DispatchQueue.main.async {
-                self.vaultArray[index].exchangeRate = exchangeRate
-                self.vaultArray[index].otherCoinSymbol = otherCoinSymbol
-            }
-        } catch {
-            print ("Failed to get exchange rate with error: \(error)")
-            logArrayTmp.append("#\(index): exchange rate error: \(error)")
-            DispatchQueue.main.async { [selectedCurrency] in
-                self.vaultArray[index].exchangeRate = nil
-                self.vaultArray[index].otherCoinSymbol = selectedCurrency
+                self.vaultArray[index].selectedFirstCurrency = selectedFirstCurrency
+                self.vaultArray[index].coinValueInFirstCurrency = coinValue
+                self.vaultArray[index].totalValueInFirstCurrency = coinValue
             }
         }
-        
-        //for debug purpose
-//        if coinInfo.coin.coinSymbol == "XCP" {
-//            address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
-//        } else if coinInfo.coin.coinSymbol == "ETH" {
-//            address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
-//            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
-//        }
+        if let exchangeRate2 = await coinInfo.coin.getExchangeRateBetween(coin: coinInfo.coin.coinSymbol, otherCoin: selectedSecondCurrency){
+            print ("exchangeRate: \(exchangeRate2) \(selectedSecondCurrency)")
+            let coinValue = balance * exchangeRate2
+            print("in fetchDataFromWeb [\(index)] totalValueInSecondCurrency: \(coinValue)")
+            DispatchQueue.main.async {
+                self.vaultArray[index].selectedSecondCurrency = self.selectedSecondCurrency
+                self.vaultArray[index].coinValueInSecondCurrency = coinValue
+                self.vaultArray[index].totalValueInSecondCurrency = coinValue
+            }
+        }
         
         // get token
         let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
@@ -433,36 +444,80 @@ class NfcReader: ObservableObject {
             self.vaultArray[index].tokenList = assetList
         }
         
-        // get nfts
+        // sort assets between token and nfts
+        // also get value if available
+        var totalTokenValueInFirstCurrency = 0.0
+        var totalTokenValueInSecondCurrency = 0.0
         var nftList: [[String:String]]=[]
         var tokenList: [[String:String]]=[]
         for asset in assetList {
             if let contract = asset["contract"]{
-                var nftListByContract = try await coinInfo.coin.getNftList(addr: address, contract: contract)
+                var nftListByContract = await coinInfo.coin.getNftList(addr: address, contract: contract)
                 
-                if nftListByContract.count>0 {
+                if nftListByContract.count>0 { // nft
                     for nft in nftListByContract {
                         var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
                         nftMerged["type"] = "nft"
                         nftList.append(nftMerged)
                         print("NfcReader: added nftMerged: \(nftMerged)")
                     }
-                } else {
+                } else { // token
                     var assetCopy = asset
                     assetCopy["type"] = "token"
+                    
+                    // get price if available
+                    if let tokenBalance = coinInfo.getTokenBalanceDouble(tokenData: asset),
+                        let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
+                        let currencyForExchangeRate = asset["currencyForExchangeRate"] {
+                        
+                        print("in fetchDataFromWeb [\(index)] tokenBalance: \(tokenBalance)")
+                        print("in fetchDataFromWeb [\(index)] tokenExchangeRate: \(tokenExchangeRate)")
+                        print("in fetchDataFromWeb [\(index)] currencyForExchangeRate: \(currencyForExchangeRate)")
+                        
+                        // selectedFirstCurrency
+                        // TODO: cache result?
+                        if let currencyExchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
+                        {
+                            print("in fetchDataFromWeb [\(index)] currencyExchangeRate1: \(currencyExchangeRate1)")
+                            print("in fetchDataFromWeb [\(index)] selectedFirstCurrency: \(selectedFirstCurrency)")
+                            
+                            let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
+                            totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
+                            assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
+                            assetCopy["firstCurrency"] = selectedFirstCurrency
+                            print("in fetchDataFromWeb tokenValueInFirstCurrency: \(tokenValueInFirstCurrency)")
+                        }
+                        
+                        // second currency
+                        if let currencyExchangeRate2 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedSecondCurrency)
+                        {
+                            let tokenValueInSecondCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate2
+                            totalTokenValueInSecondCurrency += tokenValueInSecondCurrency
+                            assetCopy["tokenValueInSecondCurrency"] = String(tokenValueInSecondCurrency)
+                            assetCopy["secondCurrency"] = selectedSecondCurrency
+                        }
+                    }
+                    
                     tokenList.append(assetCopy)
                     print("NfcReader: added assetCopy: \(assetCopy)")
-                }
-            }
-        }
-        DispatchQueue.main.async {[tokenList, nftList] in
+                } // if nft else token
+            } // if contract
+        } // for asset
+        print("in fetchDataFromWeb [\(index)] totalTokenValueInFirstCurrency: \(totalTokenValueInFirstCurrency)")
+        print("in fetchDataFromWeb [\(index)] totalTokenValueInSecondCurrency: \(totalTokenValueInSecondCurrency)")
+        
+        DispatchQueue.main.async {[tokenList, nftList, totalTokenValueInFirstCurrency, totalTokenValueInSecondCurrency] in
             self.vaultArray[index].tokenList = tokenList
             self.vaultArray[index].nftList = nftList
+            self.vaultArray[index].totalTokenValueInFirstCurrency = totalTokenValueInFirstCurrency
+            self.vaultArray[index].totalTokenValueInSecondCurrency = totalTokenValueInSecondCurrency
+            self.vaultArray[index].totalValueInFirstCurrency = (self.vaultArray[index].totalValueInFirstCurrency ?? 0) + totalTokenValueInFirstCurrency
+            self.vaultArray[index].totalValueInSecondCurrency = (self.vaultArray[index].totalValueInSecondCurrency ?? 0) + totalTokenValueInSecondCurrency
+            print("in fetchDataFromWeb [\(index)] totalValueInFirstCurrency END: \(self.vaultArray[index].totalValueInFirstCurrency)")
+            print("in fetchDataFromWeb [\(index)] totalValueInSecondCurrency END: \(self.vaultArray[index].totalValueInSecondCurrency)")
         }
         print("NfcReader: tokenList: \(tokenList)")
         print("NfcReader: nftList: \(nftList)")
-        
-        // todo: get price for token & nft
     }
     
     @MainActor
