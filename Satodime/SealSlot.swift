@@ -18,9 +18,9 @@ struct SealSlot: View {
     @ObservedObject private var contractsAutocompleteObject = ContractsAutocompleteObject()
     
     // form
-    static var blockchains = ["BTC", "ETH", "LTC", "BCH", "XCP"]
-    static var assetTypes = ["Coin", "Token", "NFT"]
-    static var supportToken = ["ETH", "XCP"]
+    static var blockchains = ["BTC", "ETH", "LTC", "BCH", "XCP", "BSC"]
+//    static var assetTypes = ["Coin", "Token", "NFT"]
+//    static var supportToken = ["ETH", "XCP", "BSC"]
     @State private var selectedBlockchain = "BTC"
     @State private var selectedAsset = "Coin"
     @State private var useTestnet = false
@@ -30,11 +30,11 @@ struct SealSlot: View {
     
     // display
     @State private var expertMode = false
-    @State private var isContractError = true // by default
-    @State private var contractErrorMsg = ""
+//    @State private var isContractError = true // by default
+//    @State private var contractErrorMsg = ""
     @State private var contractBytes = [UInt8]()
-    @State private var isTokenidError = true // by default
-    @State private var tokenidErrorMsg = ""
+//    @State private var isTokenidError = true // by default
+//    @State private var tokenidErrorMsg = ""
     @State private var tokenidBytes = [UInt8]()
     @State private var entropyBytes = [UInt8](repeating: 0, count: 32)
     
@@ -86,106 +86,106 @@ struct SealSlot: View {
                             }
                         }
                         
-                        if SealSlot.supportToken.contains(selectedBlockchain) {
-                            Section(header: Text("Select asset type:")) {
-                                Picker("Choose an asset", selection: $selectedAsset) {
-                                    ForEach(SealSlot.assetTypes, id: \.self) {
-                                        Text($0)
-                                    }
-                                }
-                                .pickerStyle(MenuPickerStyle())
-                            }
-                        } else {
-                            //selectedAsset = "Coin"
-                        }
+//                        if SealSlot.supportToken.contains(selectedBlockchain) {
+//                            Section(header: Text("Select asset type:")) {
+//                                Picker("Choose an asset", selection: $selectedAsset) {
+//                                    ForEach(SealSlot.assetTypes, id: \.self) {
+//                                        Text($0)
+//                                    }
+//                                }
+//                                .pickerStyle(MenuPickerStyle())
+//                            }
+//                        } else {
+//                            //selectedAsset = "Coin"
+//                        }
                         
-                        if (SealSlot.supportToken.contains(selectedBlockchain) && ["Token", "NFT"].contains(selectedAsset)){
-                            Section(header: Text("Enter contract adress:")){
-                                TextField("Enter your contract adress:", text: $contract)
-                                    //.focused($isFocused) // <-- add here
-                                    .onChange(of: contract) { [contract] newContract in
-                                        do {
-                                            //print("newContract: \(newContract)")
-                                            switch selectedBlockchain {
-                                            case "ETH":
-                                                contractBytes = try Ethereum.contractStringToBytes(contractString: newContract)
-                                            case "XCP":
-                                                contractBytes = try Counterparty.contractStringToBytes(contractString: newContract)
-                                            default:
-                                                contractBytes = [UInt8]()
-                                            }
-                                            isContractError = false
-                                            contractErrorMsg = "OK!"
-                                        } catch {
-                                            isContractError = true
-                                            contractErrorMsg = "Wrong contract format: \(error)"
-                                            print("Wrong contract format: \(error)")
-                                        }
-                                        
-                                        // autocomplete
-                                        contractsAutocompleteObject.autocomplete(newContract, blockchain: selectedBlockchain, asset: selectedAsset)
-                                    }
-                                List(contractsAutocompleteObject.suggestions, id: \.self) { suggestion in
-                                    ZStack {
-                                        Text(suggestion.label)
-                                    }
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                                    .onTapGesture {
-                                        //isFocused = false // <-- add here
-                                        contract = suggestion.contract
-                                        isContractError = true
-                                        contractErrorMsg = "OK!"
-                                    }
-                                }
-                                if isContractError {
-                                    HStack {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(.red)
-                                        Text("\(contractErrorMsg)")
-                                            .foregroundColor(.red)
-                                    }
-                                } else {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.green)
-                                }
-                            }
-                        }
+//                        if (SealSlot.supportToken.contains(selectedBlockchain) && ["Token", "NFT"].contains(selectedAsset)){
+//                            Section(header: Text("Enter contract adress:")){
+//                                TextField("Enter your contract adress:", text: $contract)
+//                                    //.focused($isFocused) // <-- add here
+//                                    .onChange(of: contract) { [contract] newContract in
+//                                        do {
+//                                            //print("newContract: \(newContract)")
+//                                            switch selectedBlockchain {
+//                                            case "ETH":
+//                                                contractBytes = try Ethereum.contractStringToBytes(contractString: newContract)
+//                                            case "XCP":
+//                                                contractBytes = try Counterparty.contractStringToBytes(contractString: newContract)
+//                                            default:
+//                                                contractBytes = [UInt8]()
+//                                            }
+//                                            isContractError = false
+//                                            contractErrorMsg = "OK!"
+//                                        } catch {
+//                                            isContractError = true
+//                                            contractErrorMsg = "Wrong contract format: \(error)"
+//                                            print("Wrong contract format: \(error)")
+//                                        }
+//
+//                                        // autocomplete
+//                                        contractsAutocompleteObject.autocomplete(newContract, blockchain: selectedBlockchain, asset: selectedAsset)
+//                                    }
+//                                List(contractsAutocompleteObject.suggestions, id: \.self) { suggestion in
+//                                    ZStack {
+//                                        Text(suggestion.label)
+//                                    }
+//                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+//                                    .onTapGesture {
+//                                        //isFocused = false // <-- add here
+//                                        contract = suggestion.contract
+//                                        isContractError = true
+//                                        contractErrorMsg = "OK!"
+//                                    }
+//                                }
+//                                if isContractError {
+//                                    HStack {
+//                                        Image(systemName: "xmark.circle.fill")
+//                                            .foregroundColor(.red)
+//                                        Text("\(contractErrorMsg)")
+//                                            .foregroundColor(.red)
+//                                    }
+//                                } else {
+//                                    Image(systemName: "checkmark.circle.fill")
+//                                        .foregroundColor(.green)
+//                                }
+//                            }
+//                        }
                         
-                        if (SealSlot.supportToken.contains(selectedBlockchain) && ["NFT"].contains(selectedAsset)){
-                            Section(header: Text("Enter tokenid:")){
-                                TextField("Enter your tokenid:", text: $tokenid)
-                                    .onChange(of: tokenid) { [tokenid] newTokenid in
-                                        do {
-                                            print("newTokenid: \(newTokenid)")
-                                            switch selectedBlockchain {
-                                            case "ETH":
-                                                tokenidBytes = try Ethereum.tokenidStringToBytes(tokenidString: newTokenid)
-                                            case "XCP":
-                                                tokenidBytes = try Counterparty.tokenidStringToBytes(tokenidString: newTokenid)
-                                            default:
-                                                tokenidBytes = [UInt8]()
-                                            }
-                                            isTokenidError = false
-                                            tokenidErrorMsg = "OK!"
-                                        } catch {
-                                            isTokenidError = true
-                                            tokenidErrorMsg = "Wrong tokenid format: \(error)"
-                                            print("Wrong tokenid format: \(error)")
-                                        }
-                                    }
-                                if isTokenidError {
-                                    HStack {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(.red)
-                                        Text("\(tokenidErrorMsg)")
-                                            .foregroundColor(.red)
-                                    }
-                                } else {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.green)
-                                }
-                            }
-                        }
+//                        if (SealSlot.supportToken.contains(selectedBlockchain) && ["NFT"].contains(selectedAsset)){
+//                            Section(header: Text("Enter tokenid:")){
+//                                TextField("Enter your tokenid:", text: $tokenid)
+//                                    .onChange(of: tokenid) { [tokenid] newTokenid in
+//                                        do {
+//                                            print("newTokenid: \(newTokenid)")
+//                                            switch selectedBlockchain {
+//                                            case "ETH":
+//                                                tokenidBytes = try Ethereum.tokenidStringToBytes(tokenidString: newTokenid)
+//                                            case "XCP":
+//                                                tokenidBytes = try Counterparty.tokenidStringToBytes(tokenidString: newTokenid)
+//                                            default:
+//                                                tokenidBytes = [UInt8]()
+//                                            }
+//                                            isTokenidError = false
+//                                            tokenidErrorMsg = "OK!"
+//                                        } catch {
+//                                            isTokenidError = true
+//                                            tokenidErrorMsg = "Wrong tokenid format: \(error)"
+//                                            print("Wrong tokenid format: \(error)")
+//                                        }
+//                                    }
+//                                if isTokenidError {
+//                                    HStack {
+//                                        Image(systemName: "xmark.circle.fill")
+//                                            .foregroundColor(.red)
+//                                        Text("\(tokenidErrorMsg)")
+//                                            .foregroundColor(.red)
+//                                    }
+//                                } else {
+//                                    Image(systemName: "checkmark.circle.fill")
+//                                        .foregroundColor(.green)
+//                                }
+//                            }
+//                        }
                         
                         if expertMode {
                             Section(header: Text("Entropy")){

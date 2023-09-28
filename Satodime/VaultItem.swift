@@ -121,6 +121,12 @@ public struct VaultItem: Hashable {
         case 0x00000091:
             coin = BitcoinCash(isTestnet: true, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_bchtest"
+        case 0x8000232e:
+            coin = BinanceSmartChain(isTestnet: false, apiKeys: VaultItem.apiKeys)
+            iconPath = "ic_coin_bch" //todo
+        case 0x0000232e:
+            coin = BinanceSmartChain(isTestnet: true, apiKeys: VaultItem.apiKeys)
+            iconPath = "ic_coin_bchtest" // todo
         case 0xdeadbeef: // uninitialized slot!
             coin = EmptyCoin(isTestnet: true, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_empty"

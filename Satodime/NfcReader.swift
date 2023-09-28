@@ -390,6 +390,8 @@ class NfcReader: ObservableObject {
 //            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
 //            //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
 //            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+//        } else if coinInfo.coin.coinSymbol == "BNB" {
+//            address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
 //        }
         
         // fetch balance
