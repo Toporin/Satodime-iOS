@@ -1,0 +1,85 @@
+//
+//  VaultSetupCreateView.swift
+//  Satodime
+//
+//  Created by Lionel Delvaux on 02/10/2023.
+//
+
+import Foundation
+import SwiftUI
+
+struct VaultSetupCreateView: View {
+    // MARK: - Properties
+    @ObservedObject var viewModel: VaultSetupCreateViewModel
+    
+    // MARK: - View
+    var body: some View {
+        ZStack {
+            Constants.Colors.viewBackground
+                .ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                    .frame(height: 37)
+                
+                SatoText(text: viewModel.subtitle, style: .subtitle)
+                
+                Spacer()
+                    .frame(height: 37)
+                
+                SatoText(text: viewModel.selectedCrypto.shortIdentifier, style: .subtitleBold)
+                
+                Spacer()
+                    .frame(height: 16)
+                
+                ZStack {
+                    Circle()
+                        .fill(viewModel.selectedCrypto.color)
+                        .frame(width: 100, height: 100)
+                        .padding(10)
+                    
+                    Image(viewModel.selectedCrypto.icon)
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.white)
+                }
+                
+                Spacer()
+                    .frame(height: 65)
+                
+                InfoBox(text: viewModel.informationText)
+                
+                Spacer()
+                    .frame(height: 64)
+                
+                HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
+                    Spacer()
+                    SatoToggle(isOn: $viewModel.isExpertModeActivated, label: viewModel.activateExpertModeText)
+                    Spacer()
+                })
+                
+                Spacer()
+                
+                NavigationLink(
+                    destination: VaultSetupCongratsView(viewModel: VaultSetupCongratsViewModel(selectedCrypto: viewModel.selectedCrypto)),
+                    isActive: $viewModel.isNextViewActive
+                ) {
+                    EmptyView()
+                }
+                
+                SatoButton(text: viewModel.continueButtonTitle, style: .confirm) {
+                    viewModel.isNextViewActive = true
+                }
+                
+                Spacer()
+                    .frame(height: 29)
+                
+            }.padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                SatoText(text: viewModel.title, style: .viewTitle)
+            }
+        }
+    }
+}
