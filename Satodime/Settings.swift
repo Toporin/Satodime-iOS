@@ -13,6 +13,7 @@ struct Settings: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var reader: NfcReader
+    @AppStorage("needsAppOnboarding") var needsAppOnboarding: Bool = true
     @State var showLogs = false
     
     // form
@@ -51,13 +52,39 @@ struct Settings: View {
                     //                    .pickerStyle(MenuPickerStyle())
                     //                }
                     
-                    Section(header: Text("Select currency:")) {
-                        Picker("Please choose currency", selection: $reader.selectedCurrency) {
+                    // deprecated
+//                    Section(header: Text("Select currency:")) {
+//                        Picker("Please choose currency:", selection: $reader.selectedCurrency) {
+//                            ForEach(currencies, id: \.self) {
+//                                Text($0)
+//                            }
+//                        }
+//                        .pickerStyle(MenuPickerStyle())
+//                    }
+                    
+                    // selectedFirstCurrency is the native currency for each vault (BTC, ETH, ...)
+//                    Section(header: Text("Select main currency:")) {
+//                        Picker("Please choose currency:", selection: $reader.selectedFirstCurrency) {
+//                            ForEach(currencies, id: \.self) {
+//                                Text($0)
+//                            }
+//                        }
+//                        .pickerStyle(MenuPickerStyle())
+//                    }
+                    
+                    // second currency is typically fiat
+                    Section(header: Text("Select second currency:")) {
+                        Picker("Please choose currency:", selection: $reader.selectedSecondCurrency) {
                             ForEach(currencies, id: \.self) {
                                 Text($0)
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
+                    }
+                    
+                    // dark mode is set globally for the device
+                    Section() {
+                        Toggle("Onboarding intro:", isOn: $needsAppOnboarding)
                     }
                     
                     HStack {

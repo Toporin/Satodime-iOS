@@ -26,7 +26,9 @@ public struct ActionParams {
      "LTC": 0x80000002,
      "XCP": 0x80000009,
      "ETH": 0x8000003c,
-     "BCH": 0x80000091,]
+     "BCH": 0x80000091,
+     "BSC": 0x8000232e,
+    ]
     
     var index: UInt8 = 0xFF
     var action: String = ""

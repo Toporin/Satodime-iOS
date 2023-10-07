@@ -8,26 +8,18 @@
 
 import SwiftUI
 import QRCode
+import SwiftCryptoTools
 
 struct ShowDetails: View {
     
     @EnvironmentObject var reader: NfcReader
     @State private var showPrivkey = false
-    @State private var privkeyAvailable = false
     var item: VaultItem
     var index: Int
     
     static var gradiantArray = [[Color("Color_gold"), Color("Color_gold")], [.cyan, .green], [.orange, .red]]
     
     var body: some View {
-//        Text("Details for vault #\(index)")
-//            .padding()
-//            .font(.title)
-//            .overlay(
-//                RoundedRectangle(cornerRadius: 16)
-//                    .stroke(Color(getColorFromStatus(status: item.keyslotStatus.status)), lineWidth: 4)
-//                    //.background(Color(getColorFromStatus(status: item.keyslotStatus.status)))
-//            )
         
         Text("Details for vault #\(index)")
             .foregroundColor(.black)
@@ -42,91 +34,146 @@ struct ShowDetails: View {
             )
             .cornerRadius(20)
         
-        
         ScrollView {
             
-            CustomGroup(title: "Key info") {
-                //Text("Status: \(item.getStatusString())")
-                Text("Status: \(String(localized: String.LocalizationValue(stringLiteral: item.getStatusString())))")
-                //Text("Asset type: \(item.getAssetString())")
-                Text("Asset type: \(String(localized: String.LocalizationValue(stringLiteral: item.getAssetString())))")
-                Text("Pubkey: \(item.getPublicKeyString())")
-            }
+//            CustomGroup(title: "Key info") {
+//                //Text("Status: \(item.getStatusString())")
+//                Text("Status: \(String(localized: String.LocalizationValue(stringLiteral: item.getStatusString())))")
+//                //Text("Asset type: \(item.getAssetString())")
+//                Text("Asset type: \(String(localized: String.LocalizationValue(stringLiteral: item.getAssetString())))")
+//                Text("Pubkey: \(item.getPublicKeyString())")
+//            }
             
             CustomGroup(title: "Coin info") {
                 Text("Blockchain: \(item.coin.displayName)")
                 Text("Address: \(item.address)")
-                Text("Balance: \(item.getBalanceString())")
+                Text("Balance: \(item.getCoinBalanceString())")
                 // buttons
                 ClickablesIcons(textClipboard: item.address, textQR: item.address, linkURL: item.addressUrl)
             }
             
-            if item.isToken() && !item.isNft() {
-                CustomGroup(title: "Token info") {
-                    Text("Contract: \(item.getContractString())")
-                    Text("Balance: \(item.getTokenBalanceString())")
-                    ClickablesIcons(textClipboard: item.getContractString(), textQR: item.getContractString(), linkURL: item.tokenUrl)
-                }
-            }
-            
-            if item.isNft() {
-                CustomGroup(title: "NFT info") {
-                    Text("Contract: \(item.getContractString())")
-                    Text("Token ID: \(item.getNftTokenidString())")
-                    Text("Balance: \(item.getTokenBalanceString())")
-                    Text("Name: \(item.getNftNameString())")
-                    Text("Description: \(item.getNftDescriptionString())")
-                    
-                    HStack {
-                        Spacer()
-                        AsyncImage(
-                            url: URL(string: item.getNftImageUrlString()),
-                            transaction: Transaction(animation: .easeInOut)
-                        ) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image
+            // token
+            if let tokenList = item.tokenList {
+                CustomGroup(title: "token list") {
+                    //Text("token list size: \(tokenList.count)")
+                    if let tokenValue = item.totalTokenValueInSecondCurrency {
+                        if let currency = item.selectedSecondCurrency {
+                            Text("token value: \(tokenValue) \(currency)")
+                        }
+                    }
+                    ForEach(tokenList, id: \.self) { token in
+                        if token["type"]=="token"{
+                            if let name = token["name"] {
+                                Text("Asset name: \(name)")
+                            }
+                            if let contract = token["contract"] {
+                                Text("Asset contract: \(contract)")
+                            }
+                            Text("Balance: \(item.getTokenBalanceString(tokenData: token))")
+                            if let tokenIconUrl = token["tokenIconUrl"] {
+                                HStack {
+                                    Spacer()
+                                    AsyncImage(
+                                        url: URL(string: tokenIconUrl),
+                                        transaction: Transaction(animation: .easeInOut)
+                                    )
+                                    { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .transition(.scale(scale: 0.1, anchor: .center))
+                                        case .failure:
+                                            Image(systemName: "wifi.slash")
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
+                                    .frame(width: 100, height: 100)
+                                    Spacer()
+                                }
+                            } else {
+                                Image(systemName: "dollarsign.circle")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .transition(.scale(scale: 0.1, anchor: .center))
-                            case .failure:
-                                Image(systemName: "wifi.slash")
-                            @unknown default:
-                                EmptyView()
+                                    .frame(width: 100, height: 100)
+                                    //.foregroundColor(Color("Color_foreground"))
                             }
+                            
                         }
-                        .frame(width: 250, height: 250)
-                        //.background(Color.white)
-                        //.clipShape(Circle())
-                        Spacer()
                     }
-                    
-                    ClickablesIcons(textClipboard: "\(item.getContractString()):\(item.getNftTokenidString())", textQR: "\(item.getContractString()):\(item.getNftTokenidString())", linkURL: item.nftUrl)
                 }
-            }
+            }//token
             
-            //if reader.vaultArray[index].keyslotStatus.status == 0x02 {
+            // NFT
+            if let nftList = item.nftList {
+                CustomGroup(title: "nft list") {
+                    ForEach(nftList, id: \.self) { nft in
+                        if let name = nft["name"] {
+                            Text("Name: \(name)")
+                        }
+                        if let contract = nft["contract"] {
+                            Text("Contract: \(contract)")
+                        }
+                        if let tokenid = nft["tokenid"] {
+                            Text("Tokenid: \(tokenid)")
+                        }
+                        if let balance = nft["balance"] {
+                            Text("Balance: \(balance)")
+                        }
+//                        if let decimals = nft["decimals"] {
+//                            Text("Decimals: \(decimals)")
+//                        }
+//                        if let nftDescription = token["nftDescription"] {
+//                            Text("nftDescription: \(nftDescription)")
+//                        }
+                        if let nftImageUrl = nft["nftImageUrl"] {
+                            HStack {
+                                Spacer()
+                                AsyncImage(
+                                    url: URL(string: item.getNftImageUrlString(link: nftImageUrl)),
+                                    transaction: Transaction(animation: .easeInOut)
+                                )
+                                { phase in
+                                    switch phase {
+                                    case .empty:
+                                        ProgressView()
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .transition(.scale(scale: 0.1, anchor: .center))
+                                    case .failure:
+                                        Image(systemName: "wifi.slash")
+                                    @unknown default:
+                                        EmptyView()
+                                    }
+                                }
+                                .frame(width: 250, height: 250)
+                                Spacer()
+                            }
+                        }//if
+                    }
+                }
+            }//NFT
+            
             if item.keyslotStatus.status == 0x02 {
                 CustomGroup(title: "Private info") {
                     Button(action:{
                         print("Button show privkey")
                         print("showPrivkey: \(showPrivkey)")
-                        print("privkeyAvailable: \(privkeyAvailable)")
                         if showPrivkey {
                             showPrivkey = false
                         } else {
                             showPrivkey = true
                             // fetch private info from card if not already available
                             // also todo: check if isOwner?
-                            privkeyAvailable = (reader.vaultArray[index].privkey != nil)
-                            if !privkeyAvailable {
+                            if (reader.vaultArray[index].privkey == nil) {
                                 let actionParams = ActionParams(index: UInt8(index), action: "private")
                                 reader.scanForAction(actionParams: actionParams)
-                                privkeyAvailable = (reader.vaultArray[index].privkey != nil)
-                                // todo: scanForAction is async so update to privkeyAvailable is always false. it should be done only after scanForAction is finished...
-                                // print("After scan() privkeyAvailable: \(privkeyAvailable)")
                             }
                         }
                     }){
@@ -138,7 +185,7 @@ struct ShowDetails: View {
                         }
                     }
                     if showPrivkey {
-                        if privkeyAvailable {
+                        if (reader.vaultArray[index].privkey != nil) {
                             Text("Privkey: \(reader.vaultArray[index].getPrivateKeyString())")
                             ClickablesIcons(textClipboard: reader.vaultArray[index].getPrivateKeyString(), textQR: reader.vaultArray[index].getPrivateKeyString(), linkURL: nil)
                             Text("WIF: \(reader.vaultArray[index].getWifString())")

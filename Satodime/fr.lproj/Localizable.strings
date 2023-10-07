@@ -16,9 +16,10 @@
 //"Select language:" = "Select language:";
 //"Please choose a language" = "Please choose a language";
 "Select currency:" = "Sélectionnez votre devise";
-"Please choose currency" = "Devise:";
+"Please choose currency:" = "Devise:";
 "Settings" = "Paramètres";
 "Show app logs" = "Afficher les logs";
+"Onboarding intro:" = "Intro de démarrage:";
 
 // ContentView.swift
 "Refresh to scan a card" = "Rafraichir pour scanner une carte";
@@ -165,3 +166,13 @@
 "Uninitialized" = "Vierge";
 "Sealed" = "Scellé";
 "Unsealed" = "Déscellé";
+
+// OnboardingDataModel.swift
+"Welcome!" = "Bienvenue!";
+"text_intro1" = "Satodime vous permet de créer facilement des coffres pour crypto-monnaie à la volée. Elle prend en charge les crypto-monnaies les plus innovantes et les jetons ERC-20.";
+"Use it indefinitely" = "Réutilisable à l'infini";
+"text_intro2" = "Créez jusqu'à 3 coffres pour stocker vos crypto-monnaies et NFT préférés. \n\nScellez un nouveau coffre, chargez votre token. Descellez-le pour récupérer la clé privée. Et réutilisez-les indéfiniment !";
+"How to use NFC" = "Comment utiliser le NFC";
+"text_intro3" = "Votre Satodime est équipée d'une interface NFC intégrée. \n\nPour interagir avec la carte, vous devez la placer sur votre lecteur NFC et la maintenir pendant toute l'opération.";
+"A sample vault" = "Un example de coffre";
+"text_intro4" = "La couleur verte signifie que le coffre est scellé : la clé privée a été générée aléatoirement par la carte et n'a jamais été exposée. Un coffre orange signifie que le coffre a été descellé. Un coffre gris signifie que la clé privée n'a pas encore été générée. \n\nCliquez sur l'icône en haut à droite du coffre pour modifier l'état du coffre (sceller, desceller ou réinitialiser le coffre). Cliquez sur la flèche en bas à droite pour obtenir plus d'informations.";
