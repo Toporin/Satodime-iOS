@@ -13,6 +13,9 @@ enum SatoTextStyle {
     case subtitleBold
     case viewTitle
     case cellTitle
+    case slotTitle
+    case addressText
+    case balanceLarge
     
     var lineHeight: CGFloat {
         switch self {
@@ -26,6 +29,12 @@ enum SatoTextStyle {
             return 36
         case .cellTitle:
             return 20
+        case .slotTitle:
+            return 57
+        case .addressText:
+            return 19
+        case .balanceLarge:
+            return 35
         }
     }
     
@@ -41,12 +50,18 @@ enum SatoTextStyle {
             return 24
         case .cellTitle:
             return 16
+        case .slotTitle:
+            return 45
+        case .addressText:
+            return 14
+        case .balanceLarge:
+            return 28
         }
     }
 
     var font: Font {
         switch self {
-        case .title, .cellTitle:
+        case .title, .cellTitle, .balanceLarge:
             return .custom("Outfit-Medium", size: self.fontSize)
         case .subtitle:
             return .custom("OpenSans-variable", size: self.fontSize)
@@ -54,6 +69,10 @@ enum SatoTextStyle {
             return .custom("Poppins-ExtraBold", size: self.fontSize)
         case .subtitleBold:
             return .custom("Outfit-Bold", size: self.fontSize)
+        case .slotTitle:
+            return .custom("Outfit-ExtraLight", size: self.fontSize)
+        case .addressText:
+            return .custom("OpenSans-SemiBold", size: self.fontSize)
         }
     }
 
@@ -69,6 +88,12 @@ enum SatoTextStyle {
             return .white
         case .cellTitle:
             return .white
+        case .slotTitle:
+            return .white
+        case .addressText:
+            return Constants.Colors.addressText
+        case .balanceLarge:
+            return .white
         }
     }
 
@@ -80,6 +105,12 @@ enum SatoTextStyle {
             return .regular
         case .viewTitle:
             return .bold
+        case .slotTitle:
+            return .ultraLight
+        case .addressText:
+            return .semibold
+        case .balanceLarge:
+            return .medium
         }
     }
 }

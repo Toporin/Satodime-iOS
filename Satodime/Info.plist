@@ -15,6 +15,8 @@
 		<string>Poppins-ExtraBold.ttf</string>
 		<string>Poppins-Bold2.ttf</string>
 		<string>Outfit-Bold.ttf</string>
+		<string>Outfit-ExtraLight.ttf</string>
+		<string>OpenSans-SemiBold.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

@@ -14,7 +14,10 @@ struct SatodimeApp: App {
     
     var body: some Scene {
         WindowGroup {
+            // TakeOwnershipView(viewModel: TakeOwnershipViewModel())
+             //ContentView()
             HomeView(viewModel: HomeViewModel())
+            
             /*if isFirstUse {
                 OnboardingContainerView(viewModel: OnboardingContainerViewModel())
                 // VaultSetupSelectChainView(viewModel: VaultSetupSelectChainViewModel())

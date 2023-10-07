@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "hstack-snap-to-scroll",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftui-library/hstack-snap-to-scroll.git",
+      "state" : {
+        "revision" : "d40c4cbe9f8e9bd8b424fc8b61cd3c55bd85d30a",
+        "version" : "1.0.3"
+      }
+    },
+    {
       "identity" : "qrcode",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/dagronf/QRCode.git",

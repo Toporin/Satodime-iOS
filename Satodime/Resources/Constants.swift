@@ -15,6 +15,9 @@ struct Constants {
         static let informButtonBackground = Color(hex: 0x525684)
         static let confirmButtonBackground = Color(hex: 0x24B59B)
         static let cellBackground = Color(hex: 0x3E4160)
+        static let unsealedStatusText = Color(hex: 0xFFB444)
+        static let sealedStatusText = Color(hex: 0x64FFC7)
+        static let addressText = Color(hex: 0xD6D6D6)
     }
     
     // MARK: - Dimensions
