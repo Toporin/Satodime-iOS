@@ -60,6 +60,13 @@ struct VaultSetupCreateView: View {
                 Spacer()
                 
                 NavigationLink(
+                    destination: ExpertModeView(viewModel: ExpertModeViewModel(cardService: CardService(), selectedCrypto: viewModel.selectedCrypto, index: viewModel.index, vaultCards: viewModel.vaultCards)),
+                    isActive: $viewModel.isExpertModeViewActive
+                ) {
+                    EmptyView()
+                }
+                
+                NavigationLink(
                     destination: VaultSetupCongratsView(viewModel: VaultSetupCongratsViewModel(selectedCrypto: viewModel.selectedCrypto)),
                     isActive: $viewModel.isNextViewActive
                 ) {

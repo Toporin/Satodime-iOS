@@ -82,6 +82,10 @@
 		D0825F652ADAE595006391D5 /* SettingsToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F642ADAE595006391D5 /* SettingsToggle.swift */; };
 		D0825F672ADAE7AD006391D5 /* PreferencesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F662ADAE7AD006391D5 /* PreferencesService.swift */; };
 		D0825F6A2ADB629A006391D5 /* CardVaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F692ADB629A006391D5 /* CardVaults.swift */; };
+		D0825F6D2ADD7466006391D5 /* ExpertModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F6C2ADD7466006391D5 /* ExpertModeView.swift */; };
+		D0825F6F2ADD746E006391D5 /* ExpertModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F6E2ADD746E006391D5 /* ExpertModeViewModel.swift */; };
+		D0825F712ADD7BCC006391D5 /* SatoChoiceSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */; };
+		D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F722ADD7FC6006391D5 /* SatoInputText.swift */; };
 		D0C483992AD8BC2F0085F4B9 /* UnsealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */; };
 		D0C4839B2AD8BC370085F4B9 /* UnsealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C4839A2AD8BC370085F4B9 /* UnsealViewModel.swift */; };
 		D0E1704D2AD6D1EB00C53233 /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1704C2AD6D1EB00C53233 /* ConsoleLogger.swift */; };
@@ -232,6 +236,10 @@
 		D0825F642ADAE595006391D5 /* SettingsToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsToggle.swift; sourceTree = "<group>"; };
 		D0825F662ADAE7AD006391D5 /* PreferencesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesService.swift; sourceTree = "<group>"; };
 		D0825F692ADB629A006391D5 /* CardVaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardVaults.swift; sourceTree = "<group>"; };
+		D0825F6C2ADD7466006391D5 /* ExpertModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertModeView.swift; sourceTree = "<group>"; };
+		D0825F6E2ADD746E006391D5 /* ExpertModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpertModeViewModel.swift; sourceTree = "<group>"; };
+		D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoChoiceSelector.swift; sourceTree = "<group>"; };
+		D0825F722ADD7FC6006391D5 /* SatoInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoInputText.swift; sourceTree = "<group>"; };
 		D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsealView.swift; sourceTree = "<group>"; };
 		D0C4839A2AD8BC370085F4B9 /* UnsealViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsealViewModel.swift; sourceTree = "<group>"; };
 		D0E1704C2AD6D1EB00C53233 /* ConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogger.swift; sourceTree = "<group>"; };
@@ -577,6 +585,8 @@
 				D0F62FCE2ACEEE000027EFE6 /* VaultCard */,
 				D0F62FB02ACDB26C0027EFE6 /* Cells */,
 				D0EB4DEC2AC1D26900EA83F9 /* SatoText.swift */,
+				D0825F722ADD7FC6006391D5 /* SatoInputText.swift */,
+				D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */,
 				D0EB4E092AC222A900EA83F9 /* SatoButton.swift */,
 				D06080622AD949FD001A5749 /* SatoSelectionButton.swift */,
 				D0F62FC12ACDD5DE0027EFE6 /* InfoBox.swift */,
@@ -642,6 +652,8 @@
 				D0F62FBD2ACDCE080027EFE6 /* VaultSetupCreateViewModel.swift */,
 				D0F62FC52ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift */,
 				D0F62FC72ACDFD330027EFE6 /* VaultSetupCongratsViewModel.swift */,
+				D0825F6C2ADD7466006391D5 /* ExpertModeView.swift */,
+				D0825F6E2ADD746E006391D5 /* ExpertModeViewModel.swift */,
 			);
 			path = VaultSetup;
 			sourceTree = "<group>";
@@ -847,6 +859,7 @@
 			files = (
 				D0EB4DF72AC1D62300EA83F9 /* OnBoardingWelcomeView.swift in Sources */,
 				D060805F2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift in Sources */,
+				D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */,
 				D06080612AD94808001A5749 /* ShowPrivateKeyMenuViewModel.swift in Sources */,
 				D0F62FBC2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift in Sources */,
 				D0F62FC82ACDFD330027EFE6 /* VaultSetupCongratsViewModel.swift in Sources */,
@@ -874,6 +887,7 @@
 				D060806E2AD986E2001A5749 /* ResetViewModel.swift in Sources */,
 				D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */,
 				D0EB4E0E2AC22A9B00EA83F9 /* HomeView.swift in Sources */,
+				D0825F6F2ADD746E006391D5 /* ExpertModeViewModel.swift in Sources */,
 				0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */,
 				0D8B4AA52A2632DC00E9E429 /* OnboardingDataModel.swift in Sources */,
 				0DA7B498299A37B500CEE722 /* Settings.swift in Sources */,
@@ -908,6 +922,7 @@
 				D0825F612ADAE0EF006391D5 /* SettingsView.swift in Sources */,
 				D07C9C7F2AD86317005F5917 /* TokenCell.swift in Sources */,
 				D0825F652ADAE595006391D5 /* SettingsToggle.swift in Sources */,
+				D0825F712ADD7BCC006391D5 /* SatoChoiceSelector.swift in Sources */,
 				D0EB4E062AC2008F00EA83F9 /* OnboardingContainerViewModel.swift in Sources */,
 				D06080562AD93786001A5749 /* UnsealConfirmationView.swift in Sources */,
 				D0E665762ADAC7CB00703A8F /* TransferOwnershipView.swift in Sources */,
@@ -931,6 +946,7 @@
 				0DB03FCA29A7F813002E56BD /* ShowLogs.swift in Sources */,
 				0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */,
 				D0C4839B2AD8BC370085F4B9 /* UnsealViewModel.swift in Sources */,
+				D0825F6D2ADD7466006391D5 /* ExpertModeView.swift in Sources */,
 				D06080652AD94ED2001A5749 /* Views.swift in Sources */,
 				D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */,
 				0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */,

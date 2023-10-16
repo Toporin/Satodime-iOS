@@ -14,6 +14,7 @@ final class VaultSetupCreateViewModel: BaseViewModel {
     @Published var selectedCrypto: CryptoCurrency
     @Published var isExpertModeActivated = false
     @Published var isNextViewActive = false
+    @Published var isExpertModeViewActive = false
     @Published var vaultCards: VaultsList
     var index: Int
     
@@ -32,6 +33,11 @@ final class VaultSetupCreateViewModel: BaseViewModel {
     }
     
     func sealSlot() {
+        guard !self.isExpertModeActivated else {
+            self.isExpertModeViewActive = true
+            return
+        }
+        
         print("Will create for index : \(self.index)")
         self.cardService.sealVault(vaultIndex: self.index, for: self.selectedCrypto, useTestNet: false, contractBytes: [UInt8](), tokenidBytes: [UInt8](), entropyBytes: [UInt8](), completion: { [weak self] result in
             guard let self = self else { return }
@@ -51,7 +57,6 @@ final class VaultSetupCreateViewModel: BaseViewModel {
                 break
             }
         })
-        
     }
     
 }
