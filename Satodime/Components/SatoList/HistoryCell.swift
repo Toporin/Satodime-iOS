@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HistoryCellModel: Identifiable {
+struct HistoryCellViewModel: Identifiable {
     let id = UUID()
     let event: String
     let date: String
@@ -17,18 +17,25 @@ struct HistoryCellModel: Identifiable {
 
 struct HistoryCell: View {
     // MARK: - Properties
-    let historyItem: HistoryCellModel
+    let historyItem: HistoryCellViewModel
 
     var body: some View {
         HStack {
-            Image(systemName: "clock.arrow.circlepath")
-                .resizable()
-                .frame(width: 50, height: 50)
+            ZStack {
+                Circle()
+                    .fill(Color.blue)
+                    .frame(width: 50, height: 50)
+                
+                Image("ic_history_received")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 24, height: 24)
+            }
             
             VStack(alignment: .leading) {
-                Text(historyItem.event)
+                SatoText(text: historyItem.event, style: .subtitleBold)
                     .font(.headline)
-                Text(historyItem.date)
+                SatoText(text: historyItem.date, style: .lightSubtitle)
                     .font(.subheadline)
             }
             .padding(.leading, 10)
@@ -36,9 +43,9 @@ struct HistoryCell: View {
             Spacer()
             
             VStack(alignment: .trailing) {
-                Text(historyItem.detail)
+                SatoText(text: historyItem.detail, style: .lightSubtitle)
                     .font(.headline)
-                Text(historyItem.status)
+                SatoText(text: historyItem.status, style: .lightSubtitle)
                     .font(.subheadline)
             }
             .padding(.trailing, 10)

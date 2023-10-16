@@ -146,8 +146,16 @@ struct NFTListView: View {
 
 // MARK: - HistoryListView
 
+class HistoryListViewModel: ObservableObject {
+    @Published var cellViewModels = [HistoryCellViewModel]()
+    
+    func populateCellViewModels(from items: [HistoryCellViewModel]) {
+        self.cellViewModels = items
+    }
+}
+
 struct HistoryListView: View {
-    let historyItems = [HistoryCellModel(event: "EVENT", date: "DATE", detail: "DETAIL", status: "STATUS")]
+    let historyItems: [HistoryCellViewModel] = []
 
     var body: some View {
         List(historyItems, id: \.id) { historyItem in

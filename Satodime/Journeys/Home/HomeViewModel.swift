@@ -178,6 +178,7 @@ final class HomeViewModel: ObservableObject {
     @Published var cardStatus: CardStatusObservable = CardStatusObservable()
     @Published var nftListViewModel: NFTListViewModel = NFTListViewModel()
     @Published var tokenListViewModel: TokenListViewModel = TokenListViewModel()
+    @Published var historyListViewModel: HistoryListViewModel = HistoryListViewModel()
     
     var unsealViewModel: UnsealViewModel?
     var showPrivateKeyViewModel: ShowPrivateKeyMenuViewModel?
@@ -376,7 +377,7 @@ final class HomeViewModel: ObservableObject {
                     for tokenItem in assets.tokenList {
                         if let name = tokenItem["name"],
                            let tokenIconUrl = tokenItem["tokenIconUrl"],
-                           let contract = tokenItem["contract"] {
+                           let _ = tokenItem["contract"] {
                             let fiatBalance = viewModel.vaultItem.getTokenBalanceString(tokenData: tokenItem)
                             let cryptoBalance = viewModel.vaultItem.totalTokenValueInSecondCurrency
                             let tokenCellViewModel = TokenCellViewModel(
@@ -395,6 +396,8 @@ final class HomeViewModel: ObservableObject {
                     let tokenListViewModel = TokenListViewModel()
                     tokenListViewModel.populateCellViewModels(from: tokensList)
                     self.tokenListViewModel = tokenListViewModel
+                    
+                    let historyListViewModel = HistoryListViewModel()
                 }
             }
         case .emptyVault(_):

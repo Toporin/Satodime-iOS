@@ -363,29 +363,13 @@
 				0DA7B4A7299A38B500CEE722 /* Info.plist */,
 				0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */,
 				0DA7B4BE299A81D900CEE722 /* Localizable.strings */,
-				0DA7B492299A37B400CEE722 /* AcceptCard.swift */,
-				0DA7B485299A37B200CEE722 /* ActionParams.swift */,
+				D0825F6B2ADD12F5006391D5 /* Old */,
 				D0EB4E172AC24DF600EA83F9 /* AppDelegate.swift */,
 				0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */,
-				0DA7B491299A37B400CEE722 /* CardInfo.swift */,
-				0DA7B48F299A37B400CEE722 /* NfcReader.swift */,
-				0DA7B48B299A37B300CEE722 /* ResetSlot.swift */,
-				0DA7B486299A37B200CEE722 /* SealSlot.swift */,
-				0DA7B488299A37B200CEE722 /* Settings.swift */,
-				0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */,
-				0DA7B489299A37B300CEE722 /* ShowDetails.swift */,
-				0DA7B490299A37B400CEE722 /* SideMenu.swift */,
-				0DA7B494299A37B400CEE722 /* TransferCard.swift */,
-				0DA7B48E299A37B300CEE722 /* UnknownAction.swift */,
-				0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */,
-				0DA7B487299A37B200CEE722 /* Util.swift */,
-				0DA7B493299A37B400CEE722 /* VaultItem.swift */,
 				0DA7B45A299A365900CEE722 /* SatodimeApp.swift */,
-				0DA7B45C299A365900CEE722 /* ContentView.swift */,
 				0DA7B45E299A366200CEE722 /* Assets.xcassets */,
 				0DA7B460299A366200CEE722 /* Satodime.entitlements */,
 				0DA7B461299A366200CEE722 /* Preview Content */,
-				0DB03FC929A7F813002E56BD /* ShowLogs.swift */,
 				0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */,
 				0DB03FD529BB7192002E56BD /* ContractsFile.swift */,
 				0DB03FD729BB7204002E56BD /* ContractsCache.swift */,
@@ -508,6 +492,30 @@
 				D0825F692ADB629A006391D5 /* CardVaults.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D0825F6B2ADD12F5006391D5 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				0DA7B492299A37B400CEE722 /* AcceptCard.swift */,
+				0DA7B485299A37B200CEE722 /* ActionParams.swift */,
+				0DA7B491299A37B400CEE722 /* CardInfo.swift */,
+				0DA7B48F299A37B400CEE722 /* NfcReader.swift */,
+				0DA7B48B299A37B300CEE722 /* ResetSlot.swift */,
+				0DA7B486299A37B200CEE722 /* SealSlot.swift */,
+				0DA7B488299A37B200CEE722 /* Settings.swift */,
+				0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */,
+				0DA7B489299A37B300CEE722 /* ShowDetails.swift */,
+				0DA7B490299A37B400CEE722 /* SideMenu.swift */,
+				0DA7B494299A37B400CEE722 /* TransferCard.swift */,
+				0DA7B48E299A37B300CEE722 /* UnknownAction.swift */,
+				0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */,
+				0DA7B487299A37B200CEE722 /* Util.swift */,
+				0DA7B493299A37B400CEE722 /* VaultItem.swift */,
+				0DA7B45C299A365900CEE722 /* ContentView.swift */,
+				0DB03FC929A7F813002E56BD /* ShowLogs.swift */,
+			);
+			path = Old;
 			sourceTree = "<group>";
 		};
 		D0C483972AD8BC0F0085F4B9 /* Seal */ = {
