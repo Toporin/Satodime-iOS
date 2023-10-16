@@ -23,11 +23,14 @@ struct SatoToggle: View {
                 
                 Circle()
                     .frame(width: 16, height: 16)
-                    .foregroundColor(isOn ? .blue : Constants.Colors.viewBackground)
+                    .foregroundColor(isOn ? Constants.Colors.ledGreen : .black)
             }
             .onTapGesture {
                 self.isOn.toggle()
             }
+            
+            Spacer()
+                .frame(width: 18)
             
             SatoText(text: label, style: .subtitle)
             

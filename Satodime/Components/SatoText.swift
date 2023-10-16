@@ -9,19 +9,28 @@ import SwiftUI
 
 enum SatoTextStyle {
     case title
+    case lightTitle
     case subtitle
+    case lightSubtitle
+    case graySubtitle
+    case graySubtitle18
     case subtitleBold
     case viewTitle
     case cellTitle
     case slotTitle
     case addressText
     case balanceLarge
+    case cellSmallTitle
     
     var lineHeight: CGFloat {
         switch self {
         case .title:
             return 38
-        case .subtitle:
+        case .subtitle, .lightSubtitle:
+            return 20
+        case .graySubtitle:
+            return 20
+        case .graySubtitle18:
             return 20
         case .subtitleBold:
             return 20
@@ -35,6 +44,10 @@ enum SatoTextStyle {
             return 19
         case .balanceLarge:
             return 35
+        case .lightTitle:
+            return 26
+        case .cellSmallTitle:
+            return 16
         }
     }
     
@@ -44,6 +57,10 @@ enum SatoTextStyle {
             return 30
         case .subtitle:
             return 15
+        case .graySubtitle:
+            return 15
+        case .graySubtitle18, .lightSubtitle:
+            return 18
         case .subtitleBold:
             return 16
         case .viewTitle:
@@ -56,12 +73,16 @@ enum SatoTextStyle {
             return 14
         case .balanceLarge:
             return 28
+        case .lightTitle:
+            return 24
+        case .cellSmallTitle:
+            return 14
         }
     }
 
     var font: Font {
         switch self {
-        case .title, .cellTitle, .balanceLarge:
+        case .title, .cellTitle, .balanceLarge, .lightTitle, .cellSmallTitle:
             return .custom("Outfit-Medium", size: self.fontSize)
         case .subtitle:
             return .custom("OpenSans-variable", size: self.fontSize)
@@ -69,7 +90,7 @@ enum SatoTextStyle {
             return .custom("Poppins-ExtraBold", size: self.fontSize)
         case .subtitleBold:
             return .custom("Outfit-Bold", size: self.fontSize)
-        case .slotTitle:
+        case .slotTitle, .lightSubtitle, .graySubtitle, .graySubtitle18:
             return .custom("Outfit-ExtraLight", size: self.fontSize)
         case .addressText:
             return .custom("OpenSans-SemiBold", size: self.fontSize)
@@ -78,9 +99,9 @@ enum SatoTextStyle {
 
     var textColor: Color {
         switch self {
-        case .title:
+        case .title, .lightTitle:
             return .white
-        case .subtitle:
+        case .subtitle, .lightSubtitle:
             return .white
         case .subtitleBold:
             return .white
@@ -94,6 +115,10 @@ enum SatoTextStyle {
             return Constants.Colors.addressText
         case .balanceLarge:
             return .white
+        case .graySubtitle, .graySubtitle18:
+            return Constants.Colors.lightGray
+        case .cellSmallTitle:
+            return .white
         }
     }
 
@@ -101,7 +126,7 @@ enum SatoTextStyle {
         switch self {
         case .title, .subtitleBold:
             return .bold
-        case .subtitle, .cellTitle:
+        case .subtitle, .lightSubtitle, .cellTitle:
             return .regular
         case .viewTitle:
             return .bold
@@ -109,8 +134,10 @@ enum SatoTextStyle {
             return .ultraLight
         case .addressText:
             return .semibold
-        case .balanceLarge:
+        case .balanceLarge, .lightTitle, .cellSmallTitle:
             return .medium
+        case .graySubtitle, .graySubtitle18:
+            return .regular
         }
     }
 }
@@ -123,7 +150,7 @@ struct SatoText: View {
 
     var body: some View {
         Text(.init(text))
-            .font(style.font.weight(style.fontWeight))
+            .font(style.font)
             .lineSpacing(style.lineHeight - style.fontSize)
             .multilineTextAlignment(alignment)
             .foregroundColor(style.textColor)

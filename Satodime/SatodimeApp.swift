@@ -10,20 +10,10 @@ import SwiftUI
 @main
 struct SatodimeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @AppStorage(Constants.Storage.isFirstUse) var isFirstUse = true
     
     var body: some Scene {
         WindowGroup {
-            // TakeOwnershipView(viewModel: TakeOwnershipViewModel())
-             //ContentView()
-            HomeView(viewModel: HomeViewModel())
-            
-            /*if isFirstUse {
-                OnboardingContainerView(viewModel: OnboardingContainerViewModel())
-                // VaultSetupSelectChainView(viewModel: VaultSetupSelectChainViewModel())
-            } else {
-                HomeView(viewModel: HomeViewModel())
-            }*/
+            HomeView(viewModel: HomeViewModel(cardService: CardService(), coinService: CoinService()))
         }
     }
 }

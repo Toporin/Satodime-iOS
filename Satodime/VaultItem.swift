@@ -147,6 +147,16 @@ public struct VaultItem: Hashable {
         return statusString
     }
     
+    public func isInitialized() -> Bool {
+        let result = self.keyslotStatus.status != 0x00 || self.keyslotStatus.status != 0
+        return result
+    }
+    
+    public func isSealed() -> Bool {
+        return self.keyslotStatus.status == 0x01
+    }
+    
+    
     // TODO
     // coin info
     public func getPublicKeyString() -> String {
@@ -198,6 +208,11 @@ public struct VaultItem: Hashable {
         }
         balanceString += " " + self.getCoinDenominationString() + " " + self.getCoinValueInSecondCurrencyString()
         return balanceString
+    }
+    
+    public func getCoinShortBalanceString() -> String {
+        let result = " (\(self.coin.coinSymbol))"
+        return result
     }
     
     public func getCoinDenominationString() -> String {

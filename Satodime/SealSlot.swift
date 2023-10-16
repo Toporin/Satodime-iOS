@@ -214,7 +214,7 @@ struct SealSlot: View {
                                 // todo: check for error!
                                 if (true){
                                     print("Seal operation requested!")
-                                    let actionParams = ActionParams(index: index, action: "seal", coin: selectedBlockchain, asset: selectedAsset, useTestnet: useTestnet, contractBytes: contractBytes, tokenidBytes: tokenidBytes, entropyBytes: entropyBytes)
+                                    let actionParams = ActionParams(index: index, action: "seal", coinString: selectedBlockchain, assetString: selectedAsset, useTestnet: useTestnet, contractBytes: contractBytes, tokenidBytes: tokenidBytes, entropyBytes: entropyBytes)
                                     reader.scanForAction(actionParams: actionParams)
                                     self.presentationMode.wrappedValue.dismiss()
                                 } else {

@@ -17,6 +17,7 @@
 		<string>Outfit-Bold.ttf</string>
 		<string>Outfit-ExtraLight.ttf</string>
 		<string>OpenSans-SemiBold.ttf</string>
+		<string>Outfit-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

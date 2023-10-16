@@ -9,8 +9,14 @@ import Foundation
 import SwiftUI
 import SnapToScroll
 
+enum RefreshVaults {
+    case none
+    case clear
+}
+
 class ViewStackHandler: ObservableObject {
     @Published var navigationState: NavigationState = .goBackHome
+    @Published var refreshVaults: RefreshVaults = .none
 }
 
 enum NavigationState {
@@ -18,30 +24,60 @@ enum NavigationState {
     case onboarding
     case takeOwnership
     case vaultInitialization
+    case notAuthentic
+    case unseal
+    case privateKey
+    case reset
+    case menu
 }
 
 struct HomeView: View {
-    @ObservedObject var viewStackHandler: ViewStackHandler = ViewStackHandler()
     @ObservedObject var viewModel: HomeViewModel
+    @ObservedObject var viewStackHandler: ViewStackHandler
+    
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+        self.viewStackHandler = viewModel.viewStackHandler
+    }
+    
+    func buildEmptyCardView(id: Int) -> some View {
+        VaultCardEmpty(id: id) {
+            viewModel.emptyCardSealTapped(id: id)
+        }
+        .frame(width: 261, height: 197)
+        .snapAlignmentHelper(id: id)
+    }
+    
     
     var body: some View {
         NavigationView {
             ZStack {
                 Constants.Colors.viewBackground
                     .ignoresSafeArea()
+                
+                // TODO: Find gradient issue
+                /*VStack {
+                    Image("gradient_1")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height*0.8)
+                        .clipped()
+                        .ignoresSafeArea()
+                    Spacer()
+                }.frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height)*/
                 VStack {
                     HStack {
-                        SatoStatusView()
+                        SatoStatusView(cardStatus: self.viewModel.cardStatus)
                             .padding(.leading, 22)
                         
                         Spacer()
                         
-                        SatoText(text: viewModel.viewTitle, style: .viewTitle)
+                        SatoText(text: viewModel.viewTitle, style: .title)
                         
                         Spacer()
                         
                         Button(action: {
-                            
+                            viewModel.goToMenuView()
                         }) {
                             Image("ic_dots_vertical")
                                 .resizable()
@@ -54,73 +90,142 @@ struct HomeView: View {
                         .frame(height: 16)
                     
                     HStackSnap(alignment: .leading(20), spacing: 10) {
-                        ForEach(0..<viewModel.vaultCards.count) { i in
-                            let cardData = viewModel.vaultCards[i]
+                        ForEach(Array(viewModel.vaultCards.items.indices), id: \.self) { i in
+                            let cardData = viewModel.vaultCards.items[i]
                             switch cardData {
                             case .vaultCard(let vaultCardViewModel):
-                                VaultCard(
-                                    id: vaultCardViewModel.title,
-                                    addressText: vaultCardViewModel.addressText,
-                                    sealStatus: vaultCardViewModel.sealStatus,
-                                    imageName: vaultCardViewModel.imageName,
-                                    balanceTitle: vaultCardViewModel.balanceTitle,
-                                    balanceAmount: vaultCardViewModel.balanceAmount,
-                                    balanceCurrency: vaultCardViewModel.balanceCurrency
-                                )
-                                .frame(width: 261, height: 197)
-                                .snapAlignmentHelper(id: i)
-                            case .emptyVault(_):
-                                let currIndex = i
-                                VaultCardEmpty(id: i)
+                                VaultCard(viewModel: vaultCardViewModel, indexPosition: i)
                                     .frame(width: 261, height: 197)
                                     .snapAlignmentHelper(id: i)
+                            case .emptyVault(_):
+                                self.buildEmptyCardView(id: i)
                             }
                         }
                     } eventHandler: { event in
                         handleSnapToScrollEvent(event: event)
                     }
+                    .frame(height: 197)
                     
-                    Text("EndHomeView")
-            }
-            if viewStackHandler.navigationState == .onboarding {
-                NavigationLink("", destination: OnboardingContainerView(viewModel: OnboardingContainerViewModel()), isActive: .constant(isOnboarding())).hidden()
-            }
-            if viewStackHandler.navigationState == .takeOwnership {
-                NavigationLink("", destination: TakeOwnershipView(viewModel: TakeOwnershipViewModel()), isActive: .constant(isTakeOwnership())).hidden()
-            }
-            if viewStackHandler.navigationState == .vaultInitialization {
-                NavigationLink("", destination: VaultSetupSelectChainView(viewModel: VaultSetupSelectChainViewModel()), isActive: .constant(isVaultInitialization())).hidden()
-            }
+                    Spacer()
+                        .frame(height: 16)
+                    
+                    if !viewModel.hasReadCard() {
+                        ScanButton {
+                            viewModel.startReadingCard()
+                        }
+                    }
+                    
+                    Spacer()
+                        .frame(height: 16)
+                    
+                    HStack(spacing: 18) {
+                        if viewModel.isUnsealButtonVisible() {
+                            UnsealButton {
+                                viewModel.goToUnsealSlot()
+                            }
+                        }
+                        
+                        if viewModel.isCurrentCardUnsealed() {
+                            ShowKeyButton {
+                                viewModel.goToShowKey()
+                            }
+                            
+                            ResetButton {
+                                viewModel.reset()
+                            }
+                        }
+                    }
+                    
+                    Spacer()
+                        .frame(height: 16)
+                    
+                    if viewModel.hasReadCard() && !viewModel.vaultCards.items.isEmpty {
+                        switch viewModel.vaultCards.items[viewModel.currentSlotIndex] {
+                        case .emptyVault(_):
+                            Spacer()
+                        case .vaultCard(_):
+                            SatoTabView(nftListViewModel: self.viewModel.nftListViewModel,
+                                        tokenListViewModel: self.viewModel.tokenListViewModel)
+                            .padding([.leading, .trailing], 13)
+                        }
+                    } else {
+                        Spacer()
+                    }
+                }
+                
+                if viewModel.viewStackHandler.navigationState == .onboarding {
+                    NavigationLink("", destination: OnboardingContainerView(viewModel: OnboardingContainerViewModel()), isActive: .constant(isOnboarding())).hidden()
+                }
+                if viewModel.viewStackHandler.navigationState == .notAuthentic {
+                    NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: .notAuthentic)), isActive: .constant(isNotAuthentic())).hidden()
+                }
+                if viewModel.viewStackHandler.navigationState == .takeOwnership {
+                    NavigationLink("", destination: TakeOwnershipView(viewModel: TakeOwnershipViewModel(cardService: CardService())), isActive: .constant(isTakeOwnership())).hidden()
+                }
+                if viewModel.viewStackHandler.navigationState == .vaultInitialization {
+                    NavigationLink("", destination: VaultSetupSelectChainView(viewModel: VaultSetupSelectChainViewModel(index: viewModel.currentSlotIndex, vaultCards: viewModel.vaultCards)), isActive: .constant(isVaultInitialization())).hidden()
+                }
+                if viewModel.viewStackHandler.navigationState == .menu {
+                    NavigationLink("", destination: MenuView(viewModel: MenuViewModel(cardVaults: viewModel.cardVaults)), isActive: .constant(isMenu())).hidden()
+                }
+                if viewModel.viewStackHandler.navigationState == .unseal, let viewModel = self.viewModel.unsealViewModel {
+                    NavigationLink("", destination: UnsealView(viewModel: viewModel), isActive: .constant(isUnseal())).hidden()
+                }
+                if viewModel.viewStackHandler.navigationState == .privateKey, let viewModel = self.viewModel.showPrivateKeyViewModel {
+                    NavigationLink("", destination: ShowPrivateKeyMenuView(viewModel: viewModel), isActive: .constant(isPrivateKey())).hidden()
+                }
+                if viewModel.viewStackHandler.navigationState == .reset, let viewModel = self.viewModel.resetViewModel {
+                    NavigationLink("", destination: ResetView(viewModel: viewModel), isActive: .constant(isReset())).hidden()
+                }
             }
         }
-        .environmentObject(viewStackHandler)
-        .onAppear(perform: evaluateNavigation)
+        .environmentObject(viewModel.viewStackHandler)
+        .onAppear {
+            viewModel.evaluateBaseNavigation()
+        }
     }
     
     func handleSnapToScrollEvent(event: SnapToScrollEvent) {
         switch event {
             case let .didLayout(layoutInfo: layoutInfo):
-                print("\(layoutInfo.keys.count) items layed out")
+            print("\(layoutInfo.keys.count) items layed out")
             case let .swipe(index: index):
-                print("swiped to index: \(index)")
+            viewModel.currentSlotIndex = index
+            viewModel.populateTabs()
+            print("swiped to index: \(index)")
         }
     }
 
     func isOnboarding() -> Bool {
-        viewStackHandler.navigationState == .onboarding
+        viewModel.viewStackHandler.navigationState == .onboarding
     }
 
     func isVaultInitialization() -> Bool {
-        viewStackHandler.navigationState == .vaultInitialization
+        viewModel.viewStackHandler.navigationState == .vaultInitialization
+    }
+    
+    func isMenu() -> Bool {
+        viewModel.viewStackHandler.navigationState == .menu
+    }
+    
+    func isUnseal() -> Bool {
+        viewModel.viewStackHandler.navigationState == .unseal
+    }
+    
+    func isReset() -> Bool {
+        viewModel.viewStackHandler.navigationState == .reset
+    }
+    
+    func isPrivateKey() -> Bool {
+        viewModel.viewStackHandler.navigationState == .privateKey
     }
     
     func isTakeOwnership() -> Bool {
-        viewStackHandler.navigationState == .takeOwnership
+        viewModel.viewStackHandler.navigationState == .takeOwnership
     }
-
-    func isFirstUse() -> Bool {
-        // return UserDefaults.standard.bool(forKey: "FirstUse")
-        return false
+    
+    func isNotAuthentic() -> Bool {
+        viewModel.viewStackHandler.navigationState == .notAuthentic
     }
     
     func hasNoOwnership() -> Bool {
@@ -129,18 +234,5 @@ struct HomeView: View {
 
     func isVaultInitialized() -> Bool {
         return UserDefaults.standard.bool(forKey: "VaultInitialized")
-    }
-
-    func evaluateNavigation() {
-        if isFirstUse() {
-            viewStackHandler.navigationState = .onboarding
-        } else if hasNoOwnership() {
-            viewStackHandler.navigationState = .takeOwnership
-        }
-        else if !isVaultInitialized() {
-            viewStackHandler.navigationState = .vaultInitialization
-        } else {
-            viewStackHandler.navigationState = .goBackHome
-        }
     }
 }

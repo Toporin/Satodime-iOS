@@ -22,7 +22,7 @@ struct VaultSetupCreateView: View {
                 Spacer()
                     .frame(height: 37)
                 
-                SatoText(text: viewModel.subtitle, style: .subtitle)
+                SatoText(text: viewModel.subtitle, style: .graySubtitle)
                 
                 Spacer()
                     .frame(height: 37)
@@ -66,8 +66,8 @@ struct VaultSetupCreateView: View {
                     EmptyView()
                 }
                 
-                SatoButton(text: viewModel.continueButtonTitle, style: .confirm) {
-                    viewModel.isNextViewActive = true
+                SatoButton(staticWidth: 177, text: viewModel.continueButtonTitle, style: .confirm) {
+                    viewModel.sealSlot()
                 }
                 
                 Spacer()

@@ -8,7 +8,29 @@
 import Foundation
 import SwiftUI
 
+enum ButtonStyle {
+    case confirm
+    case inform
+    case danger
+
+    var backgroundColor: Color {
+        switch self {
+        case .confirm:
+            return Constants.Colors.confirmButtonBackground
+        case .inform:
+            return Constants.Colors.informButtonBackground
+        case .danger:
+            return Constants.Colors.ledRed
+        }
+    }
+
+    var cornerRadius: CGFloat {
+        return 20
+    }
+}
+
 struct SatoButton: View {
+    let staticWidth: CGFloat
     var text: String
     var style: ButtonStyle
     var horizontalPadding: CGFloat = Constants.Dimensions.defaultMargin
@@ -22,27 +44,9 @@ struct SatoButton: View {
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.horizontal, horizontalPadding)
-                .frame(height: 40)
+                .frame(width: staticWidth, height: 40)
                 .background(style.backgroundColor)
                 .cornerRadius(20)
         }
-    }
-}
-
-enum ButtonStyle {
-    case confirm
-    case inform
-
-    var backgroundColor: Color {
-        switch self {
-        case .confirm:
-            return Constants.Colors.confirmButtonBackground
-        case .inform:
-            return Constants.Colors.informButtonBackground
-        }
-    }
-
-    var cornerRadius: CGFloat {
-        return 20
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct CryptoSelectionCell: View {
+    // MARK: - Properties
     let crypto: CryptoCurrency
 
     var body: some View {

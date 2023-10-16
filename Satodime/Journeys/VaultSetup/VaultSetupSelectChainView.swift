@@ -11,6 +11,7 @@ import SwiftUI
 struct VaultSetupSelectChainView: View {
     // MARK: - Properties
     @ObservedObject var viewModel: VaultSetupSelectChainViewModel
+    @EnvironmentObject var viewStackHandler: ViewStackHandler
     
     // MARK: - View
     var body: some View {
@@ -28,7 +29,7 @@ struct VaultSetupSelectChainView: View {
                 
                 List(CryptoCurrency.allCases, id: \.id) { crypto in
                     ZStack {
-                        NavigationLink(destination: VaultSetupCreateView(viewModel: VaultSetupCreateViewModel(selectedCrypto: crypto))) {
+                        NavigationLink(destination: VaultSetupCreateView(viewModel: VaultSetupCreateViewModel(cardService: CardService(), selectedCrypto: crypto, index: viewModel.index, vaultCards: viewModel.vaultCards))) {
                             EmptyView()
                         }
                         CryptoSelectionCell(crypto: crypto)
@@ -42,6 +43,14 @@ struct VaultSetupSelectChainView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(leading: Button(action: {
+            self.viewModel.navigateTo(destination: .goBackHome)
+        }) {
+            Image("ic_flipback")
+        })
+        .onAppear {
+            viewModel.viewStackHandler = viewStackHandler
+        }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 SatoText(text: viewModel.title, style: .viewTitle)

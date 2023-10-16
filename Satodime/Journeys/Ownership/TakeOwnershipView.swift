@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TakeOwnershipView: View {
     // MARK: - Properties
+    @EnvironmentObject var viewStackHandler: ViewStackHandler
     @ObservedObject var viewModel: TakeOwnershipViewModel
     
     // MARK: - View
@@ -27,13 +28,13 @@ struct TakeOwnershipView: View {
                     .frame(height: 37)
                 SatoText(text: viewModel.subtitle, style: .subtitle)
                 Spacer()
-                SatoButton(text: "Accept", style: .confirm, horizontalPadding: 60) {
-                    
+                SatoButton(staticWidth: 196, text: "Accept", style: .confirm, horizontalPadding: 60) {
+                    viewModel.acceptCard()
                 }
                 Spacer()
                     .frame(height: 20)
-                SatoButton(text: "Cancel", style: .inform, horizontalPadding: 30) {
-                    
+                SatoButton(staticWidth: 222, text: "Cancel", style: .inform, horizontalPadding: 30) {
+                    viewModel.cancel()
                 }
                 Spacer()
                     .frame(height: 49)
@@ -45,6 +46,9 @@ struct TakeOwnershipView: View {
             ToolbarItem(placement: .principal) {
                 SatoText(text: viewModel.title, style: .viewTitle)
             }
+        }
+        .onAppear {
+            viewModel.viewStackHandler = viewStackHandler
         }
     }
 }

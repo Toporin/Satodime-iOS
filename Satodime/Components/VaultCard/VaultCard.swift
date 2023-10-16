@@ -9,59 +9,60 @@ import Foundation
 import SwiftUI
 
 struct VaultCard: View {
-    let id: String
-    let addressText: String
-    let sealStatus: SealStatus
-    let imageName: String
-    let balanceTitle: String
-    let balanceAmount: String
-    let balanceCurrency: String
+    // MARK: - Properties
+    @StateObject var viewModel: VaultCardViewModel
+    let indexPosition: Int
+    var useFullWidth: Bool = false
 
     var body: some View {
         ZStack {
-            Image("bg_vault_card")
+            Image(viewModel.cardBackground)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 261, height: 197)
-                .clipped()
+                .aspectRatio(contentMode: .fill)
+                .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.black.opacity(0.1))
+                )
             
             RoundedRectangle(cornerRadius: 20)
-                .foregroundColor(Color.black.opacity(0.7))
-                .frame(width: 261, height: 197)
+                .foregroundColor(Color.black.opacity(0.1))
+                .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
             
             VStack {
                 HStack {
-                    SatoText(text: "0\(id)", style: .slotTitle)
-                    
+                    SatoText(text: viewModel.positionText, style: .slotTitle)
                     Spacer()
-                    
-                    AddressView(text: addressText) {
-                        
+                    AddressView(text: viewModel.addressText) {
+                        UIPasteboard.general.string = viewModel.addressText
                     }
                 }
                 .padding(.top, 20)
                 
                 Spacer()
-                    .frame(height: 10)
                 
-                SealStatusView(status: sealStatus)
+                SealStatusView(status: viewModel.sealStatus)
                 
                 Spacer()
                 
                 HStack {
-                    Image(imageName)
+                    Image(viewModel.imageName)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 26, height: 26)
                         .foregroundColor(.white)
-                    
                     Spacer()
-                    
-                    BalanceView(title: balanceTitle, balance: balanceAmount, cryptoBalance: balanceCurrency)
-                }.padding(.bottom, 20)
-            
-            }.padding(20)
+                    BalanceView(title: viewModel.balanceTitle, balance: viewModel.fiatBalance, cryptoBalance: viewModel.cryptoBalance)
+                }
+                .padding(.bottom, 20)
+            }
+            .padding(20)
         }
+        .onAppear {
+            viewModel.setIndexId(index: indexPosition)
+        }
+        .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
-

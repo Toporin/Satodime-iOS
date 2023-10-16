@@ -45,8 +45,8 @@ struct OnboardingContainerView: View {
             }
             
             if viewModel.isLastPage {
-                SatoButton(text: "Start", style: .confirm, horizontalPadding: 60) {
-                    self.viewStackHandler.navigationState = .goBackHome
+                SatoButton(staticWidth: 177, text: viewModel.startButtonTitle, style: .confirm, horizontalPadding: 60) {
+                    self.viewModel.completeOnboarding()
                 }
                 .padding(.bottom, Constants.Dimensions.defaultBottomMargin)
             } else {
@@ -62,6 +62,8 @@ struct OnboardingContainerView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        // .ignoresSafeArea() TODO: Find a solution about the backgrounds not displayed correctly
+        .onAppear {
+            viewModel.viewStackHandler = viewStackHandler
+        }
     }
 }

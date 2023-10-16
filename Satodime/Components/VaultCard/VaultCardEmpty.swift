@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 struct VaultCardEmpty: View {
+    // MARK: - Properties
     let id: Int
+    var action: () -> Void
     
     var body: some View {
         ZStack {
@@ -28,7 +30,7 @@ struct VaultCardEmpty: View {
             VStack {
                 Spacer()
                 Button(action: {
-                    
+                    action()
                 }) {
                     Image("ic_plus_circle")
                         .resizable()

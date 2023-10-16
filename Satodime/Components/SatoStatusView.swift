@@ -8,12 +8,36 @@
 import Foundation
 import SwiftUI
 
+enum CardReadState {
+    case none
+    case valid
+    case invalid
+}
+
+class CardStatusObservable: ObservableObject {
+    @Published var status: CardReadState = .none
+    func cardStatusImage() -> String {
+        switch status {
+        case .none:
+            return ""
+        case .valid:
+            return "ic_circle_valid"
+        case .invalid:
+            return "ic_circle_invalid"
+        }
+    }
+}
+
 struct SatoStatusView: View {
+    @ObservedObject var cardStatus: CardStatusObservable
+    
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
-            Image("ic_circle_valid")
-                .resizable()
-                .frame(width: 6, height: 6)
+            if cardStatus.status != .none {
+                Image(cardStatus.cardStatusImage())
+                    .resizable()
+                    .frame(width: 6, height: 6)
+            }
             
             Image("ic_sato_small")
                 .resizable()

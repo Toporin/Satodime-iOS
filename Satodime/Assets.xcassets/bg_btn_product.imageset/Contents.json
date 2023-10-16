@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "bg_btn_product.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -28,7 +28,7 @@ struct VaultSetupCongratsView: View {
                 Spacer()
                     .frame(height: 37)
                 
-                SatoText(text: viewModel.subtitle, style: .subtitle)
+                SatoText(text: viewModel.subtitle, style: .graySubtitle)
                 
                 Spacer()
                     .frame(height: 25)
@@ -56,11 +56,11 @@ struct VaultSetupCongratsView: View {
                 
                 Spacer()
                 
-                SatoText(text: viewModel.informationText, style: .subtitle)
+                SatoText(text: viewModel.informationText, style: .graySubtitle)
                 
                 Spacer()
                 
-                SatoButton(text: viewModel.continueButtonTitle, style: .confirm) {
+                SatoButton(staticWidth: 222, text: viewModel.continueButtonTitle, style: .confirm) {
                     viewStackHandler.navigationState = .goBackHome
                 }
                 

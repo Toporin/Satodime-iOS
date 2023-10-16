@@ -46,11 +46,11 @@ public struct ActionParams {
         self.action = action
     }
     
-    init(index: UInt8, action: String, coin: String, asset: String, useTestnet: Bool, contractBytes: [UInt8], tokenidBytes: [UInt8], entropyBytes: [UInt8]){
+    init(index: UInt8, action: String, coinString: String, assetString: String, useTestnet: Bool, contractBytes: [UInt8], tokenidBytes: [UInt8], entropyBytes: [UInt8]){
         self.index = index
         self.action = action
-        self.coinString = coin
-        self.assetString = asset
+        self.coinString = coinString
+        self.assetString = assetString
         self.useTestnet = useTestnet
         self.contractBytes = contractBytes
         self.tokenidBytes = tokenidBytes

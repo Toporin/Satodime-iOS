@@ -255,6 +255,9 @@ class NfcReader: ObservableObject {
                 do {
                     let rapdu = try cmdSet.satodimeSealKey(keyNbr: actionParams.index, entropyUser: actionParams.entropyBytes).checkOK()
                     print("SealSlot rapdu: \(rapdu)")
+                    print("***SealSlot***")
+                    print("tokenidBytes : \(actionParams.tokenidBytes)")
+                    print("contractBytes : \(actionParams.contractBytes)")
                     let rapdu2 = try cmdSet.satodimeSetKeyslotStatusPart0(keyNbr: actionParams.index, RFU1: 0x00, RFU2: 0x00, keyAsset: actionParams.getAssetByte(), keySlip44: actionParams.getSlip44(), keyContract: actionParams.contractBytes, keyTokenid: actionParams.tokenidBytes).checkOK()
                     print("setKeyslotStatus rapdu: \(rapdu)")
                     // partially update status

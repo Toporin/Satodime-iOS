@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-final class VaultSetupCongratsViewModel: ObservableObject {
+final class VaultSetupCongratsViewModel: BaseViewModel {
     // MARK: - Properties
     @Published var selectedCrypto: CryptoCurrency
     @Published var isNextViewActive = false
@@ -16,7 +16,7 @@ final class VaultSetupCongratsViewModel: ObservableObject {
     // MARK: - Literals
     let title = "Congrats!"
     let subtitle = "Your vault has been successfully created and sealed."
-    let informationText = "Remember that your private keys will be accessible once you’ve unsealed your vault."
+    let informationText = "Remember that your **private keys** will be accessible once you’ve **unsealed** your **vault**."
     let continueButtonTitle = "Show my vault"
     
     init(selectedCrypto: CryptoCurrency) {

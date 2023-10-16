@@ -55,7 +55,6 @@ struct ShowDetails: View {
             // token
             if let tokenList = item.tokenList {
                 CustomGroup(title: "token list") {
-                    //Text("token list size: \(tokenList.count)")
                     if let tokenValue = item.totalTokenValueInSecondCurrency {
                         if let currency = item.selectedSecondCurrency {
                             Text("token value: \(tokenValue) \(currency)")
