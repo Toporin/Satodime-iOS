@@ -25,11 +25,14 @@ struct Constants {
         static let darkLedGreen = Color(hex: 0x24B59B)
         static let separator = Color(hex: 0x585D72)
         static let ledRed = Color(hex: 0xFF2D52)
+        static let ledBlue = Color(hex: 0x65BBE0)
         static let lightGray = Color(hex: 0xFBFBFB)
         static let grayMenuButton = Color(hex: 0x65889C)
         static let greenMenuButton = Color(hex: 0x5FB4B4)
         static let blueMenuButton = Color(hex: 0x485979)
         static let darkBlueMenuButton = Color(hex: 0x2D2F46)
+        static let unsealTextColor = Color(hex: 0x9F76A1)
+        static let resetTextColor = Color(hex: 0xFF2D52)
     }
     
     // MARK: - Dimensions

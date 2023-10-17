@@ -147,12 +147,13 @@ struct SatoText: View {
     var text: String
     var style: SatoTextStyle
     var alignment: TextAlignment = .center
+    var forcedColor: Color? = nil
 
     var body: some View {
         Text(.init(text))
             .font(style.font)
             .lineSpacing(style.lineHeight - style.fontSize)
             .multilineTextAlignment(alignment)
-            .foregroundColor(style.textColor)
+            .foregroundColor(forcedColor ?? style.textColor)
     }
 }

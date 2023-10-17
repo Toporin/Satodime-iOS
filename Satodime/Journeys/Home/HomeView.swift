@@ -55,16 +55,18 @@ struct HomeView: View {
                 Constants.Colors.viewBackground
                     .ignoresSafeArea()
                 
-                // TODO: Find gradient issue
-                /*VStack {
-                    Image("gradient_1")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height*0.8)
-                        .clipped()
-                        .ignoresSafeArea()
-                    Spacer()
-                }.frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height)*/
+                if viewModel.hasReadCard() {
+                    VStack {
+                        Image(viewModel.gradientToDisplay())
+                            .resizable()
+                            .scaledToFill()
+                            .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height*0.5)
+                            .clipped()
+                            .ignoresSafeArea()
+                        Spacer()
+                    }
+                }
+
                 VStack {
                     HStack {
                         SatoStatusView(cardStatus: self.viewModel.cardStatus) {
@@ -97,6 +99,7 @@ struct HomeView: View {
                             switch cardData {
                             case .vaultCard(let vaultCardViewModel):
                                 VaultCard(viewModel: vaultCardViewModel, indexPosition: i)
+                                    .shadow(radius: 10)
                                     .frame(width: 261, height: 197)
                                     .snapAlignmentHelper(id: i)
                             case .emptyVault(_):

@@ -73,6 +73,19 @@ final class HomeViewModel: ObservableObject {
         return result
     }
     
+    func gradientToDisplay() -> String {
+        switch currentSlotIndex {
+        case 0:
+            return "gradient_1"
+        case 1:
+            return "gradient_2"
+        case 2:
+            return "gradient_3"
+        default:
+            return "gradient_1"
+        }
+    }
+    
     func hasReadCard() -> Bool {
         return !self.vaultCards.items.isEmpty
     }
