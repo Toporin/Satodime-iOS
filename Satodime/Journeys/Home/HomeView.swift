@@ -48,7 +48,6 @@ struct HomeView: View {
         .snapAlignmentHelper(id: id)
     }
     
-    
     var body: some View {
         NavigationView {
             ZStack {

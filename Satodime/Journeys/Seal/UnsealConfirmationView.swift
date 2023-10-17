@@ -19,6 +19,10 @@ struct UnsealConfirmationView: View {
             Constants.Colors.viewBackground
                 .ignoresSafeArea()
             
+            RadialGradient(gradient: Gradient(colors: [Constants.Colors.errorViewBackground, Constants.Colors.errorViewBackground.opacity(0)]), center: .center, startRadius: 10, endRadius: 280)
+                            .position(x: 120, y: 340)
+                            .ignoresSafeArea()
+            
             VStack {
                 Spacer()
                     .frame(height: 37)
@@ -34,6 +38,7 @@ struct UnsealConfirmationView: View {
                     .frame(height: 58)
                 
                 VaultCard(viewModel: viewModel.vaultCardViewModel, indexPosition: viewModel.indexPosition, useFullWidth: true)
+                    .shadow(radius: 10)
                 
                 Spacer()
                     .frame(height: 62)

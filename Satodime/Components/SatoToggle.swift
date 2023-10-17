@@ -18,12 +18,10 @@ struct SatoToggle: View {
             
             ZStack {
                 Circle()
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(.white)
-                
-                Circle()
-                    .frame(width: 16, height: 16)
-                    .foregroundColor(isOn ? Constants.Colors.ledGreen : .black)
+                    .strokeBorder(Color.white, lineWidth: 2)
+                    .background(isOn ? Constants.Colors.ledGreen : .clear)
+                    .clipShape(Circle())
+                    .frame(width: 18, height: 18)
             }
             .onTapGesture {
                 self.isOn.toggle()

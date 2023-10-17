@@ -21,7 +21,7 @@ final class VaultSetupCreateViewModel: BaseViewModel {
     // MARK: - Literals
     let title = "Create your vault"
     let subtitle = "You are about to create and seal a vault. A new key pair will be generated automatically."
-    let informationText = "Once the **vault** has been generated, the corresponding **private** **key** is hidden in the **Satodime** **chip’s** **memory**."
+    let informationText = "Once the **vault** has been generated,\nthe corresponding **private** **key** is\nhidden in the **Satodime** **chip’s** **memory**."
     let activateExpertModeText = "Activate the expert mode"
     let continueButtonTitle = "Create and Seal"
     

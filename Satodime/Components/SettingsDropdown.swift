@@ -19,6 +19,9 @@ struct SelectionSheet: View {
                 .ignoresSafeArea()
             
             VStack(alignment: .leading) {
+                Spacer()
+                    .frame(height: 37)
+                
                 ForEach(choices, id: \.self) { choice in
                     Button(action: {
                         selectionHandler(choice)

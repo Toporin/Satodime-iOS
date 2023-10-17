@@ -46,7 +46,7 @@ class MenuViewModel: BaseViewModel {
     func onSettings() {
         self.shouldShowSettings = true
     }
-    
+        
     func openURL(_ satochipURL: SatochipURL) {
         guard let url = satochipURL.url else {
             print("Invalid URL")

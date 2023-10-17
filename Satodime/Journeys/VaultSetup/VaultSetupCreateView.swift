@@ -47,7 +47,10 @@ struct VaultSetupCreateView: View {
                 Spacer()
                     .frame(height: 65)
                 
-                InfoBox(text: viewModel.informationText)
+                SatoText(text: viewModel.informationText, style: .graySubtitle)
+                    .frame(maxWidth: .infinity, minHeight: 91)
+                    .background(Constants.Colors.cellBackground)
+                    .cornerRadius(20)
                 
                 Spacer()
                     .frame(height: 64)

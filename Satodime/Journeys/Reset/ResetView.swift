@@ -29,6 +29,7 @@ struct ResetView: View {
                     .frame(height: 29)
                 
                 VaultCard(viewModel: viewModel.vaultCardViewModel, indexPosition: viewModel.indexPosition, useFullWidth: true)
+                    .shadow(radius: 10)
                 
                 Spacer()
                     .frame(height: 27)

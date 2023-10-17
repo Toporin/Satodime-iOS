@@ -28,8 +28,11 @@ final class HomeViewModel: ObservableObject {
     private func observeStack() {
         viewStackHandler.$refreshVaults
             .sink { [weak self] newValue in
+                guard let self = self else { return }
                 if newValue == .clear {
-                    self?.vaultCards = VaultsList(items: [])
+                    DispatchQueue.main.async {
+                        self.vaultCards = VaultsList(items: [])
+                    }
                 }
             }
             .store(in: &cancellables)
@@ -43,7 +46,7 @@ final class HomeViewModel: ObservableObject {
     }
     @Published var currentSlotIndex: Int = 0 {
         didSet {
-            self.checkForNFTTab()
+            self.checkNFTTabCanBeEnabled()
         }
     }
     @Published var cardStatus: CardStatusObservable = CardStatusObservable()
@@ -74,6 +77,14 @@ final class HomeViewModel: ObservableObject {
     }
     
     func gradientToDisplay() -> String {
+        guard !self.vaultCards.items.isEmpty else { return "" }
+        switch self.vaultCards.items[currentSlotIndex] {
+        case .emptyVault(_):
+            return ""
+        default:
+            break
+        }
+        
         switch currentSlotIndex {
         case 0:
             return "gradient_1"
@@ -110,7 +121,7 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
-    private func checkForNFTTab() {
+    private func checkNFTTabCanBeEnabled() {
         guard !self.vaultCards.items.isEmpty else { return }
         let item = self.vaultCards.items[self.currentSlotIndex]
         switch item {
@@ -177,17 +188,14 @@ final class HomeViewModel: ObservableObject {
     func startReadingCard() {
         self.cardService.getCardActionStateStatus { [weak self] status in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.cardStatus.status = .valid
-            }
             switch status {
             case .unknown:
                 break
-            case .readingError(error: let error):
+            case .readingError(error: _):
                 DispatchQueue.main.async {
                     self.cardStatus.status = .invalid
                 }
-            case .silentError(error: let error):
+            case .silentError(error: _):
                 break
             case .notAuthentic:
                 self.navigateTo(destination: .notAuthentic)
@@ -214,8 +222,11 @@ final class HomeViewModel: ObservableObject {
             case .noVault:
                 self.navigateTo(destination: .vaultInitialization)
             case .hasVault(vaults: let vaults):
-                self.constructVaultsList(with: vaults)
-            case .sealed(result: let result):
+                DispatchQueue.main.async {
+                    self.cardStatus.status = .valid
+                    self.constructVaultsList(with: vaults)
+                }
+            case .sealed(result: _):
                 break
             }
         }
@@ -236,27 +247,27 @@ final class HomeViewModel: ObservableObject {
     // MARK: - Data construction
     
     private func constructVaultsList(with data: CardVaults) {
-        self.cardVaults = data
-        self.vaultCards = VaultsList(items: [])
-        self.nftListViewModel = NFTListViewModel()
-        self.tokenListViewModel = TokenListViewModel()
-        
-        var vaults: [VaultCardViewModelType] = []
-        
-        for vault in data.vaults {
-            if vault.isInitialized() {
-                let viewModel = VaultCardViewModel(walletAddress: vault.address, vaultItem: vault, coinService: CoinService())
-                vaults.append(.vaultCard(viewModel))
-            } else {
-                let viewModel = EmptyVaultViewModel(vaultItem: vault)
-                vaults.append(.emptyVault(viewModel))
-            }
-        }
-        
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            
+            self.cardVaults = data
+            self.nftListViewModel = NFTListViewModel()
+            self.tokenListViewModel = TokenListViewModel()
+            
+            var vaults: [VaultCardViewModelType] = []
+            
+            for vault in data.vaults {
+                if vault.isInitialized() {
+                    let viewModel = VaultCardViewModel(walletAddress: vault.address, vaultItem: vault, coinService: CoinService())
+                    vaults.append(.vaultCard(viewModel))
+                } else {
+                    let viewModel = EmptyVaultViewModel(vaultItem: vault)
+                    vaults.append(.emptyVault(viewModel))
+                }
+            }
+            
             self.vaultCards = VaultsList(items: vaults)
-            self.checkForNFTTab()
+            self.checkNFTTabCanBeEnabled()
         }
     }
     
