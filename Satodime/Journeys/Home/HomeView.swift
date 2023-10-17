@@ -67,8 +67,10 @@ struct HomeView: View {
                 }.frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height)*/
                 VStack {
                     HStack {
-                        SatoStatusView(cardStatus: self.viewModel.cardStatus)
-                            .padding(.leading, 22)
+                        SatoStatusView(cardStatus: self.viewModel.cardStatus) {
+                            self.viewModel.startReadingCard()
+                        }
+                        .padding(.leading, 22)
                         
                         Spacer()
                         
@@ -145,7 +147,8 @@ struct HomeView: View {
                             Spacer()
                         case .vaultCard(_):
                             SatoTabView(nftListViewModel: self.viewModel.nftListViewModel,
-                                        tokenListViewModel: self.viewModel.tokenListViewModel)
+                                        tokenListViewModel: self.viewModel.tokenListViewModel,
+                                        canSelectNFT: $viewModel.canSelectNFT)
                             .padding([.leading, .trailing], 13)
                         }
                     } else {

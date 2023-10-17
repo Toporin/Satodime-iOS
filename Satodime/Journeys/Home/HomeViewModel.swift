@@ -9,139 +9,6 @@ import Foundation
 import SwiftUI
 import Combine
 
-class EmptyVaultViewModel: Hashable {
-    var vaultItem: VaultItem
-    
-    init(vaultItem: VaultItem) {
-        self.vaultItem = vaultItem
-    }
-    
-    static func == (lhs: EmptyVaultViewModel, rhs: EmptyVaultViewModel) -> Bool {
-        return true
-    }
-
-    func hash(into hasher: inout Hasher) {
-
-    }
-}
-
-class VaultCardViewModel: ObservableObject, Hashable {
-    let coinService: PCoinService
-    let walletAddress: String
-
-    @Published var vaultItem: VaultItem {
-        didSet {
-            updateProperties(with: vaultItem)
-        }
-    }
-
-    @Published var indexId: Int {
-        didSet {
-            self.positionText = "0\(indexId+1)"
-        }
-    }
-    
-    @Published var positionText: String
-    @Published var addressText: String
-    @Published var sealStatus: SealStatus
-    @Published var imageName: String
-    @Published var balanceTitle: String
-    @Published var fiatBalance: String
-    @Published var cryptoBalance: String
-    @Published var tokenList: [[String:String]] = []
-    @Published var nftList: [[String:String]] = []
-    @Published var cardBackground: String
-    
-    func sealedBackgroundImageName() -> String {
-        if indexId == 1 {
-            return "bg_vault_card_2"
-        }
-        if indexId == 2 {
-            return "bg_vault_card_3"
-        }
-        return "bg_vault_card"
-    
-    }
-
-    init(walletAddress: String, vaultItem: VaultItem, coinService: PCoinService) {
-        self.coinService = coinService
-        self.walletAddress = walletAddress
-        self.vaultItem = vaultItem
-        self.indexId = 0
-        self.positionText = "00"
-        self.addressText = ""
-        self.sealStatus = .unsealed
-        self.imageName = ""
-        self.balanceTitle = ""
-        self.fiatBalance = ""
-        self.cryptoBalance = ""
-        self.cardBackground = "bg_vault_card"
-
-        updateProperties(with: vaultItem)
-    }
-
-    static func == (lhs: VaultCardViewModel, rhs: VaultCardViewModel) -> Bool {
-        return lhs.walletAddress == rhs.walletAddress
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(walletAddress)
-    }
-    
-    func setIndexId(index: Int) {
-        self.indexId = index
-        self.cardBackground = self.vaultItem.isSealed() ? self.sealedBackgroundImageName() : "bg_card_unsealed"
-    }
-
-    private func updateProperties(with vaultItem: VaultItem) {
-        self.addressText = vaultItem.address
-        self.sealStatus = vaultItem.isSealed() ? .sealed : .unsealed
-        self.imageName = vaultItem.iconPath
-        self.balanceTitle = "Total balance"
-        self.fiatBalance = "0"
-        self.cardBackground = vaultItem.isSealed() ? self.sealedBackgroundImageName() : "bg_card_unsealed"
-        
-        Task {
-            let cryptoBalance = await self.coinService.fetchCryptoBalance(for: vaultItem)
-            DispatchQueue.main.async {
-                self.cryptoBalance = "\(cryptoBalance) \(vaultItem.coin.coinSymbol)"
-            }
-            
-            let fetchedFiatBalance = await self.coinService.fetchFiatBalance(for: vaultItem, with: cryptoBalance)
-            DispatchQueue.main.async {
-                self.fiatBalance = fetchedFiatBalance
-            }
-        }
-    }
-}
-
-enum VaultCardViewModelType: Hashable {
-    case vaultCard(VaultCardViewModel)
-    case emptyVault(EmptyVaultViewModel)
-    
-    func hash(into hasher: inout Hasher) {
-        switch self {
-        case .vaultCard(let viewModel):
-            hasher.combine(0)
-            hasher.combine(viewModel)
-        case .emptyVault(let viewModel):
-            hasher.combine(1)
-            hasher.combine(viewModel)
-        }
-    }
-    
-    static func == (lhs: VaultCardViewModelType, rhs: VaultCardViewModelType) -> Bool {
-        switch (lhs, rhs) {
-        case (.vaultCard(let leftViewModel), .vaultCard(let rightViewModel)):
-            return leftViewModel == rightViewModel
-        case (.emptyVault(let leftViewModel), .emptyVault(let rightViewModel)):
-            return leftViewModel == rightViewModel
-        default:
-            return false
-        }
-    }
-}
-
 class VaultsList: ObservableObject {
     @Published var items: [VaultCardViewModelType]
 
@@ -174,11 +41,16 @@ final class HomeViewModel: ObservableObject {
             self.populateTabs()
         }
     }
-    @Published var currentSlotIndex: Int = 0
+    @Published var currentSlotIndex: Int = 0 {
+        didSet {
+            self.checkForNFTTab()
+        }
+    }
     @Published var cardStatus: CardStatusObservable = CardStatusObservable()
     @Published var nftListViewModel: NFTListViewModel = NFTListViewModel()
     @Published var tokenListViewModel: TokenListViewModel = TokenListViewModel()
     @Published var historyListViewModel: HistoryListViewModel = HistoryListViewModel()
+    @Published var canSelectNFT: Bool = true
     
     var unsealViewModel: UnsealViewModel?
     var showPrivateKeyViewModel: ShowPrivateKeyMenuViewModel?
@@ -222,6 +94,19 @@ final class HomeViewModel: ObservableObject {
             return !viewModel.vaultItem.isSealed()
         default:
             return false
+        }
+    }
+    
+    private func checkForNFTTab() {
+        guard !self.vaultCards.items.isEmpty else { return }
+        let item = self.vaultCards.items[self.currentSlotIndex]
+        switch item {
+        case .vaultCard(let viewModel):
+            let coin = viewModel.vaultItem.getCoinSymbol()
+            // TODO: We should unify to way to recognize coin
+            self.canSelectNFT = coin == "ETH" || coin == "XCP"
+        default:
+            break
         }
     }
 
@@ -340,6 +225,9 @@ final class HomeViewModel: ObservableObject {
     private func constructVaultsList(with data: CardVaults) {
         self.cardVaults = data
         self.vaultCards = VaultsList(items: [])
+        self.nftListViewModel = NFTListViewModel()
+        self.tokenListViewModel = TokenListViewModel()
+        
         var vaults: [VaultCardViewModelType] = []
         
         for vault in data.vaults {
@@ -355,6 +243,7 @@ final class HomeViewModel: ObservableObject {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.vaultCards = VaultsList(items: vaults)
+            self.checkForNFTTab()
         }
     }
     

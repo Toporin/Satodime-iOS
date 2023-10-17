@@ -1,5 +1,5 @@
 //
-//  SatoTabList.swift
+//  SatoTabView.swift
 //  Satodime
 //
 //  Created by Lionel Delvaux on 12/10/2023.
@@ -17,6 +17,7 @@ struct SatoTabView: View {
     @State private var selectedTab: SelectedTab = .token
     @ObservedObject var nftListViewModel: NFTListViewModel
     @ObservedObject var tokenListViewModel: TokenListViewModel
+    @Binding var canSelectNFT: Bool
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -45,10 +46,13 @@ struct SatoTabView: View {
                     }
                                         
                     Button(action: {
-                        selectedTab = .nft
+                        if self.canSelectNFT {
+                            selectedTab = .nft
+                        }
                     }) {
                         VStack {
                             SatoText(text: "NFT", style: .subtitleBold)
+                                .opacity(self.canSelectNFT ? 1 : 0.3)
                             ZStack {
                                 Rectangle().frame(height: 2).foregroundColor(Constants.Colors.separator)
                                 if selectedTab == .nft {

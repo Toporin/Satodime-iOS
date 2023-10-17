@@ -220,6 +220,10 @@ public struct VaultItem: Hashable {
         return denominationString
     }
     
+    public func getCoinSymbol() -> String {
+        return self.coin.coinSymbol
+    }
+    
 //    public func getFiatValueString() -> String {
 //        let fiatValueString: String
 //        if let balance = self.balance,

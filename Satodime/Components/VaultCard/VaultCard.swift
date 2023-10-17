@@ -41,17 +41,21 @@ struct VaultCard: View {
                 .padding(.top, 20)
                 
                 Spacer()
+                    .frame(height: 11)
                 
                 SealStatusView(status: viewModel.sealStatus)
                 
                 Spacer()
                 
                 HStack {
-                    Image(viewModel.imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 26, height: 26)
-                        .foregroundColor(.white)
+                    VStack {
+                        Spacer()
+                        Image(viewModel.imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 26, height: 26)
+                            .foregroundColor(.white)
+                    }
                     Spacer()
                     BalanceView(title: viewModel.balanceTitle, balance: viewModel.fiatBalance, cryptoBalance: viewModel.cryptoBalance)
                 }

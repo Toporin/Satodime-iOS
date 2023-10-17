@@ -30,6 +30,7 @@ class CardStatusObservable: ObservableObject {
 
 struct SatoStatusView: View {
     @ObservedObject var cardStatus: CardStatusObservable
+    var onImageTap: () -> Void
     
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
@@ -42,6 +43,9 @@ struct SatoStatusView: View {
             Image("ic_sato_small")
                 .resizable()
                 .frame(width: 48, height: 48)
+                .onTapGesture {
+                    onImageTap()
+                }
         }
         .frame(width: 54, height: 48)
     }

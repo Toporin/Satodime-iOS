@@ -25,6 +25,7 @@ struct CryptoSelectionCell: View {
 
                 Image(crypto.icon)
                     .frame(width: 30, height: 30)
+                    .aspectRatio(contentMode: .fit)
                     .foregroundColor(.white)
             }
             
