@@ -13,7 +13,7 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
     case ethereum
     case litecoin
     case bitcoinCash
-    case binance
+    // case binance // For later use
     case counterParty
 
     var id: String { self.rawValue }
@@ -28,8 +28,8 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
             return "ic_ltc"
         case .bitcoinCash:
             return "ic_btc_cash"
-        case .binance:
-            return "ic_bnb"
+        // case .binance: // For later use
+        //     return "ic_bnb"
         case .counterParty:
             return "ic_xcp"
         }
@@ -45,8 +45,8 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
             return "Litecoin"
         case .bitcoinCash:
             return "BitcoinCash"
-        case .binance:
-            return "Binance"
+        // case .binance: // For later use
+        //     return "Binance"
         case .counterParty:
             return "Counterparty"
         }
@@ -62,8 +62,8 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
             return "LTC"
         case .bitcoinCash:
             return "BCH"
-        case .binance:
-            return "BNB"
+        // case .binance: // For later use
+        //     return "BNB"
         case .counterParty:
             return "XCP"
         }
@@ -79,8 +79,8 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
             Color(hex: 0xABADB0)
         case .bitcoinCash:
             Color(hex: 0x35B795)
-        case .binance:
-            Color(hex: 0xF3BA2F)
+        // case .binance: // For later use
+        //     Color(hex: 0xF3BA2F)
         case .counterParty:
             Color(hex: 0xD93554)
         }
