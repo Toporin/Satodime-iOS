@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 
 enum SatochipURL: String {
-    case howToUse = "https://satochip.io/quick-start/satodime/"
+    case howToUse = "https://satochip.io/setup-use-satodime-on-mobile/"
     case terms = "https://satochip.io/terms-of-service/"
     case privacy = "https://satochip.io/privacy-policy/"
-    case products = "https://satochip.io/"
+    case products = "https://satochip.io/shop/"
 
     var url: URL? {
         return URL(string: self.rawValue)
