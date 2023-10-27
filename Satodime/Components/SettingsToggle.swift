@@ -16,8 +16,7 @@ struct SettingsToggle: View {
     
     var body: some View {
         HStack {
-            Text(title)
-                .foregroundColor(.white)
+            SatoText(text: title, style: .subtitleBold)
             
             Spacer()
             

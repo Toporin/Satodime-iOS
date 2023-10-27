@@ -46,7 +46,7 @@ struct SettingsDropdown: View {
     var body: some View {
         Button(action: action) {
             HStack {
-                SatoText(text: title, style: .subtitle)
+                SatoText(text: title, style: .subtitleBold)
                     .lineLimit(1)
                 
                 Spacer()

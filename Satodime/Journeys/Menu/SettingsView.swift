@@ -20,9 +20,15 @@ struct SettingsView: View {
             
             VStack {
                 Spacer()
-                    .frame(height: 66)
+                    .frame(height: 47)
                 
-                SatoText(text: "", style: .lightSubtitle)
+                Image("il_settings")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 212)
+                
+                Spacer()
+                    .frame(height: 47)
                 
                 SettingsDropdown(
                     title: viewModel.currencyTitle,
@@ -49,6 +55,8 @@ struct SettingsView: View {
                 SatoButton(staticWidth: 134, text: viewModel.showLogsButtonTitle, style: .inform) {
                     
                 }
+                
+                Spacer()
             }
             .padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
             .sheet(isPresented: $viewModel.showingSheet) {
