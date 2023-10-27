@@ -10,7 +10,7 @@ import Combine
 // MARK: - SatoTabView
 
 enum SelectedTab {
-    case token, nft, history
+    case token, nft//, history
 }
 
 struct SatoTabView: View {
@@ -63,8 +63,8 @@ struct SatoTabView: View {
                             }
                         }
                     }
-                                        
-                    Button(action: {
+                    // For later use
+                    /*Button(action: {
                         selectedTab = .history
                     }) {
                         VStack {
@@ -78,7 +78,7 @@ struct SatoTabView: View {
                                 }
                             }
                         }
-                    }
+                    }*/
                 }
                 .padding(.top, 20)
                 .padding(.horizontal, 33)
@@ -92,9 +92,9 @@ struct SatoTabView: View {
                 case .nft:
                     NFTListView(viewModel: self.nftListViewModel)
                         .background(Color.clear)
-                case .history:
+                /*case .history:
                     HistoryListView()
-                        .background(Color.clear)
+                        .background(Color.clear)*/
                 }
             }
             .background(Color.clear)
@@ -150,7 +150,7 @@ struct NFTListView: View {
 
 // MARK: - HistoryListView
 
-class HistoryListViewModel: ObservableObject {
+/*class HistoryListViewModel: ObservableObject {
     @Published var cellViewModels = [HistoryCellViewModel]()
     
     func populateCellViewModels(from items: [HistoryCellViewModel]) {
@@ -169,6 +169,6 @@ struct HistoryListView: View {
         .listStyle(PlainListStyle())
         .background(Color.clear)
     }
-}
+}*/
 
 

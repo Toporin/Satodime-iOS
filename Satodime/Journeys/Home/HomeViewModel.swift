@@ -52,7 +52,7 @@ final class HomeViewModel: ObservableObject {
     @Published var cardStatus: CardStatusObservable = CardStatusObservable()
     @Published var nftListViewModel: NFTListViewModel = NFTListViewModel()
     @Published var tokenListViewModel: TokenListViewModel = TokenListViewModel()
-    @Published var historyListViewModel: HistoryListViewModel = HistoryListViewModel()
+    // @Published var historyListViewModel: HistoryListViewModel = HistoryListViewModel() // For later use
     @Published var canSelectNFT: Bool = true
     
     var unsealViewModel: UnsealViewModel?
@@ -310,7 +310,7 @@ final class HomeViewModel: ObservableObject {
                     tokenListViewModel.populateCellViewModels(from: tokensList)
                     self.tokenListViewModel = tokenListViewModel
                     
-                    let historyListViewModel = HistoryListViewModel()
+                    // let historyListViewModel = HistoryListViewModel() // For later use
                 }
             }
         case .emptyVault(_):
