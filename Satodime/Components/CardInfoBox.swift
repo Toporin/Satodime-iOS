@@ -11,6 +11,7 @@ struct CardInfoBox: View {
     let text: String
     let backgroundColor: Color
     var width: CGFloat?
+    var action: (() -> Void)?
     
     var body: some View {
         SatoText(text: text, style: .subtitle)
@@ -21,6 +22,9 @@ struct CardInfoBox: View {
             .cornerRadius(20)
             .lineLimit(1)
             .foregroundColor(.white)
+            .onTapGesture {
+                action?()
+            }
     }
 }
 

@@ -211,7 +211,7 @@ class CardService: PCardService {
                 
                 logger.info("Card is setup")
                 
-                guard let cardVaults = self.getVaults(cmdSet: cmdSet, cardAuthenticity: authenticity, cardStatus: cardStatus) else {
+                guard var cardVaults = self.getVaults(cmdSet: cmdSet, cardAuthenticity: authenticity, cardStatus: cardStatus) else {
                     logger.error("Can't read vaults")
                     completion(.readingError(error: "Can't read vaults"))
                     return
@@ -225,6 +225,8 @@ class CardService: PCardService {
                         emptySlotCounter += 1
                     }
                 }
+                
+                cardVaults.cardAuthenticity = authenticity
                 
                 if emptySlotCounter == slots || cardVaults.vaults.isEmpty {
                     logger.warning("No initialized vaults")

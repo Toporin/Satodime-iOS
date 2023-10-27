@@ -60,8 +60,12 @@ struct CardInfoView: View {
                 Spacer()
                     .frame(height: 21)
                 
-                CardInfoBox(text: viewModel.certButtonTitle, backgroundColor: Constants.Colors.blueMenuButton)
+                CardInfoBox(text: viewModel.certButtonTitle, backgroundColor: Constants.Colors.blueMenuButton) {
+                   viewModel.onCertButtonTapped()
+                }
                     .padding([.leading, .trailing], 71)
+                
+                NavigationLink(destination: ShowCertificates(certificateCode: viewModel.cardVaults.cardAuthenticity!.certificateCode, certificateDic: viewModel.cardVaults.cardAuthenticity!.certificateDic), isActive: $viewModel.isCertDetailsViewActive){EmptyView()}
                 
                 Spacer()
                     .frame(height: 139)

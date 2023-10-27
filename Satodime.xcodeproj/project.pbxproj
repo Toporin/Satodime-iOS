@@ -479,6 +479,7 @@
 				D07C9C772AD85279005F5917 /* MenuViewModel.swift */,
 				D0E6656F2ADABCA400703A8F /* CardInfoView.swift */,
 				D0E665712ADABCAE00703A8F /* CardInfoViewModel.swift */,
+				0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */,
 				D0825F602ADAE0EF006391D5 /* SettingsView.swift */,
 				D0825F622ADAE0F8006391D5 /* SettingsViewModel.swift */,
 			);
@@ -514,7 +515,6 @@
 				0DA7B48B299A37B300CEE722 /* ResetSlot.swift */,
 				0DA7B486299A37B200CEE722 /* SealSlot.swift */,
 				0DA7B488299A37B200CEE722 /* Settings.swift */,
-				0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */,
 				0DA7B489299A37B300CEE722 /* ShowDetails.swift */,
 				0DA7B490299A37B400CEE722 /* SideMenu.swift */,
 				0DA7B494299A37B400CEE722 /* TransferCard.swift */,

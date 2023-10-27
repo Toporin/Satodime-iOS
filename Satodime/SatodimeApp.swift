@@ -13,6 +13,7 @@ struct SatodimeApp: App {
     
     var body: some Scene {
         WindowGroup {
+            // ContentView()
             HomeView(viewModel: HomeViewModel(cardService: CardService(), coinService: CoinService()))
         }
     }

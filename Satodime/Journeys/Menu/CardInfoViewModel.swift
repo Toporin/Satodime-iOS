@@ -10,6 +10,8 @@ import Foundation
 final class CardInfoViewModel: BaseViewModel {
     // MARK: - Properties
     @Published var cardVaults: CardVaults
+    @Published var isCertDetailsViewActive = false
+    
     // MARK: - Literals
     let title = "Card info"
     let ownerTitle = "Card ownership status"
@@ -26,5 +28,10 @@ final class CardInfoViewModel: BaseViewModel {
     
     init(cardVaults: CardVaults) {
         self.cardVaults = cardVaults
+    }
+    
+    func onCertButtonTapped() {
+        guard let authenticity = self.cardVaults.cardAuthenticity else { return }
+        self.isCertDetailsViewActive = true
     }
 }

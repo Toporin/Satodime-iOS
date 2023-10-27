@@ -12,4 +12,5 @@ struct CardVaults {
     let isCardAuthentic: Bool
     let cardVersion: String
     let vaults: [VaultItem]
+    var cardAuthenticity: CardAuthenticity?
 }
