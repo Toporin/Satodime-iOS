@@ -59,12 +59,12 @@ class NfcReader: ObservableObject {
         // settings
         isAlreadyUsed = defaults.bool(forKey: "isAlreadyUsed")
         if isAlreadyUsed {
-            unlockSecretDict = defaults.object(forKey: "unlockSecretDict") as? [String: [UInt8]] ?? [String: [UInt8]]()
+            unlockSecretDict = defaults.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
         } else {
             // set default values
             // unlockSecret value is required to perform sensitive changes to a Satodime (seal-unseal-reset-transfer a card)
             unlockSecretDict = [String: [UInt8]]() // [String: String]
-            defaults.set(unlockSecretDict, forKey: "unlockSecretDict")
+            defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
             defaults.set(true, forKey: "isAlreadyUsed")
         }
         print("unlockSecretDict: \(unlockSecretDict)")
@@ -213,7 +213,7 @@ class NfcReader: ObservableObject {
                         print("AuthentikeyHex: \(authentikeyHex)")
                         // save in defaults
                         unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
-                        defaults.set(unlockSecretDict, forKey: "unlockSecretDict")
+                        defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
                         isOwner = true
                         sessionForAction?.stop(alertMessage: String(localized: "Card ownership accepted successfully!"))
                         return
@@ -344,7 +344,7 @@ class NfcReader: ObservableObject {
                     isOwner = false
                     // remove pairing secret from user defaults
                     unlockSecretDict[authentikeyHex] = nil
-                    defaults.set(unlockSecretDict, forKey: "unlockSecretDict")
+                    defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
                     sessionForAction?.stop(alertMessage: String(localized: "Ownership transfer initiated successfully!"))
                     return
                 } catch {

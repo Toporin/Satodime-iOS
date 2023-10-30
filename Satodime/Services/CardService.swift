@@ -102,7 +102,7 @@ class CardService: PCardService {
                 _ = try cmdSet.satodimeGetStatus().checkOK()
                 print("transferOwnership satodimeStatus: \(cmdSet.satodimeStatus)")
 
-                var unlockSecretDict = UserDefaults.standard.object(forKey: "unlockSecretDict") as? [String: [UInt8]] ?? [String: [UInt8]]()
+                var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                 
                 if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
                     let onDeviceAuthKey = unlockSecretDict[auth.keyHex]
@@ -117,7 +117,7 @@ class CardService: PCardService {
                     let rapdu = try cmdSet.satodimeInitiateOwnershipTransfer().checkOK()
                     print("transferOwnership TransferCard rapdu: \(rapdu)")
                     unlockSecretDict[auth.keyHex] = nil
-                    UserDefaults.standard.set(unlockSecretDict, forKey: "unlockSecretDict")
+                    UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
                 } else {
                     print("Found no unlockSecret for this card!")
                     completion(.readingError(error: "Found no unlockSecret for this card!"))
@@ -156,7 +156,7 @@ class CardService: PCardService {
                 _ = try cmdSet.satodimeGetStatus().checkOK()
                 print("satodimeStatus: \(cmdSet.satodimeStatus)")
                 
-                let unlockSecretDict = UserDefaults.standard.object(forKey: "unlockSecretDict") as? [String: [UInt8]] ?? [String: [UInt8]]()
+                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                 if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
                     cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
                     print("Found an unlockSecret for this card: \(unlockSecret)")
@@ -270,9 +270,12 @@ class CardService: PCardService {
                         let (_, authentikey, authentikeyHex) = try cmdSet.cardGetAuthentikey()
                         logger.info("Authentikey: \(authentikey)")
                         logger.info("AuthentikeyHex: \(authentikeyHex)")
+                                                
+                        var unlockSecretDict: [String: [UInt8]] = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                         
-                        let unlockSecretDict: [String: [UInt8]] = [authentikeyHex: cmdSet.satodimeStatus.unlockSecret]
-                        UserDefaults.standard.set(unlockSecretDict, forKey: "unlockSecretDict")
+                        unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
+                        
+                        UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
                         cardController?.stop(alertMessage: String(localized: "Card ownership accepted successfully!"))
                         completion(.cardAccepted)
                         return
@@ -323,7 +326,7 @@ class CardService: PCardService {
                 _ = try cmdSet.satodimeGetStatus().checkOK()
                 print("satodimeStatus: \(cmdSet.satodimeStatus)")
                 // check for ownership
-                let unlockSecretDict = UserDefaults.standard.object(forKey: "unlockSecretDict") as? [String: [UInt8]] ?? [String: [UInt8]]()
+                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                 if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
                     cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
                     print("Found an unlockSecret for this card: \(unlockSecret)")
@@ -382,7 +385,7 @@ class CardService: PCardService {
                 _ = try cmdSet.satodimeGetStatus().checkOK()
                 print("satodimeStatus: \(cmdSet.satodimeStatus)")
                 
-                let unlockSecretDict = UserDefaults.standard.object(forKey: "unlockSecretDict") as? [String: [UInt8]] ?? [String: [UInt8]]()
+                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                 if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
                     cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
                     print("Found an unlockSecret for this card: \(unlockSecret)")
@@ -433,7 +436,7 @@ class CardService: PCardService {
                 _ = try cmdSet.satodimeGetStatus().checkOK()
                 print("satodimeStatus: \(cmdSet.satodimeStatus)")
                 
-                let unlockSecretDict = UserDefaults.standard.object(forKey: "unlockSecretDict") as? [String: [UInt8]] ?? [String: [UInt8]]()
+                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                 if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
                     cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
                     print("Found an unlockSecret for this card: \(unlockSecret)")
@@ -466,7 +469,7 @@ class CardService: PCardService {
         var isOwner = false
         
         do {
-            let unlockSecretDict = UserDefaults.standard.object(forKey: "unlockSecretDict") as? [String: [UInt8]] ?? [String: [UInt8]]()
+            let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
             var satodimeStatus = try SatodimeStatus(rapdu: cmdSet.satodimeGetStatus().checkOK())
             logger.info("satodimeStatus: \(satodimeStatus)")
             if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
