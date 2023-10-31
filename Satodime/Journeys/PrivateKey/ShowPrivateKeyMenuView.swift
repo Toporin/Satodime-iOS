@@ -40,10 +40,9 @@ struct ShowPrivateKeyMenuView: View {
                 .listStyle(PlainListStyle())
                 .listRowSpacing(0)
                 .background(Color.clear)
-                .sheet(isPresented: $viewModel.isBottomSheetPresented) {
-                    if let keyResult = viewModel.keyResult {
-                        KeyBottomSheetView(viewModel: KeyBottomSheetViewModel(mode: viewModel.selectedMode, keyResult: keyResult, vault: viewModel.vaultCardViewModel.vaultItem))
-                    }
+                
+                NavigationLink(destination: ShowPrivateKeyView(viewModel: ShowPrivateKeyViewModel(mode: viewModel.selectedMode, keyResult: viewModel.keyResult, vault: viewModel.vaultCardViewModel.vaultItem)), isActive: $viewModel.isKeyViewPresented) {
+                    EmptyView()
                 }
             }
         }

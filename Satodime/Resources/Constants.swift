@@ -33,6 +33,7 @@ struct Constants {
         static let darkBlueMenuButton = Color(hex: 0x2D2F46)
         static let unsealTextColor = Color(hex: 0x9F76A1)
         static let resetTextColor = Color(hex: 0xFF2D52)
+        static let bottomSheetBackground = Color(hex: 0x292B3D)
     }
     
     // MARK: - Dimensions
@@ -41,6 +42,7 @@ struct Constants {
         static let defaultMargin: CGFloat = 16.0
         static let smallSideMargin: CGFloat = 20.0
         static let defaultSideMargin: CGFloat = 35.0
+        static let bigSideMargin: CGFloat = 47.0
         static let defaultBottomMargin: CGFloat = 47.0
         
         // MARK: - Spacing

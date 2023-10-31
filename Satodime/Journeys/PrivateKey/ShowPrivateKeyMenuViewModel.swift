@@ -20,7 +20,7 @@ final class ShowPrivateKeyMenuViewModel: BaseViewModel {
     @Published var vaultCardViewModel: VaultCardViewModel
     @Published var selectedMode: ShowPrivateKeyMode = .legacy
     @Published var keyResult: PrivateKeyResult?
-    @Published var isBottomSheetPresented = false
+    @Published var isKeyViewPresented = false
     let indexPosition: Int
     let keyDisplayOptions: [ShowPrivateKeyMode] = [.legacy, .wif, .entropy]
     
@@ -41,7 +41,7 @@ final class ShowPrivateKeyMenuViewModel: BaseViewModel {
                 DispatchQueue.main.async {
                     self.keyResult = item
                     self.selectedMode = mode
-                    self.isBottomSheetPresented = true
+                    self.isKeyViewPresented = true
                 }
             default:
                 break

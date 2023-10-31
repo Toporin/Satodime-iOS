@@ -96,7 +96,7 @@ class VaultCardViewModel: ObservableObject, Hashable {
     private func updateProperties(with vaultItem: VaultItem) {
         self.addressText = vaultItem.address
         self.sealStatus = vaultItem.isSealed() ? .sealed : .unsealed
-        self.imageName = "ic_\(vaultItem.getCoinSymbol().lowercased())"//vaultItem.iconPath
+        self.imageName = "ic_\(vaultItem.getCoinSymbol().lowercased())"
         self.balanceTitle = "Total balance"
         self.fiatBalance = "0"
         self.cardBackground = vaultItem.isSealed() ? self.sealedBackgroundImageName() : "bg_card_unsealed"

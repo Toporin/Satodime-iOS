@@ -89,6 +89,8 @@
 		D0825F752ADEEB7E006391D5 /* VaultCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F742ADEEB7E006391D5 /* VaultCardViewModel.swift */; };
 		D0C483992AD8BC2F0085F4B9 /* UnsealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */; };
 		D0C4839B2AD8BC370085F4B9 /* UnsealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C4839A2AD8BC370085F4B9 /* UnsealViewModel.swift */; };
+		D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */; };
+		D0D0FFC82AEFED2B000C4BC6 /* ShowPrivateKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D0FFC72AEFED2B000C4BC6 /* ShowPrivateKeyViewModel.swift */; };
 		D0E1704D2AD6D1EB00C53233 /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1704C2AD6D1EB00C53233 /* ConsoleLogger.swift */; };
 		D0E1704F2AD7042800C53233 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1704E2AD7042800C53233 /* BaseViewModel.swift */; };
 		D0E665682ADAA08200703A8F /* Outfit-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0E665672ADAA08200703A8F /* Outfit-Regular.ttf */; };
@@ -244,6 +246,8 @@
 		D0825F742ADEEB7E006391D5 /* VaultCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardViewModel.swift; sourceTree = "<group>"; };
 		D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsealView.swift; sourceTree = "<group>"; };
 		D0C4839A2AD8BC370085F4B9 /* UnsealViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsealViewModel.swift; sourceTree = "<group>"; };
+		D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPrivateKeyView.swift; sourceTree = "<group>"; };
+		D0D0FFC72AEFED2B000C4BC6 /* ShowPrivateKeyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPrivateKeyViewModel.swift; sourceTree = "<group>"; };
 		D0E1704C2AD6D1EB00C53233 /* ConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogger.swift; sourceTree = "<group>"; };
 		D0E1704E2AD7042800C53233 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		D0E665672ADAA08200703A8F /* Outfit-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-Regular.ttf"; sourceTree = "<group>"; };
@@ -448,6 +452,8 @@
 			children = (
 				D060805E2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift */,
 				D06080602AD94808001A5749 /* ShowPrivateKeyMenuViewModel.swift */,
+				D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */,
+				D0D0FFC72AEFED2B000C4BC6 /* ShowPrivateKeyViewModel.swift */,
 			);
 			path = PrivateKey;
 			sourceTree = "<group>";
@@ -863,6 +869,7 @@
 				D0EB4DF72AC1D62300EA83F9 /* OnBoardingWelcomeView.swift in Sources */,
 				D060805F2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift in Sources */,
 				D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */,
+				D0D0FFC82AEFED2B000C4BC6 /* ShowPrivateKeyViewModel.swift in Sources */,
 				D06080612AD94808001A5749 /* ShowPrivateKeyMenuViewModel.swift in Sources */,
 				D0F62FBC2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift in Sources */,
 				D0F62FC82ACDFD330027EFE6 /* VaultSetupCongratsViewModel.swift in Sources */,
@@ -937,6 +944,7 @@
 				D0E6656E2ADAB6C300703A8F /* ProductButton.swift in Sources */,
 				D0E665722ADABCAE00703A8F /* CardInfoViewModel.swift in Sources */,
 				D0EB4DFB2AC1D69100EA83F9 /* OnboardingNFCView.swift in Sources */,
+				D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */,
 				0DA7B4A4299A37B500CEE722 /* TransferCard.swift in Sources */,
 				D0EB4E102AC22AD300EA83F9 /* HomeViewModel.swift in Sources */,
 				D0F62FD02ACEEE0C0027EFE6 /* SealStatusView.swift in Sources */,
