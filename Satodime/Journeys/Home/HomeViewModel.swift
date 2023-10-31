@@ -49,6 +49,7 @@ final class HomeViewModel: ObservableObject {
             self.checkNFTTabCanBeEnabled()
         }
     }
+    @Published var showOwnershipAlert = false
     @Published var cardStatus: CardStatusObservable = CardStatusObservable()
     @Published var nftListViewModel: NFTListViewModel = NFTListViewModel()
     @Published var tokenListViewModel: TokenListViewModel = TokenListViewModel()
@@ -58,6 +59,14 @@ final class HomeViewModel: ObservableObject {
     var unsealViewModel: UnsealViewModel?
     var showPrivateKeyViewModel: ShowPrivateKeyMenuViewModel?
     var resetViewModel: ResetViewModel?
+    
+    let ownershipAlert: SatoAlert = SatoAlert(title: "Ownership", message: "You are not the owner of this card, so you cannot perform sensitive operations on vaults, such as:\n\n-Create and Seal\n-Unseal\n-Delete\n\nGet more information on how the get the ownership by cliking here.", buttonTitle: "More info", buttonAction: {
+            guard let url = URL(string: "https://satochip.io") else {
+                print("Invalid URL")
+                return
+            }
+        UIApplication.shared.open(url)
+    })
     
     // MARK: - Literals
     let viewTitle: String = "Vaults"
@@ -148,6 +157,10 @@ final class HomeViewModel: ObservableObject {
     
     func goToUnsealSlot() {
         guard !self.vaultCards.items.isEmpty else { return }
+        guard let isOwner = self.cardVaults?.isOwner, isOwner else {
+            self.showOwnershipAlert = true
+            return
+        }
         
         let vaultCard = self.vaultCards.items[self.currentSlotIndex]
         switch vaultCard {
@@ -161,6 +174,10 @@ final class HomeViewModel: ObservableObject {
     
     func goToShowKey() {
         guard !self.vaultCards.items.isEmpty else { return }
+        guard let isOwner = self.cardVaults?.isOwner, isOwner else {
+            self.showOwnershipAlert = true
+            return
+        }
         
         let vaultCard = self.vaultCards.items[self.currentSlotIndex]
         switch vaultCard {
@@ -170,6 +187,23 @@ final class HomeViewModel: ObservableObject {
             break
         }
         self.navigateTo(destination: .privateKey)
+    }
+    
+    func reset() {
+        guard !self.vaultCards.items.isEmpty else { return }
+        guard let isOwner = self.cardVaults?.isOwner, isOwner else {
+            self.showOwnershipAlert = true
+            return
+        }
+        
+        let vaultCard = self.vaultCards.items[self.currentSlotIndex]
+        switch vaultCard {
+        case .vaultCard(let viewModel):
+            self.resetViewModel = ResetViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex, vaultsList: self.vaultCards)
+        case .emptyVault(_):
+            break
+        }
+        self.navigateTo(destination: .reset)
     }
     
     func emptyCardSealTapped(id: Int) {
@@ -207,8 +241,12 @@ final class HomeViewModel: ObservableObject {
                 break
             case .isOwner:
                 break
-            case .notOwner:
-                break
+            case .notOwner(vaults: let vaults):
+                DispatchQueue.main.async {
+                    self.cardStatus.status = .valid
+                    self.constructVaultsList(with: vaults)
+                    self.showOwnershipAlert = true
+                }
             case .getPrivate:
                 break
             case .reset:
@@ -231,19 +269,7 @@ final class HomeViewModel: ObservableObject {
             }
         }
     }
-    
-    func reset() {
-        guard !self.vaultCards.items.isEmpty else { return }
-        let vaultCard = self.vaultCards.items[self.currentSlotIndex]
-        switch vaultCard {
-        case .vaultCard(let viewModel):
-            self.resetViewModel = ResetViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex, vaultsList: self.vaultCards)
-        case .emptyVault(_):
-            break
-        }
-        self.navigateTo(destination: .reset)
-    }
-    
+
     // MARK: - Data construction
     
     private func constructVaultsList(with data: CardVaults) {

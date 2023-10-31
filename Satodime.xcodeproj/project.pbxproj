@@ -87,6 +87,7 @@
 		D0825F712ADD7BCC006391D5 /* SatoChoiceSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */; };
 		D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F722ADD7FC6006391D5 /* SatoInputText.swift */; };
 		D0825F752ADEEB7E006391D5 /* VaultCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F742ADEEB7E006391D5 /* VaultCardViewModel.swift */; };
+		D08CAF8B2AF1534000B6CE55 /* SatoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */; };
 		D0C483992AD8BC2F0085F4B9 /* UnsealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */; };
 		D0C4839B2AD8BC370085F4B9 /* UnsealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C4839A2AD8BC370085F4B9 /* UnsealViewModel.swift */; };
 		D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */; };
@@ -244,6 +245,7 @@
 		D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoChoiceSelector.swift; sourceTree = "<group>"; };
 		D0825F722ADD7FC6006391D5 /* SatoInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoInputText.swift; sourceTree = "<group>"; };
 		D0825F742ADEEB7E006391D5 /* VaultCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardViewModel.swift; sourceTree = "<group>"; };
+		D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoAlert.swift; sourceTree = "<group>"; };
 		D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsealView.swift; sourceTree = "<group>"; };
 		D0C4839A2AD8BC370085F4B9 /* UnsealViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsealViewModel.swift; sourceTree = "<group>"; };
 		D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPrivateKeyView.swift; sourceTree = "<group>"; };
@@ -609,6 +611,7 @@
 				D0E665732ADABDF500703A8F /* CardInfoBox.swift */,
 				D0825F5E2ADAE093006391D5 /* SettingsDropdown.swift */,
 				D0825F642ADAE595006391D5 /* SettingsToggle.swift */,
+				D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -959,6 +962,7 @@
 				0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */,
 				D0C4839B2AD8BC370085F4B9 /* UnsealViewModel.swift in Sources */,
 				D0825F6D2ADD7466006391D5 /* ExpertModeView.swift in Sources */,
+				D08CAF8B2AF1534000B6CE55 /* SatoAlert.swift in Sources */,
 				D06080652AD94ED2001A5749 /* Views.swift in Sources */,
 				D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */,
 				0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */,

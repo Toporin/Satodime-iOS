@@ -183,6 +183,22 @@ struct HomeView: View {
                     NavigationLink("", destination: ResetView(viewModel: viewModel), isActive: .constant(isReset())).hidden()
                 }
             }
+            .overlay(
+                Group {
+                    if viewModel.showOwnershipAlert {
+                        ZStack {
+                            Color.black.opacity(0.4)
+                                .ignoresSafeArea()
+                                .onTapGesture {
+                                    viewModel.showOwnershipAlert = false
+                                }
+                            
+                            SatoAlertView(isPresented: $viewModel.showOwnershipAlert, alert: viewModel.ownershipAlert)
+                                .padding([.leading, .trailing], 24)
+                        }
+                    }
+                }
+            )
         }
         .environmentObject(viewModel.viewStackHandler)
         .onAppear {

@@ -47,7 +47,7 @@ indirect enum CardActionState {
     case noVault
     case hasVault(vaults: CardVaults)
     case isOwner
-    case notOwner
+    case notOwner(vaults: CardVaults)
     case getPrivate(privateKey: PrivateKeyResult)
     case reset(updatedItem: VaultItem)
     case seal
@@ -237,8 +237,14 @@ class CardService: PCardService {
                 
                 logger.info("Vaults readed successfully")
                 cardController?.stop(alertMessage: String(localized: "Vaults readed successfully"))
-                completion(.hasVault(vaults: cardVaults))
                 
+                if cardVaults.isOwner {
+                    completion(.hasVault(vaults: cardVaults))
+                    return
+                } else {
+                    completion(.notOwner(vaults: cardVaults))
+                    return
+                }
             } catch {
                 logger.error("ERROR - Satodime reading : \(error.localizedDescription)")
                 cardController?.stop(alertMessage: String(localized: "An error occured : \(error.localizedDescription)"))
