@@ -41,7 +41,7 @@ struct ShowPrivateKeyMenuView: View {
                 .listRowSpacing(0)
                 .background(Color.clear)
                 
-                NavigationLink(destination: ShowPrivateKeyView(viewModel: ShowPrivateKeyViewModel(mode: viewModel.selectedMode, keyResult: viewModel.keyResult, vault: viewModel.vaultCardViewModel.vaultItem)), isActive: $viewModel.isKeyViewPresented) {
+                NavigationLink(destination: ShowPrivateKeyView(viewModel: ShowPrivateKeyViewModel(indexPosition: viewModel.indexPosition, mode: viewModel.selectedMode, keyResult: viewModel.keyResult, vault: viewModel.vaultCardViewModel.vaultItem)), isActive: $viewModel.isKeyViewPresented) {
                     EmptyView()
                 }
             }

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ShowPrivateKeyView: View {
     // MARK: - Properties
+    @Environment(\.presentationMode) var presentation
     @EnvironmentObject var viewStackHandler: ViewStackHandler
     @ObservedObject var viewModel: ShowPrivateKeyViewModel
     
@@ -132,20 +133,12 @@ struct ShowPrivateKeyView: View {
                 SatoText(text: viewModel.title, style: .viewTitle)
             }
         }
-        /*.navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            self.viewModel.navigateTo(destination: .goBackHome)
+            self.presentation.wrappedValue.dismiss()
         }) {
             Image("ic_flipback")
         })
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                SatoText(text: viewModel.title, style: .lightTitle)
-            }
-        }
-        .onAppear {
-            viewModel.viewStackHandler = viewStackHandler
-        }*/
     }
 }
 

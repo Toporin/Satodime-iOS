@@ -16,6 +16,7 @@ final class ShowPrivateKeyViewModel: BaseViewModel {
     @Published var slotNumber: String = ""
     @Published var coinIcon: String = ""
     
+    let indexPosition: Int
     var mode: ShowPrivateKeyMode
     var keyResult: PrivateKeyResult?
     private var vault: VaultItem
@@ -23,12 +24,13 @@ final class ShowPrivateKeyViewModel: BaseViewModel {
     // MARK: - Literals
     let title = "Show private key"
     
-    init(mode: ShowPrivateKeyMode, keyResult: PrivateKeyResult?, vault: VaultItem) {
+    init(indexPosition: Int, mode: ShowPrivateKeyMode, keyResult: PrivateKeyResult?, vault: VaultItem) {
+        self.indexPosition = indexPosition
         self.mode = mode
         self.keyResult = keyResult
         self.vault = vault
         super.init()
-        self.slotNumber = "0\(vault.index)"
+        self.slotNumber = "0\(indexPosition)"
         self.coinIcon = "ic_\(vault.getCoinSymbol().lowercased())"
         self.determineKeyToDisplay()
     }
