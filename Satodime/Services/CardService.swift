@@ -40,7 +40,7 @@ indirect enum CardActionState {
     case unknown
     case readingError(error: String)
     case silentError(error: String) // Quick workaround for the moment, I think the onFailure closure could be removed
-    case notAuthentic
+    case notAuthentic(vaults: CardVaults)
     case needToAcceptCard
     case cardAccepted
     case setupDone
@@ -202,10 +202,9 @@ class CardService: PCardService {
                     return
                 }
                 
-                guard let authenticity = self.isCardAuthentic(cmdSet: cmdSet), authenticity.isAuthentic() else {
-                    cardController?.stop(alertMessage: String(localized: "This card is not authentic!"))
-                    logger.error("Card is not authentic!")
-                    completion(.notAuthentic)
+                guard let authenticity = self.isCardAuthentic(cmdSet: cmdSet) else {
+                    cardController?.stop(alertMessage: String(localized: "Error while checking authenticity"))
+                    logger.error("Error while checking authenticity")
                     return
                 }
                 
@@ -237,6 +236,11 @@ class CardService: PCardService {
                 
                 logger.info("Vaults readed successfully")
                 cardController?.stop(alertMessage: String(localized: "Vaults readed successfully"))
+                
+                if !authenticity.isAuthentic() {
+                    completion(.notAuthentic(vaults: cardVaults))
+                    return
+                }
                 
                 if cardVaults.isOwner {
                     completion(.hasVault(vaults: cardVaults))
