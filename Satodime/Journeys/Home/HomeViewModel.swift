@@ -305,6 +305,19 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
+    // Temporary fix as we do not get a correct url for now from the framework
+    // eg.:
+    // ipfs://ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png"
+    // instead of :
+    // https://ipfs.io/ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png
+    private func getCorrectNFTUri(input: String) -> String {
+        if input.hasPrefix("ipfs://") {
+            let replacedString = input.replacingOccurrences(of: "ipfs://", with: "https://ipfs.io/")
+            return replacedString
+        }
+        return input
+    }
+    
     func populateTabs() {
         guard !self.vaultCards.items.isEmpty else { return }
         
@@ -317,7 +330,7 @@ final class HomeViewModel: ObservableObject {
                     var tokensList: [TokenCellViewModel] = []
                     
                     for nftList in assets.nftList {
-                        if let imageUri = nftList["nftImageUrl"], let imageUrl = URL(string: imageUri) {
+                        if let imageUri = nftList["nftImageUrl"], let imageUrl = URL(string: self.getCorrectNFTUri(input: imageUri)) {
                             nftImageUrlResults.append(imageUrl)
                         }
                     }

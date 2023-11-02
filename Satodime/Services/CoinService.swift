@@ -64,8 +64,10 @@ class CoinService: PCoinService {
         let selectedFirstCurrency: String = coinInfo.coin.coinSymbol
         var selectedSecondCurrency: String = self.preferenceService.getCurrency()
         #if DEBUG
-        var address = "0x72eb30D3ca53f5e839325E2eACf535E70a9e6987"
-        let assetList = [["contract":"0xEEe334e5DEB8522cD85097b47a69afC939715FFA"]]
+        //var address = "0x72eb30D3ca53f5e839325E2eACf535E70a9e6987"
+        //let assetList = [["contract":"0xEEe334e5DEB8522cD85097b47a69afC939715FFA"]]
+        var address = "0x2C4eBD4b21736E992f3EfeB55dE37ae66457199D"
+        let assetList = [["contract": "0xB66a603f4cFe17e3D27B87a8BfCaD319856518B8"]]
         #else
         var address = coinInfo.address
         let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
