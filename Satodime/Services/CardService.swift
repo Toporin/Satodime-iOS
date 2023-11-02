@@ -44,7 +44,7 @@ indirect enum CardActionState {
     case needToAcceptCard
     case cardAccepted
     case setupDone
-    case noVault
+    case noVaultSet(vaults: CardVaults)
     case hasVault(vaults: CardVaults)
     case isOwner
     case notOwner(vaults: CardVaults)
@@ -229,7 +229,7 @@ class CardService: PCardService {
                 
                 if emptySlotCounter == slots || cardVaults.vaults.isEmpty {
                     logger.warning("No initialized vaults")
-                    completion(.noVault)
+                    completion(.noVaultSet(vaults: cardVaults))
                     cardController?.stop(alertMessage: String(localized: "This card needs to setup a first vault"))
                     return
                 }

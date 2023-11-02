@@ -261,8 +261,12 @@ final class HomeViewModel: ObservableObject {
                 break
             case .unsealed:
                 self.navigateTo(destination: .unseal)
-            case .noVault:
-                self.navigateTo(destination: .vaultInitialization)
+            case .noVaultSet(vaults: let vaults):
+                DispatchQueue.main.async {
+                    self.cardStatus.status = .valid
+                    self.constructVaultsList(with: vaults)
+                    self.navigateTo(destination: .vaultInitialization)
+                }
             case .hasVault(vaults: let vaults):
                 DispatchQueue.main.async {
                     self.cardStatus.status = .valid
