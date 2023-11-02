@@ -110,6 +110,16 @@ final class HomeViewModel: ObservableObject {
         return !self.vaultCards.items.isEmpty
     }
     
+    func isAddFundsButtonVisible() -> Bool {
+        guard !self.vaultCards.items.isEmpty else { return false }
+        switch self.vaultCards.items[currentSlotIndex] {
+        case .vaultCard(_):
+            return true
+        default:
+            return false
+        }
+    }
+    
     func isUnsealButtonVisible() -> Bool {
         guard !self.vaultCards.items.isEmpty else { return false }
         switch self.vaultCards.items[currentSlotIndex] {
@@ -153,6 +163,11 @@ final class HomeViewModel: ObservableObject {
     
     func goToMenuView() {
         self.navigateTo(destination: .menu)
+    }
+    
+    func goToAddFunds() {
+        guard !self.vaultCards.items.isEmpty else { return }
+        self.navigateTo(destination: .addFunds)
     }
     
     func goToUnsealSlot() {
