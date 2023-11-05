@@ -11,6 +11,7 @@ final class CardInfoViewModel: BaseViewModel {
     // MARK: - Properties
     @Published var cardVaults: CardVaults
     @Published var isCertDetailsViewActive = false
+    @Published var shouldShowAuthenticityScreen = false
     
     // MARK: - Literals
     let title = "Card info"
@@ -33,5 +34,9 @@ final class CardInfoViewModel: BaseViewModel {
     func onCertButtonTapped() {
         guard let authenticity = self.cardVaults.cardAuthenticity else { return }
         self.isCertDetailsViewActive = true
+    }
+    
+    func gotoAuthenticityScreen() {
+        self.shouldShowAuthenticityScreen = true
     }
 }
