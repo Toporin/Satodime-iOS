@@ -66,6 +66,7 @@
 		D060806E2AD986E2001A5749 /* ResetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D060806D2AD986E2001A5749 /* ResetViewModel.swift */; };
 		D06080702AD98C07001A5749 /* ResetConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D060806F2AD98C07001A5749 /* ResetConfirmationView.swift */; };
 		D06080722AD98C11001A5749 /* ResetConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06080712AD98C11001A5749 /* ResetConfirmationViewModel.swift */; };
+		D065EF5B2AF81CEC006751C5 /* ButtonBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */; };
 		D07C9C6E2AD834AA005F5917 /* CoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C6D2AD834AA005F5917 /* CoinService.swift */; };
 		D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C702AD84303005F5917 /* AuthenticView.swift */; };
 		D07C9C732AD84325005F5917 /* AuthenticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C722AD84325005F5917 /* AuthenticViewModel.swift */; };
@@ -227,6 +228,7 @@
 		D060806D2AD986E2001A5749 /* ResetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewModel.swift; sourceTree = "<group>"; };
 		D060806F2AD98C07001A5749 /* ResetConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetConfirmationView.swift; sourceTree = "<group>"; };
 		D06080712AD98C11001A5749 /* ResetConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetConfirmationViewModel.swift; sourceTree = "<group>"; };
+		D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBox.swift; sourceTree = "<group>"; };
 		D07C9C6D2AD834AA005F5917 /* CoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinService.swift; sourceTree = "<group>"; };
 		D07C9C702AD84303005F5917 /* AuthenticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticView.swift; sourceTree = "<group>"; };
 		D07C9C722AD84325005F5917 /* AuthenticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticViewModel.swift; sourceTree = "<group>"; };
@@ -629,6 +631,7 @@
 				D0825F5E2ADAE093006391D5 /* SettingsDropdown.swift */,
 				D0825F642ADAE595006391D5 /* SettingsToggle.swift */,
 				D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */,
+				D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -965,6 +968,7 @@
 				D0E6656E2ADAB6C300703A8F /* ProductButton.swift in Sources */,
 				D0E665722ADABCAE00703A8F /* CardInfoViewModel.swift in Sources */,
 				D08CAF8E2AF3EB5B00B6CE55 /* AddFundsView.swift in Sources */,
+				D065EF5B2AF81CEC006751C5 /* ButtonBox.swift in Sources */,
 				D0EB4DFB2AC1D69100EA83F9 /* OnboardingNFCView.swift in Sources */,
 				D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */,
 				0DA7B4A4299A37B500CEE722 /* TransferCard.swift in Sources */,

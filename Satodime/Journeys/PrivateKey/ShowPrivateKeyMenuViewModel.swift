@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum ShowPrivateKeyMode: String, Hashable {
     case legacy = "Show private key (Legacy)"
@@ -47,5 +48,11 @@ final class ShowPrivateKeyMenuViewModel: BaseViewModel {
                 break
             }
         })
+    }
+    
+    func gotoExportKey() {
+        if let url = URL(string: "https://satochip.io/satodime-how-to-export-private-key/") {
+            UIApplication.shared.open(url)
+        }
     }
 }

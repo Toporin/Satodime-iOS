@@ -36,6 +36,11 @@ struct ShowPrivateKeyMenuView: View {
                                 viewModel.showKey(mode: mode)
                             }.listRowBackground(Color.clear)
                     }
+                    
+                    ButtonBox(text: "How do I export my private key", iconName: "") {
+                        viewModel.gotoExportKey()
+                    }
+                    .listRowBackground(Color.clear)
                 }
                 .listStyle(PlainListStyle())
                 .listRowSpacing(0)
