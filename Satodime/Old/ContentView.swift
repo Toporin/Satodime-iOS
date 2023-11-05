@@ -254,7 +254,8 @@ struct ContentView: View {
             //return AnyView(ShowCertificates(certificateCode: reader.certificateCode, certificates: reader.certificates))
             return AnyView(ShowCertificates(certificateCode: reader.certificateCode, certificateDic: reader.certificateDic))
         } else if operation == "ShowLogs" {
-            return AnyView(ShowLogs(logArray: reader.logArray))
+            // return AnyView(ShowLogs(logArray: reader.logArray))
+            return AnyView(ShowLogs())
         } else {
             return AnyView(UnknownAction(operation: operation, index: index))
         }

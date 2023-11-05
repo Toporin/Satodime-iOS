@@ -53,10 +53,14 @@ struct SettingsView: View {
                     .frame(height: 33)
                 
                 SatoButton(staticWidth: 134, text: viewModel.showLogsButtonTitle, style: .inform) {
-                    
+                    viewModel.gotoShowLogs()
                 }
                 
                 Spacer()
+                
+                NavigationLink(destination: ShowLogs(), isActive: $viewModel.isShowLogs) {
+                    EmptyView()
+                }
             }
             .padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
             .sheet(isPresented: $viewModel.showingSheet) {

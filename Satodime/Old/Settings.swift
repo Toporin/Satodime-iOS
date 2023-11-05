@@ -114,7 +114,9 @@ struct Settings: View {
                 
             }// VStack
             .background(
-                NavigationLink(destination: ShowLogs(logArray: reader.logArray), isActive: $showLogs){EmptyView()}
+                // NavigationLink(destination: ShowLogs(logArray: reader.logArray), isActive: $showLogs){EmptyView()}
+                NavigationLink(destination: ShowLogs(), isActive: $showLogs){EmptyView()}
+
             )
 //            .navigationBarBackButtonHidden(true)
 //            .navigationTitle("Settings")

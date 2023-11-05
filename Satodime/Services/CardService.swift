@@ -194,6 +194,7 @@ class CardService: PCardService {
                 let statusApdu = try cmdSet.cardGetStatus()
                 let cardStatus = try CardStatus(rapdu: statusApdu)
                 logger.info("Status: \(cardStatus)")
+                LoggerService().log(entry: cardStatus.toString())
                 
                 if !cardStatus.setupDone {
                     cardController?.stop(alertMessage: String(localized: "Satodime needs setup!"))

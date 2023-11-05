@@ -67,6 +67,7 @@
 		D06080702AD98C07001A5749 /* ResetConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D060806F2AD98C07001A5749 /* ResetConfirmationView.swift */; };
 		D06080722AD98C11001A5749 /* ResetConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06080712AD98C11001A5749 /* ResetConfirmationViewModel.swift */; };
 		D065EF5B2AF81CEC006751C5 /* ButtonBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */; };
+		D065EF5D2AF8220A006751C5 /* LoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D065EF5C2AF8220A006751C5 /* LoggerService.swift */; };
 		D07C9C6E2AD834AA005F5917 /* CoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C6D2AD834AA005F5917 /* CoinService.swift */; };
 		D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C702AD84303005F5917 /* AuthenticView.swift */; };
 		D07C9C732AD84325005F5917 /* AuthenticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C722AD84325005F5917 /* AuthenticViewModel.swift */; };
@@ -229,6 +230,7 @@
 		D060806F2AD98C07001A5749 /* ResetConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetConfirmationView.swift; sourceTree = "<group>"; };
 		D06080712AD98C11001A5749 /* ResetConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetConfirmationViewModel.swift; sourceTree = "<group>"; };
 		D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBox.swift; sourceTree = "<group>"; };
+		D065EF5C2AF8220A006751C5 /* LoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerService.swift; sourceTree = "<group>"; };
 		D07C9C6D2AD834AA005F5917 /* CoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinService.swift; sourceTree = "<group>"; };
 		D07C9C702AD84303005F5917 /* AuthenticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticView.swift; sourceTree = "<group>"; };
 		D07C9C722AD84325005F5917 /* AuthenticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticViewModel.swift; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 				D0F62FCC2ACEE5D40027EFE6 /* CardService.swift */,
 				D07C9C6D2AD834AA005F5917 /* CoinService.swift */,
 				D0825F662ADAE7AD006391D5 /* PreferencesService.swift */,
+				D065EF5C2AF8220A006751C5 /* LoggerService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -902,6 +905,7 @@
 				D0EB4E152AC22F4200EA83F9 /* VaultSetupSelectChainViewModel.swift in Sources */,
 				D07C9C7C2AD86134005F5917 /* SatoTabView.swift in Sources */,
 				D06080672AD9689F001A5749 /* ScanButton.swift in Sources */,
+				D065EF5D2AF8220A006751C5 /* LoggerService.swift in Sources */,
 				D0EB4E022AC1EC3700EA83F9 /* OnboardingWelcomeViewModel.swift in Sources */,
 				D0F62FD42ACEF2A80027EFE6 /* AddressView.swift in Sources */,
 				D07C9C6E2AD834AA005F5917 /* CoinService.swift in Sources */,

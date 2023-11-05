@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct ShowLogs: View {
-    
+    var loggerService: PLoggerService
     var logArray: [String]
+    
+    init() {
+        self.loggerService = LoggerService()
+        self.logArray = loggerService.getLog()
+    }
     
     var body: some View {
         
@@ -38,11 +43,5 @@ struct ShowLogs: View {
                 }
             }
         }
-    }
-}
-
-struct ShowLogs_Previews: PreviewProvider {
-    static var previews: some View {
-        ShowLogs(logArray: ["test", "test2"])
     }
 }

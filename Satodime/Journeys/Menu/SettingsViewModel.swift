@@ -13,6 +13,7 @@ final class SettingsViewModel: BaseViewModel {
     @Published var selectedValue: String = ""
     @Published var showingSheet = false
     @Published var starterIntroIsOn: Bool = false
+    @Published var isShowLogs: Bool = false
     
     // MARK: - Literals
     let title = "Settings"
@@ -32,5 +33,9 @@ final class SettingsViewModel: BaseViewModel {
     
     func setCurrency(currency: String){
         self.preferencesService.setCurrency(currency)
+    }
+    
+    func gotoShowLogs() {
+        self.isShowLogs = true
     }
 }
