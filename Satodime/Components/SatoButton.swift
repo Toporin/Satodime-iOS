@@ -35,18 +35,24 @@ struct SatoButton: View {
     var style: ButtonStyle
     var horizontalPadding: CGFloat = Constants.Dimensions.defaultMargin
     var action: () -> Void
+    var isEnabled: Bool?
 
     var body: some View {
         Button(action: {
-            action()
+            if isEnabled ?? true {
+                action()
+            }
         }) {
             Text(text)
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.horizontal, horizontalPadding)
                 .frame(width: staticWidth, height: 40)
-                .background(style.backgroundColor)
+                .background(isEnabled != nil ? (isEnabled! ? style.backgroundColor : Color.gray) : style.backgroundColor)
                 .cornerRadius(20)
+                .opacity(isEnabled != nil ? (isEnabled! ? 1.0 : 0.5) : 1.0)
         }
+        .disabled(isEnabled == nil ? false : !(isEnabled!))
     }
 }
+

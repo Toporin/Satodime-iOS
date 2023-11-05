@@ -62,11 +62,11 @@ struct ResetView: View {
                 
                 Spacer()
                 
-                SatoButton(staticWidth: 293, text: viewModel.continueButtonTitle, style: .danger) {
+                SatoButton(staticWidth: 293, text: viewModel.continueButtonTitle, style: .danger, action:  {
                     if viewModel.hasUserConfirmedTerms {
                         viewModel.reset()
                     }
-                }
+                }, isEnabled: $viewModel.hasUserConfirmedTerms.wrappedValue)
                 
                 Spacer()
                     .frame(height: 29)

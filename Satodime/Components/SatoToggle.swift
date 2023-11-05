@@ -21,7 +21,7 @@ struct SatoToggle: View {
                     .strokeBorder(Color.white, lineWidth: 2)
                     .background(isOn ? Constants.Colors.ledGreen : .clear)
                     .clipShape(Circle())
-                    .frame(width: 18, height: 18)
+                    .frame(width: 28, height: 28)
             }
             .onTapGesture {
                 self.isOn.toggle()
