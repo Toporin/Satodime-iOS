@@ -14,13 +14,13 @@ struct UnsealButton: View {
         Button(action: action) {
             VStack {
                 ZStack {
-                    Image("bg_seal_btn")
+                    Image("bg_seal_clear")
                         .resizable()
                         .scaledToFill()
                         .frame(width: 64, height: 64)
                         .clipped()
                     
-                    Image("ic_seal_lock")
+                    Image("ic_lock_white")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 27, height: 39)
@@ -30,7 +30,7 @@ struct UnsealButton: View {
                 Spacer()
                     .frame(height: 9)
 
-                SatoText(text: "Unseal", style: .subtitle, forcedColor: Constants.Colors.unsealTextColor)
+                SatoText(text: "Unseal", style: .subtitle, forcedColor: .white)
             }
         }
     }
