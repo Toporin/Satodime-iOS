@@ -320,7 +320,7 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
-    // Temporary fix as we do not get a correct url for now from the framework
+    // TODO: Temporary fix as we do not get a correct url for now from the framework
     // eg.:
     // ipfs://ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png"
     // instead of :
@@ -349,6 +349,16 @@ final class HomeViewModel: ObservableObject {
                             nftImageUrlResults.append(imageUrl)
                         }
                     }
+                    
+                    let mainTokenItem = TokenCellViewModel(
+                        imageUri: viewModel.imageName,
+                        name: viewModel.vaultItem.getCoinDenominationString(),
+                        cryptoBalance: "\(viewModel.vaultItem.balance ?? 0.0) \(viewModel.vaultItem.getCoinShortBalanceString())",
+                        fiatBalance: "\(viewModel.vaultItem.totalTokenValueInSecondCurrency ?? 0.0)",
+                        mainToken: viewModel.vaultItem.getCoinSymbol())
+                    
+                    tokensList.append(mainTokenItem)
+                    
                     for tokenItem in assets.tokenList {
                         if let name = tokenItem["name"],
                            let tokenIconUrl = tokenItem["tokenIconUrl"],

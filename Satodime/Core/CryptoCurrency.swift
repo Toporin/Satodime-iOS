@@ -17,6 +17,16 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
     case counterParty
 
     var id: String { self.rawValue }
+    
+    init?(shortIdentifier: String) {
+        for currency in CryptoCurrency.allCases {
+            if currency.shortIdentifier == shortIdentifier {
+                self = currency
+                return
+            }
+        }
+        return nil
+    }
 
     var icon: String {
         switch self {

@@ -11,23 +11,27 @@ import Combine
 
 class TokenCellViewModel: ObservableObject {
     // MARK: - Properties
+    let preferenceService: PPreferencesService = PreferencesService()
     let id = UUID()
     @Published var image: UIImage?
     @Published var name: String
     @Published var cryptoBalance: String
     @Published var fiatBalance: String
+    var mainToken: String?
+    
     
     private var cancellables = Set<AnyCancellable>()
     let imageUrl: URL?
     
     // MARK: - Lifecycle
-    init(imageUri: String, name: String, cryptoBalance: String, fiatBalance: String) {
+    init(imageUri: String, name: String, cryptoBalance: String, fiatBalance: String, mainToken: String? = nil) {
         let imageUrl = URL(string: imageUri)
         self.imageUrl = imageUrl
         self.name = name
         self.cryptoBalance = cryptoBalance
-        self.fiatBalance = fiatBalance
-        if let imageUrl = self.imageUrl {
+        self.fiatBalance = "\(fiatBalance) \(self.preferenceService.getCurrency())"
+        self.mainToken = mainToken
+        if mainToken == nil, let imageUrl = self.imageUrl {
             self.fetchImage(url: imageUrl)
         }
     }
@@ -47,9 +51,23 @@ struct TokenCell: View {
 
     var body: some View {
         HStack {
-            Image(uiImage: viewModel.image ?? UIImage())
-                .resizable()
+            if let mainToken = self.viewModel.mainToken, let cryptoCurrency = CryptoCurrency(shortIdentifier: mainToken) {
+                ZStack {
+                    Circle()
+                        .fill(cryptoCurrency.color)
+                        .frame(width: 50, height: 50)
+                        .padding(5)
+
+                    Image(cryptoCurrency.icon)
+                        .frame(width: 22, height: 22)
+                        .foregroundColor(.white)
+                }
                 .frame(width: 50, height: 50)
+            } else {
+                Image(uiImage: viewModel.image ?? UIImage())
+                    .resizable()
+                    .frame(width: 50, height: 50)
+            }
 
             VStack(alignment: .leading) {
                 SatoText(text: viewModel.name, style: .cellSmallTitle)
