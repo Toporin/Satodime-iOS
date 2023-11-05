@@ -26,6 +26,6 @@ final class UnsealConfirmationViewModel: BaseViewModel {
     }
     
     func completeFlow() {
-        self.navigateTo(destination: .goBackHome)
+        self.navigateTo(destination: .privateKey)
     }
 }

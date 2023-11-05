@@ -46,7 +46,9 @@ final class HomeViewModel: ObservableObject {
     }
     @Published var currentSlotIndex: Int = 0 {
         didSet {
+            self.buildShowPrivateKeyVM()
             self.checkNFTTabCanBeEnabled()
+            
         }
     }
     @Published var showOwnershipAlert = false
@@ -194,13 +196,13 @@ final class HomeViewModel: ObservableObject {
             return
         }
         
-        let vaultCard = self.vaultCards.items[self.currentSlotIndex]
+        /*let vaultCard = self.vaultCards.items[self.currentSlotIndex]
         switch vaultCard {
         case .vaultCard(let viewModel):
             self.showPrivateKeyViewModel = ShowPrivateKeyMenuViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex)
         case .emptyVault(_):
             break
-        }
+        }*/
         self.navigateTo(destination: .privateKey)
     }
     
@@ -219,6 +221,18 @@ final class HomeViewModel: ObservableObject {
             break
         }
         self.navigateTo(destination: .reset)
+    }
+    
+    func buildShowPrivateKeyVM() -> ShowPrivateKeyMenuViewModel? {
+        guard !self.vaultCards.items.isEmpty else { return nil }
+        let vaultCard = self.vaultCards.items[self.currentSlotIndex]
+        switch vaultCard {
+        case .vaultCard(let viewModel):
+            self.showPrivateKeyViewModel = ShowPrivateKeyMenuViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex)
+            return self.showPrivateKeyViewModel
+        case .emptyVault(_):
+            return nil
+        }
     }
     
     func emptyCardSealTapped(id: Int) {

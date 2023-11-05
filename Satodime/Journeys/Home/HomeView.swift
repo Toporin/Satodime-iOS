@@ -195,7 +195,7 @@ struct HomeView: View {
                     if viewModel.viewStackHandler.navigationState == .unseal, let viewModel = self.viewModel.unsealViewModel {
                         NavigationLink("", destination: UnsealView(viewModel: viewModel), isActive: .constant(isUnseal())).hidden()
                     }
-                    if viewModel.viewStackHandler.navigationState == .privateKey, let viewModel = self.viewModel.showPrivateKeyViewModel {
+                    if viewModel.viewStackHandler.navigationState == .privateKey, let viewModel = self.viewModel.buildShowPrivateKeyVM() {
                         NavigationLink("", destination: ShowPrivateKeyMenuView(viewModel: viewModel), isActive: .constant(isPrivateKey())).hidden()
                     }
                     if viewModel.viewStackHandler.navigationState == .reset, let viewModel = self.viewModel.resetViewModel {
