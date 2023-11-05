@@ -102,12 +102,20 @@ class VaultCardViewModel: ObservableObject, Hashable {
         self.cardBackground = vaultItem.isSealed() ? self.sealedBackgroundImageName() : "bg_card_unsealed"
         
         Task {
-            let cryptoBalance = await self.coinService.fetchCryptoBalance(for: vaultItem)
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            numberFormatter.maximumFractionDigits = 7
+            
+            let fetchedCryptoBalance = await self.coinService.fetchCryptoBalance(for: vaultItem)
             DispatchQueue.main.async {
-                self.cryptoBalance = "\(cryptoBalance) \(vaultItem.coin.coinSymbol)"
+                if let formattedAmount = numberFormatter.string(from: NSNumber(value: fetchedCryptoBalance)) {
+                    self.cryptoBalance = "\(formattedAmount) \(vaultItem.coin.coinSymbol)"
+                } else {
+                    self.cryptoBalance = "\(fetchedCryptoBalance) \(vaultItem.coin.coinSymbol)"
+                }
             }
             
-            let fetchedFiatBalance = await self.coinService.fetchFiatBalance(for: vaultItem, with: cryptoBalance)
+            let fetchedFiatBalance = await self.coinService.fetchFiatBalance(for: vaultItem, with: fetchedCryptoBalance)
             DispatchQueue.main.async {
                 self.fiatBalance = fetchedFiatBalance
             }

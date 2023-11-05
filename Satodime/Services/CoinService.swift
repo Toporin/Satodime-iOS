@@ -57,7 +57,7 @@ class CoinService: PCoinService {
             balance = coinValue
         }
         
-        return "\(balance) \(selectedSecondCurrency)"
+        return "\(String(format: "%.2f", balance)) \(selectedSecondCurrency)"
     }
     
     func fetchAssets(for coinInfo: VaultItem) async -> AssetsResult {
