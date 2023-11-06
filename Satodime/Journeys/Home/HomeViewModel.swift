@@ -248,6 +248,11 @@ final class HomeViewModel: ObservableObject {
     
     // MARK: - NFC
     
+    func gotoCardAuthenticity() {
+        guard self.cardStatus.status != .none else { return }
+        self.navigateTo(destination: .cardAuthenticity)
+    }
+    
     func startReadingCard() {
         self.cardService.getCardActionStateStatus { [weak self] status in
             guard let self = self else { return }
@@ -262,7 +267,7 @@ final class HomeViewModel: ObservableObject {
                 break
             case .notAuthentic(vaults: let vaults):
                 DispatchQueue.main.async {
-                    self.cardStatus.status = .valid
+                    self.cardStatus.status = .invalid
                     self.constructVaultsList(with: vaults)
                     self.navigateTo(destination: .notAuthentic)
                 }

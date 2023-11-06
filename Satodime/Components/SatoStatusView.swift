@@ -33,20 +33,53 @@ struct SatoStatusView: View {
     var onImageTap: () -> Void
     
     var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            if cardStatus.status != .none {
-                Image(cardStatus.cardStatusImage())
-                    .resizable()
-                    .frame(width: 6, height: 6)
-            }
-            
-            Image("ic_sato_small")
-                .resizable()
-                .frame(width: 48, height: 48)
-                .onTapGesture {
-                    onImageTap()
+        HStack {
+            VStack {
+                Spacer()
+                    .frame(height: 5)
+                
+                if cardStatus.status != .none {
+                    Image(cardStatus.cardStatusImage())
+                        .resizable()
+                        .frame(width: 6, height: 6)
                 }
+                
+                Spacer()
+            }
+
+            Spacer()
+                .frame(width: 0)
+            
+            ZStack {
+                Image("ic_sato_small")
+                    .resizable()
+                    .frame(width: 48, height: 48)
+                    .onTapGesture {
+                        onImageTap()
+                    }
+                
+                if cardStatus.status == .invalid {
+                    VStack {
+                        HStack {
+                            Spacer()
+                                .frame(width: 4)
+                            
+                            Text(String(localized: "error"))
+                                .font(.system(size: 9))
+                                .foregroundColor(Constants.Colors.ledRed)
+                                .padding(.vertical, 3)
+                                .padding(.horizontal, 6)
+                                .background(
+                                    Color.black.opacity(0.3)
+                                        .cornerRadius(3)
+                                )
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                }
+            }
+            .frame(width: 54, height: 48)
         }
-        .frame(width: 54, height: 48)
     }
 }

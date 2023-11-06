@@ -25,6 +25,7 @@ enum NavigationState {
     case takeOwnership
     case vaultInitialization
     case notAuthentic
+    case cardAuthenticity
     case unseal
     case privateKey
     case reset
@@ -70,7 +71,7 @@ struct HomeView: View {
                     VStack {
                         HStack {
                             SatoStatusView(cardStatus: self.viewModel.cardStatus) {
-                                self.viewModel.startReadingCard()
+                                self.viewModel.gotoCardAuthenticity()
                             }
                             .padding(.leading, 22)
                             
@@ -177,6 +178,9 @@ struct HomeView: View {
                         }
                     }
                     
+                    if viewModel.viewStackHandler.navigationState == .cardAuthenticity, viewModel.cardStatus.status != .none {
+                        NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardStatus.status == .valid ? .isAuthentic : .notAuthentic)), isActive: .constant(isCardAuthenticity())).hidden()
+                    }
                     if viewModel.viewStackHandler.navigationState == .onboarding {
                         NavigationLink("", destination: OnboardingContainerView(viewModel: OnboardingContainerViewModel()), isActive: .constant(isOnboarding())).hidden()
                     }
@@ -237,6 +241,10 @@ struct HomeView: View {
             viewModel.populateTabs()
             print("swiped to index: \(index)")
         }
+    }
+    
+    func isCardAuthenticity() -> Bool {
+        viewModel.viewStackHandler.navigationState == .cardAuthenticity
     }
 
     func isOnboarding() -> Bool {
