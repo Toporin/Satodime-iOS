@@ -29,7 +29,7 @@
 		<key>UIColorName</key>
 		<string>Launchscreen-background</string>
 		<key>UIImageName</key>
-		<string>Launchscreen-image</string>
+		<string>bg_splash_transp</string>
 		<key>UIImageRespectsSafeAreaInsets</key>
 		<false/>
 	</dict>
