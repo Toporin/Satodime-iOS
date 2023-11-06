@@ -321,7 +321,7 @@ final class HomeViewModel: ObservableObject {
             
             for vault in data.vaults {
                 if vault.isInitialized() {
-                    let viewModel = VaultCardViewModel(walletAddress: vault.address, vaultItem: vault, coinService: CoinService())
+                    let viewModel = VaultCardViewModel(walletAddress: vault.address, vaultItem: vault, coinService: CoinService(), isTestnet: vault.coin.isTestnet)
                     vaults.append(.vaultCard(viewModel))
                 } else {
                     let viewModel = EmptyVaultViewModel(vaultItem: vault)

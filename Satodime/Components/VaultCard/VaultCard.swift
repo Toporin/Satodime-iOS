@@ -49,12 +49,17 @@ struct VaultCard: View {
                 
                 HStack {
                     VStack {
-                        Spacer()
-                        Image(viewModel.imageName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 26, height: 26)
-                            .foregroundColor(.white)
+                        VStack {
+                            Spacer()
+                            Image(viewModel.imageName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 26, height: 26)
+                                .foregroundColor(.white)
+                        }
+                        if viewModel.isTestnet {
+                            SatoText(text: "TESTNET", style: .addressText)
+                        }
                     }
                     Spacer()
                     BalanceView(title: viewModel.balanceTitle, balance: viewModel.fiatBalance, cryptoBalance: viewModel.cryptoBalance)

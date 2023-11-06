@@ -56,7 +56,7 @@ final class ExpertModeViewModel: BaseViewModel {
             switch result {
             case .sealed(let result):
                 DispatchQueue.main.async {
-                    let vaultCardViewModel = VaultCardViewModel(walletAddress: result.vaultItem.address, vaultItem: result.vaultItem, coinService: CoinService())
+                    let vaultCardViewModel = VaultCardViewModel(walletAddress: result.vaultItem.address, vaultItem: result.vaultItem, coinService: CoinService(), isTestnet: result.vaultItem.coin.isTestnet)
                     if(self.vaultCards.items.isEmpty) {
                         self.vaultCards.items.append(.vaultCard(vaultCardViewModel))
                     } else {
