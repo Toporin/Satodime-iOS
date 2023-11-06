@@ -22,7 +22,7 @@ struct SealStatusView: View {
                 .resizable()
                 .frame(width: 9, height: 13)
             
-            Text(status == .sealed ? "Sealed" : "Unsealed")
+            Text(status == .sealed ? String(localized: "sealed") : String(localized: "unsealed"))
                 .foregroundColor(status == .sealed ? Constants.Colors.sealedStatusText : Constants.Colors.unsealedStatusText)
             
             Spacer()

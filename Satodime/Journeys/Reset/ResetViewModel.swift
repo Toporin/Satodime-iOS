@@ -19,16 +19,16 @@ final class ResetViewModel: BaseViewModel {
     let indexPosition: Int
     
     // MARK: - Literals
-    let title = "Warning"
-    let subtitle = "You are about to RESET the following crypto vault."
+    let title = "warning"
+    let subtitle = "youAreAboutToReset"
     
-    let resetText = "**Reset** this **vault** will completely and irrevocably **delete** the corresponding **private keys** from your **Satodime device**."
+    let resetText = "resettingThisCryptoVaultWill"
     
-    let informationText = "After that you will be able to **create a new crypto vault**."
+    let informationText = "afterThatYouWillBeAbleTo"
     
-    let confirmationText = "I confirm that I have made a backup of the corresponding private key."
+    let confirmationText = "iConfirmThatBackup"
     
-    let continueButtonTitle = "Reset the vault"
+    let continueButtonTitle = String(localized: "resetTheVault")
 
     
     init(cardService: PCardService, vaultCardViewModel: VaultCardViewModel, indexPosition: Int, vaultsList: VaultsList) {

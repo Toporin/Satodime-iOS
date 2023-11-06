@@ -31,7 +31,7 @@ struct ShowKeyButton: View {
                 Spacer()
                     .frame(height: 9)
 
-                SatoText(text: "Show key", style: .subtitle)
+                SatoText(text: "showKey", style: .subtitle)
             }
         }
     }

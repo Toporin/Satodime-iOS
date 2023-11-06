@@ -31,7 +31,7 @@ struct ResetButton: View {
                 Spacer()
                     .frame(height: 9)
 
-                SatoText(text: "Reset", style: .subtitle, forcedColor: Constants.Colors.resetTextColor)
+                SatoText(text: "resetBtn", style: .subtitle, forcedColor: Constants.Colors.resetTextColor)
             }
         }
     }

@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 enum ShowPrivateKeyMode: String, Hashable {
-    case legacy = "Show private key (Legacy)"
-    case wif = "Show private key (WIF)"
-    case entropy = "Show entropy"
+    case legacy = "showPrivateKeyLegacy"
+    case wif = "showPrivateKeyWIF"
+    case entropy = "showEntropy"
 }
 
 final class ShowPrivateKeyMenuViewModel: BaseViewModel {
@@ -26,7 +26,7 @@ final class ShowPrivateKeyMenuViewModel: BaseViewModel {
     let keyDisplayOptions: [ShowPrivateKeyMode] = [.legacy, .wif, .entropy]
     
     // MARK: - Literals
-    let title = "Show private key"
+    let title = "showPrivateKey"
     
     init(cardService: PCardService, vaultCardViewModel: VaultCardViewModel, indexPosition: Int) {
         self.cardService = cardService

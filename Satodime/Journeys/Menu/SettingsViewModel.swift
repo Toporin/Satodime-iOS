@@ -16,10 +16,10 @@ final class SettingsViewModel: BaseViewModel {
     @Published var isShowLogs: Bool = false
     
     // MARK: - Literals
-    let title = "Settings"
-    let currencyTitle = "Currency"
-    let starterIntroTitle = "Starter intro"
-    let showLogsButtonTitle = "Show logs"
+    let title = "settings"
+    let currencyTitle = "currency"
+    let starterIntroTitle = "starterIntro"
+    let showLogsButtonTitle = "showLogs"
     
     init(preferencesService: PPreferencesService){
         self.preferencesService = preferencesService

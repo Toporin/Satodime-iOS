@@ -31,7 +31,7 @@ struct AddFundsButton: View {
                 Spacer()
                     .frame(height: 9)
 
-                SatoText(text: "Add funds", style: .subtitle)
+                SatoText(text: "addFunds", style: .subtitle)
             }
         }
     }

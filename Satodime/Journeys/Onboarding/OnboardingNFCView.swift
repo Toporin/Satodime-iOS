@@ -28,7 +28,7 @@ struct OnboardingNFCView: View {
                 SatoText(text: viewModel.subtitleText, style: .subtitle)
                 Spacer()
                     .frame(height: 34)
-                SatoButton(staticWidth: 111, text: "More info", style: .inform) {
+                SatoButton(staticWidth: 111, text: String(localized: "moreInfo"), style: .inform) {
                     viewModel.goToMoreInfo()
                 }
                 Spacer()

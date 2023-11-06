@@ -19,17 +19,21 @@ final class VaultSetupCreateViewModel: BaseViewModel {
     var index: Int
     
     // MARK: - Literals
-    let title = "Create your vault"
-    let subtitle = "You are about to create and seal a vault. A new key pair will be generated automatically."
-    let informationText = "Once the **vault** has been generated,\nthe corresponding **private** **key** is\nhidden in the **Satodime** **chip’s** **memory**."
-    let activateExpertModeText = "Activate the expert mode"
-    let continueButtonTitle = "Create and Seal"
+    let title = "createYourVault"
+    let subtitle = "youAreAboutToCreateAndSeal"
+    let informationText = "onceTheVaultHasBeengenerated"
+    let activateExpertModeText = String(localized: "activateTheExpertMode")
+    let continueButtonTitle = String(localized: "createAndSeal")
     
     init(cardService: PCardService, selectedCrypto: CryptoCurrency, index: Int, vaultCards: VaultsList) {
         self.cardService = cardService
         self.selectedCrypto = selectedCrypto
         self.index = index
         self.vaultCards = vaultCards
+    }
+    
+    func goToExpertMode() {
+        self.isExpertModeViewActive = true
     }
     
     func sealSlot() {

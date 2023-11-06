@@ -30,16 +30,16 @@ final class ExpertModeViewModel: BaseViewModel {
     var index: Int
     
     // MARK: - Literals
-    let title = "Expert mode"
-    let informationText = "The expert mode allows you to: \n\n Select the network Provide the entropy for key generation"
+    let title = "expertMode"
+    let informationText = "theExpertModeAllowsYou"
     
-    let networkChoiceSystem = "Network:"
-    let mainNetText = "MainNet"
-    let testNetText = "TestNet"
+    let networkChoiceSystem = "network"
+    let mainNetText = "mainNet"
+    let testNetText = "testNet"
     
-    let entropyTitle = "Entropy:"
+    let entropyTitle = "entropy"
     
-    let continueButtonTitle = "Create and Seal"
+    let continueButtonTitle = String(localized: "createAndSeal")
     
     // MARK: - Lifecycle
     init(cardService: PCardService, selectedCrypto: CryptoCurrency, index: Int, vaultCards: VaultsList) {

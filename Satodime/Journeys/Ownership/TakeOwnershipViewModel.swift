@@ -13,15 +13,8 @@ final class TakeOwnershipViewModel: BaseViewModel {
     let cardService: PCardService
     
     // MARK: - Literals
-    let title = "Take the ownership"
-    let subtitle = 
-        """
-            In order to perform sensitive operations on the card (seal - unseal - reset), you need to take the ownership. 
-            This right is revocable and transferable at any time in the application options.
-        
-            Click **Accept** to get the ownership right,
-            or **Cancel** to give up.
-        """
+    let title = "takeTheOwnershipTitle"
+    let subtitle = "takeTheOwnershipDescription"
     
     init(cardService: PCardService) {
         self.cardService = cardService

@@ -62,7 +62,7 @@ final class HomeViewModel: ObservableObject {
     var showPrivateKeyViewModel: ShowPrivateKeyMenuViewModel?
     var resetViewModel: ResetViewModel?
     
-    let ownershipAlert: SatoAlert = SatoAlert(title: "Ownership", message: "You are not the owner of this card, so you cannot perform sensitive operations on vaults, such as:\n\n-Create and Seal\n-Unseal\n-Delete\n\nGet more information on how the get the ownership by cliking here.", buttonTitle: "More info", buttonAction: {
+    let ownershipAlert: SatoAlert = SatoAlert(title: "Ownership", message: "ownershipText", buttonTitle: String(localized:"moreInfo"), buttonAction: {
             guard let url = URL(string: "https://satochip.io") else {
                 print("Invalid URL")
                 return
@@ -71,7 +71,7 @@ final class HomeViewModel: ObservableObject {
     })
     
     // MARK: - Literals
-    let viewTitle: String = "Vaults"
+    let viewTitle: String = "vaults"
     
     // MARK: - Lifecycle
     init(cardService: PCardService, coinService: PCoinService) {

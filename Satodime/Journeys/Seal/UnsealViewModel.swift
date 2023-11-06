@@ -17,17 +17,16 @@ final class UnsealViewModel: BaseViewModel {
     let indexPosition: Int
     
     // MARK: - Literals
-    let title = "Warning"
-    let subtitle = "You are about to UNSEAL the following crypto vault."
+    let title = "warning"
+    let subtitle = "youAreAboutToUnseal"
     
-    let unsealText = "**Unsealing** this crypto vault will reveal the corresponding private key."
-    let transferText = "You can then transfer the entire balance to another wallet using the revealed private key."
+    let unsealText = "unsealingThisCryptoVaultWillReveal"
+    let transferText = "youCanThenTransferTheEntireBalance"
     
-    let informationText = "This action is irreversible."
+    let informationText = "thisActionIsIrreversible"
     
-    let continueButtonTitle = "UNSEAL"
+    let continueButtonTitle = String(localized: "unseal")
 
-    
     init(cardService: PCardService, vaultCardViewModel: VaultCardViewModel, indexPosition: Int) {
         self.cardService = cardService
         self.vaultCardViewModel = vaultCardViewModel

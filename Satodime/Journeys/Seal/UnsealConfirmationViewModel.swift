@@ -13,12 +13,12 @@ final class UnsealConfirmationViewModel: BaseViewModel {
     let indexPosition: Int
     
     // MARK: - Literals
-    let title = "Congrats!"
-    let subtitle = "**Vault** successfully **UNSEAL**"
+    let title = "congrats"
+    let subtitle = "vaultSuccessfullyUnseal"
     
-    let confirmationText = "You can now view the corresponding private key and import it into another wallet."
+    let confirmationText = "youCanNowViewThePrivateKey"
         
-    let continueButtonTitle = "Show the private key"
+    let continueButtonTitle = String(localized: "showThePrivateKey")
     
     init(vaultCardViewModel: VaultCardViewModel, indexPosition: Int) {
         self.vaultCardViewModel = vaultCardViewModel

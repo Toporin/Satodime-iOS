@@ -13,12 +13,12 @@ final class ResetConfirmationViewModel: BaseViewModel {
     let indexPosition: Int
     
     // MARK: - Literals
-    let title = "**Congrats!**"
-    let subtitle = "Vault successfully RESET"
+    let title = "**\(String(localized: "congrats"))**"
+    let subtitle = "vaultSuccessfullyReset"
     
-    let confirmationText = "You can now **CREATE** & **SEAL** a new **vault**."
+    let confirmationText = "youCanNowCreateAndSeal"
         
-    let continueButtonTitle = "Back to my vaults"
+    let continueButtonTitle = String(localized: "backToMyVaults")
     
     init(vaultCardViewModel: VaultCardViewModel, indexPosition: Int) {
         self.vaultCardViewModel = vaultCardViewModel

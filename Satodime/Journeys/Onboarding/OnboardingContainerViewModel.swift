@@ -25,7 +25,7 @@ final class OnboardingContainerViewModel: BaseViewModel {
     }
     
     // MARK: - Literals
-    let startButtonTitle = "Start"
+    let startButtonTitle = String(localized: "start")
 
     func goToNextPage() {
         if currentPageIndex < numberOfPages - 1 {

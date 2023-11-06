@@ -94,7 +94,7 @@ struct ShowPrivateKeyView: View {
                         .frame(height: 38)
 
                     HStack(spacing: 15) {
-                        SatoText(text: "Copy to clipboard", style: .addressText)
+                        SatoText(text: "copyToClipboard", style: .addressText)
                             .lineLimit(1)
                             .frame(alignment: .trailing)
                         

@@ -23,7 +23,7 @@ struct ProductButton: View {
 
                 VStack {
                     HStack {
-                        Text("All our\nproducts")
+                        Text(String(localized: "allOurProducts"))
                             .font(
                                 Font.custom("Outfit", size: 20)
                                     .weight(.medium)

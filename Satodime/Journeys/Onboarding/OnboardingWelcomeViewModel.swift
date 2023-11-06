@@ -11,6 +11,6 @@ final class OnboardingWelcomeViewModel: ObservableObject {
 
     // MARK: - Literals
     let titleText = "Welcome"
-    let subtitleText = "Satodime lets you easily create vaults to store your cryptocurrencies. It supports the most innovative crypto-assets."
+    let subtitleText = "satodimeLetsYou"
 
 }

@@ -19,18 +19,18 @@ struct ButtonBox: View {
         }) {
             VStack {
                 HStack {
-                    Text(text)
-                        .font(.headline)
-                        .foregroundColor(.white)
+                    SatoText(text: text, style: .cellTitle)
                         .multilineTextAlignment(.leading)
-                        .padding(.leading, 25)
-                        .padding(.trailing, 16)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 8)
+                    
+                    Spacer()
                     
                     Image(systemName: iconName)
                         .resizable()
                         .frame(width: 31, height: 31)
                         .foregroundColor(.white)
-                        .padding(.trailing, 25)
+                        .padding(.trailing, 16)
                 }
                 .padding(.top, 18)
                 .padding(.bottom, 18)

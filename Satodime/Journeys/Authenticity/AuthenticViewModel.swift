@@ -23,11 +23,11 @@ class AuthenticViewModel: BaseViewModel {
         switch authState {
         case .isAuthentic:
             self.imageForState = Image("il_authentic")
-            self.textForState = "Card authentication successful"
+            self.textForState = "authenticationSuccess"
             self.backgroundColor = Constants.Colors.viewBackground
         case .notAuthentic:
             self.imageForState = Image("il_not_authentic")
-            self.textForState = "Card authentication failed!\n\nImpossible to authenticate the issuer of this card. It has not been issued by Satochip S.R.L.\n\nIf you have not loaded the card yourself, be extremely careful!"
+            self.textForState = "authenticationFailed"
             self.backgroundColor = Constants.Colors.errorViewBackground
         }
     }

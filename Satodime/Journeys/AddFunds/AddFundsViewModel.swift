@@ -18,9 +18,9 @@ final class AddFundsViewModel: BaseViewModel {
     private var vault: VaultItem
 
     // MARK: - Literals
-    let viewTitle = "Add funds"
-    let title: String = "Deposit address"
-    let subtitle: String = "You or anybody can deposit funds to this vault by sending crypto tokens to this address."
+    let viewTitle = "addFunds"
+    let title: String = "depositAddress"
+    let subtitle: String = "youOrAnybodyCanDepositFunds"
     
     init(indexPosition: Int, vault: VaultItem) {
         self.indexPosition = indexPosition

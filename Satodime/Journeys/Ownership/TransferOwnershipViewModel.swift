@@ -14,10 +14,9 @@ final class TransferOwnershipViewModel: BaseViewModel {
     let cardService: PCardService
     
     // MARK: - Literals
-    let title = "Transfer ownership"
-    let subtitle =
-        "Please note!\n\nThis operation releases the ownership of the card. The next person to scan the card becomes its owner.\n\nOnly the owner of the card can perform sensitive operations (seal-unseal-reset) on the mobile device.\n\nClick **Transfer** to continue,\nor **Cancel** to give up."
-    let transferButtonTitle = "Transfer"
+    let title = "transferOwner"
+    let subtitle = "transferOwnershipDescription"
+    let transferButtonTitle = String(localized: "transferBtn")
     
     init(cardService: PCardService) {
         self.cardService = cardService

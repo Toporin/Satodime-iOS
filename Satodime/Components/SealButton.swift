@@ -30,7 +30,7 @@ struct UnsealButton: View {
                 Spacer()
                     .frame(height: 9)
 
-                SatoText(text: "Unseal", style: .subtitle, forcedColor: .white)
+                SatoText(text: "unseal", style: .subtitle, forcedColor: .white)
             }
         }
     }

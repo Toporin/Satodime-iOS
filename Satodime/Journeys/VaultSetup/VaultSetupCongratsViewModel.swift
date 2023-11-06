@@ -14,10 +14,10 @@ final class VaultSetupCongratsViewModel: BaseViewModel {
     @Published var isNextViewActive = false
     
     // MARK: - Literals
-    let title = "Congrats!"
-    let subtitle = "Your vault has been successfully created and sealed."
-    let informationText = "Remember that your **private keys** will be accessible once you’ve **unsealed** your **vault**."
-    let continueButtonTitle = "Show my vault"
+    let title = "congrats"
+    let subtitle = "yourVaultsHasBeenCreated"
+    let informationText = "rememberPrivateKeys"
+    let continueButtonTitle = String(localized: "showMyVault")
     
     init(selectedCrypto: CryptoCurrency) {
         self.selectedCrypto = selectedCrypto

@@ -47,7 +47,7 @@ struct SatoButton: View {
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.horizontal, horizontalPadding)
-                .frame(width: staticWidth, height: 40)
+                .frame(minWidth: staticWidth, minHeight: 40, maxHeight: 40)
                 .background(isEnabled != nil ? (isEnabled! ? style.backgroundColor : Color.gray) : style.backgroundColor)
                 .cornerRadius(20)
                 .opacity(isEnabled != nil ? (isEnabled! ? 1.0 : 0.5) : 1.0)

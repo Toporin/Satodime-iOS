@@ -14,18 +14,18 @@ final class CardInfoViewModel: BaseViewModel {
     @Published var shouldShowAuthenticityScreen = false
     
     // MARK: - Literals
-    let title = "Card info"
-    let ownerTitle = "Card ownership status"
-    let ownerText = "You are the card owner"
-    let notOwnerText = "You are not the card owner"
+    let title = "cardInfo"
+    let ownerTitle = "cardOwnershipStatus"
+    let ownerText = "youAreTheCardOwner"
+    let notOwnerText = "youAreNotTheCardOwner"
     
-    let cardVersionTitle = "Card version"
+    let cardVersionTitle = "cardVersion"
     
-    let cardGenuineTitle = "Card authenticity"
-    let cardGenuineText = "This card is genuine"
-    let cardNotGenuineText = "This card is not genuine"
+    let cardGenuineTitle = "cardAuthenticity"
+    let cardGenuineText = "thisCardIsGenuine"
+    let cardNotGenuineText = "thisCardIsNotGenuine"
     
-    let certButtonTitle = "Certificates details"
+    let certButtonTitle = "certDetails"
     
     init(cardVaults: CardVaults) {
         self.cardVaults = cardVaults

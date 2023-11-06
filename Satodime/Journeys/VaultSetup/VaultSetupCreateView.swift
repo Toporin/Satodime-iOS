@@ -53,13 +53,11 @@ struct VaultSetupCreateView: View {
                     .cornerRadius(20)
                 
                 Spacer()
-                    .frame(height: 64)
+                    .frame(height: 22)
                 
-                HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    Spacer()
-                    SatoToggle(isOn: $viewModel.isExpertModeActivated, label: viewModel.activateExpertModeText)
-                    Spacer()
-                })
+                SatoButton(staticWidth: 177, text: viewModel.activateExpertModeText, style: .inform) {
+                    viewModel.goToExpertMode()
+                }
                 
                 Spacer()
                 

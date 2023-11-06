@@ -31,12 +31,12 @@ struct MenuView: View {
                 
                 GeometryReader { geometry in
                     HStack(spacing: 10) {
-                        MenuButton(title: "Card's information", iconName: "ic_credit_card", iconWidth: 34, iconHeight: 34, backgroundColor: Constants.Colors.grayMenuButton, action: {
+                        MenuButton(title: String(localized: "cardInfo"), iconName: "ic_credit_card", iconWidth: 34, iconHeight: 34, backgroundColor: Constants.Colors.grayMenuButton, action: {
                             self.viewModel.onCardInfo()
                         })
                         .frame(width: geometry.size.width * 0.50 - 15)
 
-                        MenuButton(title: "Transfer ownership", iconName: "ic_transfer_owner", iconWidth: 27, iconHeight: 27, backgroundColor: Constants.Colors.blueMenuButton, action: {
+                        MenuButton(title: String(localized: "transferOwner"), iconName: "ic_transfer_owner", iconWidth: 27, iconHeight: 27, backgroundColor: Constants.Colors.blueMenuButton, action: {
                             self.viewModel.onTransferOwner()
                         })
                         .frame(width: geometry.size.width * 0.50 - 15)
@@ -49,12 +49,12 @@ struct MenuView: View {
                 
                 GeometryReader { geometry in
                     HStack(spacing: 10) {
-                        MenuButton(title: "How to use Satodime", iconName: "ic_howto", iconWidth: 34, iconHeight: 34, backgroundColor: Constants.Colors.greenMenuButton, action: {
+                        MenuButton(title: String(localized: "howToUse"), iconName: "ic_howto", iconWidth: 34, iconHeight: 34, backgroundColor: Constants.Colors.greenMenuButton, action: {
                             viewModel.openURL(.howToUse)
                         })
                         .frame(width: geometry.size.width * 0.65 - 15)
                         
-                        MenuButton(title: "Settings", iconName: "ic_settings", iconWidth: 27, iconHeight: 27, backgroundColor: Constants.Colors.blueMenuButton, action: {
+                        MenuButton(title: String(localized: "settings"), iconName: "ic_settings", iconWidth: 27, iconHeight: 27, backgroundColor: Constants.Colors.blueMenuButton, action: {
                             viewModel.onSettings()
                         })
                         .frame(width: geometry.size.width * 0.35 - 15)
@@ -66,11 +66,11 @@ struct MenuView: View {
                     .frame(height: 15)
                 
                 HStack(spacing: 10) {
-                    SmallMenuButton(text: "Terms of service", backgroundColor: Constants.Colors.darkBlueMenuButton, action: {
+                    SmallMenuButton(text: String(localized: "termsOfService"), backgroundColor: Constants.Colors.darkBlueMenuButton, action: {
                         viewModel.openURL(.terms)
                     })
                     
-                    SmallMenuButton(text: "Privacy policy", backgroundColor: Constants.Colors.darkBlueMenuButton, action: {
+                    SmallMenuButton(text: String(localized: "privacyPolicy"), backgroundColor: Constants.Colors.darkBlueMenuButton, action: {
                         viewModel.openURL(.privacy)
                     })
                 }

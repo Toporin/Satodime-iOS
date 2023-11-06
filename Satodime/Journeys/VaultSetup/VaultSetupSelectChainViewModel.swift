@@ -16,8 +16,8 @@ final class VaultSetupSelectChainViewModel: BaseViewModel {
     var vaultCards: VaultsList
     
     // MARK: - Literals
-    let title = "Select the blockchain"
-    let subtitle = "Select the cryptocurrency you want to store."
+    let title = "selectTheBlockchain"
+    let subtitle = "selectTheCrypto"
     
     init(index: Int, vaultCards: VaultsList) {
         self.index = index

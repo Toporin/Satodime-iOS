@@ -37,7 +37,7 @@ struct ShowPrivateKeyMenuView: View {
                             }.listRowBackground(Color.clear)
                     }
                     
-                    ButtonBox(text: "How do I export my private key", iconName: "") {
+                    ButtonBox(text: String(localized: "howDoiExportPrivateKey"), iconName: "") {
                         viewModel.gotoExportKey()
                     }
                     .listRowBackground(Color.clear)
@@ -91,7 +91,7 @@ struct KeyBottomSheetView: View {
                     .frame(height: 53)
 
                 HStack(spacing: 15) {
-                    SatoText(text: "Copy to clipboard", style: .addressText)
+                    SatoText(text: "copyToClipboard", style: .addressText)
                         .lineLimit(1)
                         .frame(alignment: .trailing)
                     
