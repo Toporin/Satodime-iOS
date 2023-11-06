@@ -81,6 +81,16 @@ struct HomeView: View {
                             
                             Spacer()
                             
+                            if !viewModel.vaultCards.items.isEmpty {
+                                Button(action: {
+                                    viewModel.startReadingCard()
+                                }) {
+                                    Image("ic_refresh")
+                                        .resizable()
+                                        .frame(width: 24, height: 24)
+                                }.padding(.trailing, 8)
+                            }
+                            
                             Button(action: {
                                 viewModel.goToMenuView()
                             }) {
