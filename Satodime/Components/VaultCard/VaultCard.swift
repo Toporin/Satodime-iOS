@@ -36,6 +36,22 @@ struct VaultCard: View {
                     Spacer()
                     AddressView(text: viewModel.addressText) {
                         UIPasteboard.general.string = viewModel.addressText
+                        let generator = UIImpactFeedbackGenerator(style: .medium)
+                        generator.prepare()
+                        generator.impactOccurred()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            generator.impactOccurred()
+                        }
+                    }
+                    if let weblink = viewModel.addressWebLink, let weblinkUrl = URL(string: weblink) {
+                        Button(action: {
+                            UIApplication.shared.open(weblinkUrl)
+                        }) {
+                            Image("ic_link")
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .padding(.top, 20)

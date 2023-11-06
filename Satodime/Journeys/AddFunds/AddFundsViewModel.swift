@@ -33,6 +33,13 @@ final class AddFundsViewModel: BaseViewModel {
 
     func copyToClipboard() {
         UIPasteboard.general.string = self.pubAddressToDisplay
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        generator.impactOccurred()
+        generator.impactOccurred()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            generator.impactOccurred()
+        }
     }
     
     func getSealStatus() -> SealStatus {

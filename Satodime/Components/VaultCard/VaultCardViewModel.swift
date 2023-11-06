@@ -29,6 +29,7 @@ class VaultCardViewModel: ObservableObject, Hashable {
     let coinService: PCoinService
     let walletAddress: String
     let isTestnet: Bool
+    let addressWebLink: String?
 
     @Published var vaultItem: VaultItem {
         didSet {
@@ -64,11 +65,12 @@ class VaultCardViewModel: ObservableObject, Hashable {
     
     }
 
-    init(walletAddress: String, vaultItem: VaultItem, coinService: PCoinService, isTestnet: Bool) {
+    init(walletAddress: String, vaultItem: VaultItem, coinService: PCoinService, isTestnet: Bool, addressWebLink: String?) {
         self.coinService = coinService
         self.walletAddress = walletAddress
         self.vaultItem = vaultItem
         self.isTestnet = isTestnet
+        self.addressWebLink = addressWebLink
         self.indexId = 0
         self.positionText = "00"
         self.addressText = ""

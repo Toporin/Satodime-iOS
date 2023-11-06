@@ -151,6 +151,13 @@ class KeyBottomSheetViewModel: ObservableObject {
 
     func copyToClipboard() {
         UIPasteboard.general.string = self.keyToDisplay
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        generator.impactOccurred()
+        generator.impactOccurred()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            generator.impactOccurred()
+        }
     }
 }
 

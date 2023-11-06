@@ -48,7 +48,7 @@ final class VaultSetupCreateViewModel: BaseViewModel {
             switch result {
             case .sealed(let result):
                 DispatchQueue.main.async {
-                    let vaultCardViewModel = VaultCardViewModel(walletAddress: result.vaultItem.address, vaultItem: result.vaultItem, coinService: CoinService(), isTestnet: result.vaultItem.coin.isTestnet)
+                    let vaultCardViewModel = VaultCardViewModel(walletAddress: result.vaultItem.address, vaultItem: result.vaultItem, coinService: CoinService(), isTestnet: result.vaultItem.coin.isTestnet, addressWebLink: result.vaultItem.coin.getAddressWebLink(address: result.vaultItem.address))
                     if(self.vaultCards.items.isEmpty) {
                         self.vaultCards.items.append(.vaultCard(vaultCardViewModel))
                     } else {
