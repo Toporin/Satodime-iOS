@@ -20,9 +20,8 @@ struct MenuButton: View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Text(title)
-                        .font(.headline)
-                        .foregroundColor(.white)
+                    SatoText(text: title, style: .subtitle, alignment: .leading)
+                        .lineLimit(nil)
                         .padding([.top, .leading])
                     Spacer()
                 }
@@ -36,7 +35,7 @@ struct MenuButton: View {
                         .padding([.trailing, .bottom])
                 }
             }
-            .frame(maxWidth: .infinity, minHeight: 107, maxHeight: 107)
+            .frame(maxWidth: .infinity, minHeight: 120, maxHeight: 120)
             .background(backgroundColor)
             .cornerRadius(20)
         }

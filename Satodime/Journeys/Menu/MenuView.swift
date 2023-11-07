@@ -42,7 +42,7 @@ struct MenuView: View {
                         .frame(width: geometry.size.width * 0.50 - 15)
                     }
                     .padding([.horizontal], 10)
-                }.frame(height: 107)
+                }.frame(height: 120)
                 
                 Spacer()
                     .frame(height: 10)
@@ -60,7 +60,7 @@ struct MenuView: View {
                         .frame(width: geometry.size.width * 0.35 - 15)
                     }
                     .padding([.horizontal], 10)
-                }.frame(height: 107)
+                }.frame(height: 120)
                 
                 Spacer()
                     .frame(height: 15)

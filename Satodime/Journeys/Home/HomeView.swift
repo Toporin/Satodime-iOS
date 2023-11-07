@@ -188,11 +188,11 @@ struct HomeView: View {
                         }
                     }
                     
-                    if viewModel.viewStackHandler.navigationState == .cardAuthenticity, viewModel.cardStatus.status != .none {
-                        NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardStatus.status == .valid ? .isAuthentic : .notAuthentic)), isActive: .constant(isCardAuthenticity())).hidden()
-                    }
                     if viewModel.viewStackHandler.navigationState == .onboarding {
                         NavigationLink("", destination: OnboardingContainerView(viewModel: OnboardingContainerViewModel()), isActive: .constant(isOnboarding())).hidden()
+                    }
+                    if viewModel.viewStackHandler.navigationState == .cardAuthenticity, viewModel.cardStatus.status != .none {
+                        NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardStatus.status == .valid ? .isAuthentic : .notAuthentic)), isActive: .constant(isCardAuthenticity())).hidden()
                     }
                     if viewModel.viewStackHandler.navigationState == .notAuthentic {
                         NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: .notAuthentic)), isActive: .constant(isNotAuthentic())).hidden()
