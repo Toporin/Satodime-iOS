@@ -22,18 +22,18 @@ struct TakeOwnershipView: View {
                 Spacer()
                     .frame(height: 37)
                 Image("il-onboard-2")
-                    .resizable()
+                    .frame(maxHeight: 210)
                     .scaledToFit()
                 Spacer()
                     .frame(height: 37)
                 SatoText(text: viewModel.subtitle, style: .subtitle)
                 Spacer()
-                SatoButton(staticWidth: 196, text: "Accept", style: .confirm, horizontalPadding: 60) {
+                SatoButton(staticWidth: 196, text: "accept", style: .confirm, horizontalPadding: 60) {
                     viewModel.acceptCard()
                 }
                 Spacer()
                     .frame(height: 20)
-                SatoButton(staticWidth: 222, text: "Cancel", style: .inform, horizontalPadding: 30) {
+                SatoButton(staticWidth: 222, text: "cancel", style: .inform, horizontalPadding: 30) {
                     viewModel.cancel()
                 }
                 Spacer()
