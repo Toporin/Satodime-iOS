@@ -62,7 +62,7 @@ final class HomeViewModel: ObservableObject {
     var showPrivateKeyViewModel: ShowPrivateKeyMenuViewModel?
     var resetViewModel: ResetViewModel?
     
-    let ownershipAlert: SatoAlert = SatoAlert(title: "Ownership", message: "ownershipText", buttonTitle: String(localized:"moreInfo"), buttonAction: {
+    let ownershipAlert: SatoAlert = SatoAlert(title: "ownership", message: "ownershipText", buttonTitle: String(localized:"moreInfo"), buttonAction: {
             guard let url = URL(string: "https://satochip.io") else {
                 print("Invalid URL")
                 return
