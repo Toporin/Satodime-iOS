@@ -22,7 +22,7 @@ struct TransferOwnershipView: View {
                 Spacer()
                     .frame(height: 37)
                 Image("il-onboard-2")
-                    .resizable()
+                    .frame(maxHeight: 210)
                     .scaledToFit()
                 Spacer()
                     .frame(height: 37)
