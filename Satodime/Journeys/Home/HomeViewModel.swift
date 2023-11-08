@@ -352,6 +352,20 @@ final class HomeViewModel: ObservableObject {
         return input
     }
     
+    func getBalanceRoundedValue(originalString: String, with decimals: Int) -> String {
+        if let doubleValue = Double(originalString) {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = decimals
+            formatter.minimumFractionDigits = 2
+            
+            if let formattedString = formatter.string(from: NSNumber(value: doubleValue)) {
+                return formattedString
+            }
+        }
+        return originalString
+    }
+    
     func populateTabs() {
         guard !self.vaultCards.items.isEmpty else { return }
         
@@ -372,22 +386,25 @@ final class HomeViewModel: ObservableObject {
                     let mainTokenItem = TokenCellViewModel(
                         imageUri: viewModel.imageName,
                         name: viewModel.vaultItem.getCoinDenominationString(),
-                        cryptoBalance: "\(viewModel.vaultItem.balance ?? 0.0) \(viewModel.vaultItem.getCoinShortBalanceString())",
-                        fiatBalance: "\(viewModel.vaultItem.totalTokenValueInSecondCurrency ?? 0.0)",
+                        cryptoBalance: "\(assets.mainCryptoBalance)",
+                        fiatBalance: "\(assets.mainCryptoFiatBalance)",
                         mainToken: viewModel.vaultItem.getCoinSymbol())
                     
                     tokensList.append(mainTokenItem)
+                    
+                    // tokenValueInFirstCurrency eg.: in ETH
+                    // tokenValueInSecondCurrency eg.: in EUR
                     
                     for tokenItem in assets.tokenList {
                         if let name = tokenItem["name"],
                            let tokenIconUrl = tokenItem["tokenIconUrl"],
                            let _ = tokenItem["contract"] {
-                            let fiatBalance = viewModel.vaultItem.getTokenBalanceString(tokenData: tokenItem)
-                            let cryptoBalance = viewModel.vaultItem.totalTokenValueInSecondCurrency
+                            let fiatBalance = self.getBalanceRoundedValue(originalString: tokenItem["tokenValueInSecondCurrency"] ?? "0.0", with: 2)
+                            let cryptoBalance = self.getBalanceRoundedValue(originalString: tokenItem["tokenBalance"] ?? "0.0", with: 7)
                             let tokenCellViewModel = TokenCellViewModel(
                                 imageUri: tokenIconUrl,
                                 name: name,
-                                cryptoBalance: "\(cryptoBalance ?? 0.0)",
+                                cryptoBalance: cryptoBalance,
                                 fiatBalance: fiatBalance)
                             tokensList.append(tokenCellViewModel)
                         }

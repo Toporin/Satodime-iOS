@@ -11,6 +11,8 @@ import Foundation
 // MARK: - Data
 
 struct AssetsResult {
+    let mainCryptoBalance: Double
+    let mainCryptoFiatBalance: String
     let nftList: [[String:String]]
     let tokenList: [[String:String]]
 }
@@ -19,6 +21,7 @@ struct AssetsResult {
 
 protocol PCoinService {
     func fetchCryptoBalance(for coinInfo: VaultItem) async -> Double
+    func fetchCryptoTotalBalance(for coinInfo: VaultItem) async -> Double
     func fetchFiatBalance(for coinInfo: VaultItem, with cryptoBalance: Double) async -> String
     func fetchAssets(for coinInfo: VaultItem) async -> AssetsResult
 }
@@ -34,7 +37,7 @@ class CoinService: PCoinService {
         
         logger.log("fetching balance...")
         var balance: Double = 0.0
-        let addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: address) ?? "")
+        // let addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: address) ?? "")
         
         do {
             balance = try await coinInfo.coin.getBalance(addr: address)
@@ -44,6 +47,27 @@ class CoinService: PCoinService {
         }
         
         return balance
+    }
+    
+    func fetchCryptoTotalBalance(for coinInfo: VaultItem) async -> Double {
+        let address = coinInfo.address
+        
+        logger.log("fetching balance...")
+        var balance: Double = 0.0
+        // let addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: address) ?? "")
+        
+        do {
+            balance = try await coinInfo.coin.getBalance(addr: address)
+        } catch {
+            logger.error("Request failed with error: \(error)")
+            logger.error("Coin: \(coinInfo.coin.coinSymbol)")
+        }
+        
+        let tokenBalance = await self.fetchTokensTotalBalance(for: coinInfo)
+        
+        let totalBalance = balance + tokenBalance
+        
+        return totalBalance
     }
     
     func fetchFiatBalance(for coinInfo: VaultItem, with cryptoBalance: Double) async -> String {
@@ -60,6 +84,54 @@ class CoinService: PCoinService {
         return "\(String(format: "%.2f", balance)) \(selectedSecondCurrency)"
     }
     
+    func fetchTokensTotalBalance(for coinInfo: VaultItem) async -> Double {
+        let selectedFirstCurrency: String = coinInfo.coin.coinSymbol
+        var selectedSecondCurrency: String = self.preferenceService.getCurrency()
+        
+        var address = coinInfo.address
+        let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
+        
+        var totalTokenValueInFirstCurrency = 0.0
+        var totalTokenValueInSecondCurrency = 0.0
+        
+        var tokenList: [[String:String]]=[]
+        for asset in assetList {
+            if let contract = asset["contract"]{
+                var assetCopy = asset
+                assetCopy["type"] = "token"
+                
+                // get price if available
+                if let tokenBalance = coinInfo.getTokenBalanceDouble(tokenData: asset),
+                   let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
+                   let currencyForExchangeRate = asset["currencyForExchangeRate"] {
+                    
+                    assetCopy["tokenBalance"] = String(tokenBalance)
+                    
+                    if let currencyExchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
+                    {
+                        let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
+                        totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
+                        assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
+                        assetCopy["firstCurrency"] = selectedFirstCurrency
+                        print("in fetchDataFromWeb tokenValueInFirstCurrency: \(tokenValueInFirstCurrency)")
+                    }
+                    
+                }
+                tokenList.append(assetCopy)
+                print("NfcReader: added assetCopy: \(assetCopy)")
+            }
+        }
+
+        print("NfcReader: tokenList: \(tokenList)")
+        
+        print("Total balance 1 : \(totalTokenValueInFirstCurrency) ")
+        print("Total balance 2 : \(totalTokenValueInSecondCurrency) ")
+        
+        return totalTokenValueInFirstCurrency
+        
+        
+    }
+    
     func fetchAssets(for coinInfo: VaultItem) async -> AssetsResult {
         let selectedFirstCurrency: String = coinInfo.coin.coinSymbol
         var selectedSecondCurrency: String = self.preferenceService.getCurrency()
@@ -72,6 +144,9 @@ class CoinService: PCoinService {
         var address = coinInfo.address
         let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
         #endif*/
+        
+        var mainCryptoBalance = await self.fetchCryptoBalance(for: coinInfo)
+        var mainCryptoFiatBalance = await self.fetchFiatBalance(for: coinInfo, with: mainCryptoBalance)
         
         var address = coinInfo.address
         let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
@@ -103,6 +178,8 @@ class CoinService: PCoinService {
                     if let tokenBalance = coinInfo.getTokenBalanceDouble(tokenData: asset),
                         let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
                         let currencyForExchangeRate = asset["currencyForExchangeRate"] {
+                        
+                        assetCopy["tokenBalance"] = String(tokenBalance)
                         
                         print("in fetchDataFromWeb [\(index)] tokenBalance: \(tokenBalance)")
                         print("in fetchDataFromWeb [\(index)] tokenExchangeRate: \(tokenExchangeRate)")
@@ -141,7 +218,11 @@ class CoinService: PCoinService {
         print("NfcReader: tokenList: \(tokenList)")
         print("NfcReader: nftList: \(nftList)")
         
+        print("Total balance 1 : \(totalTokenValueInFirstCurrency) ")
+        print("Total balance 2 : \(totalTokenValueInSecondCurrency) ")
         let result = AssetsResult(
+            mainCryptoBalance: mainCryptoBalance,
+            mainCryptoFiatBalance: mainCryptoFiatBalance,
             nftList: nftList,
             tokenList: tokenList)
         

@@ -29,25 +29,33 @@ class TokenCellViewModel: ObservableObject {
         self.imageUrl = imageUrl
         self.name = name
         self.cryptoBalance = cryptoBalance
-        self.fiatBalance = "\(fiatBalance) \(self.preferenceService.getCurrency())"
+        self.fiatBalance = fiatBalance
         self.mainToken = mainToken
         if mainToken == nil, let imageUrl = self.imageUrl {
             self.fetchImage(url: imageUrl)
+            self.fiatBalance = "\(fiatBalance) \(self.preferenceService.getCurrency())"
+        } else {
+            self.fiatBalance = "\(fiatBalance)"
         }
     }
+
     
     func fetchImage(url: URL) {
         URLSession.shared.dataTaskPublisher(for: url)
             .map { UIImage(data: $0.data) }
             .replaceError(with: nil)
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] in self?.image = $0 })
+            .sink(receiveValue: {
+                [weak self] in 
+                let result = $0
+                self?.image = $0
+            })
             .store(in: &cancellables)
     }
 }
 
 struct TokenCell: View {
-    let viewModel: TokenCellViewModel
+    @ObservedObject var viewModel: TokenCellViewModel
 
     var body: some View {
         HStack {

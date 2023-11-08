@@ -121,7 +121,7 @@ class VaultCardViewModel: ObservableObject, Hashable {
             numberFormatter.numberStyle = .decimal
             numberFormatter.maximumFractionDigits = 7
             
-            let fetchedCryptoBalance = await self.coinService.fetchCryptoBalance(for: vaultItem)
+            let fetchedCryptoBalance = await self.coinService.fetchCryptoTotalBalance(for: vaultItem)
             DispatchQueue.main.async {
                 if let formattedAmount = numberFormatter.string(from: NSNumber(value: fetchedCryptoBalance)) {
                     self.cryptoBalance = "\(formattedAmount) \(vaultItem.coin.coinSymbol)"
