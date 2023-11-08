@@ -10,6 +10,7 @@ import SwiftUI
 enum SatoTextStyle {
     case title
     case lightTitle
+    case lightTitleSmall
     case subtitle
     case lightSubtitle
     case graySubtitle
@@ -46,6 +47,8 @@ enum SatoTextStyle {
             return 35
         case .lightTitle:
             return 26
+        case .lightTitleSmall:
+            return 22
         case .cellSmallTitle:
             return 16
         }
@@ -75,6 +78,8 @@ enum SatoTextStyle {
             return 28
         case .lightTitle:
             return 24
+        case .lightTitleSmall:
+            return 20
         case .cellSmallTitle:
             return 14
         }
@@ -82,7 +87,7 @@ enum SatoTextStyle {
 
     var font: Font {
         switch self {
-        case .title, .cellTitle, .balanceLarge, .lightTitle, .cellSmallTitle:
+        case .title, .cellTitle, .balanceLarge, .lightTitle, .lightTitleSmall, .cellSmallTitle:
             return .custom("Outfit-Medium", size: self.fontSize)
         case .subtitle:
             return .custom("OpenSans-variable", size: self.fontSize)
@@ -99,7 +104,7 @@ enum SatoTextStyle {
 
     var textColor: Color {
         switch self {
-        case .title, .lightTitle:
+        case .title, .lightTitle, .lightTitleSmall:
             return .white
         case .subtitle, .lightSubtitle:
             return .white
@@ -134,7 +139,7 @@ enum SatoTextStyle {
             return .ultraLight
         case .addressText:
             return .semibold
-        case .balanceLarge, .lightTitle, .cellSmallTitle:
+        case .balanceLarge, .lightTitle, .lightTitleSmall, .cellSmallTitle:
             return .medium
         case .graySubtitle, .graySubtitle18:
             return .regular

@@ -23,7 +23,8 @@ struct ResetView: View {
                 Spacer()
                     .frame(height: 37)
                 
-                SatoText(text: viewModel.subtitle, style: .lightTitle)
+                SatoText(text: viewModel.subtitle, style: .lightTitleSmall)
+                    .lineLimit(nil)
                 
                 Spacer()
                     .frame(height: 29)
@@ -55,9 +56,7 @@ struct ResetView: View {
                     .frame(height: 27)
                 
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    Spacer()
                     SatoToggle(isOn: $viewModel.hasUserConfirmedTerms, label: viewModel.confirmationText)
-                    Spacer()
                 })
                 
                 Spacer()
