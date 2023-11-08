@@ -13,6 +13,7 @@ final class AddFundsViewModel: BaseViewModel {
     @Published var pubAddressToDisplay: String = ""
     @Published var slotNumber: String = ""
     @Published var coinIcon: String = ""
+    @Published var headerImageName: String = ""
     
     let indexPosition: Int
     private var vault: VaultItem
@@ -29,6 +30,7 @@ final class AddFundsViewModel: BaseViewModel {
         self.slotNumber = "0\(indexPosition+1)"
         self.pubAddressToDisplay = vault.address
         self.coinIcon = "ic_\(vault.getCoinSymbol().lowercased())"
+        self.headerImageName = self.vault.isSealed() ? "bg_header_addfunds" : "bg_red_gradient"
     }
 
     func copyToClipboard() {

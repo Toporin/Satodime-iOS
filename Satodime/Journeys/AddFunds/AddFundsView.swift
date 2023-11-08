@@ -23,7 +23,7 @@ struct AddFundsView: View {
             VStack {
                 ZStack {
                     VStack {
-                        Image("bg_header_addfunds")
+                        Image(viewModel.headerImageName)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: UIScreen.main.bounds.width, height: 269)
