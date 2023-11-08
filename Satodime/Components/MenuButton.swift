@@ -18,13 +18,20 @@ struct MenuButton: View {
 
     var body: some View {
         Button(action: action) {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading) {
                 HStack {
-                    SatoText(text: title, style: .subtitle, alignment: .leading)
-                        .lineLimit(nil)
-                        .padding([.top, .leading])
+                    Text(title)
+                        .alignmentGuide(.leading) { d in d[.leading] }
+                        .multilineTextAlignment(.leading)
+                        .foregroundColor(.white)
+                        .font(.headline)
+                        .lineLimit(2)
+                        .padding([.top, .leading, .trailing])
                     Spacer()
                 }
+                
+                Spacer()
+                
                 HStack {
                     Spacer()
                     Image(iconName)
