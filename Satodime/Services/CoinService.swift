@@ -63,7 +63,7 @@ class CoinService: PCoinService {
     func fetchAssets(for coinInfo: VaultItem) async -> AssetsResult {
         let selectedFirstCurrency: String = coinInfo.coin.coinSymbol
         var selectedSecondCurrency: String = self.preferenceService.getCurrency()
-        #if DEBUG
+        /*#if DEBUG
         //var address = "0x72eb30D3ca53f5e839325E2eACf535E70a9e6987"
         //let assetList = [["contract":"0xEEe334e5DEB8522cD85097b47a69afC939715FFA"]]
         var address = "0x2C4eBD4b21736E992f3EfeB55dE37ae66457199D"
@@ -71,7 +71,10 @@ class CoinService: PCoinService {
         #else
         var address = coinInfo.address
         let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
-        #endif
+        #endif*/
+        
+        var address = coinInfo.address
+        let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
         
         logger.info("fetchTokenList: \(assetList)")
         

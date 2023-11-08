@@ -69,7 +69,7 @@ struct CardInfoView: View {
                 
                 NavigationLink(destination: ShowCertificates(certificateCode: viewModel.cardVaults.cardAuthenticity!.certificateCode, certificateDic: viewModel.cardVaults.cardAuthenticity!.certificateDic), isActive: $viewModel.isCertDetailsViewActive){EmptyView()}
                 
-                NavigationLink(destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardVaults.isCardAuthentic ? .isAuthentic : .notAuthentic)), isActive: $viewModel.shouldShowAuthenticityScreen){EmptyView()}
+                NavigationLink(destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardVaults.isCardAuthentic ? .isAuthentic : .notAuthentic, viewStackHandler: viewModel.viewStackHandler)), isActive: $viewModel.shouldShowAuthenticityScreen){EmptyView()}
                 
                 Spacer()
                     .frame(height: 139)

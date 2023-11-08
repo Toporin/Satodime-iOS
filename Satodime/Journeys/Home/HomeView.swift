@@ -195,7 +195,7 @@ struct HomeView: View {
                         NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardStatus.status == .valid ? .isAuthentic : .notAuthentic)), isActive: .constant(isCardAuthenticity())).hidden()
                     }
                     if viewModel.viewStackHandler.navigationState == .notAuthentic {
-                        NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: .notAuthentic)), isActive: .constant(isNotAuthentic())).hidden()
+                        NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: .notAuthentic, viewStackHandler: viewModel.viewStackHandler)), isActive: .constant(isNotAuthentic())).hidden()
                     }
                     if viewModel.viewStackHandler.navigationState == .takeOwnership {
                         NavigationLink("", destination: TakeOwnershipView(viewModel: TakeOwnershipViewModel(cardService: CardService())), isActive: .constant(isTakeOwnership())).hidden()

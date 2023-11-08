@@ -13,13 +13,13 @@ enum AuthenticationState {
     case notAuthentic
 }
 
-class AuthenticViewModel: BaseViewModel {
+final class AuthenticViewModel: BaseViewModel {
     
     @Published var imageForState: Image
     @Published var textForState: String
     @Published var backgroundColor: Color
 
-    init(authState: AuthenticationState) {
+    init(authState: AuthenticationState, viewStackHandler: ViewStackHandler? = nil) {
         switch authState {
         case .isAuthentic:
             self.imageForState = Image("il_authentic")
@@ -30,5 +30,10 @@ class AuthenticViewModel: BaseViewModel {
             self.textForState = "authenticationFailed"
             self.backgroundColor = Constants.Colors.errorViewBackground
         }
+        super.init()
+        self.viewStackHandler = viewStackHandler
+        /*if let viewStackHandler = viewStackHandler, self.viewStackHandler == nil {
+            self.viewStackHandler = viewStackHandler
+        }*/
     }
 }
