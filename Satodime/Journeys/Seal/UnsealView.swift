@@ -26,7 +26,8 @@ struct UnsealView: View {
                 Spacer()
                     .frame(height: 37)
                 
-                SatoText(text: viewModel.subtitle, style: .lightTitle)
+                SatoText(text: viewModel.subtitle, style: .lightTitleSmall)
+                    .lineLimit(nil)
                 
                 Spacer()
                     .frame(height: 29)
