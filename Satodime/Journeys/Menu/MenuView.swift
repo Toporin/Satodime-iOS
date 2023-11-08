@@ -130,6 +130,18 @@ struct MenuView: View {
                             .padding([.leading, .trailing], 24)
                     }
                 }
+                if viewModel.showCardNeedsToBeScannedAlert {
+                    ZStack {
+                        Color.black.opacity(0.4)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                viewModel.showCardNeedsToBeScannedAlert = false
+                            }
+                        
+                        SatoAlertView(isPresented: $viewModel.showCardNeedsToBeScannedAlert, alert: viewModel.cardNeedToBeScannedAlert)
+                            .padding([.leading, .trailing], 24)
+                    }
+                }
             }
         )
         .navigationBarBackButtonHidden(true)

@@ -13,6 +13,7 @@ struct SatoAlert {
     var message: String
     var buttonTitle: String
     var buttonAction: () -> Void
+    var isMoreInfoBtnVisible: Bool = true
 }
 
 struct SatoAlertView: View {
@@ -33,19 +34,22 @@ struct SatoAlertView: View {
                 .frame(height: 16)
             
             VStack {
-                Button(action: {
-                    alert.buttonAction()
-                    isPresented = false
-                }) {
-                    Text(alert.buttonTitle)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Constants.Colors.informButtonBackground)
-                        .foregroundColor(.white)
-                        .cornerRadius(24)
+                if alert.isMoreInfoBtnVisible {
+                    Button(action: {
+                        alert.buttonAction()
+                        isPresented = false
+                    }) {
+                        Text(alert.buttonTitle)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Constants.Colors.informButtonBackground)
+                            .foregroundColor(.white)
+                            .cornerRadius(24)
+                    }
+                    Spacer()
+                        .frame(height: 16)
                 }
-                Spacer()
-                    .frame(height: 16)
+                    
                 Button(action: {
                     isPresented = false
                 }) {

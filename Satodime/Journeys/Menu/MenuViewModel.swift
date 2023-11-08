@@ -26,8 +26,17 @@ class MenuViewModel: BaseViewModel {
     @Published var shouldShowTransferOwnership: Bool = false
     @Published var shouldShowSettings: Bool = false
     @Published var showOwnershipAlert = false
+    @Published var showCardNeedsToBeScannedAlert = false
     
     let ownershipAlert: SatoAlert = SatoAlert(title: "ownership", message: "ownershipText", buttonTitle: String(localized:"moreInfo"), buttonAction: {
+            guard let url = URL(string: "https://satochip.io") else {
+                print("Invalid URL")
+                return
+            }
+        UIApplication.shared.open(url)
+    })
+    
+    var cardNeedToBeScannedAlert: SatoAlert = SatoAlert(title: "cardNeedToBeScannedTitle", message: "cardNeedToBeScannedMessage", buttonTitle: String(localized:"moreInfo"), buttonAction: {
             guard let url = URL(string: "https://satochip.io") else {
                 print("Invalid URL")
                 return
@@ -45,7 +54,10 @@ class MenuViewModel: BaseViewModel {
     func onCardInfo() {
         if cardVaults != nil {
             self.shouldShowCardInfo = true
+            return
         }
+        cardNeedToBeScannedAlert.isMoreInfoBtnVisible = false
+        showCardNeedsToBeScannedAlert = true
     }
     
     func onTransferOwner() {
