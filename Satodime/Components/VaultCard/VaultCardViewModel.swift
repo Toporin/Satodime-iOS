@@ -96,13 +96,24 @@ class VaultCardViewModel: ObservableObject, Hashable {
         self.indexId = index
         self.cardBackground = self.vaultItem.isSealed() ? self.sealedBackgroundImageName() : "bg_card_unsealed"
     }
+    
+    func getCoinIcon(from coinSymbol: String) -> String {
+        if coinSymbol.hasSuffix("TEST") {
+            return String(coinSymbol.dropLast(4))
+        } else if coinSymbol == "ROP" {
+            return "eth"
+        }
+        else {
+            return coinSymbol
+        }
+    }
 
     private func updateProperties(with vaultItem: VaultItem) {
         self.addressText = vaultItem.address
         self.sealStatus = vaultItem.isSealed() ? .sealed : .unsealed
-        self.imageName = "ic_\(vaultItem.getCoinSymbol().lowercased())"
+        self.imageName = "ic_\(self.getCoinIcon(from: vaultItem.getCoinSymbol()).lowercased())"
         self.balanceTitle = String(localized: "totalBalance")
-        self.fiatBalance = "0"
+        self.fiatBalance = "0,-"
         self.cardBackground = vaultItem.isSealed() ? self.sealedBackgroundImageName() : "bg_card_unsealed"
         
         Task {
