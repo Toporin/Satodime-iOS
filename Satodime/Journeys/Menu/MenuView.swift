@@ -116,6 +116,22 @@ struct MenuView: View {
                 }
             }
         }
+        .overlay(
+            Group {
+                if viewModel.showOwnershipAlert {
+                    ZStack {
+                        Color.black.opacity(0.4)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                viewModel.showOwnershipAlert = false
+                            }
+                        
+                        SatoAlertView(isPresented: $viewModel.showOwnershipAlert, alert: viewModel.ownershipAlert)
+                            .padding([.leading, .trailing], 24)
+                    }
+                }
+            }
+        )
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
             self.viewModel.navigateTo(destination: .goBackHome)
