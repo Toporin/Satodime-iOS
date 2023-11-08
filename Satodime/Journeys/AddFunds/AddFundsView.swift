@@ -86,7 +86,7 @@ struct AddFundsView: View {
                     SatoText(text: viewModel.pubAddressToDisplay, style: .subtitle)
 
                     Spacer()
-                        .frame(height: 38)
+                        .frame(height: 30)
 
                     HStack(spacing: 15) {
                         SatoText(text: "Copy to clipboard", style: .addressText)
@@ -107,7 +107,7 @@ struct AddFundsView: View {
                     }
                     
                     Spacer()
-                        .frame(height: 38)
+                        .frame(height: 30)
 
                     if let cgImage = QRCodeHelper().getQRfromText(text: viewModel.pubAddressToDisplay) {
                         Image(uiImage: UIImage(cgImage: cgImage))
@@ -118,7 +118,7 @@ struct AddFundsView: View {
                     }
                     
                     Spacer()
-                        .frame(height: 35)
+                        .frame(height: 30)
                     SatoText(text: viewModel.subtitle, style: .lightSubtitle)
                     
                     Spacer()
