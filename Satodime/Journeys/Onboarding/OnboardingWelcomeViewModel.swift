@@ -10,7 +10,7 @@ import Foundation
 final class OnboardingWelcomeViewModel: ObservableObject {
 
     // MARK: - Literals
-    let titleText = "Welcome"
+    let titleText = "welcome"
     let subtitleText = "satodimeLetsYou"
 
 }
