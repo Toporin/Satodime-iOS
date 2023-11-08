@@ -42,6 +42,12 @@ struct TakeOwnershipView: View {
             }.padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
         }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action: {
+            self.viewModel.navigateTo(destination: .goBackHome)
+        }) {
+            Image("ic_flipback")
+        })
         .toolbar {
             ToolbarItem(placement: .principal) {
                 SatoText(text: viewModel.title, style: .viewTitle)
