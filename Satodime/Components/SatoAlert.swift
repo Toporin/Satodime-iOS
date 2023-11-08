@@ -31,16 +31,33 @@ struct SatoAlertView: View {
                 .font(.body)
             Spacer()
                 .frame(height: 16)
-            Button(action: {
-                alert.buttonAction()
-                isPresented = false
-            }) {
-                Text(alert.buttonTitle)
-                    .padding()
-                    .background(Constants.Colors.informButtonBackground)
-                    .foregroundColor(.white)
-                    .cornerRadius(24)
+            
+            VStack {
+                Button(action: {
+                    alert.buttonAction()
+                    isPresented = false
+                }) {
+                    Text(alert.buttonTitle)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Constants.Colors.informButtonBackground)
+                        .foregroundColor(.white)
+                        .cornerRadius(24)
+                }
+                Spacer()
+                    .frame(height: 16)
+                Button(action: {
+                    isPresented = false
+                }) {
+                    Text(String(localized: "close"))
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Constants.Colors.ledBlue)
+                        .foregroundColor(.white)
+                        .cornerRadius(24)
+                }
             }
+            
             Spacer()
                 .frame(height: 16)
         }
