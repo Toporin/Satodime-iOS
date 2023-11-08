@@ -53,7 +53,7 @@ struct VaultSetupSelectChainView: View {
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
-                SatoText(text: viewModel.title, style: .viewTitle)
+                SatoText(text: viewModel.title, style: .lightTitle)
             }
         }
     }

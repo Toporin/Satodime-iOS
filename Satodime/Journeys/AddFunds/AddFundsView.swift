@@ -129,7 +129,7 @@ struct AddFundsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                SatoText(text: viewModel.viewTitle, style: .viewTitle)
+                SatoText(text: viewModel.viewTitle, style: .lightTitle)
             }
         }
         .onAppear {

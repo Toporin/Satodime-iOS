@@ -79,7 +79,7 @@ struct CardInfoView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                SatoText(text: viewModel.title, style: .title)
+                SatoText(text: viewModel.title, style: .lightTitle)
             }
         }
     }
