@@ -15,6 +15,13 @@ struct OnboardingNFCView: View {
     // MARK: - View
     var body: some View {
         ZStack(alignment: .bottom) {
+            
+            Image("view-background-onboard-3")
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea()
+            
             VStack {
                 Image("logo_satodime_white")
                     .resizable()
@@ -36,11 +43,7 @@ struct OnboardingNFCView: View {
             .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }.background {
-            Image("view-background-onboard-3")
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .ignoresSafeArea()
+            
         }
     }
 }

@@ -36,6 +36,16 @@ struct OnboardingContainerView: View {
                 .background {
                     Constants.Colors.viewBackground
                         .ignoresSafeArea()
+                    if viewModel.isLastPage {
+                        Image("view-background-onboard-3")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .ignoresSafeArea()
+                    } else {
+                        Constants.Colors.viewBackground
+                            .ignoresSafeArea()
+                    }
                 }
                 .tabViewStyle(PageTabViewStyle())
                 .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
