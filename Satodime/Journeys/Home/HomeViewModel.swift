@@ -303,7 +303,6 @@ final class HomeViewModel: ObservableObject {
                 }
             case .hasVault(vaults: let vaults):
                 DispatchQueue.main.async {
-                    self.showOwnershipAlert = true
                     self.cardStatus.status = .valid
                     self.constructVaultsList(with: vaults)
                 }
