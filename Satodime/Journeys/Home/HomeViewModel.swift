@@ -63,7 +63,7 @@ final class HomeViewModel: ObservableObject {
     var resetViewModel: ResetViewModel?
     
     let ownershipAlert: SatoAlert = SatoAlert(title: "ownership", message: "ownershipText", buttonTitle: String(localized:"moreInfo"), buttonAction: {
-            guard let url = URL(string: "https://satochip.io") else {
+            guard let url = URL(string: "https://satochip.io/satodime-ownership-explained/") else {
                 print("Invalid URL")
                 return
             }
@@ -303,6 +303,7 @@ final class HomeViewModel: ObservableObject {
                 }
             case .hasVault(vaults: let vaults):
                 DispatchQueue.main.async {
+                    self.showOwnershipAlert = true
                     self.cardStatus.status = .valid
                     self.constructVaultsList(with: vaults)
                 }
