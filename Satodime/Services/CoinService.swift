@@ -161,59 +161,61 @@ class CoinService: PCoinService {
         var tokenList: [[String:String]]=[]
         for asset in assetList {
             if let contract = asset["contract"]{
-                var nftListByContract = await coinInfo.coin.getNftList(addr: address, contract: contract)
+                var assetCopy = asset
+                assetCopy["type"] = "token"
                 
-                if nftListByContract.count>0 { // nft
-                    for nft in nftListByContract {
-                        var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
-                        nftMerged["type"] = "nft"
-                        nftList.append(nftMerged)
-                        print("NfcReader: added nftMerged: \(nftMerged)")
-                    }
-                } else { // token
-                    var assetCopy = asset
-                    assetCopy["type"] = "token"
+                // get price if available
+                if let tokenBalance = coinInfo.getTokenBalanceDouble(tokenData: asset),
+                    let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
+                    let currencyForExchangeRate = asset["currencyForExchangeRate"] {
                     
-                    // get price if available
-                    if let tokenBalance = coinInfo.getTokenBalanceDouble(tokenData: asset),
-                        let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
-                        let currencyForExchangeRate = asset["currencyForExchangeRate"] {
+                    assetCopy["tokenBalance"] = String(tokenBalance)
+                    
+                    print("in fetchDataFromWeb [\(index)] tokenBalance: \(tokenBalance)")
+                    print("in fetchDataFromWeb [\(index)] tokenExchangeRate: \(tokenExchangeRate)")
+                    print("in fetchDataFromWeb [\(index)] currencyForExchangeRate: \(currencyForExchangeRate)")
+                    
+                    // selectedFirstCurrency
+                    // TODO: cache result?
+                    if let currencyExchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
+                    {
+                        print("in fetchDataFromWeb [\(index)] currencyExchangeRate1: \(currencyExchangeRate1)")
+                        print("in fetchDataFromWeb [\(index)] selectedFirstCurrency: \(selectedFirstCurrency)")
                         
-                        assetCopy["tokenBalance"] = String(tokenBalance)
-                        
-                        print("in fetchDataFromWeb [\(index)] tokenBalance: \(tokenBalance)")
-                        print("in fetchDataFromWeb [\(index)] tokenExchangeRate: \(tokenExchangeRate)")
-                        print("in fetchDataFromWeb [\(index)] currencyForExchangeRate: \(currencyForExchangeRate)")
-                        
-                        // selectedFirstCurrency
-                        // TODO: cache result?
-                        if let currencyExchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
-                        {
-                            print("in fetchDataFromWeb [\(index)] currencyExchangeRate1: \(currencyExchangeRate1)")
-                            print("in fetchDataFromWeb [\(index)] selectedFirstCurrency: \(selectedFirstCurrency)")
-                            
-                            let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
-                            totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
-                            assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
-                            assetCopy["firstCurrency"] = selectedFirstCurrency
-                            print("in fetchDataFromWeb tokenValueInFirstCurrency: \(tokenValueInFirstCurrency)")
-                        }
-                        
-                        // second currency
-                        if let currencyExchangeRate2 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedSecondCurrency)
-                        {
-                            let tokenValueInSecondCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate2
-                            totalTokenValueInSecondCurrency += tokenValueInSecondCurrency
-                            assetCopy["tokenValueInSecondCurrency"] = String(tokenValueInSecondCurrency)
-                            assetCopy["secondCurrency"] = selectedSecondCurrency
-                        }
+                        let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
+                        totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
+                        assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
+                        assetCopy["firstCurrency"] = selectedFirstCurrency
+                        print("in fetchDataFromWeb tokenValueInFirstCurrency: \(tokenValueInFirstCurrency)")
                     }
                     
-                    tokenList.append(assetCopy)
-                    print("NfcReader: added assetCopy: \(assetCopy)")
-                } // if nft else token
-            } // if contract
-        } // for asset
+                    // second currency
+                    if let currencyExchangeRate2 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedSecondCurrency)
+                    {
+                        let tokenValueInSecondCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate2
+                        totalTokenValueInSecondCurrency += tokenValueInSecondCurrency
+                        assetCopy["tokenValueInSecondCurrency"] = String(tokenValueInSecondCurrency)
+                        assetCopy["secondCurrency"] = selectedSecondCurrency
+                    }
+                }
+                
+                tokenList.append(assetCopy)
+                print("NfcReader: added assetCopy: \(assetCopy)")
+            } // if nft else token
+        } // if contract
+        
+        // TODO: contract is not needed ?
+        var nftListByContract = await coinInfo.coin.getNftList(addr: address, contract: "")
+        
+        if nftListByContract.count>0 { // nft
+            for nft in nftListByContract {
+                // var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
+                var nftMerged: [String:String] = [:]
+                nftMerged["nftImageUrl"] = nft["nftImageUrl"]
+                nftMerged["type"] = "nft"
+                nftList.append(nftMerged)
+            }
+        }
 
         print("NfcReader: tokenList: \(tokenList)")
         print("NfcReader: nftList: \(nftList)")
