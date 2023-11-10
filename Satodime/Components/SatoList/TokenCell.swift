@@ -28,9 +28,18 @@ class TokenCellViewModel: ObservableObject {
         let imageUrl = URL(string: imageUri)
         self.imageUrl = imageUrl
         self.name = name
+        
         self.cryptoBalance = cryptoBalance
         self.fiatBalance = fiatBalance
         self.mainToken = mainToken
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 7
+        if let cryptoBalanceDouble = Double(cryptoBalance), let formattedAmount = numberFormatter.string(from: NSNumber(value: cryptoBalanceDouble)) {
+            self.cryptoBalance = formattedAmount
+        }
+        
         if mainToken == nil, let imageUrl = self.imageUrl {
             self.fetchImage(url: imageUrl)
             self.fiatBalance = "\(fiatBalance) \(self.preferenceService.getCurrency())"
