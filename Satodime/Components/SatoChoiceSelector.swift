@@ -16,21 +16,23 @@ struct SatoChoiceSelector<Item: SelectableItem & Hashable>: View {
     var items: [Item]
 
     var body: some View {
-        ForEach(items, id: \.self) { item in
-            HStack {
-                Circle()
-                    .strokeBorder(Color.white, lineWidth: 2)
-                    .background(selectedItem == item ? Constants.Colors.ledGreen : .clear)
-                    .clipShape(Circle())
-                    .frame(width: 18, height: 18)
-                
-                Spacer()
-                
-                SatoText(text: item.displayString, style: .lightSubtitle)
-                    .foregroundColor(.white)
-            }
-            .onTapGesture {
-                selectedItem = item
+        VStack(spacing: 24) {
+            ForEach(items, id: \.self) { item in
+                HStack {
+                    Circle()
+                        .strokeBorder(Color.white, lineWidth: 2)
+                        .background(selectedItem == item ? Constants.Colors.ledGreen : .clear)
+                        .clipShape(Circle())
+                        .frame(width: 32, height: 32)
+                    
+                    Spacer()
+                    
+                    SatoText(text: item.displayString, style: .lightSubtitle)
+                        .foregroundColor(.white)
+                }
+                .onTapGesture {
+                    selectedItem = item
+                }
             }
         }
     }

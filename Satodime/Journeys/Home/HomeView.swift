@@ -197,8 +197,8 @@ struct HomeView: View {
                     if viewModel.viewStackHandler.navigationState == .notAuthentic {
                         NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: .notAuthentic, viewStackHandler: viewModel.viewStackHandler)), isActive: .constant(isNotAuthentic())).hidden()
                     }
-                    if viewModel.viewStackHandler.navigationState == .takeOwnership {
-                        NavigationLink("", destination: TakeOwnershipView(viewModel: TakeOwnershipViewModel(cardService: CardService())), isActive: .constant(isTakeOwnership())).hidden()
+                    if viewModel.viewStackHandler.navigationState == .takeOwnership, let cardVaults = viewModel.cardVaults {
+                        NavigationLink("", destination: TakeOwnershipView(viewModel: TakeOwnershipViewModel(cardService: CardService(), cardVaults: cardVaults, viewStackHandler: viewStackHandler)), isActive: .constant(isTakeOwnership())).hidden()
                     }
                     if viewModel.viewStackHandler.navigationState == .vaultInitialization {
                         NavigationLink("", destination: VaultSetupSelectChainView(viewModel: VaultSetupSelectChainViewModel(index: viewModel.currentSlotIndex, vaultCards: viewModel.vaultCards)), isActive: .constant(isVaultInitialization())).hidden()

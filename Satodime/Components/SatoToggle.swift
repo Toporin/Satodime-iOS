@@ -31,6 +31,7 @@ struct SatoToggle: View {
                 .frame(width: 18)
             
             SatoText(text: label, style: .subtitle)
+                .frame(height: 46)
                 .lineLimit(nil)
             
             Spacer()

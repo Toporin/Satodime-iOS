@@ -271,8 +271,13 @@ final class HomeViewModel: ObservableObject {
                     self.constructVaultsList(with: vaults)
                     self.navigateTo(destination: .notAuthentic)
                 }
-            case .needToAcceptCard:
-                self.navigateTo(destination: .takeOwnership)
+            case .needToAcceptCard(vaults: let vaults):
+                DispatchQueue.main.async {
+                    let isAuthentic = vaults.cardAuthenticity?.isAuthentic() ?? false
+                    self.cardStatus.status = isAuthentic ? .valid : .invalid
+                    self.constructVaultsList(with: vaults)
+                    self.navigateTo(destination: .takeOwnership)
+                }
             case .cardAccepted:
                 print("TODO - cardAccepted")
             case .setupDone:

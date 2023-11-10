@@ -11,13 +11,19 @@ final class TakeOwnershipViewModel: BaseViewModel {
     // MARK: - Properties
     let logger = ConsoleLogger()
     let cardService: PCardService
+    var cardVaults: CardVaults
     
     // MARK: - Literals
     let title = "takeTheOwnershipTitle"
     let subtitle = "takeTheOwnershipDescription"
     
-    init(cardService: PCardService) {
+    init(cardService: PCardService, cardVaults: CardVaults, viewStackHandler: ViewStackHandler? = nil) {
         self.cardService = cardService
+        self.cardVaults = cardVaults
+        super.init()
+        if let viewStackHandler = viewStackHandler {
+            self.viewStackHandler = viewStackHandler
+        }
     }
     
     func acceptCard() {
@@ -32,7 +38,10 @@ final class TakeOwnershipViewModel: BaseViewModel {
             case .readingError(error: let error):
                 logger.error("Error on acceptCard() : \(error)")
             case .cardAccepted:
-                self.navigateTo(destination: .goBackHome)
+                DispatchQueue.main.async {
+                    self.cardVaults.isOwner = true
+                    self.navigateTo(destination: .goBackHome)
+                }
             default:
                 break
             }
