@@ -29,7 +29,7 @@ class MenuViewModel: BaseViewModel {
     @Published var showCardNeedsToBeScannedAlert = false
     
     let ownershipAlert: SatoAlert = SatoAlert(title: "ownership", message: "ownershipText", buttonTitle: String(localized:"moreInfo"), buttonAction: {
-            guard let url = URL(string: "https://satochip.io") else {
+            guard let url = URL(string: "https://satochip.io/satodime-ownership-explained/") else {
                 print("Invalid URL")
                 return
             }
