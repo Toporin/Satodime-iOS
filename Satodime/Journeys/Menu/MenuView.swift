@@ -52,12 +52,12 @@ struct MenuView: View {
                         MenuButton(title: String(localized: "howToUse"), iconName: "ic_howto", iconWidth: 34, iconHeight: 34, backgroundColor: Constants.Colors.greenMenuButton, action: {
                             viewModel.openURL(.howToUse)
                         })
-                        .frame(width: geometry.size.width * 0.65 - 15)
+                        .frame(width: geometry.size.width * 0.55 - 15)
                         
                         MenuButton(title: String(localized: "settings"), iconName: "ic_settings", iconWidth: 27, iconHeight: 27, backgroundColor: Constants.Colors.blueMenuButton, action: {
                             viewModel.onSettings()
                         })
-                        .frame(width: geometry.size.width * 0.35 - 15)
+                        .frame(width: geometry.size.width * 0.45 - 15)
                     }
                     .padding([.horizontal], 10)
                 }.frame(height: 120)
