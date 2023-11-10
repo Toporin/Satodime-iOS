@@ -19,7 +19,7 @@ final class SettingsViewModel: BaseViewModel {
     let title = "settings"
     let currencyTitle = "currency"
     let starterIntroTitle = "starterIntro"
-    let showLogsButtonTitle = "showLogs"
+    let showLogsButtonTitle = String(localized: "showLogs")
     
     init(preferencesService: PPreferencesService){
         self.preferencesService = preferencesService

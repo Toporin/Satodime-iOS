@@ -21,7 +21,7 @@ struct SettingsToggle: View {
             Spacer()
             
             Toggle("", isOn: $isOn)
-                .toggleStyle(SwitchToggleStyle(tint: .white))
+                .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.ledGreen))
                 .onChange(of: isOn) { newValue in
                     onToggle(newValue)
                 }
