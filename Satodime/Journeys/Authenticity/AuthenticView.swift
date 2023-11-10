@@ -29,7 +29,7 @@ struct AuthenticView: View {
 
                 viewModel.imageForState
                     .resizable()
-                    .frame(width: 154, height: 173)
+                    .frame(width: 150, height: 150)
                 
                 Spacer()
                     .frame(height: 38)
