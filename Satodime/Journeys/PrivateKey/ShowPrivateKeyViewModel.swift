@@ -43,15 +43,15 @@ final class ShowPrivateKeyViewModel: BaseViewModel {
         
         switch mode {
         case .legacy:
-            self.titleMode = "Private key"
+            self.titleMode = "privateKey"
             self.subtitleMode = "(Legacy)"
             self.keyToDisplay = vault.getPrivateKeyString()
         case .wif:
-            self.titleMode = "Private key"
+            self.titleMode = "privateKey"
             self.subtitleMode = "(Wallet Import Format)"
             self.keyToDisplay = vault.getWifString()
         case .entropy:
-            self.titleMode = "Entropy"
+            self.titleMode = "entropyMode"
             self.subtitleMode = ""
             self.keyToDisplay = vault.getEntropyString()
         }
