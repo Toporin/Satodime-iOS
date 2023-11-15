@@ -22,16 +22,21 @@ final class ShowPrivateKeyMenuViewModel: BaseViewModel {
     @Published var selectedMode: ShowPrivateKeyMode = .legacy
     @Published var keyResult: PrivateKeyResult?
     @Published var isKeyViewPresented = false
+    
     let indexPosition: Int
     let keyDisplayOptions: [ShowPrivateKeyMode] = [.legacy, .wif, .entropy]
     
     // MARK: - Literals
     let title = "showPrivateKey"
     
-    init(cardService: PCardService, vaultCardViewModel: VaultCardViewModel, indexPosition: Int) {
+    init(cardService: PCardService, vaultCardViewModel: VaultCardViewModel, indexPosition: Int, viewStackHandler: ViewStackHandler? = nil) {
         self.cardService = cardService
         self.vaultCardViewModel = vaultCardViewModel
         self.indexPosition = indexPosition
+        super.init()
+        if let viewStackHandler = viewStackHandler {
+            self.viewStackHandler = viewStackHandler
+        }
     }
     
     func showKey(mode: ShowPrivateKeyMode) {

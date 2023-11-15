@@ -108,8 +108,8 @@ class CardService: PCardService {
                     let onDeviceAuthKey = unlockSecretDict[auth.keyHex]
                     guard onDeviceAuthKey?.toHexString() != auth.keyHex else {
                         print("Card mismatch! \nIs this the correct card?")
-                        cardController?.stop(errorMessage: String(localized: "Card mismatch! \nIs this the correct card?"))
-                        completion(.readingError(error: String(localized: "Card mismatch! \nIs this the correct card?")))
+                        cardController?.stop(errorMessage: String(localized: "nfcCardMismatch"))
+                        completion(.readingError(error: String(localized: "nfcCardMismatch")))
                         return
                     }
                     
@@ -124,22 +124,22 @@ class CardService: PCardService {
                     return
                 }
                 
-                cardController?.stop(alertMessage: String(localized: "Ownership transfer initiated successfully!"))
+                cardController?.stop(alertMessage: String(localized: "nfcOwnershipTransferSuccess"))
                 completion(.transfer)
                 return
             } catch {
                 print("TransferCard error: \(error)")
-                cardController?.stop(errorMessage: String(localized: "Failed to transfer ownership with error: \(error.localizedDescription)"))
+                cardController?.stop(errorMessage: "\(String(localized: "nfcOwnershipTransferFailed")) \(error.localizedDescription)")
                 return
             }
             
         } onFailure: { [weak self] error in
             guard let self = self else { return }
             logger.error("ERROR - Satodime reading : \(error.localizedDescription)")
-            cardController?.stop(alertMessage: String(localized: "An error occured : \(error.localizedDescription)"))
+            cardController?.stop(alertMessage: "\(String(localized: "nfcErrorOccured")) \(error.localizedDescription)")
             completion(.readingError(error: error.localizedDescription))
         }
-        cardController?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
+        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
 
     func getPrivateKey(vaultIndex: Int, completion: @escaping (CardActionState) -> Void) {
@@ -169,19 +169,19 @@ class CardService: PCardService {
                 let result = PrivateKeyResult(privkey: privkeyInfo.privkey, entropy: privkeyInfo.entropy)
                 
                 completion(.getPrivate(privateKey: result))
-                cardController?.stop(alertMessage: String(localized: "Vault privkey recovered successfully!"))
+                cardController?.stop(alertMessage: String(localized: "nfcPrivkeyRecoverSuccess"))
                 return
             } catch {
                 logger.error("GetPrivkey error: \(error)")
-                cardController?.stop(errorMessage: String(localized: "Failed to get vault private key with error: \(error.localizedDescription)"))
+                cardController?.stop(errorMessage: "\(String(localized: "nfcPrivkeyRecoverFailed")) \(error.localizedDescription)")
                 return
             }
         } onFailure: { [weak self] error in
             guard let self = self else { return }
             self.logger.error("getPrivateKey() error: \(error.localizedDescription)")
-            self.cardController?.stop(errorMessage: String(localized: "Failed to get vault private key with error: \(error.localizedDescription)"))
+            self.cardController?.stop(errorMessage: "\(String(localized: "nfcPrivkeyRecoverFailed")) \(error.localizedDescription)")
         }
-        cardController?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
+        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
     
     func getCardActionStateStatus(completion: @escaping (CardActionState) -> Void) {
@@ -197,12 +197,12 @@ class CardService: PCardService {
                 logger.info("Status: \(cardStatus)")
                 LoggerService().log(entry: cardStatus.toString())
                 
-                /*if !cardStatus.setupDone {
-                    cardController?.stop(alertMessage: String(localized: "Satodime needs setup!"))
+                if !cardStatus.setupDone {
+                    cardController?.stop(alertMessage: String(localized: "nfcSatodimeNeedSetup"))
                     logger.info("Satodime needs setup!")
-                    completion(.needToAcceptCard)
+                    completion(.needToAcceptCard(vaults: CardVaults(isOwner: false, isCardAuthentic: true, cardVersion: "", vaults: [], cardAuthenticity: nil)))
                     return
-                }*/
+                }
                 
                 if !cardStatus.setupDone {
                     logger.info("Satodime needs setup!")
@@ -237,12 +237,12 @@ class CardService: PCardService {
                 if emptySlotCounter == slots || cardVaults.vaults.isEmpty {
                     logger.warning("No initialized vaults")
                     completion(.noVaultSet(vaults: cardVaults))
-                    cardController?.stop(alertMessage: String(localized: "This card needs to setup a first vault"))
+                    cardController?.stop(alertMessage: String(localized: "nfcNeedsFirstVaults"))
                     return
                 }
                 
                 logger.info("Vaults readed successfully")
-                cardController?.stop(alertMessage: String(localized: "Vaults readed successfully"))
+                cardController?.stop(alertMessage: String(localized: "nfcVaultsListSuccess"))
                 
                 if !authenticity.isAuthentic() {
                     completion(.notAuthentic(vaults: cardVaults))
@@ -263,13 +263,13 @@ class CardService: PCardService {
                 }
             } catch {
                 logger.error("ERROR - Satodime reading : \(error.localizedDescription)")
-                cardController?.stop(alertMessage: String(localized: "An error occured : \(error.localizedDescription)"))
+                cardController?.stop(alertMessage: "\(String(localized: "nfcErrorOccured")) \(error.localizedDescription)")
                 completion(.readingError(error: error.localizedDescription))
             }
         } onFailure: { error in
             completion(.silentError(error: error.localizedDescription))
         }
-        cardController?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
+        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
     
     func acceptCard(completion: @escaping (CardActionState) -> Void) {
@@ -298,30 +298,30 @@ class CardService: PCardService {
                         unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
                         
                         UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
-                        cardController?.stop(alertMessage: String(localized: "Card ownership accepted successfully!"))
+                        cardController?.stop(alertMessage: String(localized: "nfcOwnershipAcceptSuccess"))
                         completion(.cardAccepted)
                         return
                     } catch {
                         logger.error("Error during card setup: \(error)")
-                        cardController?.stop(errorMessage: String(localized: "Failed to accept card ownership with error: \(error.localizedDescription)"))
+                        cardController?.stop(errorMessage: "\(String(localized: "nfcOwnershipAcceptFailed")) \(error.localizedDescription)")
                         completion(.readingError(error: error.localizedDescription))
                         return
                     }
                 } else {
                     logger.error("Card transer already done!")
-                    cardController?.stop(alertMessage: String(localized: "Card transfer already done!"))
+                    cardController?.stop(alertMessage: String(localized: "nfcTransferAlreadyDone"))
                     completion(.cardAccepted)
                     return
                 }
             } catch {
                 logger.error("Error during card setup: \(error)")
-                cardController?.stop(errorMessage: String(localized: "Failed to accept card ownership with error: \(error.localizedDescription)"))
+                cardController?.stop(errorMessage: "\(String(localized: "nfcOwnershipAcceptFailed")) \(error.localizedDescription)")
                 completion(.readingError(error: error.localizedDescription))
             }
         } onFailure: { error in
             completion(.silentError(error: error.localizedDescription))
         }
-        cardController?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
+        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
 
     func sealVault(vaultIndex: Int,
@@ -377,17 +377,17 @@ class CardService: PCardService {
 
                 let result = SealResult(vaultIndex: vaultIndex, vaultItem: newVaultItem)
                 completion(.sealed(result: result))
-                cardController?.stop(alertMessage: String(localized: "Vault sealed successfully!"))
+                cardController?.stop(alertMessage: String(localized: "nfcVaultSealedSuccess"))
                 return
             } catch {
                 print("SealSlot error: \(error.localizedDescription)")
-                cardController?.stop(errorMessage: String(localized: "Failed to seal vault with error: \(error.localizedDescription)"))
+                cardController?.stop(errorMessage: "\(String(localized: "nfcVaultSealedFailed")) \(error.localizedDescription)")
                 return
             }
         } onFailure: { error in
             completion(.silentError(error: error.localizedDescription))
         }
-        cardController?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
+        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
     
     func reset(vaultIndex: Int, completion: @escaping (CardActionState) -> Void) {
@@ -428,17 +428,17 @@ class CardService: PCardService {
                 print("address: \(vaultItem.address)")
                 
                 completion(.reset(updatedItem: vaultItem))
-                cardController?.stop(alertMessage: String(localized: "Vault reset successfully!"))
+                cardController?.stop(alertMessage: String(localized: "nfcVaultResetSuccess"))
                 return
             } catch {
                 print("ResetSlot error: \(error)")
-                cardController?.stop(errorMessage: String(localized: "Failed to reset vault slot with error: \(error.localizedDescription)"))
+                cardController?.stop(errorMessage: "\(String(localized: "nfcVaultResetFailed")) \(error.localizedDescription)")
                 return
             }
         } onFailure: { error in
             completion(.silentError(error: error.localizedDescription))
         }
-        cardController?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
+        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
     
     func unseal(vaultIndex: Int, completion: @escaping (CardActionState) -> Void) {
@@ -469,20 +469,20 @@ class CardService: PCardService {
                 let rapdu = try cmdSet.satodimeUnsealKey(keyNbr: UInt8(vaultIndex)).checkOK()
                 logger.info("UnsealSlot rapdu: \(rapdu)")
                 
-                cardController?.stop(alertMessage: String(localized: "Vault unsealed successfully!"))
+                cardController?.stop(alertMessage: String(localized: "nfcVaultUnsealSuccess"))
                 let statusToWrite = 0x02
                 completion(.unsealed(status: UInt8(statusToWrite)) )
                 return
             } catch {
                 logger.error("UnsealSlot error: \(error)")
-                cardController?.stop(errorMessage: String(localized: "Failed to unseal vault with error: \(error.localizedDescription)"))
+                cardController?.stop(errorMessage: "\(String(localized: "nfcVaultUnsealFailed")) \(error.localizedDescription)")
                 completion(.readingError(error: "unseal error : \(error.localizedDescription)"))
                 return
             }
         } onFailure: { error in
             completion(.silentError(error: error.localizedDescription))
         }
-        cardController?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
+        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
     
     func getVaults(cmdSet: SatocardCommandSet, cardAuthenticity: CardAuthenticity, cardStatus: CardStatus) -> CardVaults? {
@@ -492,6 +492,7 @@ class CardService: PCardService {
         
         do {
             let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+            print("unlockSecretDict : \(unlockSecretDict)")
             var satodimeStatus = try SatodimeStatus(rapdu: cmdSet.satodimeGetStatus().checkOK())
             logger.info("satodimeStatus: \(satodimeStatus)")
             if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{

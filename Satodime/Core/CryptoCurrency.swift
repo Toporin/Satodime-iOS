@@ -19,8 +19,11 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
     var id: String { self.rawValue }
     
     init?(shortIdentifier: String) {
+        // TODO: refactoring needed - Unify formatting in one place
+        var formattedIdentifier = shortIdentifier.replacingOccurrences(of: "TEST", with: "").uppercased()
+        formattedIdentifier = formattedIdentifier.replacingOccurrences(of: "ROP", with: "ETH")
         for currency in CryptoCurrency.allCases {
-            if currency.shortIdentifier == shortIdentifier {
+            if currency.shortIdentifier == formattedIdentifier {
                 self = currency
                 return
             }

@@ -51,7 +51,14 @@ public struct VaultItem: Hashable {
     // coin info
     public var pubkey: [UInt8]? = nil
     public var balance: Double? = nil // async value
-    public var address: String = "(undefined)"
+    public var address: String = "(undefined)" {
+        didSet {
+            print("** didSet VaultItem address: \(address)")
+            if address == "(unsupported)" {
+                print("unsupported coin")
+            }
+        }
+    }
     public var addressUrl: URL? = nil // explorer url
     
     // deprecated fiat value

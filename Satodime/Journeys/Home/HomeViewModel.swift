@@ -11,10 +11,17 @@ import Combine
 
 class VaultsList: ObservableObject {
     @Published var items: [VaultCardViewModelType]
+    @Published var guid: String = UUID().uuidString
 
     init(items: [VaultCardViewModelType]) {
         self.items = items
     }
+}
+
+enum VaultsVisibility  {
+    case makeVisible
+    case idle
+    case invisible
 }
 
 
@@ -23,6 +30,7 @@ final class HomeViewModel: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     let cardService: PCardService
     let coinService: PCoinService
+    @Published var vaultVisibility: VaultsVisibility = .invisible
     
     var viewStackHandler = ViewStackHandler()
     private func observeStack() {
@@ -32,6 +40,15 @@ final class HomeViewModel: ObservableObject {
                 if newValue == .clear {
                     DispatchQueue.main.async {
                         self.vaultCards = VaultsList(items: [])
+                        self.viewStackHandler.refreshVaults = .none
+                    }
+                }
+                if newValue == .refresh {
+                    DispatchQueue.main.async {
+                        self.vaultVisibility = .idle
+                        self.vaultVisibility = .makeVisible
+                        self.viewStackHandler.refreshVaults = .none
+                        self.populateTabs()
                     }
                 }
             }
@@ -46,7 +63,7 @@ final class HomeViewModel: ObservableObject {
     }
     @Published var currentSlotIndex: Int = 0 {
         didSet {
-            self.buildShowPrivateKeyVM()
+            self.buildShowPrivateKeyVM(viewStackHandler: self.viewStackHandler)
             self.checkNFTTabCanBeEnabled()
             
         }
@@ -61,6 +78,7 @@ final class HomeViewModel: ObservableObject {
     var unsealViewModel: UnsealViewModel?
     var showPrivateKeyViewModel: ShowPrivateKeyMenuViewModel?
     var resetViewModel: ResetViewModel?
+    var emptyVaultsStateList: [RoundedRectangle] = []
     
     let ownershipAlert: SatoAlert = SatoAlert(title: "ownership", message: "ownershipText", buttonTitle: String(localized:"moreInfo"), buttonAction: {
             guard let url = URL(string: "https://satochip.io/satodime-ownership-explained/") else {
@@ -148,8 +166,8 @@ final class HomeViewModel: ObservableObject {
         switch item {
         case .vaultCard(let viewModel):
             let coin = viewModel.vaultItem.getCoinSymbol()
-            // TODO: We should unify to way to recognize coin
-            self.canSelectNFT = coin == "ETH" || coin == "XCP"
+            // TODO: We should unify the way to recognize coin
+            self.canSelectNFT = coin == "ETH" || coin == "XCP" || coin == "ROP"
         default:
             break
         }
@@ -182,11 +200,14 @@ final class HomeViewModel: ObservableObject {
         let vaultCard = self.vaultCards.items[self.currentSlotIndex]
         switch vaultCard {
         case .vaultCard(let viewModel):
-            self.unsealViewModel = UnsealViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.unsealViewModel = UnsealViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex)
+                self.navigateTo(destination: .unseal)
+            }
         case .emptyVault(_):
             break
         }
-        self.navigateTo(destination: .unseal)
     }
     
     func goToShowKey() {
@@ -196,14 +217,14 @@ final class HomeViewModel: ObservableObject {
             return
         }
         
-        /*let vaultCard = self.vaultCards.items[self.currentSlotIndex]
+        let vaultCard = self.vaultCards.items[self.currentSlotIndex]
         switch vaultCard {
         case .vaultCard(let viewModel):
             self.showPrivateKeyViewModel = ShowPrivateKeyMenuViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex)
+            self.navigateTo(destination: .privateKey)
         case .emptyVault(_):
             break
-        }*/
-        self.navigateTo(destination: .privateKey)
+        }
     }
     
     func reset() {
@@ -216,19 +237,22 @@ final class HomeViewModel: ObservableObject {
         let vaultCard = self.vaultCards.items[self.currentSlotIndex]
         switch vaultCard {
         case .vaultCard(let viewModel):
-            self.resetViewModel = ResetViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex, vaultsList: self.vaultCards)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.resetViewModel = ResetViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex, vaultsList: self.vaultCards)
+                self.navigateTo(destination: .reset)
+            }
         case .emptyVault(_):
             break
         }
-        self.navigateTo(destination: .reset)
     }
     
-    func buildShowPrivateKeyVM() -> ShowPrivateKeyMenuViewModel? {
+    func buildShowPrivateKeyVM(viewStackHandler: ViewStackHandler) -> ShowPrivateKeyMenuViewModel? {
         guard !self.vaultCards.items.isEmpty else { return nil }
         let vaultCard = self.vaultCards.items[self.currentSlotIndex]
         switch vaultCard {
         case .vaultCard(let viewModel):
-            self.showPrivateKeyViewModel = ShowPrivateKeyMenuViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex)
+            self.showPrivateKeyViewModel = ShowPrivateKeyMenuViewModel(cardService: CardService(), vaultCardViewModel: viewModel, indexPosition: self.currentSlotIndex, viewStackHandler: viewStackHandler)
             return self.showPrivateKeyViewModel
         case .emptyVault(_):
             return nil
@@ -253,66 +277,90 @@ final class HomeViewModel: ObservableObject {
         self.navigateTo(destination: .cardAuthenticity)
     }
     
-    func startReadingCard() {
-        self.cardService.getCardActionStateStatus { [weak self] status in
+    private func clearData(completion: @escaping () -> Void) {
+        DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            switch status {
-            case .unknown:
-                break
-            case .readingError(error: _):
-                DispatchQueue.main.async {
-                    self.cardStatus.status = .invalid
+            self.cardVaults = nil
+            self.vaultCards = VaultsList(items: [])
+            self.nftListViewModel = NFTListViewModel()
+            self.tokenListViewModel = TokenListViewModel()
+            self.cardStatus.status = .none
+            self.currentSlotIndex = 0
+            self.vaultVisibility = .invisible
+            completion()
+        }
+    }
+    
+    func startReadingCard() {
+        self.clearData { [weak self] in
+            guard let self = self else { return }
+            self.cardService.getCardActionStateStatus { [weak self] status in
+                guard let self = self else { return }
+                switch status {
+                case .unknown:
+                    break
+                case .readingError(error: _):
+                    DispatchQueue.main.async {
+                        self.cardStatus.status = .invalid
+                    }
+                case .silentError(error: _):
+                    break
+                case .notAuthentic(vaults: let vaults):
+                    DispatchQueue.main.async {
+                        self.vaultVisibility = .idle
+                        self.vaultVisibility = .makeVisible
+                        self.cardStatus.status = .invalid
+                        self.constructVaultsList(with: vaults)
+                        self.navigateTo(destination: .notAuthentic)
+                    }
+                case .needToAcceptCard(vaults: let vaults):
+                    DispatchQueue.main.async {
+                        self.cardStatus.status = .none
+                        self.constructVaultsList(with: vaults)
+                        self.navigateTo(destination: .takeOwnership)
+                    }
+                case .cardAccepted:
+                    print("TODO - cardAccepted")
+                case .setupDone:
+                    break
+                case .isOwner:
+                    break
+                case .notOwner(vaults: let vaults):
+                    DispatchQueue.main.async {
+                        self.vaultVisibility = .idle
+                        self.vaultVisibility = .makeVisible
+                        self.cardStatus.status = .valid
+                        self.constructVaultsList(with: vaults)
+                        self.showOwnershipAlert = true
+                    }
+                case .getPrivate:
+                    break
+                case .reset:
+                    break
+                case .seal:
+                    break
+                case .transfer:
+                    break
+                case .unsealed:
+                    self.navigateTo(destination: .unseal)
+                case .noVaultSet(vaults: let vaults):
+                    DispatchQueue.main.async {
+                        self.vaultVisibility = .idle
+                        self.vaultVisibility = .makeVisible
+                        self.cardStatus.status = .valid
+                        self.constructVaultsList(with: vaults)
+                        self.navigateTo(destination: .vaultInitialization)
+                    }
+                case .hasVault(vaults: let vaults):
+                    DispatchQueue.main.async {
+                        self.vaultVisibility = .idle
+                        self.vaultVisibility = .makeVisible
+                        self.cardStatus.status = .valid
+                        self.constructVaultsList(with: vaults)
+                    }
+                case .sealed(result: _):
+                    break
                 }
-            case .silentError(error: _):
-                break
-            case .notAuthentic(vaults: let vaults):
-                DispatchQueue.main.async {
-                    self.cardStatus.status = .invalid
-                    self.constructVaultsList(with: vaults)
-                    self.navigateTo(destination: .notAuthentic)
-                }
-            case .needToAcceptCard(vaults: let vaults):
-                DispatchQueue.main.async {
-                    let isAuthentic = vaults.cardAuthenticity?.isAuthentic() ?? false
-                    self.cardStatus.status = isAuthentic ? .valid : .invalid
-                    self.constructVaultsList(with: vaults)
-                    self.navigateTo(destination: .takeOwnership)
-                }
-            case .cardAccepted:
-                print("TODO - cardAccepted")
-            case .setupDone:
-                break
-            case .isOwner:
-                break
-            case .notOwner(vaults: let vaults):
-                DispatchQueue.main.async {
-                    self.cardStatus.status = .valid
-                    self.constructVaultsList(with: vaults)
-                    self.showOwnershipAlert = true
-                }
-            case .getPrivate:
-                break
-            case .reset:
-                break
-            case .seal:
-                break
-            case .transfer:
-                break
-            case .unsealed:
-                self.navigateTo(destination: .unseal)
-            case .noVaultSet(vaults: let vaults):
-                DispatchQueue.main.async {
-                    self.cardStatus.status = .valid
-                    self.constructVaultsList(with: vaults)
-                    self.navigateTo(destination: .vaultInitialization)
-                }
-            case .hasVault(vaults: let vaults):
-                DispatchQueue.main.async {
-                    self.cardStatus.status = .valid
-                    self.constructVaultsList(with: vaults)
-                }
-            case .sealed(result: _):
-                break
             }
         }
     }
@@ -374,6 +422,12 @@ final class HomeViewModel: ObservableObject {
     func populateTabs() {
         guard !self.vaultCards.items.isEmpty else { return }
         
+        // Clear tabs
+        let nftListViewModel = NFTListViewModel()
+        self.nftListViewModel = nftListViewModel
+        let tokenListViewModel = TokenListViewModel()
+        self.tokenListViewModel = tokenListViewModel
+        
         switch self.vaultCards.items[currentSlotIndex] {
         case .vaultCard(let viewModel):
             Task {
@@ -415,11 +469,10 @@ final class HomeViewModel: ObservableObject {
                         }
                     }
                     
-                    let nftListViewModel = NFTListViewModel()
+                    
                     nftListViewModel.populateCellViewModels(from: nftImageUrlResults)
                     self.nftListViewModel = nftListViewModel
-                    
-                    let tokenListViewModel = TokenListViewModel()
+
                     tokenListViewModel.populateCellViewModels(from: tokensList)
                     self.tokenListViewModel = tokenListViewModel
                     

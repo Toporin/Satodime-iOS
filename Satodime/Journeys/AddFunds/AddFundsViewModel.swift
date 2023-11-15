@@ -17,18 +17,21 @@ final class AddFundsViewModel: BaseViewModel {
     
     let indexPosition: Int
     private var vault: VaultItem
+    private var card: VaultCardViewModel
 
     // MARK: - Literals
     let viewTitle = "addFunds"
     let title: String = "depositAddress"
     let subtitle: String = "youOrAnybodyCanDepositFunds"
     
-    init(indexPosition: Int, vault: VaultItem) {
+    init(indexPosition: Int, vault: VaultItem, card: VaultCardViewModel) {
         self.indexPosition = indexPosition
         self.vault = vault
+        self.card = card
         super.init()
         self.slotNumber = "0\(indexPosition+1)"
-        self.pubAddressToDisplay = vault.address
+        // self.pubAddressToDisplay = vault.address
+        self.pubAddressToDisplay = self.card.walletAddress
         self.coinIcon = "ic_\(vault.getCoinSymbol().lowercased())"
         self.headerImageName = self.vault.isSealed() ? "bg_header_addfunds" : "bg_red_gradient"
     }

@@ -52,7 +52,10 @@ final class VaultSetupCreateViewModel: BaseViewModel {
                     if(self.vaultCards.items.isEmpty) {
                         self.vaultCards.items.append(.vaultCard(vaultCardViewModel))
                     } else {
-                        self.vaultCards.items[self.index] = .vaultCard(vaultCardViewModel)
+                        let bufferVaultCards = self.vaultCards
+                        bufferVaultCards.guid = UUID().uuidString
+                        bufferVaultCards.items[self.index] = .vaultCard(vaultCardViewModel)
+                        self.vaultCards = bufferVaultCards
                     }
                     self.isNextViewActive = true
                     print("Sealed!")

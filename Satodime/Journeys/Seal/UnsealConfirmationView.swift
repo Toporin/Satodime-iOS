@@ -49,6 +49,7 @@ struct UnsealConfirmationView: View {
                 Spacer()
                 
                 SatoButton(staticWidth: 222, text: viewModel.continueButtonTitle, style: .confirm, horizontalPadding: 25) {
+                    viewStackHandler.refreshVaults = .refresh
                     viewModel.completeFlow()
                 }
                 

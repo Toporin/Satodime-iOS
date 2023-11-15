@@ -25,7 +25,7 @@ class EmptyVaultViewModel: Hashable {
     }
 }
 
-class VaultCardViewModel: ObservableObject, Hashable {
+class VaultCardViewModel: ObservableObject, Hashable, Identifiable {
     let coinService: PCoinService
     let walletAddress: String
     let isTestnet: Bool

@@ -12,6 +12,7 @@ import SnapToScroll
 enum RefreshVaults {
     case none
     case clear
+    case refresh
 }
 
 class ViewStackHandler: ObservableObject {
@@ -104,31 +105,35 @@ struct HomeView: View {
                         Spacer()
                             .frame(height: 16)
                         
-                        HStackSnap(alignment: .leading(20), spacing: 10) {
-                            ForEach(Array(viewModel.vaultCards.items.indices), id: \.self) { i in
-                                let cardData = viewModel.vaultCards.items[i]
-                                switch cardData {
-                                case .vaultCard(let vaultCardViewModel):
-                                    VaultCard(viewModel: vaultCardViewModel, indexPosition: i)
-                                        .shadow(radius: 10)
-                                        .frame(width: 261, height: 197)
-                                        .snapAlignmentHelper(id: i)
-                                case .emptyVault(_):
-                                    self.buildEmptyCardView(id: i)
+                        // Quick hack as HStackSnap does not support dynamic data
+                        if viewModel.vaultVisibility != .makeVisible {
+                            HStackSnap(alignment: .leading(20), spacing: 10) {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.clear, lineWidth: 2)
+                                    .frame(width: 261, height: 197)
+                                    .snapAlignmentHelper(id: 0)
+                            } eventHandler: { event in
+                                handleSnapToScrollEvent(event: event)
+                            }
+                            .frame(height: 197)
+                        } else {
+                            HStackSnap(alignment: .leading(20), spacing: 10) {
+                                ForEach(Array(viewModel.vaultCards.items.indices), id: \.self) { i in
+                                    let cardData = viewModel.vaultCards.items[i]
+                                    switch cardData {
+                                    case .vaultCard(let vaultCardViewModel):
+                                        VaultCard(viewModel: vaultCardViewModel, indexPosition: i)
+                                            .shadow(radius: 10)
+                                            .frame(width: 261, height: 197)
+                                            .snapAlignmentHelper(id: i)
+                                    case .emptyVault(_):
+                                        self.buildEmptyCardView(id: i)
+                                    }
                                 }
+                            } eventHandler: { event in
+                                handleSnapToScrollEvent(event: event)
                             }
-                        } eventHandler: { event in
-                            handleSnapToScrollEvent(event: event)
-                        }
-                        .frame(height: 197)
-                        
-                        Spacer()
-                            .frame(height: 16)
-                        
-                        if !viewModel.hasReadCard() {
-                            ScanButton {
-                                viewModel.startReadingCard()
-                            }
+                            .frame(height: 197)
                         }
                         
                         Spacer()
@@ -209,14 +214,19 @@ struct HomeView: View {
                     if viewModel.viewStackHandler.navigationState == .unseal, let viewModel = self.viewModel.unsealViewModel {
                         NavigationLink("", destination: UnsealView(viewModel: viewModel), isActive: .constant(isUnseal())).hidden()
                     }
-                    if viewModel.viewStackHandler.navigationState == .privateKey, let viewModel = self.viewModel.buildShowPrivateKeyVM() {
+                    if viewModel.viewStackHandler.navigationState == .privateKey, let viewModel = self.viewModel.buildShowPrivateKeyVM(viewStackHandler: self.viewStackHandler) {
                         NavigationLink("", destination: ShowPrivateKeyMenuView(viewModel: viewModel), isActive: .constant(isPrivateKey())).hidden()
                     }
                     if viewModel.viewStackHandler.navigationState == .reset, let viewModel = self.viewModel.resetViewModel {
                         NavigationLink("", destination: ResetView(viewModel: viewModel), isActive: .constant(isReset())).hidden()
                     }
                     if viewModel.viewStackHandler.navigationState == .addFunds, let vaultItem = viewModel.cardVaults?.vaults[viewModel.currentSlotIndex] {
-                        NavigationLink("", destination: AddFundsView(viewModel: AddFundsViewModel(indexPosition: viewModel.currentSlotIndex, vault: vaultItem) ), isActive: .constant(isAddFunds())).hidden()
+                        switch viewModel.vaultCards.items[viewModel.currentSlotIndex] {
+                        case .vaultCard(let cardViewModel):
+                            NavigationLink("", destination: AddFundsView(viewModel: AddFundsViewModel(indexPosition: viewModel.currentSlotIndex, vault: vaultItem, card: cardViewModel)), isActive: .constant(isAddFunds())).hidden()
+                        case .emptyVault(_):
+                            EmptyView()
+                        }
                     }
                 }
                 .overlay(
@@ -231,6 +241,12 @@ struct HomeView: View {
                                 
                                 SatoAlertView(isPresented: $viewModel.showOwnershipAlert, alert: viewModel.ownershipAlert)
                                     .padding([.leading, .trailing], 24)
+                            }
+                        }
+                        
+                        if !viewModel.hasReadCard() {
+                            ScanButton {
+                                viewModel.startReadingCard()
                             }
                         }
                     }
