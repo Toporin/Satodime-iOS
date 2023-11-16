@@ -24,7 +24,7 @@ final class AddFundsViewModel: BaseViewModel {
     let title: String = "depositAddress"
     let subtitle: String = "youOrAnybodyCanDepositFunds"
     
-    init(indexPosition: Int, vault: VaultItem, card: VaultCardViewModel) {
+    init(indexPosition: Int, vault: VaultItem, card: VaultCardViewModel, viewStackHandler: ViewStackHandler? = nil) {
         self.indexPosition = indexPosition
         self.vault = vault
         self.card = card
@@ -33,7 +33,10 @@ final class AddFundsViewModel: BaseViewModel {
         // self.pubAddressToDisplay = vault.address
         self.pubAddressToDisplay = self.card.walletAddress
         self.coinIcon = "ic_\(vault.getCoinSymbol().lowercased())"
-        self.headerImageName = self.vault.isSealed() ? "bg_header_addfunds" : "bg_red_gradient"
+        self.headerImageName = self.card.sealStatus == .sealed ? "bg_header_addfunds" : "bg_red_gradient"
+        if let viewStackHandler = viewStackHandler {
+            self.viewStackHandler = viewStackHandler
+        }
     }
 
     func copyToClipboard() {
@@ -48,7 +51,7 @@ final class AddFundsViewModel: BaseViewModel {
     }
     
     func getSealStatus() -> SealStatus {
-        return self.vault.isSealed() ? .sealed : .unsealed
+        return self.card.sealStatus
     }
 }
 

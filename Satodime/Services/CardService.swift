@@ -197,12 +197,12 @@ class CardService: PCardService {
                 logger.info("Status: \(cardStatus)")
                 LoggerService().log(entry: cardStatus.toString())
                 
-                if !cardStatus.setupDone {
+                /*if !cardStatus.setupDone {
                     cardController?.stop(alertMessage: String(localized: "nfcSatodimeNeedSetup"))
                     logger.info("Satodime needs setup!")
                     completion(.needToAcceptCard(vaults: CardVaults(isOwner: false, isCardAuthentic: true, cardVersion: "", vaults: [], cardAuthenticity: nil)))
                     return
-                }
+                }*/
                 
                 if !cardStatus.setupDone {
                     logger.info("Satodime needs setup!")
@@ -210,7 +210,8 @@ class CardService: PCardService {
                 }
                 
                 guard let authenticity = self.isCardAuthentic(cmdSet: cmdSet) else {
-                    cardController?.stop(alertMessage: String(localized: "Error while checking authenticity"))
+                    cardController?.stop(alertMessage: String(localized: "\(String(localized: "nfcSatodimeNeedSetup"))  - Error while checking authenticity"))
+                    completion(.needToAcceptCard(vaults: CardVaults(isOwner: false, isCardAuthentic: true, cardVersion: "", vaults: [], cardAuthenticity: nil)))
                     logger.error("Error while checking authenticity")
                     return
                 }

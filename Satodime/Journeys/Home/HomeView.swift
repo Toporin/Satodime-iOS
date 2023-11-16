@@ -223,7 +223,7 @@ struct HomeView: View {
                     if viewModel.viewStackHandler.navigationState == .addFunds, let vaultItem = viewModel.cardVaults?.vaults[viewModel.currentSlotIndex] {
                         switch viewModel.vaultCards.items[viewModel.currentSlotIndex] {
                         case .vaultCard(let cardViewModel):
-                            NavigationLink("", destination: AddFundsView(viewModel: AddFundsViewModel(indexPosition: viewModel.currentSlotIndex, vault: vaultItem, card: cardViewModel)), isActive: .constant(isAddFunds())).hidden()
+                            NavigationLink("", destination: AddFundsView(viewModel: AddFundsViewModel(indexPosition: viewModel.currentSlotIndex, vault: vaultItem, card: cardViewModel, viewStackHandler: self.viewStackHandler)), isActive: .constant(isAddFunds())).hidden()
                         case .emptyVault(_):
                             EmptyView()
                         }

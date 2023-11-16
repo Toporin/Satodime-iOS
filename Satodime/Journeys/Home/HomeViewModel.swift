@@ -315,6 +315,8 @@ final class HomeViewModel: ObservableObject {
                     }
                 case .needToAcceptCard(vaults: let vaults):
                     DispatchQueue.main.async {
+                        self.vaultVisibility = .idle
+                        self.vaultVisibility = .makeVisible
                         self.cardStatus.status = .none
                         self.constructVaultsList(with: vaults)
                         self.navigateTo(destination: .takeOwnership)
