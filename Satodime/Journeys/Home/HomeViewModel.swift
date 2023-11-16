@@ -16,6 +16,16 @@ class VaultsList: ObservableObject {
     init(items: [VaultCardViewModelType]) {
         self.items = items
     }
+    
+    func areAllEmptyVaults() -> Bool {
+        return self.items.allSatisfy {
+            if case .emptyVault = $0 {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
 }
 
 enum VaultsVisibility  {
@@ -32,6 +42,8 @@ final class HomeViewModel: ObservableObject {
     let coinService: PCoinService
     @Published var vaultVisibility: VaultsVisibility = .invisible
     
+    var doesUserRequestToSeeAuthenticScreen: Bool = false
+    
     var viewStackHandler = ViewStackHandler()
     private func observeStack() {
         viewStackHandler.$refreshVaults
@@ -39,6 +51,7 @@ final class HomeViewModel: ObservableObject {
                 guard let self = self else { return }
                 if newValue == .clear {
                     DispatchQueue.main.async {
+                        self.cardStatus.status = .none
                         self.vaultCards = VaultsList(items: [])
                         self.viewStackHandler.refreshVaults = .none
                     }
@@ -274,6 +287,7 @@ final class HomeViewModel: ObservableObject {
     
     func gotoCardAuthenticity() {
         guard self.cardStatus.status != .none else { return }
+        self.doesUserRequestToSeeAuthenticScreen = true
         self.navigateTo(destination: .cardAuthenticity)
     }
     
@@ -307,6 +321,7 @@ final class HomeViewModel: ObservableObject {
                     break
                 case .notAuthentic(vaults: let vaults):
                     DispatchQueue.main.async {
+                        self.doesUserRequestToSeeAuthenticScreen = false
                         self.vaultVisibility = .idle
                         self.vaultVisibility = .makeVisible
                         self.cardStatus.status = .invalid

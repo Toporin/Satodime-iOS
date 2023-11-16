@@ -18,8 +18,10 @@ final class AuthenticViewModel: BaseViewModel {
     @Published var imageForState: Image
     @Published var textForState: String
     @Published var backgroundColor: Color
+    
+    var destinationOnClose: NavigationState?
 
-    init(authState: AuthenticationState, viewStackHandler: ViewStackHandler? = nil) {
+    init(authState: AuthenticationState, viewStackHandler: ViewStackHandler? = nil, destinationOnClose: NavigationState? = nil) {
         switch authState {
         case .isAuthentic:
             self.imageForState = Image("il_authentic")
@@ -32,6 +34,7 @@ final class AuthenticViewModel: BaseViewModel {
         }
         super.init()
         self.viewStackHandler = viewStackHandler
+        self.destinationOnClose = destinationOnClose
         /*if let viewStackHandler = viewStackHandler, self.viewStackHandler == nil {
             self.viewStackHandler = viewStackHandler
         }*/

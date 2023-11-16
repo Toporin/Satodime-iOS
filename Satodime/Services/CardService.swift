@@ -210,8 +210,11 @@ class CardService: PCardService {
                 }
                 
                 guard let authenticity = self.isCardAuthentic(cmdSet: cmdSet) else {
+                    // TODO: Refactor the check for the setup
+                    // <<<<<
                     cardController?.stop(alertMessage: String(localized: "\(String(localized: "nfcSatodimeNeedSetup"))  - Error while checking authenticity"))
                     completion(.needToAcceptCard(vaults: CardVaults(isOwner: false, isCardAuthentic: true, cardVersion: "", vaults: [], cardAuthenticity: nil)))
+                    // >>>>>
                     logger.error("Error while checking authenticity")
                     return
                 }
@@ -235,6 +238,18 @@ class CardService: PCardService {
                 
                 cardVaults.cardAuthenticity = authenticity
                 
+                if !setupDone {
+                    completion(.needToAcceptCard(vaults: cardVaults))
+                    cardController?.stop(alertMessage: (String(localized: "nfcSatodimeNeedSetup")))
+                    return
+                }
+                
+                if !authenticity.isAuthentic() {
+                    completion(.notAuthentic(vaults: cardVaults))
+                    cardController?.stop(alertMessage: String(localized: "nfcVaultsListSuccess"))
+                    return
+                }
+                
                 if emptySlotCounter == slots || cardVaults.vaults.isEmpty {
                     logger.warning("No initialized vaults")
                     completion(.noVaultSet(vaults: cardVaults))
@@ -244,16 +259,6 @@ class CardService: PCardService {
                 
                 logger.info("Vaults readed successfully")
                 cardController?.stop(alertMessage: String(localized: "nfcVaultsListSuccess"))
-                
-                if !authenticity.isAuthentic() {
-                    completion(.notAuthentic(vaults: cardVaults))
-                    return
-                }
-                
-                if !setupDone {
-                    completion(.needToAcceptCard(vaults: cardVaults))
-                    return
-                }
                 
                 if cardVaults.isOwner {
                     completion(.hasVault(vaults: cardVaults))
