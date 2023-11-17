@@ -359,6 +359,7 @@ final class HomeViewModel: ObservableObject {
                         }
                         if vaults.isCardAuthentic == .notAuthentic {
                             self.cardStatus.status = .invalid
+                            // self.navigateTo(destination: .notAuthentic)
                         }
                         if vaults.isCardAuthentic == .unknown {
                             self.cardStatus.status = .none
@@ -401,6 +402,7 @@ final class HomeViewModel: ObservableObject {
                         }
                         if vaults.isCardAuthentic == .notAuthentic {
                             self.cardStatus.status = .invalid
+                            self.navigateTo(destination: .notAuthentic)
                         }
                         if vaults.isCardAuthentic == .unknown {
                             self.cardStatus.status = .none

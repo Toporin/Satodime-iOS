@@ -42,7 +42,11 @@ final class TakeOwnershipViewModel: BaseViewModel {
             case .cardAccepted:
                 DispatchQueue.main.async {
                     self.cardVaults.isOwner = true
-                    self.navigateTo(destination: .goBackHome)
+                    if let destinationOnClose = self.destinationOnClose {
+                        self.navigateTo(destination: destinationOnClose)
+                    } else {
+                        self.navigateTo(destination: .goBackHome)
+                    }
                 }
             default:
                 break
