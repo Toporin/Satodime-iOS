@@ -332,7 +332,15 @@ final class HomeViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.vaultVisibility = .idle
                         self.vaultVisibility = .makeVisible
-                        self.cardStatus.status = .none
+                        if vaults.isCardAuthentic == .authentic {
+                            self.cardStatus.status = .valid
+                        }
+                        if vaults.isCardAuthentic == .notAuthentic {
+                            self.cardStatus.status = .invalid
+                        }
+                        if vaults.isCardAuthentic == .unknown {
+                            self.cardStatus.status = .none
+                        }
                         self.constructVaultsList(with: vaults)
                         self.navigateTo(destination: .takeOwnership)
                     }
@@ -346,7 +354,15 @@ final class HomeViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.vaultVisibility = .idle
                         self.vaultVisibility = .makeVisible
-                        self.cardStatus.status = .valid
+                        if vaults.isCardAuthentic == .authentic {
+                            self.cardStatus.status = .valid
+                        }
+                        if vaults.isCardAuthentic == .notAuthentic {
+                            self.cardStatus.status = .invalid
+                        }
+                        if vaults.isCardAuthentic == .unknown {
+                            self.cardStatus.status = .none
+                        }
                         self.constructVaultsList(with: vaults)
                         self.showOwnershipAlert = true
                     }
@@ -364,7 +380,15 @@ final class HomeViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.vaultVisibility = .idle
                         self.vaultVisibility = .makeVisible
-                        self.cardStatus.status = .valid
+                        if vaults.isCardAuthentic == .authentic {
+                            self.cardStatus.status = .valid
+                        }
+                        if vaults.isCardAuthentic == .notAuthentic {
+                            self.cardStatus.status = .invalid
+                        }
+                        if vaults.isCardAuthentic == .unknown {
+                            self.cardStatus.status = .none
+                        }
                         self.constructVaultsList(with: vaults)
                         self.navigateTo(destination: .vaultInitialization)
                     }
@@ -372,7 +396,15 @@ final class HomeViewModel: ObservableObject {
                     DispatchQueue.main.async {
                         self.vaultVisibility = .idle
                         self.vaultVisibility = .makeVisible
-                        self.cardStatus.status = .valid
+                        if vaults.isCardAuthentic == .authentic {
+                            self.cardStatus.status = .valid
+                        }
+                        if vaults.isCardAuthentic == .notAuthentic {
+                            self.cardStatus.status = .invalid
+                        }
+                        if vaults.isCardAuthentic == .unknown {
+                            self.cardStatus.status = .none
+                        }
                         self.constructVaultsList(with: vaults)
                     }
                 case .sealed(result: _):

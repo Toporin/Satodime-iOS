@@ -213,7 +213,7 @@ class CardService: PCardService {
                     // TODO: Refactor the check for the setup
                     // <<<<<
                     cardController?.stop(alertMessage: String(localized: "\(String(localized: "nfcSatodimeNeedSetup"))  - Error while checking authenticity"))
-                    completion(.needToAcceptCard(vaults: CardVaults(isOwner: false, isCardAuthentic: true, cardVersion: "", vaults: [], cardAuthenticity: nil)))
+                    completion(.needToAcceptCard(vaults: CardVaults(isOwner: false, isCardAuthentic: .unknown, cardVersion: "", vaults: [], cardAuthenticity: nil)))
                     // >>>>>
                     logger.error("Error while checking authenticity")
                     return
@@ -539,7 +539,7 @@ class CardService: PCardService {
                 logger.info("End for index: \(index)")
             }
             let versionString = getCardVersionString(cardStatus: cardStatus)
-            let result = CardVaults(isOwner: isOwner, isCardAuthentic: cardAuthenticity.isAuthentic(), cardVersion: versionString, vaults: vaultArray)
+            let result = CardVaults(isOwner: isOwner, isCardAuthentic: cardAuthenticity.isAuthentic() ? .authentic : .notAuthentic, cardVersion: versionString, vaults: vaultArray)
             return result
         } catch {
             logger.error("ERROR - getVaults : \(error.localizedDescription)")

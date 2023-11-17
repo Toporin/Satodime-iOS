@@ -203,7 +203,7 @@ struct HomeView: View {
                         NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: .notAuthentic, viewStackHandler: viewModel.viewStackHandler, destinationOnClose: viewModel.vaultCards.areAllEmptyVaults() && !viewModel.doesUserRequestToSeeAuthenticScreen ? .vaultInitialization : nil)), isActive: .constant(isNotAuthentic())).hidden()
                     }
                     if viewModel.viewStackHandler.navigationState == .takeOwnership, let cardVaults = viewModel.cardVaults {
-                        NavigationLink("", destination: TakeOwnershipView(viewModel: TakeOwnershipViewModel(cardService: CardService(), cardVaults: cardVaults, viewStackHandler: viewStackHandler)), isActive: .constant(isTakeOwnership())).hidden()
+                        NavigationLink("", destination: TakeOwnershipView(viewModel: TakeOwnershipViewModel(cardService: CardService(), cardVaults: cardVaults, viewStackHandler: viewStackHandler, destinationOnClose: viewModel.cardVaults?.isCardAuthentic == .notAuthentic ? .notAuthentic : nil)), isActive: .constant(isTakeOwnership())).hidden()
                     }
                     if viewModel.viewStackHandler.navigationState == .vaultInitialization {
                         NavigationLink("", destination: VaultSetupSelectChainView(viewModel: VaultSetupSelectChainViewModel(index: viewModel.currentSlotIndex, vaultCards: viewModel.vaultCards)), isActive: .constant(isVaultInitialization())).hidden()

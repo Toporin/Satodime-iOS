@@ -12,18 +12,20 @@ final class TakeOwnershipViewModel: BaseViewModel {
     let logger = ConsoleLogger()
     let cardService: PCardService
     var cardVaults: CardVaults
+    var destinationOnClose: NavigationState?
     
     // MARK: - Literals
     let title = "takeTheOwnershipTitle"
     let subtitle = "takeTheOwnershipDescription"
     
-    init(cardService: PCardService, cardVaults: CardVaults, viewStackHandler: ViewStackHandler? = nil) {
+    init(cardService: PCardService, cardVaults: CardVaults, viewStackHandler: ViewStackHandler? = nil, destinationOnClose: NavigationState? = nil) {
         self.cardService = cardService
         self.cardVaults = cardVaults
         super.init()
         if let viewStackHandler = viewStackHandler {
             self.viewStackHandler = viewStackHandler
         }
+        self.destinationOnClose = destinationOnClose
     }
     
     func acceptCard() {
@@ -49,6 +51,10 @@ final class TakeOwnershipViewModel: BaseViewModel {
     }
     
     func cancel() {
-        self.navigateTo(destination: .goBackHome)
+        if let destinationOnClose = destinationOnClose {
+            self.navigateTo(destination: destinationOnClose)
+        } else {
+            self.navigateTo(destination: .goBackHome)
+        }
     }
 }

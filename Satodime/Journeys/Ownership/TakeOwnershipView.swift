@@ -44,7 +44,11 @@ struct TakeOwnershipView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            self.viewModel.navigateTo(destination: .goBackHome)
+            if let destinationOnClose = viewModel.destinationOnClose {
+                self.viewModel.navigateTo(destination: destinationOnClose)
+            } else {
+                self.viewModel.navigateTo(destination: .goBackHome)
+            }
         }) {
             Image("ic_flipback")
         })

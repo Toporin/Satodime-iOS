@@ -54,7 +54,7 @@ struct CardInfoView: View {
                 Spacer()
                     .frame(height: 14)
                 
-                CardInfoBox(text: viewModel.cardVaults.isCardAuthentic ? viewModel.cardGenuineText : viewModel.cardNotGenuineText, backgroundColor: viewModel.cardVaults.isCardAuthentic ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed) {
+                CardInfoBox(text: viewModel.cardVaults.isCardAuthentic == .authentic ? viewModel.cardGenuineText : viewModel.cardNotGenuineText, backgroundColor: viewModel.cardVaults.isCardAuthentic == .authentic ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed) {
                     viewModel.gotoAuthenticityScreen()
                 }
                     .padding([.leading, .trailing], 57)
@@ -69,7 +69,7 @@ struct CardInfoView: View {
                 
                 NavigationLink(destination: ShowCertificates(certificateCode: viewModel.cardVaults.cardAuthenticity!.certificateCode, certificateDic: viewModel.cardVaults.cardAuthenticity!.certificateDic), isActive: $viewModel.isCertDetailsViewActive){EmptyView()}
                 
-                NavigationLink(destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardVaults.isCardAuthentic ? .isAuthentic : .notAuthentic, viewStackHandler: viewModel.viewStackHandler)), isActive: $viewModel.shouldShowAuthenticityScreen){EmptyView()}
+                NavigationLink(destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardVaults.isCardAuthentic == .authentic ? .isAuthentic : .notAuthentic, viewStackHandler: viewModel.viewStackHandler)), isActive: $viewModel.shouldShowAuthenticityScreen){EmptyView()}
                 
                 Spacer()
                     .frame(height: 139)
