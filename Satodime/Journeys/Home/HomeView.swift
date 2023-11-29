@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import SnapToScroll
 
+// TODO: do we need this?
 enum RefreshVaults {
     case none
     case clear
@@ -35,6 +36,8 @@ enum NavigationState {
 }
 
 struct HomeView: View {
+    //@StateObject var logger = LoggerService()
+    
     @ObservedObject var viewModel: HomeViewModel
     @ObservedObject var viewStackHandler: ViewStackHandler
     
@@ -140,6 +143,8 @@ struct HomeView: View {
                             .frame(height: 16)
                         
                         HStack(spacing: 18) {
+                            // TODO: add link to explorer here?
+                            
                             if viewModel.isAddFundsButtonVisible() {
                                 // HStack {
                                 AddFundsButton {
@@ -210,6 +215,8 @@ struct HomeView: View {
                     }
                     if viewModel.viewStackHandler.navigationState == .menu {
                         NavigationLink("", destination: MenuView(viewModel: MenuViewModel(cardVaults: viewModel.cardVaults)), isActive: .constant(isMenu())).hidden()
+                        // TODO: isMenu() returns "viewModel.viewStackHandler.navigationState == .menu"
+                        // replace with isActive: True ??
                     }
                     if viewModel.viewStackHandler.navigationState == .unseal, let viewModel = self.viewModel.unsealViewModel {
                         NavigationLink("", destination: UnsealView(viewModel: viewModel), isActive: .constant(isUnseal())).hidden()
@@ -243,6 +250,7 @@ struct HomeView: View {
                                     .padding([.leading, .trailing], 24)
                             }
                         }
+                        // TODO: show authenticity issue here?
                         
                         if !viewModel.hasReadCard() {
                             ScanButton {
@@ -269,6 +277,7 @@ struct HomeView: View {
         }
     }
     
+    // TODO: do we really need these?
     func isCardAuthenticity() -> Bool {
         viewModel.viewStackHandler.navigationState == .cardAuthenticity
     }
@@ -309,10 +318,12 @@ struct HomeView: View {
         viewModel.viewStackHandler.navigationState == .addFunds
     }
     
+    // TODO: remove (unused)
     func hasNoOwnership() -> Bool {
         return true
     }
-
+    
+    // TODO: remove (unused)
     func isVaultInitialized() -> Bool {
         return UserDefaults.standard.bool(forKey: "VaultInitialized")
     }

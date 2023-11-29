@@ -60,11 +60,11 @@ indirect enum CardActionState {
 
 protocol PCardService {
     func getCardActionStateStatus(completion: @escaping (CardActionState) -> Void)
-    func acceptCard(completion: @escaping (CardActionState) -> Void)
+    func acceptCard(completion: @escaping (CardActionState) -> Void) // TODO: rename to takeOwnership
+    func transferOwnership(completion: @escaping (CardActionState) -> Void)
     func getPrivateKey(vaultIndex: Int, completion: @escaping (CardActionState) -> Void)
     func unseal(vaultIndex: Int, completion: @escaping (CardActionState) -> Void)
     func reset(vaultIndex: Int, completion: @escaping (CardActionState) -> Void)
-    func transferOwnership(completion: @escaping (CardActionState) -> Void)
     func sealVault(vaultIndex: Int,
                    for crypto: CryptoCurrency,
                    useTestNet: Bool,
@@ -106,7 +106,7 @@ class CardService: PCardService {
                 
                 if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
                     let onDeviceAuthKey = unlockSecretDict[auth.keyHex]
-                    guard onDeviceAuthKey?.toHexString() != auth.keyHex else {
+                    guard onDeviceAuthKey?.toHexString() != auth.keyHex else { // todo: why this code?
                         print("Card mismatch! \nIs this the correct card?")
                         cardController?.stop(errorMessage: String(localized: "nfcCardMismatch"))
                         completion(.readingError(error: String(localized: "nfcCardMismatch")))
@@ -257,7 +257,7 @@ class CardService: PCardService {
                     return
                 }
                 
-                logger.info("Vaults readed successfully")
+                logger.info("Vaults read successfully")
                 cardController?.stop(alertMessage: String(localized: "nfcVaultsListSuccess"))
                 
                 if cardVaults.isOwner {
@@ -554,8 +554,9 @@ class CardService: PCardService {
             let result = CardAuthenticity(certificateCode: certificateCode, certificateDic: certificateDic)
             return result
         } catch {
+            // TODO: could be due to error while reading card (e.g. removing card too soon)
             logger.error("Failed to authenticate card with error: \(error.localizedDescription)")
-            return nil
+            return nil // return .unknown?
         }
     }
     

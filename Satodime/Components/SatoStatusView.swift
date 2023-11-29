@@ -14,6 +14,7 @@ enum CardReadState {
     case invalid
 }
 
+// TODO: merge with isCardAuthentic  & CardAuthenticity ??
 class CardStatusObservable: ObservableObject {
     @Published var status: CardReadState = .none
     func cardStatusImage() -> String {

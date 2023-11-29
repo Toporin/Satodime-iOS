@@ -7,6 +7,7 @@
 
 import Foundation
 
+// TODO: merge with 
 enum isCardAuthentic {
     case authentic
     case notAuthentic
@@ -19,8 +20,9 @@ class CardVaults {
     let isCardAuthentic: isCardAuthentic
     let cardVersion: String
     let vaults: [VaultItem]
-    var cardAuthenticity: CardAuthenticity?
+    var cardAuthenticity: CardAuthenticity? // todo: merge with isCardAuthentic
     
+    // TODO: merge isCardAuthentic & CardAuthenticity
     init(isOwner: Bool, isCardAuthentic: isCardAuthentic, cardVersion: String, vaults: [VaultItem], cardAuthenticity: CardAuthenticity? = nil) {
         self.isOwner = isOwner
         self.isCardAuthentic = isCardAuthentic
