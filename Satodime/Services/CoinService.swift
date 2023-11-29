@@ -11,6 +11,12 @@ import Foundation
 // MARK: - Data
 
 struct AssetsResult {
+    // TODO:
+    // coin: [String:String]
+    // totalValueInFirstCurrency: Double
+    // firstCurrency: String
+    // totalValueInSecondCurrency: Double
+    // secondCurrency: String
     let mainCryptoBalance: Double
     let mainCryptoFiatBalance: String
     let nftList: [[String:String]]
@@ -29,13 +35,26 @@ protocol PCoinService {
 // MARK: - Service
 
 class CoinService: PCoinService {
-    let logger = ConsoleLogger()
+    //let logger = ConsoleLogger()
+    let logger = LoggerService()
     let preferenceService = PreferencesService()
     
     func fetchCryptoBalance(for coinInfo: VaultItem) async -> Double {
-        let address = coinInfo.address
+        var address = coinInfo.address
+        #if DEBUG
+        if coinInfo.coin.coinSymbol == "XCP" {
+            //address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4" // nft
+            address = "1DvNiQkdX7HN7UJpMNWsnWLizEJSxXzgCp" // nft + xcp
+        } else if coinInfo.coin.coinSymbol == "ETH" {
+            //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
+            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
+            //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
+            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+        }
+        #endif
         
         logger.log("fetching balance...")
+        //logger2.debug("fetching balance...")
         var balance: Double = 0.0
         // let addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: address) ?? "")
         
@@ -50,12 +69,24 @@ class CoinService: PCoinService {
     }
     
     func fetchCryptoTotalBalance(for coinInfo: VaultItem) async -> Double {
-        let address = coinInfo.address
+        var address = coinInfo.address
+        #if DEBUG
+        if coinInfo.coin.coinSymbol == "XCP" {
+            //address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4" // nft
+            address = "1DvNiQkdX7HN7UJpMNWsnWLizEJSxXzgCp" // nft + xcp
+        } else if coinInfo.coin.coinSymbol == "ETH" {
+            //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
+            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
+            //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
+            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+        }
+        #endif
         
         logger.log("fetching balance...")
         var balance: Double = 0.0
         // let addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: address) ?? "")
         
+        // TODO: duplicate code!
         do {
             balance = try await coinInfo.coin.getBalance(addr: address)
         } catch {
@@ -119,8 +150,8 @@ class CoinService: PCoinService {
                 }
                 tokenList.append(assetCopy)
                 print("NfcReader: added assetCopy: \(assetCopy)")
-            }
-        }
+            } // if contract
+        }// for asset
 
         print("NfcReader: tokenList: \(tokenList)")
         
@@ -128,30 +159,31 @@ class CoinService: PCoinService {
         print("Total balance 2 : \(totalTokenValueInSecondCurrency) ")
         
         return totalTokenValueInFirstCurrency
-        
-        
     }
     
     func fetchAssets(for coinInfo: VaultItem) async -> AssetsResult {
         let selectedFirstCurrency: String = coinInfo.coin.coinSymbol
         var selectedSecondCurrency: String = self.preferenceService.getCurrency()
-        /*#if DEBUG
-        //var address = "0x72eb30D3ca53f5e839325E2eACf535E70a9e6987"
-        //let assetList = [["contract":"0xEEe334e5DEB8522cD85097b47a69afC939715FFA"]]
-        var address = "0x2C4eBD4b21736E992f3EfeB55dE37ae66457199D"
-        let assetList = [["contract": "0xB66a603f4cFe17e3D27B87a8BfCaD319856518B8"]]
-        #else
-        var address = coinInfo.address
-        let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
-        #endif*/
         
         var mainCryptoBalance = await self.fetchCryptoBalance(for: coinInfo)
         var mainCryptoFiatBalance = await self.fetchFiatBalance(for: coinInfo, with: mainCryptoBalance)
         
         var address = coinInfo.address
-        let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
+        #if DEBUG
+        if coinInfo.coin.coinSymbol == "XCP" {
+            //address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4" // nft
+            address = "1DvNiQkdX7HN7UJpMNWsnWLizEJSxXzgCp" // nft + xcp
+        } else if coinInfo.coin.coinSymbol == "ETH" {
+            //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
+            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
+            //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
+            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+        }
+        #endif
+        logger.info("Fetch asset for address: \(address)")
         
-        logger.info("fetchTokenList: \(assetList)")
+        let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
+        logger.info("Asset list: \(assetList)")
         
         // sort assets between token and nfts
         // also get value if available
@@ -159,69 +191,139 @@ class CoinService: PCoinService {
         var totalTokenValueInSecondCurrency = 0.0
         var nftList: [[String:String]]=[]
         var tokenList: [[String:String]]=[]
+        
         for asset in assetList {
             if let contract = asset["contract"]{
-                var assetCopy = asset
-                assetCopy["type"] = "token"
+                var nftListByContract = await coinInfo.coin.getNftList(addr: address, contract: contract)
                 
-                // get price if available
-                if let tokenBalance = coinInfo.getTokenBalanceDouble(tokenData: asset),
-                    let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
-                    let currencyForExchangeRate = asset["currencyForExchangeRate"] {
-                    
-                    assetCopy["tokenBalance"] = String(tokenBalance)
-                    
-                    print("in fetchDataFromWeb [\(index)] tokenBalance: \(tokenBalance)")
-                    print("in fetchDataFromWeb [\(index)] tokenExchangeRate: \(tokenExchangeRate)")
-                    print("in fetchDataFromWeb [\(index)] currencyForExchangeRate: \(currencyForExchangeRate)")
-                    
-                    // selectedFirstCurrency
-                    // TODO: cache result?
-                    if let currencyExchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
-                    {
-                        print("in fetchDataFromWeb [\(index)] currencyExchangeRate1: \(currencyExchangeRate1)")
-                        print("in fetchDataFromWeb [\(index)] selectedFirstCurrency: \(selectedFirstCurrency)")
+                if nftListByContract.count>0 { // nft
+                    for nft in nftListByContract {
+                        // we merge the asset & nft dicts to get the most info about the nft
+                        var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
+                        nftMerged["type"] = "nft"
+                        nftList.append(nftMerged)
+                        logger.debug("NfcReader: added nftMerged: \(nftMerged)")
                         
-                        let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
-                        totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
-                        assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
-                        assetCopy["firstCurrency"] = selectedFirstCurrency
-                        print("in fetchDataFromWeb tokenValueInFirstCurrency: \(tokenValueInFirstCurrency)")
+                        // TODO: fetch price
                     }
+                } else { // token
+                    var assetCopy = asset
+                    assetCopy["type"] = "token"
                     
-                    // second currency
-                    if let currencyExchangeRate2 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedSecondCurrency)
-                    {
-                        let tokenValueInSecondCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate2
-                        totalTokenValueInSecondCurrency += tokenValueInSecondCurrency
-                        assetCopy["tokenValueInSecondCurrency"] = String(tokenValueInSecondCurrency)
-                        assetCopy["secondCurrency"] = selectedSecondCurrency
-                    }
-                }
-                
-                tokenList.append(assetCopy)
-                print("NfcReader: added assetCopy: \(assetCopy)")
-            } // if nft else token
-        } // if contract
+                    // get price if available
+                    if let tokenBalance = coinInfo.getTokenBalanceDouble(tokenData: asset),
+                        let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
+                        let currencyForExchangeRate = asset["currencyForExchangeRate"] {
+                        
+                        print("in fetchDataFromWeb tokenBalance: \(tokenBalance)")
+                        print("in fetchDataFromWeb tokenExchangeRate: \(tokenExchangeRate)")
+                        print("in fetchDataFromWeb currencyForExchangeRate: \(currencyForExchangeRate)")
+                        
+                        // selectedFirstCurrency
+                        // TODO: cache result?
+                        if let currencyExchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
+                        {
+                            print("in fetchDataFromWeb currencyExchangeRate1: \(currencyExchangeRate1)")
+                            print("in fetchDataFromWeb selectedFirstCurrency: \(selectedFirstCurrency)")
+                            
+                            let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
+                            totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
+                            assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
+                            assetCopy["firstCurrency"] = selectedFirstCurrency
+                            print("in fetchDataFromWeb tokenValueInFirstCurrency: \(tokenValueInFirstCurrency)")
+                        }
+                        
+                        // second currency
+                        if let currencyExchangeRate2 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedSecondCurrency)
+                        {
+                            let tokenValueInSecondCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate2
+                            totalTokenValueInSecondCurrency += tokenValueInSecondCurrency
+                            assetCopy["tokenValueInSecondCurrency"] = String(tokenValueInSecondCurrency)
+                            assetCopy["secondCurrency"] = selectedSecondCurrency
+                        }
+                    } // if token balance
+//                    else {
+//                        // DEBUG
+//                        print("in fetchDataFromWeb ERROR no balance available")
+//                        print("asset: \(asset)")
+//                        print(coinInfo.getTokenBalanceDouble(tokenData: asset))
+//                        print(Double(asset["tokenExchangeRate"] ?? ""))
+//                        print(asset["currencyForExchangeRate"])
+//                        print("---------")
+//                    }
+                    
+                    tokenList.append(assetCopy)
+                    print("NfcReader: added assetCopy: \(assetCopy)")
+                } // if nft else token
+            } // if contract
+        } // for asset
         
-        // TODO: contract is not needed ?
-        var nftListByContract = await coinInfo.coin.getNftList(addr: address, contract: "")
         
-        if nftListByContract.count>0 { // nft
-            for nft in nftListByContract {
-                // var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
-                var nftMerged: [String:String] = [:]
-                nftMerged["nftImageUrl"] = nft["nftImageUrl"]
-                nftMerged["type"] = "nft"
-                nftList.append(nftMerged)
-            }
-        }
+        
+        //old
+//        for asset in assetList {
+//            if let contract = asset["contract"]{
+//                var assetCopy = asset
+//                assetCopy["type"] = "token"
+//                
+//                // get price if available
+//                if let tokenBalance = coinInfo.getTokenBalanceDouble(tokenData: asset),
+//                    let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
+//                    let currencyForExchangeRate = asset["currencyForExchangeRate"] {
+//                    
+//                    assetCopy["tokenBalance"] = String(tokenBalance)
+//                    
+//                    print("in fetchDataFromWeb [\(index)] tokenBalance: \(tokenBalance)")
+//                    print("in fetchDataFromWeb [\(index)] tokenExchangeRate: \(tokenExchangeRate)")
+//                    print("in fetchDataFromWeb [\(index)] currencyForExchangeRate: \(currencyForExchangeRate)")
+//                    
+//                    // selectedFirstCurrency
+//                    // TODO: cache result?
+//                    if let currencyExchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
+//                    {
+//                        print("in fetchDataFromWeb [\(index)] currencyExchangeRate1: \(currencyExchangeRate1)")
+//                        print("in fetchDataFromWeb [\(index)] selectedFirstCurrency: \(selectedFirstCurrency)")
+//                        
+//                        let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
+//                        totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
+//                        assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
+//                        assetCopy["firstCurrency"] = selectedFirstCurrency
+//                        print("in fetchDataFromWeb tokenValueInFirstCurrency: \(tokenValueInFirstCurrency)")
+//                    }
+//                    
+//                    // second currency
+//                    if let currencyExchangeRate2 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedSecondCurrency)
+//                    {
+//                        let tokenValueInSecondCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate2
+//                        totalTokenValueInSecondCurrency += tokenValueInSecondCurrency
+//                        assetCopy["tokenValueInSecondCurrency"] = String(tokenValueInSecondCurrency)
+//                        assetCopy["secondCurrency"] = selectedSecondCurrency
+//                    }
+//                }// if tokenBalance
+//                
+//                tokenList.append(assetCopy)
+//                print("NfcReader: added assetCopy: \(assetCopy)")
+//            } // if contract
+//        } // for asset
+        
+//        // TODO: contract is not needed ?
+//        var nftListByContract = await coinInfo.coin.getNftList(addr: address, contract: "")
+//        
+//        if nftListByContract.count>0 { // nft
+//            for nft in nftListByContract {
+//                // var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
+//                var nftMerged: [String:String] = [:]
+//                nftMerged["nftImageUrl"] = nft["nftImageUrl"]
+//                nftMerged["type"] = "nft"
+//                nftList.append(nftMerged)
+//            }
+//        }
 
-        print("NfcReader: tokenList: \(tokenList)")
-        print("NfcReader: nftList: \(nftList)")
+        logger.debug("TokenList: \(tokenList)", tag: "CoinService")
+        logger.debug("NftList: \(nftList)", tag: "CoinService")
         
-        print("Total balance 1 : \(totalTokenValueInFirstCurrency) ")
-        print("Total balance 2 : \(totalTokenValueInSecondCurrency) ")
+        logger.debug("Total balance 1 : \(totalTokenValueInFirstCurrency) ")
+        logger.debug("Total balance 2 : \(totalTokenValueInSecondCurrency) ")
         let result = AssetsResult(
             mainCryptoBalance: mainCryptoBalance,
             mainCryptoFiatBalance: mainCryptoFiatBalance,

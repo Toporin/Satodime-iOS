@@ -15,8 +15,9 @@ class TokenCellViewModel: ObservableObject {
     let id = UUID()
     @Published var image: UIImage?
     @Published var name: String
-    @Published var cryptoBalance: String
-    @Published var fiatBalance: String
+    @Published var cryptoBalance: String // TODO: firstCurrency
+    @Published var fiatBalance: String // TODO: secondCurrency
+    @Published var symbol: String
     var mainToken: String?
     
     
@@ -24,10 +25,11 @@ class TokenCellViewModel: ObservableObject {
     let imageUrl: URL?
     
     // MARK: - Lifecycle
-    init(imageUri: String, name: String, cryptoBalance: String, fiatBalance: String, mainToken: String? = nil) {
+    init(imageUri: String, name: String, symbol: String, cryptoBalance: String, fiatBalance: String, mainToken: String? = nil) {
         let imageUrl = URL(string: imageUri)
         self.imageUrl = imageUrl
         self.name = name
+        self.symbol = symbol
         
         self.cryptoBalance = cryptoBalance
         self.fiatBalance = fiatBalance
@@ -89,7 +91,7 @@ struct TokenCell: View {
             VStack(alignment: .leading) {
                 SatoText(text: viewModel.name, style: .cellSmallTitle)
                     .font(.headline)
-                Text(viewModel.cryptoBalance)
+                Text(viewModel.cryptoBalance + " " + viewModel.symbol)
                     .font(
                         Font.custom("Outfit-ExtraLight", size: 12)
                             .weight(.light)

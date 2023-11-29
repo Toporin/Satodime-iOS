@@ -40,12 +40,12 @@ final class HomeViewModel: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     let cardService: PCardService
     let coinService: PCoinService
-    @Published var vaultVisibility: VaultsVisibility = .invisible
+    @Published var vaultVisibility: VaultsVisibility = .invisible //TODO: document
     
-    var doesUserRequestToSeeAuthenticScreen: Bool = false
+    var doesUserRequestToSeeAuthenticScreen: Bool = false // TODO: document
     
     var viewStackHandler = ViewStackHandler()
-    private func observeStack() {
+    private func observeStack() { // TODO: document
         viewStackHandler.$refreshVaults
             .sink { [weak self] newValue in
                 guard let self = self else { return }
@@ -128,6 +128,7 @@ final class HomeViewModel: ObservableObject {
         }
         
         switch currentSlotIndex {
+        //TODO: use modulo 3?
         case 0:
             return "gradient_1"
         case 1:
@@ -163,6 +164,7 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
+    // TODO: same as isUnsealButtonVisible
     func isCurrentCardUnsealed() -> Bool {
         guard !self.vaultCards.items.isEmpty else { return false }
         switch self.vaultCards.items[currentSlotIndex] {
@@ -283,13 +285,13 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
-    // MARK: - NFC
-    
     func gotoCardAuthenticity() {
         guard self.cardStatus.status != .none else { return }
         self.doesUserRequestToSeeAuthenticScreen = true
         self.navigateTo(destination: .cardAuthenticity)
     }
+    
+    // MARK: - NFC
     
     private func clearData(completion: @escaping () -> Void) {
         DispatchQueue.main.async { [weak self] in
@@ -312,17 +314,19 @@ final class HomeViewModel: ObservableObject {
                 guard let self = self else { return }
                 switch status {
                 case .unknown:
+                    // TODO: logs + ?
                     break
                 case .readingError(error: _):
                     DispatchQueue.main.async {
                         self.cardStatus.status = .invalid
                     }
                 case .silentError(error: _):
+                    // TODO: logs
                     break
                 case .notAuthentic(vaults: let vaults):
                     DispatchQueue.main.async {
                         self.doesUserRequestToSeeAuthenticScreen = false
-                        self.vaultVisibility = .idle
+                        self.vaultVisibility = .idle // TODO: remove?
                         self.vaultVisibility = .makeVisible
                         self.cardStatus.status = .invalid
                         self.constructVaultsList(with: vaults)
@@ -330,9 +334,9 @@ final class HomeViewModel: ObservableObject {
                     }
                 case .needToAcceptCard(vaults: let vaults):
                     DispatchQueue.main.async {
-                        self.vaultVisibility = .idle
+                        self.vaultVisibility = .idle // TODO: remove?
                         self.vaultVisibility = .makeVisible
-                        if vaults.isCardAuthentic == .authentic {
+                        if vaults.isCardAuthentic == .authentic { // todo: merge cardStatus & isCardAuthentic??
                             self.cardStatus.status = .valid
                         }
                         if vaults.isCardAuthentic == .notAuthentic {
@@ -444,6 +448,7 @@ final class HomeViewModel: ObservableObject {
     }
     
     // TODO: Temporary fix as we do not get a correct url for now from the framework
+    // TODO: see getNftImageUrlString() in VaultItem
     // eg.:
     // ipfs://ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png"
     // instead of :
@@ -475,7 +480,7 @@ final class HomeViewModel: ObservableObject {
         
         // Clear tabs
         let nftListViewModel = NFTListViewModel()
-        self.nftListViewModel = nftListViewModel
+        self.nftListViewModel = nftListViewModel // TODO: why 2 lines??
         let tokenListViewModel = TokenListViewModel()
         self.tokenListViewModel = tokenListViewModel
         
@@ -496,6 +501,7 @@ final class HomeViewModel: ObservableObject {
                     let mainTokenItem = TokenCellViewModel(
                         imageUri: viewModel.imageName,
                         name: viewModel.vaultItem.getCoinDenominationString(),
+                        symbol: viewModel.vaultItem.getCoinSymbol(),
                         cryptoBalance: "\(assets.mainCryptoBalance)",
                         fiatBalance: "\(assets.mainCryptoFiatBalance)",
                         mainToken: viewModel.vaultItem.getCoinSymbol())
@@ -506,18 +512,35 @@ final class HomeViewModel: ObservableObject {
                     // tokenValueInSecondCurrency eg.: in EUR
                     
                     for tokenItem in assets.tokenList {
-                        if let name = tokenItem["name"],
-                           let tokenIconUrl = tokenItem["tokenIconUrl"],
-                           let _ = tokenItem["contract"] {
-                            let fiatBalance = self.getBalanceRoundedValue(originalString: tokenItem["tokenValueInSecondCurrency"] ?? "0.0", with: 2)
-                            let cryptoBalance = self.getBalanceRoundedValue(originalString: tokenItem["tokenBalance"] ?? "0.0", with: 7)
-                            let tokenCellViewModel = TokenCellViewModel(
-                                imageUri: tokenIconUrl,
-                                name: name,
-                                cryptoBalance: cryptoBalance,
-                                fiatBalance: fiatBalance)
-                            tokensList.append(tokenCellViewModel)
-                        }
+                        
+                        let name = tokenItem["name"] ?? "?"
+                        let symbol = tokenItem["symbol"] ?? ""
+                        let tokenIconUrl = tokenItem["tokenIconUrl"] ?? ""
+                        //let _ = tokenItem["contract"]
+                        let fiatBalance = self.getBalanceRoundedValue(originalString: tokenItem["tokenValueInSecondCurrency"] ?? "0.0", with: 2)
+                        let cryptoBalance = self.getBalanceRoundedValue(originalString: tokenItem["balance"] ?? "0.0", with: 7) // TODO: divide by decimals!
+//                        let cryptoBalance = self.getBalanceRoundedValue(originalString: tokenItem["tokenValueInFirstCurrency"] ?? "0.0", with: 7)
+                        //let cryptoBalance = self.getBalanceRoundedValue(originalString: tokenItem["tokenBalance"] ?? "0.0", with: 7)
+                        let tokenCellViewModel = TokenCellViewModel(
+                            imageUri: tokenIconUrl,
+                            name: name,
+                            symbol: symbol,
+                            cryptoBalance: cryptoBalance,
+                            fiatBalance: fiatBalance)
+                        tokensList.append(tokenCellViewModel)
+                        
+//                        if let name = tokenItem["name"],
+//                           let tokenIconUrl = tokenItem["tokenIconUrl"],
+//                           let _ = tokenItem["contract"] {
+//                            let fiatBalance = self.getBalanceRoundedValue(originalString: tokenItem["tokenValueInSecondCurrency"] ?? "0.0", with: 2)
+//                            let cryptoBalance = self.getBalanceRoundedValue(originalString: tokenItem["tokenBalance"] ?? "0.0", with: 7)
+//                            let tokenCellViewModel = TokenCellViewModel(
+//                                imageUri: tokenIconUrl,
+//                                name: name,
+//                                cryptoBalance: cryptoBalance,
+//                                fiatBalance: fiatBalance)
+//                            tokensList.append(tokenCellViewModel)
+//                        }
                     }
                     
                     
