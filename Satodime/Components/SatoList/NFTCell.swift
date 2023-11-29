@@ -14,6 +14,7 @@ class NFTCellViewModel: ObservableObject {
     @Published var image: UIImage?
     private var cancellables = Set<AnyCancellable>()
     let imageUrl: URL
+    let uid = UUID()
     
     // MARK: - Lifecycle
     init(imageUrl: URL) {

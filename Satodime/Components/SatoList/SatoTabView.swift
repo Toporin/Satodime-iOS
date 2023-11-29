@@ -139,7 +139,8 @@ struct NFTListView: View {
     @ObservedObject var viewModel: NFTListViewModel
     
     var body: some View {
-        List(viewModel.cellViewModels, id: \.imageUrl) { cellVM in
+        //List(viewModel.cellViewModels, id: \.imageUrl) { cellVM in // imageUrl may not be unique!!
+        List(viewModel.cellViewModels, id: \.uid) { cellVM in
             NFTCell(viewModel: cellVM)
                 .listRowBackground(Constants.Colors.satoListBackground)
         }
