@@ -36,7 +36,7 @@ struct ScanButton: View {
                     .frame(width: initialSize, height: initialSize)
                     .shadow(radius: 10)
                 
-                Text("Scan")
+                Text("Click to scan") // Text("Scan")
                     .foregroundColor(.white)
                     .fontWeight(.bold)
                     .frame(minWidth: 0, maxWidth: .infinity)

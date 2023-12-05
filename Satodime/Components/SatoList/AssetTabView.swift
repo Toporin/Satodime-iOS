@@ -1,24 +1,28 @@
 //
-//  SatoTabView.swift
+//  AssetTabView.swift
 //  Satodime
 //
-//  Created by Lionel Delvaux on 12/10/2023.
+//  Created by Satochip on 04/12/2023.
 //
+
 import SwiftUI
 import Combine
 
 // MARK: - SatoTabView
 
-enum SelectedTab {
-    case token, nft//, history
-}
-
-struct SatoTabView: View {
+struct AssetTabView: View {
+    
+    @EnvironmentObject var cardState: CardState
+    
+    //@ObservedObject var nftListViewModel: NFTListViewModel
+    //@ObservedObject var tokenListViewModel: TokenListViewModel
+    
     @State private var selectedTab: SelectedTab = .token
-    @ObservedObject var nftListViewModel: NFTListViewModel
-    @ObservedObject var tokenListViewModel: TokenListViewModel
-    @Binding var canSelectNFT: Bool
-
+    //@Binding var canSelectNFT: Bool
+    
+    var index: Int
+    var canSelectNFT: Bool
+    
     var body: some View {
         ZStack(alignment: .top) {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -63,22 +67,6 @@ struct SatoTabView: View {
                             }
                         }
                     }
-                    // For later use
-                    /*Button(action: {
-                        selectedTab = .history
-                    }) {
-                        VStack {
-                            SatoText(text: "History", style: .subtitleBold)
-                            ZStack {
-                                Rectangle().frame(height: 2).foregroundColor(Constants.Colors.separator)
-                                if selectedTab == .history {
-                                    Rectangle()
-                                        .frame(width: 61, height: 4)
-                                        .foregroundColor(Constants.Colors.ledGreen)
-                                }
-                            }
-                        }
-                    }*/
                 }
                 .padding(.top, 20)
                 .padding(.horizontal, 33)
@@ -87,10 +75,10 @@ struct SatoTabView: View {
                 
                 switch selectedTab {
                 case .token:
-                    TokenListView(viewModel: self.tokenListViewModel)
+                    TokenListViewNew(tokenList: getTokenList()) // TODO: add native coin in args
                         .background(Color.clear)
                 case .nft:
-                    NFTListView(viewModel: self.nftListViewModel)
+                    NftListViewNew(nftList: getNftList())
                         .background(Color.clear)
                 /*case .history:
                     HistoryListView()
@@ -99,25 +87,43 @@ struct SatoTabView: View {
             }
             .background(Color.clear)
         }
+    } // body
+    
+    func getTokenList() -> [[String:String]] {
+        if cardState.vaultArray.count > index {
+            return cardState.vaultArray[index].tokenList ?? [[String:String]]()
+        }
+        return [[String:String]]()
     }
+    
+    func getNftList() -> [[String:String]] {
+        if cardState.vaultArray.count > index {
+            return cardState.vaultArray[index].nftList ?? [[String:String]]()
+        }
+        return [[String:String]]()
+    }
+    
 }
 
 // MARK: - TokenListView
 
-class TokenListViewModel: ObservableObject {
-    @Published var cellViewModels = [TokenCellViewModel]()
+//class TokenListViewModel: ObservableObject {
+//    @Published var cellViewModels = [TokenCellViewModel]()
+//    
+//    func populateCellViewModels(from items: [TokenCellViewModel]) {
+//        self.cellViewModels = items
+//    }
+//}
+
+struct TokenListViewNew: View {
+    //@ObservedObject var viewModel: TokenListViewModel
+    var tokenList: [[String: String]]
+    //var tokenNative: [String:String] // todo
     
-    func populateCellViewModels(from items: [TokenCellViewModel]) {
-        self.cellViewModels = items
-    }
-}
-
-struct TokenListView: View {
-    @ObservedObject var viewModel: TokenListViewModel
-
     var body: some View {
-        List(viewModel.cellViewModels, id: \.id) { token in
-            TokenCell(viewModel: token)
+        // todo: add native token (coin)
+        List(tokenList, id: \.self) { token in
+            TokenCellNew(tokenAsset: token)
                 .listRowBackground(Constants.Colors.satoListBackground)
         }
         .listStyle(PlainListStyle())
@@ -127,21 +133,22 @@ struct TokenListView: View {
 
 // MARK: - NFTListView
 
-class NFTListViewModel: ObservableObject {
-    @Published var cellViewModels = [NFTCellViewModel]()
-    
-    func populateCellViewModels(from urlList: [URL]) {
-        self.cellViewModels = urlList.map { NFTCellViewModel(imageUrl: $0) }
-    }
-}
+//class NFTListViewModel: ObservableObject {
+//    @Published var cellViewModels = [NFTCellViewModel]()
+//    
+//    func populateCellViewModels(from urlList: [URL]) {
+//        self.cellViewModels = urlList.map { NFTCellViewModel(imageUrl: $0) }
+//    }
+//}
 
-struct NFTListView: View {
-    @ObservedObject var viewModel: NFTListViewModel
+struct NftListViewNew: View {
+    //@ObservedObject var viewModel: NFTListViewModel
+    var nftList: [[String: String]]
     
     var body: some View {
-        //List(viewModel.cellViewModels, id: \.imageUrl) { cellVM in
-        List(viewModel.cellViewModels, id: \.uid) { cellVM in
-            NFTCell(viewModel: cellVM)
+        //List(viewModel.cellViewModels, id: \.imageUrl) { cellVM in // imageUrl may not be unique!!
+        List(nftList, id: \.self) { nft in
+            NftCellNew(nftAsset: nft)
                 .listRowBackground(Constants.Colors.satoListBackground)
         }
         .listStyle(PlainListStyle())
@@ -149,27 +156,5 @@ struct NFTListView: View {
     }
 }
 
-// MARK: - HistoryListView
-
-/*class HistoryListViewModel: ObservableObject {
-    @Published var cellViewModels = [HistoryCellViewModel]()
-    
-    func populateCellViewModels(from items: [HistoryCellViewModel]) {
-        self.cellViewModels = items
-    }
-}
-
-struct HistoryListView: View {
-    let historyItems: [HistoryCellViewModel] = []
-
-    var body: some View {
-        List(historyItems, id: \.id) { historyItem in
-            HistoryCell(historyItem: historyItem)
-                .listRowBackground(Constants.Colors.satoListBackground)
-        }
-        .listStyle(PlainListStyle())
-        .background(Color.clear)
-    }
-}*/
 
 

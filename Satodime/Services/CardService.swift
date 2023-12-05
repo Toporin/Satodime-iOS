@@ -36,6 +36,7 @@ struct SealResult {
     let vaultItem: VaultItem
 }
 
+// TODO: refactor
 indirect enum CardActionState {
     case unknown
     case readingError(error: String)

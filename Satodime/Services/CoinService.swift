@@ -37,6 +37,7 @@ protocol PCoinService {
 class CoinService: PCoinService {
     //let logger = ConsoleLogger()
     let logger = LoggerService()
+    //@EnvironmentObject var logger: LoggerService
     let preferenceService = PreferencesService()
     
     func fetchCryptoBalance(for coinInfo: VaultItem) async -> Double {
@@ -44,12 +45,12 @@ class CoinService: PCoinService {
         #if DEBUG
         if coinInfo.coin.coinSymbol == "XCP" {
             //address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4" // nft
-            address = "1DvNiQkdX7HN7UJpMNWsnWLizEJSxXzgCp" // nft + xcp
+            //address = "1DvNiQkdX7HN7UJpMNWsnWLizEJSxXzgCp" // lots of nft + xcp
         } else if coinInfo.coin.coinSymbol == "ETH" {
             //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
             //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
             //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
-            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+            //address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
         }
         #endif
         
@@ -73,12 +74,12 @@ class CoinService: PCoinService {
         #if DEBUG
         if coinInfo.coin.coinSymbol == "XCP" {
             //address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4" // nft
-            address = "1DvNiQkdX7HN7UJpMNWsnWLizEJSxXzgCp" // nft + xcp
+            //address = "1DvNiQkdX7HN7UJpMNWsnWLizEJSxXzgCp" // nft + xcp
         } else if coinInfo.coin.coinSymbol == "ETH" {
             //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
             //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
             //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
-            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+            //address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
         }
         #endif
         
@@ -172,12 +173,12 @@ class CoinService: PCoinService {
         #if DEBUG
         if coinInfo.coin.coinSymbol == "XCP" {
             //address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4" // nft
-            address = "1DvNiQkdX7HN7UJpMNWsnWLizEJSxXzgCp" // nft + xcp
+            //address = "1DvNiQkdX7HN7UJpMNWsnWLizEJSxXzgCp" // nft + xcp
         } else if coinInfo.coin.coinSymbol == "ETH" {
             //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
             //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
             //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
-            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+            //address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
         }
         #endif
         logger.info("Fetch asset for address: \(address)")

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D644D472B14C7C2008CB29A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D462B14C7C2008CB29A /* Log.swift */; };
+		0D644D492B1A1E05008CB29A /* CardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D482B1A1E05008CB29A /* CardState.swift */; };
+		0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */; };
+		0D644D4D2B1E75D9008CB29A /* AssetTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4C2B1E75D9008CB29A /* AssetTabView.swift */; };
+		0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */; };
+		0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D502B1F146D008CB29A /* NftCellNew.swift */; };
+		0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D522B1F344E008CB29A /* AddFundViewNew.swift */; };
 		0D8B4AA42A2632DC00E9E429 /* OnboardingViewPure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */; };
 		0D8B4AA52A2632DC00E9E429 /* OnboardingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */; };
 		0D8B4AA62A2632DC00E9E429 /* OnboardingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */; };
@@ -46,8 +53,10 @@
 		0DB03FDE29BF5A62002E56BD /* contracts_XCP_NFT in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */; };
 		0DB03FE029BF62E7002E56BD /* contracts_XCP_Token in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */; };
 		0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */; };
-		0DC4B0492ABC8114004B8E3B /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = 0DC4B0482ABC8114004B8E3B /* BigInt */; };
-		D0602B492AD080A100CF8AEC /* SnapToScroll in Frameworks */ = {isa = PBXBuildFile; productRef = D0602B482AD080A100CF8AEC /* SnapToScroll */; };
+		0DE0A93D2AFA9B3100D0845F /* SwiftCryptoTools in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A93C2AFA9B3100D0845F /* SwiftCryptoTools */; };
+		0DE0A9402AFA9B7D00D0845F /* SatochipSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */; };
+		0DE0A9462AFA9D4D00D0845F /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A9452AFA9D4D00D0845F /* BigInt */; };
+		0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */ = {isa = PBXBuildFile; productRef = 0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */; };
 		D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */; };
 		D0602B4D2AD0A7F700CF8AEC /* VaultCardEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */; };
 		D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */; };
@@ -167,6 +176,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D644D462B14C7C2008CB29A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		0D644D482B1A1E05008CB29A /* CardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardState.swift; sourceTree = "<group>"; };
+		0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardNew.swift; sourceTree = "<group>"; };
+		0D644D4C2B1E75D9008CB29A /* AssetTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTabView.swift; sourceTree = "<group>"; };
+		0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCellNew.swift; sourceTree = "<group>"; };
+		0D644D502B1F146D008CB29A /* NftCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCellNew.swift; sourceTree = "<group>"; };
+		0D644D522B1F344E008CB29A /* AddFundViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFundViewNew.swift; sourceTree = "<group>"; };
 		0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewPure.swift; sourceTree = "<group>"; };
 		0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataModel.swift; sourceTree = "<group>"; };
 		0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingStepView.swift; sourceTree = "<group>"; };
@@ -317,12 +333,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */,
 				0DA7B4B1299A4D6D00CEE722 /* SatochipSwift in Frameworks */,
-				D0602B492AD080A100CF8AEC /* SnapToScroll in Frameworks */,
+				0DE0A9462AFA9D4D00D0845F /* BigInt in Frameworks */,
 				0DA7B4B3299A4D7E00CEE722 /* SwiftCryptoTools in Frameworks */,
 				0DA7B4B6299A4E6400CEE722 /* QRCode in Frameworks */,
 				D0EB4DE52AC079B200EA83F9 /* SwiftCryptoTools in Frameworks */,
-				0DC4B0492ABC8114004B8E3B /* BigInt in Frameworks */,
+				0DE0A9402AFA9B7D00D0845F /* SatochipSwift in Frameworks */,
+				0DE0A93D2AFA9B3100D0845F /* SwiftCryptoTools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +516,7 @@
 				D0E6656F2ADABCA400703A8F /* CardInfoView.swift */,
 				D0E665712ADABCAE00703A8F /* CardInfoViewModel.swift */,
 				0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */,
+				0DB03FC929A7F813002E56BD /* ShowLogs.swift */,
 				D0825F602ADAE0EF006391D5 /* SettingsView.swift */,
 				D0825F622ADAE0F8006391D5 /* SettingsViewModel.swift */,
 			);
@@ -511,6 +530,9 @@
 				D07C9C822AD8AAB8005F5917 /* NFTCell.swift */,
 				D07C9C7E2AD86317005F5917 /* TokenCell.swift */,
 				D07C9C802AD8638D005F5917 /* HistoryCell.swift */,
+				0D644D4C2B1E75D9008CB29A /* AssetTabView.swift */,
+				0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */,
+				0D644D502B1F146D008CB29A /* NftCellNew.swift */,
 			);
 			path = SatoList;
 			sourceTree = "<group>";
@@ -519,6 +541,7 @@
 			isa = PBXGroup;
 			children = (
 				D0825F692ADB629A006391D5 /* CardVaults.swift */,
+				0D644D482B1A1E05008CB29A /* CardState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -540,7 +563,6 @@
 				0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */,
 				0DA7B487299A37B200CEE722 /* Util.swift */,
 				0DA7B45C299A365900CEE722 /* ContentView.swift */,
-				0DB03FC929A7F813002E56BD /* ShowLogs.swift */,
 			);
 			path = Old;
 			sourceTree = "<group>";
@@ -550,6 +572,7 @@
 			children = (
 				D08CAF8D2AF3EB5B00B6CE55 /* AddFundsView.swift */,
 				D08CAF8F2AF3EB9500B6CE55 /* AddFundsViewModel.swift */,
+				0D644D522B1F344E008CB29A /* AddFundViewNew.swift */,
 			);
 			path = AddFunds;
 			sourceTree = "<group>";
@@ -703,6 +726,7 @@
 			children = (
 				0DA7B493299A37B400CEE722 /* VaultItem.swift */,
 				D0F62FB52ACDBAA70027EFE6 /* CryptoCurrency.swift */,
+				0D644D462B14C7C2008CB29A /* Log.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -727,6 +751,7 @@
 				D0F62FD92ACF13400027EFE6 /* VaultCard.swift */,
 				D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */,
 				D0825F742ADEEB7E006391D5 /* VaultCardViewModel.swift */,
+				0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */,
 			);
 			path = VaultCard;
 			sourceTree = "<group>";
@@ -752,8 +777,10 @@
 				0DA7B4B2299A4D7E00CEE722 /* SwiftCryptoTools */,
 				0DA7B4B5299A4E6400CEE722 /* QRCode */,
 				D0EB4DE42AC079B200EA83F9 /* SwiftCryptoTools */,
-				D0602B482AD080A100CF8AEC /* SnapToScroll */,
-				0DC4B0482ABC8114004B8E3B /* BigInt */,
+				0DE0A93C2AFA9B3100D0845F /* SwiftCryptoTools */,
+				0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */,
+				0DE0A9452AFA9D4D00D0845F /* BigInt */,
+				0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */,
 			);
 			productName = Satodime;
 			productReference = 0DA7B457299A365900CEE722 /* Satodime.app */;
@@ -830,9 +857,10 @@
 			mainGroup = 0DA7B44E299A365900CEE722;
 			packageReferences = (
 				0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */,
-				D0EB4DE32AC079B200EA83F9 /* XCLocalSwiftPackageReference "../../keycard-xcode14/SwiftCryptoTools" */,
-				D0602B472AD080A100CF8AEC /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */,
-				0DC4B0472ABC810B004B8E3B /* XCRemoteSwiftPackageReference "BigInt" */,
+				0DE0A93B2AFA9B3100D0845F /* XCLocalSwiftPackageReference "../SwiftCryptoTools" */,
+				0DE0A93E2AFA9B7D00D0845F /* XCLocalSwiftPackageReference "../SatochipSwift" */,
+				0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */,
+				0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */,
 			);
 			productRefGroup = 0DA7B458299A365900CEE722 /* Products */;
 			projectDirPath = "";
@@ -906,6 +934,7 @@
 				D07C9C7C2AD86134005F5917 /* SatoTabView.swift in Sources */,
 				D06080672AD9689F001A5749 /* ScanButton.swift in Sources */,
 				D065EF5D2AF8220A006751C5 /* LoggerService.swift in Sources */,
+				0D644D472B14C7C2008CB29A /* Log.swift in Sources */,
 				D0EB4E022AC1EC3700EA83F9 /* OnboardingWelcomeViewModel.swift in Sources */,
 				D0F62FD42ACEF2A80027EFE6 /* AddressView.swift in Sources */,
 				D07C9C6E2AD834AA005F5917 /* CoinService.swift in Sources */,
@@ -914,16 +943,19 @@
 				D060805A2AD94152001A5749 /* ShowKeyButton.swift in Sources */,
 				D0825F632ADAE0F8006391D5 /* SettingsViewModel.swift in Sources */,
 				0DB03FDA29BB94C0002E56BD /* ContractsAutocomplete.swift in Sources */,
+				0D644D4D2B1E75D9008CB29A /* AssetTabView.swift in Sources */,
 				0DA7B499299A37B500CEE722 /* ShowDetails.swift in Sources */,
 				D0E665782ADAC7D800703A8F /* TransferOwnershipViewModel.swift in Sources */,
 				D08CAF902AF3EB9500B6CE55 /* AddFundsViewModel.swift in Sources */,
 				D07C9C7A2AD857DD005F5917 /* SealButton.swift in Sources */,
 				D0EB4E132AC22F3500EA83F9 /* VaultSetupSelectChainView.swift in Sources */,
 				D07C9C812AD8638D005F5917 /* HistoryCell.swift in Sources */,
+				0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */,
 				D06080702AD98C07001A5749 /* ResetConfirmationView.swift in Sources */,
 				D0F62FC22ACDD5DE0027EFE6 /* InfoBox.swift in Sources */,
 				D060806E2AD986E2001A5749 /* ResetViewModel.swift in Sources */,
 				D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */,
+				0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */,
 				D0EB4E0E2AC22A9B00EA83F9 /* HomeView.swift in Sources */,
 				D0825F6F2ADD746E006391D5 /* ExpertModeViewModel.swift in Sources */,
 				0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */,
@@ -980,18 +1012,21 @@
 				D0F62FD02ACEEE0C0027EFE6 /* SealStatusView.swift in Sources */,
 				D0E1704F2AD7042800C53233 /* BaseViewModel.swift in Sources */,
 				D0EB4DED2AC1D26900EA83F9 /* SatoText.swift in Sources */,
+				0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */,
 				0DA7B497299A37B500CEE722 /* Util.swift in Sources */,
 				D06080722AD98C11001A5749 /* ResetConfirmationViewModel.swift in Sources */,
 				0DA7B495299A37B500CEE722 /* ActionParams.swift in Sources */,
 				D0F62FD82ACF11FE0027EFE6 /* BalanceView.swift in Sources */,
 				D0EB4E082AC2213300EA83F9 /* OnboardingInfoViewModel.swift in Sources */,
 				0DB03FCA29A7F813002E56BD /* ShowLogs.swift in Sources */,
+				0D644D492B1A1E05008CB29A /* CardState.swift in Sources */,
 				0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */,
 				D0C4839B2AD8BC370085F4B9 /* UnsealViewModel.swift in Sources */,
 				D08CAF922AF3EDF600B6CE55 /* AddFundsButton.swift in Sources */,
 				D0825F6D2ADD7466006391D5 /* ExpertModeView.swift in Sources */,
 				D08CAF8B2AF1534000B6CE55 /* SatoAlert.swift in Sources */,
 				D06080652AD94ED2001A5749 /* Views.swift in Sources */,
+				0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */,
 				D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */,
 				0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */,
 				0DA7B49B299A37B500CEE722 /* ResetSlot.swift in Sources */,
@@ -1181,7 +1216,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1206,7 +1241,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1226,7 +1261,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1251,7 +1286,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1421,7 +1456,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 68UCR527YD;
@@ -1447,7 +1482,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dlvx.dev.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1553,9 +1588,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		D0EB4DE32AC079B200EA83F9 /* XCLocalSwiftPackageReference "../../keycard-xcode14/SwiftCryptoTools" */ = {
+		0DE0A93B2AFA9B3100D0845F /* XCLocalSwiftPackageReference "../SwiftCryptoTools" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../keycard-xcode14/SwiftCryptoTools";
+			relativePath = ../SwiftCryptoTools;
+		};
+		0DE0A93E2AFA9B7D00D0845F /* XCLocalSwiftPackageReference "../SatochipSwift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../SatochipSwift;
 		};
 /* End XCLocalSwiftPackageReference section */
 
@@ -1568,15 +1607,15 @@
 				version = 12.1.1;
 			};
 		};
-		0DC4B0472ABC810B004B8E3B /* XCRemoteSwiftPackageReference "BigInt" */ = {
+		0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/attaswift/BigInt.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.3.0;
+				minimumVersion = 5.1.0;
 			};
 		};
-		D0602B472AD080A100CF8AEC /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */ = {
+		0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/swiftui-library/hstack-snap-to-scroll.git";
 			requirement = {
@@ -1600,14 +1639,22 @@
 			package = 0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */;
 			productName = QRCode;
 		};
-		0DC4B0482ABC8114004B8E3B /* BigInt */ = {
+		0DE0A93C2AFA9B3100D0845F /* SwiftCryptoTools */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0DC4B0472ABC810B004B8E3B /* XCRemoteSwiftPackageReference "BigInt" */;
+			productName = SwiftCryptoTools;
+		};
+		0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SatochipSwift;
+		};
+		0DE0A9452AFA9D4D00D0845F /* BigInt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */;
 			productName = BigInt;
 		};
-		D0602B482AD080A100CF8AEC /* SnapToScroll */ = {
+		0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0602B472AD080A100CF8AEC /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */;
+			package = 0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */;
 			productName = SnapToScroll;
 		};
 		D0EB4DE42AC079B200EA83F9 /* SwiftCryptoTools */ = {

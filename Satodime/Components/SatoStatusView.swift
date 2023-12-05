@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SatochipSwift
 
 enum CardReadState {
     case none
@@ -30,6 +31,8 @@ class CardStatusObservable: ObservableObject {
 }
 
 struct SatoStatusView: View {
+    
+    @EnvironmentObject var cardState: CardState
     @ObservedObject var cardStatus: CardStatusObservable
     var onImageTap: () -> Void
     
@@ -39,6 +42,7 @@ struct SatoStatusView: View {
                 Spacer()
                     .frame(height: 5)
                 
+                // TODO: remove!
                 if cardStatus.status != .none {
                     Image(cardStatus.cardStatusImage())
                         .resizable()
@@ -59,13 +63,14 @@ struct SatoStatusView: View {
                         onImageTap()
                     }
                 
-                if cardStatus.status == .invalid {
+                if cardState.certificateCode != PkiReturnCode.success {
+                //if cardStatus.status == .invalid {
                     VStack {
                         HStack {
                             Spacer()
                                 .frame(width: 4)
                             
-                            Text(String(localized: "error"))
+                            Text(String(localized: "error!"))
                                 .font(.system(size: 9))
                                 .foregroundColor(Constants.Colors.ledRed)
                                 .padding(.vertical, 3)

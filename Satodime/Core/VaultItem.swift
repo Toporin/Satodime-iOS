@@ -97,54 +97,32 @@ public struct VaultItem: Hashable {
             slip44 = keyslotStatus.slip44
         }
         let isTestnet = ((slip44 & 0x80000000)==0x00000000) ? true : false
-        switch slip44 {
+        let slip44WithoutTestnetBit = (slip44 | 0x80000000)
+        switch slip44WithoutTestnetBit {
         case 0x80000000:
-            coin = Bitcoin(isTestnet: false, apiKeys: VaultItem.apiKeys)
+            coin = Bitcoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_btc"
-        case 0x00000000:
-            coin = Bitcoin(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_btctest"
         case 0x80000002:
-            coin = Litecoin(isTestnet: false, apiKeys: VaultItem.apiKeys)
+            coin = Litecoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_ltc"
-        case 0x00000002:
-            coin = Litecoin(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_ltctest"
         case 0x80000009:
-            coin = Counterparty(isTestnet: false, apiKeys: VaultItem.apiKeys)
+            coin = Counterparty(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_xcp"
-        case 0x00000009:
-            coin = Counterparty(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_xcptest"
         case 0x8000003c:
-            coin = Ethereum(isTestnet: false, apiKeys: VaultItem.apiKeys)
+            coin = Ethereum(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_eth"
-        case 0x0000003c:
-            coin = Ethereum(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_ethtest"
         case 0x80000091:
-            coin = BitcoinCash(isTestnet: false, apiKeys: VaultItem.apiKeys)
+            coin = BitcoinCash(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_bch"
-        case 0x00000091:
-            coin = BitcoinCash(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_bchtest"
-        case 0x8000232e:
-            coin = BinanceSmartChain(isTestnet: false, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_bch" //todo
-        case 0x0000232e:
-            coin = BinanceSmartChain(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_bchtest" // todo
+//        case 0x8000232e:
+//            coin = BinanceSmartChain(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+//            iconPath = "ic_coin_bnb"
         case 0xdeadbeef: // uninitialized slot!
-            coin = EmptyCoin(isTestnet: true, apiKeys: VaultItem.apiKeys)
+            coin = EmptyCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_empty"
         default:
             coin = UnsupportedCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-            if isTestnet {
-                iconPath = "ic_coin_unknowntest"
-            }
-            else {
-                iconPath = "ic_coin_unknown"
-            }
+            iconPath = "ic_coin_unknown"
         }
     }
     
@@ -161,6 +139,17 @@ public struct VaultItem: Hashable {
     
     public func isSealed() -> Bool {
         return self.keyslotStatus.status == 0x01
+    }
+    
+    public func getStatus() -> SealStatus {
+        switch self.keyslotStatus.status {
+        case 0x01:
+            return .sealed
+        case 0x02:
+            return .unsealed
+        default:
+            return .uninitialized
+        }
     }
     
     

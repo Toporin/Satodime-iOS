@@ -19,8 +19,10 @@ protocol PLoggerService {
 
 
 // MARK: - Service
-final class LoggerService: PLoggerService {
+final class LoggerService: PLoggerService, ObservableObject {
 //    var consoleLogger = ConsoleLogger()
+    
+    @Published var logs = [Log]()
     
     //TODO: remove
     func getLog() -> [String] {
@@ -35,32 +37,41 @@ final class LoggerService: PLoggerService {
     }
     
     func getLogs() -> [Log] {
-        var logs = [Log]()
-        let datalogs = UserDefaults.standard.object(forKey: "logs") as? [Data] ?? [Data]()
-        for datalog in datalogs {
-            if let decodedLog = try? JSONDecoder().decode(Log.self, from: datalog) {
-                //print(decodedLog)
-                logs.append(decodedLog)
-            }
-        }
-        return logs
+        return self.logs
     }
+    
+//    func getLogs() -> [Log] {
+//        var logs = [Log]()
+//        let datalogs = UserDefaults.standard.object(forKey: "logs") as? [Data] ?? [Data]()
+//        for datalog in datalogs {
+//            if let decodedLog = try? JSONDecoder().decode(Log.self, from: datalog) {
+//                //print(decodedLog)
+//                logs.append(decodedLog)
+//            }
+//        }
+//        return logs
+//    }
     
     // TODO: keep only last xxx logs...
     // TODO: improve storage?
     // => do not store logs in user default, only store as a temporary object in app?
     
     func addLog(level: LogLevel, msg: String, tag: String = "") {
-        
         let log = Log(time: Date(), level: level, msg: msg, tag: tag)
-        
-        if let encoded = try? JSONEncoder().encode(log) {
-            //print("Log encoded: \(encoded)")
-            var currentLog: [Data] = UserDefaults.standard.object(forKey: "logs") as? [Data] ?? [Data]()
-            currentLog.append(encoded)
-            UserDefaults.standard.set(currentLog, forKey: "logs")
-        }
+        self.logs.append(log)
     }
+    
+//    func addLog(level: LogLevel, msg: String, tag: String = "") {
+//        
+//        let log = Log(time: Date(), level: level, msg: msg, tag: tag)
+//        
+//        if let encoded = try? JSONEncoder().encode(log) {
+//            //print("Log encoded: \(encoded)")
+//            var currentLog: [Data] = UserDefaults.standard.object(forKey: "logs") as? [Data] ?? [Data]()
+//            currentLog.append(encoded)
+//            UserDefaults.standard.set(currentLog, forKey: "logs")
+//        }
+//    }
     
     func warning(_ msg: String, tag: String = "") {
         #if DEBUG

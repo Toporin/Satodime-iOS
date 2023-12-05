@@ -40,7 +40,7 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
         case .litecoin:
             return "ic_ltc"
         case .bitcoinCash:
-            return "ic_btc_cash"
+            return "ic_bch"
         // case .binance: // For later use
         //     return "ic_bnb"
         case .counterParty:

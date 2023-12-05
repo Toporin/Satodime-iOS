@@ -558,5 +558,5 @@ final class HomeViewModel: ObservableObject {
             self.tokenListViewModel = TokenListViewModel()
             break
         }
-    }
+    } // populateTabs
 }
