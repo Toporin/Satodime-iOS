@@ -45,14 +45,15 @@ public struct VaultItem: Hashable {
     
     public var index: UInt8
     public var coin: BaseCoin
-    public var iconPath: String = "ic_coin_unknown"
+    var coinMeta: CryptoCurrency = CryptoCurrency.empty
+    public var iconPath: String = "ic_coin_unknown" // TODO: deprecate, use coinMeta instead
     public var keyslotStatus: SatodimeKeyslotStatus
     
     // coin info
     public var pubkey: [UInt8]? = nil
     public var balance: Double? = nil // async value
     public var address: String = "(undefined)" {
-        didSet {
+        didSet { // TODO: remove??
             print("** didSet VaultItem address: \(address)")
             if address == "(unsupported)" {
                 print("unsupported coin")
@@ -102,27 +103,34 @@ public struct VaultItem: Hashable {
         case 0x80000000:
             coin = Bitcoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_btc"
+            coinMeta = .bitcoin
         case 0x80000002:
             coin = Litecoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_ltc"
+            coinMeta = .litecoin
         case 0x80000009:
             coin = Counterparty(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_xcp"
+            coinMeta = .counterParty
         case 0x8000003c:
             coin = Ethereum(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_eth"
+            coinMeta = .ethereum
         case 0x80000091:
             coin = BitcoinCash(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_bch"
+            coinMeta = .bitcoinCash
 //        case 0x8000232e:
 //            coin = BinanceSmartChain(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
 //            iconPath = "ic_coin_bnb"
         case 0xdeadbeef: // uninitialized slot!
             coin = EmptyCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_empty"
+            coinMeta = .empty
         default:
             coin = UnsupportedCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             iconPath = "ic_coin_unknown"
+            coinMeta = .unknown
         }
     }
     
@@ -173,7 +181,7 @@ public struct VaultItem: Hashable {
         if let value = self.totalValueInFirstCurrency {
             valueString = String(value)
         } else {
-            print("Debug balance is nil!")
+            //print("Debug balance is nil!")
             valueString = "? "
         }
         valueString += " " + self.getCoinDenominationString()
@@ -241,7 +249,7 @@ public struct VaultItem: Hashable {
             return ""
         }
     }
-    
+    // TODO: remove 
     public func getNftImageUrlString(link: String) -> String {
         var nftImageUrlString = link
         // check if IPFS? => use ipfs.io gateway
@@ -261,6 +269,8 @@ public struct VaultItem: Hashable {
         return nftImageUrlString
     }
     
+    
+    //TODO: move to helpers?
     public func getTokenBalanceDouble(tokenData: [String:String]) -> Double? {
         
         if let balanceString = tokenData["balance"] {

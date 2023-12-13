@@ -10,8 +10,19 @@ import SwiftUI
 
 struct ResetConfirmationView: View {
     // MARK: - Properties
-    @EnvironmentObject var viewStackHandler: ViewStackHandler
-    @ObservedObject var viewModel: ResetConfirmationViewModel
+//    @EnvironmentObject var viewStackHandler: ViewStackHandler
+//    @ObservedObject var viewModel: ResetConfirmationViewModel
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var cardState: CardState
+    
+    //@Published var vaultCardViewModel: VaultCardViewModel
+    let index: Int
+    
+    // MARK: - Literals
+    let title = "**\(String(localized: "congrats"))**"
+    let subtitle = "vaultSuccessfullyReset"
+    let confirmationText = "youCanNowCreateAndSeal"
+    let continueButtonTitle = String(localized: "backToMyVaults")
     
     // MARK: - View
     var body: some View {
@@ -23,12 +34,12 @@ struct ResetConfirmationView: View {
                 Spacer()
                     .frame(height: 95)
                 
-                SatoText(text: viewModel.title, style: .lightTitle)
+                SatoText(text: title, style: .lightTitle)
                 
                 Spacer()
                     .frame(height: 20)
                 
-                SatoText(text: viewModel.subtitle, style: .lightTitle)
+                SatoText(text: subtitle, style: .lightTitle)
                 
                 Spacer()
                     .frame(height: 44)
@@ -49,12 +60,13 @@ struct ResetConfirmationView: View {
                 Spacer()
                     .frame(height: 86)
                 
-                SatoText(text: viewModel.confirmationText, style: .graySubtitle)
+                SatoText(text: confirmationText, style: .graySubtitle)
                 
                 Spacer()
                 
-                SatoButton(staticWidth: 222, text: viewModel.continueButtonTitle, style: .confirm) {
-                    viewModel.completeFlow()
+                SatoButton(staticWidth: 222, text: continueButtonTitle, style: .confirm) {
+                    //viewModel.completeFlow()
+                    self.viewStackHandler.navigationState = .goBackHome
                 }
                 
                 Spacer()
@@ -63,8 +75,8 @@ struct ResetConfirmationView: View {
             }.padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
         }
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            viewModel.viewStackHandler = viewStackHandler
-        }
+//        .onAppear {
+//            viewModel.viewStackHandler = viewStackHandler
+//        }
     }
 }

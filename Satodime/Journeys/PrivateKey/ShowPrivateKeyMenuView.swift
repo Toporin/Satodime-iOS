@@ -8,10 +8,45 @@
 import Foundation
 import SwiftUI
 
+enum ShowPrivateKeyMode: String, Hashable {
+    case legacy = "showPrivateKeyLegacy"
+    case wif = "showPrivateKeyWIF"
+    case entropy = "showEntropy"
+}
+
 struct ShowPrivateKeyMenuView: View {
     // MARK: - Properties
-    @EnvironmentObject var viewStackHandler: ViewStackHandler
-    @ObservedObject var viewModel: ShowPrivateKeyMenuViewModel
+//    @EnvironmentObject var viewStackHandler: ViewStackHandler
+//    @ObservedObject var viewModel: ShowPrivateKeyMenuViewModel
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var cardState: CardState
+    @State var showNotOwnerAlert: Bool = false
+    
+    //let cardService: PCardService
+    
+    //@Published var vaultCardViewModel: VaultCardViewModel
+    @State var selectedMode: ShowPrivateKeyMode = .legacy
+    var keyResult: PrivateKeyResult?
+    @State var isKeyViewPresented = false
+    
+    let index: Int
+    let keyDisplayOptions: [ShowPrivateKeyMode] = [.legacy, .wif, .entropy]
+    
+    // MARK: - Literals
+    let title = "showPrivateKey"
+    
+    let notOwnerAlert = SatoAlert(
+        title: "ownership",
+        message: "ownershipText",
+        buttonTitle: String(localized:"moreInfo"),
+        buttonAction: {
+            guard let url = URL(string: "https://satochip.io/satodime-ownership-explained/") else {
+                print("Invalid URL")
+                return
+            }
+            UIApplication.shared.open(url)
+        }
+    )
     
     // MARK: - View
     var body: some View {
@@ -23,22 +58,53 @@ struct ShowPrivateKeyMenuView: View {
                 Spacer()
                     .frame(height: 37)
                 
-                VaultCard(viewModel: viewModel.vaultCardViewModel, indexPosition: viewModel.indexPosition, useFullWidth: true)
+                VaultCardNew(index: UInt8(index), action: {}, useFullWidth: true)
                     .padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
                 
                 Spacer()
                     .frame(height: 27)
                 
                 List {
-                    ForEach(viewModel.keyDisplayOptions, id: \.self) { mode in
+                    ForEach(keyDisplayOptions, id: \.self) { mode in
                         SatoSelectionButton(mode: mode)
                             .onTapGesture {
-                                viewModel.showKey(mode: mode)
+                                
+                                print("debug: ShowPrivateKeyMenuView click to show privkey")
+                                self.selectedMode = mode
+                                // if the private key is not already available, scan the card to fetch it
+                                if (cardState.vaultArray[index].privkey == nil) {
+                                    
+                                    if cardState.ownershipStatus == .owner {
+                                        cardState.getPrivateKeyNew(
+                                            cardAuthentikeyHex: cardState.authentikeyHex,
+                                            index: index,
+                                            onSuccess: {privkeyResult in
+                                                print("debug privkeyResult: \(privkeyResult)")
+                                                DispatchQueue.main.async {
+                                                    self.cardState.vaultArray[index].privkey = privkeyResult.privkey
+                                                    self.cardState.vaultArray[index].entropy = privkeyResult.entropy
+                                                    self.selectedMode = mode
+                                                }
+                                            },
+                                            onFail: {
+                                                print("error privkeyResult: failed to recover privkey (are you owner??")
+                                            }
+                                        )
+                                    } else {
+                                        self.showNotOwnerAlert = true
+                                    }
+                                } else {
+                                    self.isKeyViewPresented = true
+                                }
+                                
                             }.listRowBackground(Color.clear)
                     }
                     
-                    ButtonBox(text: String(localized: "howDoiExportPrivateKey"), iconName: "") {
-                        viewModel.gotoExportKey()
+                    ButtonBox(text: String(localized: "howDoiExportPrivateKey"), iconName: "ic_link") {
+                        //viewModel.gotoExportKey()
+                        if let url = URL(string: "https://satochip.io/satodime-how-to-export-private-key/") {
+                            UIApplication.shared.open(url)
+                        }
                     }
                     .listRowBackground(Color.clear)
                 }
@@ -46,28 +112,49 @@ struct ShowPrivateKeyMenuView: View {
                 .listRowSpacing(0)
                 .background(Color.clear)
                 
-                NavigationLink(destination: ShowPrivateKeyView(viewModel: ShowPrivateKeyViewModel(indexPosition: viewModel.indexPosition, mode: viewModel.selectedMode, keyResult: viewModel.keyResult, vault: viewModel.vaultCardViewModel.vaultItem)), isActive: $viewModel.isKeyViewPresented) {
+                NavigationLink(destination: ShowPrivateKeyView(index: index, mode: selectedMode), isActive: $isKeyViewPresented) {
                     EmptyView()
                 }
+//                if (cardState.vaultArray[index].privkey != nil){
+//                    NavigationLink("", destination: ShowPrivateKeyView(index: index, mode: selectedMode), isActive: .constant(true)).hidden()
+//                }
             }
-        }
+        } //ZStack
+        .overlay(
+            Group {
+                // Alert if user is not owner
+                if showNotOwnerAlert {
+                    ZStack {
+                        Color.black.opacity(0.4)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                showNotOwnerAlert = false
+                            }
+                        
+                        SatoAlertView(isPresented: $showNotOwnerAlert, alert: notOwnerAlert)
+                            .padding([.leading, .trailing], 24)
+                    }
+                }
+            }
+        )// overlay
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            self.viewModel.navigateTo(destination: .goBackHome)
+            self.viewStackHandler.navigationState = .goBackHome
         }) {
             Image("ic_flipback")
         })
         .toolbar {
             ToolbarItem(placement: .principal) {
-                SatoText(text: viewModel.title, style: .lightTitle)
+                SatoText(text: title, style: .lightTitle)
             }
         }
-        .onAppear {
-            viewModel.viewStackHandler = viewStackHandler
-        }
+//        .onAppear {
+//            viewModel.viewStackHandler = viewStackHandler
+//        }
     }
 }
 
+// TODO: remove?
 struct KeyBottomSheetView: View {
     @ObservedObject var viewModel: KeyBottomSheetViewModel
 

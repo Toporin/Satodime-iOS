@@ -26,11 +26,11 @@ struct ButtonBox: View {
                     
                     Spacer()
                     
-                    Image(systemName: iconName)
+                    Image(iconName)// Image(systemName: iconName)
                         .resizable()
                         .frame(width: 31, height: 31)
                         .foregroundColor(.white)
-                        .padding(.trailing, 16)
+                        .padding(.trailing, 18)
                 }
                 .padding(.top, 18)
                 .padding(.bottom, 18)

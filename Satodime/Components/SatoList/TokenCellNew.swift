@@ -32,8 +32,8 @@ struct TokenCellNew: View {
 //                    .resizable()
 //                    .frame(width: 50, height: 50)
 //            }
-            //token icon
-            if let icon_url = tokenAsset[""] {
+            //token icon from web api
+            if let icon_url = tokenAsset["tokenIconUrl"] {
                 AsyncImage(
                     url: URL(string: icon_url),
                     transaction: Transaction(animation: .easeInOut)
@@ -55,11 +55,20 @@ struct TokenCellNew: View {
                 .frame(width: 50, height: 50)
                 //.background(Color.white)
                 .clipShape(Circle())
-                
-            } else if let icon_path = tokenAsset[""] {
+                .onTapGesture(count: 1) {
+                    print("tapped on token icon_url!")
+                    if let weblink = tokenAsset["tokenExplorerLink"],
+                        let weblinkUrl = URL(string: weblink) {
+                        UIApplication.shared.open(weblinkUrl)
+                    }
+                }
+            } 
+            // token icon from local asset
+            else if let icon_path = tokenAsset["tokenIconPath"] {
+                //TODO: correct alignment with other cells
                 ZStack {
                     Circle()
-                        //.fill(cryptoCurrency.color) // TODO!
+                        .fill(CryptoCurrency(shortIdentifier: (tokenAsset["symbol"] ?? ""))?.color ?? Color.white) // TODO!
                         .frame(width: 50, height: 50)
                         .padding(5)
 
@@ -68,17 +77,49 @@ struct TokenCellNew: View {
                         .foregroundColor(.white)
                 }
                 .frame(width: 50, height: 50)
+                .onTapGesture(count: 1) {
+                    print("tapped on token icon_path!")
+                    if let weblink = tokenAsset["tokenExplorerLink"],
+                        let weblinkUrl = URL(string: weblink) {
+                        UIApplication.shared.open(weblinkUrl)
+                    }
+                }
+                
+//                Image(icon_path) // todo
+//                    .frame(width: 50, height: 50)
+//                    //.foregroundColor(.white)
+//                    .clipShape(Circle())
+//                    .onTapGesture(count: 1) {
+//                        print("tapped on token icon_path!")
+//                        if let weblink = tokenAsset["tokenExplorerLink"],
+//                            let weblinkUrl = URL(string: weblink) {
+//                            UIApplication.shared.open(weblinkUrl)
+//                        }
+//                    }
                 
             } else {
-                Image(systemName: "wifi.slash") // todo: question mark icon?
+                Image(systemName: "t.circle") // TODO: question mark icon?
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
+                    .clipShape(Circle())
+                    .onTapGesture(count: 1) {
+                        print("tapped on token icon_url!")
+                        if let weblink = tokenAsset["tokenExplorerLink"],
+                            let weblinkUrl = URL(string: weblink) {
+                            UIApplication.shared.open(weblinkUrl)
+                        }
+                    }
             }
             
             
-            
+            // show balance
             VStack(alignment: .leading) {
                 SatoText(text: tokenAsset["name"] ?? "?", style: .cellSmallTitle)
                     .font(.headline)
-                Text((tokenAsset["balance"] ?? "") + " " + (tokenAsset["symbole"] ?? "")) // TODO: clean
+                // show balance in token
+                //Text((tokenAsset["balance"] ?? "") + " " + (tokenAsset["symbol"] ?? "")) // TODO: clean
+                Text(SatodimeUtil.formatBalance(balanceString: tokenAsset["balance"], decimalsString: tokenAsset["decimals"], symbol: tokenAsset["symbol"], maxFractionDigit: 8))
                     .font(
                         Font.custom("Outfit-ExtraLight", size: 12)
                             .weight(.light)
@@ -88,8 +129,10 @@ struct TokenCellNew: View {
             .padding(.leading, 10)
 
             Spacer()
-
-            Text((tokenAsset["balance"] ?? "")) // in fiat
+            
+            // show value in second currency
+            //Text((tokenAsset["balance"] ?? "")) // in fiat
+            Text(SatodimeUtil.formatBalance(balanceString: tokenAsset["tokenValueInSecondCurrency"], decimalsString: "0", symbol: tokenAsset["secondCurrency"], maxFractionDigit: 2))
                 .font(
                     Font.custom("Outfit-Medium", size: 12)
                         .weight(.medium)

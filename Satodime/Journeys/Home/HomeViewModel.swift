@@ -82,7 +82,7 @@ final class HomeViewModel: ObservableObject {
         }
     }
     @Published var showOwnershipAlert = false
-    @Published var cardStatus: CardStatusObservable = CardStatusObservable()
+    @Published var cardStatus: CardStatusObservable = CardStatusObservable() // TODO: try to remove?
     @Published var nftListViewModel: NFTListViewModel = NFTListViewModel()
     @Published var tokenListViewModel: TokenListViewModel = TokenListViewModel()
     // @Published var historyListViewModel: HistoryListViewModel = HistoryListViewModel() // For later use
@@ -285,6 +285,7 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
+    // deprecated?
     func gotoCardAuthenticity() {
         guard self.cardStatus.status != .none else { return }
         self.doesUserRequestToSeeAuthenticScreen = true

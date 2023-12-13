@@ -10,8 +10,21 @@ import SwiftUI
 
 struct VaultSetupCongratsView: View {
     // MARK: - Properties
-    @ObservedObject var viewModel: VaultSetupCongratsViewModel
-    @EnvironmentObject var viewStackHandler: ViewStackHandler
+//    @ObservedObject var viewModel: VaultSetupCongratsViewModel
+//    @EnvironmentObject var viewStackHandler: ViewStackHandler
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var cardState: CardState
+    
+    // MARK: - Properties
+    var index: Int
+    //var selectedCrypto: CryptoCurrency
+    //@State var isNextViewActive = false
+    
+    // MARK: - Literals
+    let title = "congrats"
+    let subtitle = "yourVaultsHasBeenCreated"
+    let informationText = "rememberPrivateKeys"
+    let continueButtonTitle = String(localized: "showMyVault")
     
     // MARK: - View
     var body: some View {
@@ -23,12 +36,12 @@ struct VaultSetupCongratsView: View {
                 
                 Spacer()
                 
-                SatoText(text: viewModel.title, style: .viewTitle)
+                SatoText(text: title, style: .viewTitle)
                 
                 Spacer()
                     .frame(height: 37)
                 
-                SatoText(text: viewModel.subtitle, style: .graySubtitle)
+                SatoText(text: subtitle, style: .graySubtitle)
                 
                 Spacer()
                     .frame(height: 25)
@@ -41,11 +54,11 @@ struct VaultSetupCongratsView: View {
                         .overlay(
                             ZStack {
                                 Circle()
-                                    .fill(viewModel.selectedCrypto.color)
+                                    .fill(cardState.vaultArray[index].coinMeta.color)
                                     .frame(width: 66, height: 66)
                                     .padding(16)
 
-                                Image(viewModel.selectedCrypto.icon)
+                                Image(cardState.vaultArray[index].coinMeta.icon) //TODO: DEBUG!! //Image(selectedCrypto.icon)
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(.white)
                             }
@@ -56,19 +69,25 @@ struct VaultSetupCongratsView: View {
                 
                 Spacer()
                 
-                SatoText(text: viewModel.informationText, style: .graySubtitle)
+                SatoText(text: informationText, style: .graySubtitle)
                 
                 Spacer()
                 
-                SatoButton(staticWidth: 222, text: viewModel.continueButtonTitle, style: .confirm) {
-                    viewStackHandler.refreshVaults = .refresh
-                    viewStackHandler.navigationState = .goBackHome
+                SatoButton(staticWidth: 222, text: continueButtonTitle, style: .confirm) {
+                    //viewStackHandler.refreshVaults = .refresh
+                    self.viewStackHandler.navigationState = .goBackHome
                 }
                 
                 Spacer()
                     .frame(height: 29)
-            }.padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
-        }
+            }// VStack
+            .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
+        }// ZStack
         .navigationBarHidden(true)
-    }
+        .onAppear { // TODO: remove debug trace
+//            print("Debug setup vault selectedCrypto: \(selectedCrypto)!")
+//            print("Debug setup vault selectedCrypto.icon: \(selectedCrypto.icon)!")
+        }
+    }// body
 }
+ 

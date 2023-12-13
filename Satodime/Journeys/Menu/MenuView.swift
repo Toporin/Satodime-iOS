@@ -8,10 +8,66 @@
 import Foundation
 import SwiftUI
 
+enum SatochipURL: String {
+    case howToUse = "https://satochip.io/setup-use-satodime-on-mobile/"
+    case terms = "https://satochip.io/terms-of-service/"
+    case privacy = "https://satochip.io/privacy-policy/"
+    case products = "https://satochip.io/shop/"
+
+    var url: URL? {
+        return URL(string: self.rawValue)
+    }
+}
+
 struct MenuView: View {
     // MARK: - Properties
-    @EnvironmentObject var viewStackHandler: ViewStackHandler
-    @ObservedObject var viewModel: MenuViewModel
+    @EnvironmentObject var cardState: CardState
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    
+    //@State var cardVaults: CardVaults?
+    @State var shouldShowCardInfo: Bool = false
+    @State var shouldShowTransferOwnership: Bool = false
+    @State var shouldShowSettings: Bool = false
+    @State var showNotOwnerAlert: Bool = false
+    @State var showTakeOwnershipAlert: Bool = false
+    @State var showCardNeedsToBeScannedAlert: Bool = false
+    
+    //@EnvironmentObject var viewStackHandler: ViewStackHandler
+    //@ObservedObject var viewModel: MenuViewModel
+    
+    func openURL(_ satochipURL: SatochipURL) {
+        guard let url = satochipURL.url else {
+            print("Invalid URL")
+            return
+        }
+        UIApplication.shared.open(url)
+    }
+    
+    let notOwnerAlert = SatoAlert(
+        title: "ownership",
+        message: "ownershipText",
+        buttonTitle: String(localized:"moreInfo"),
+        buttonAction: {
+            guard let url = URL(string: "https://satochip.io/satodime-ownership-explained/") else {
+                print("Invalid URL")
+                return
+            }
+            UIApplication.shared.open(url)
+        }
+    )
+    
+    let cardNeedToBeScannedAlert = SatoAlert(
+        title: "cardNeedToBeScannedTitle",
+        message: "cardNeedToBeScannedMessage",
+        buttonTitle: String(localized:"moreInfo"),
+        buttonAction: {
+            guard let url = URL(string: "https://satochip.io") else {
+                print("Invalid URL")
+                return
+            }
+            UIApplication.shared.open(url)
+        }
+    )
     
     // MARK: - View
     var body: some View {
@@ -31,48 +87,113 @@ struct MenuView: View {
                 
                 GeometryReader { geometry in
                     HStack(spacing: 10) {
-                        MenuButton(title: String(localized: "cardInfo"), iconName: "ic_credit_card", iconWidth: 34, iconHeight: 34, backgroundColor: Constants.Colors.grayMenuButton, action: {
-                            self.viewModel.onCardInfo()
-                        })
+                        
+                        // CARD INFO
+                        MenuButton(
+                            title: String(localized: "cardInfo"),
+                            iconName: "ic_credit_card",
+                            iconWidth: 34, iconHeight: 34,
+                            backgroundColor: Constants.Colors.grayMenuButton,
+                            action: {
+                                //self.viewModel.onCardInfo()
+                                if cardState.hasReadCard() {
+                                    self.shouldShowCardInfo = true
+                                } else { //TODO: v0.1 & unclaimed ownership will trigger this
+                                    //cardNeedToBeScannedAlert.isMoreInfoBtnVisible = false
+                                    showCardNeedsToBeScannedAlert = true
+                                }
+                            }
+                        )
                         .frame(width: geometry.size.width * 0.50 - 15)
-
-                        MenuButton(title: String(localized: "transferOwner"), iconName: "ic_transfer_owner", iconWidth: 27, iconHeight: 27, backgroundColor: Constants.Colors.blueMenuButton, action: {
-                            self.viewModel.onTransferOwner()
-                        })
+                        
+                        // TRANSFER OWNERSHIP
+                        MenuButton(
+                            title: String(localized: "transferOwner"),
+                            iconName: "ic_transfer_owner",
+                            iconWidth: 27,
+                            iconHeight: 27,
+                            backgroundColor: Constants.Colors.blueMenuButton,
+                            action: {
+                                //self.viewModel.onTransferOwner()
+                                if cardState.ownershipStatus == .notOwner { //if !cardState.isOwner {
+                                    self.showNotOwnerAlert = true
+                                    print("warning: ownership transfer fail: not owner!")
+                                } else if cardState.ownershipStatus == .owner {
+                                    self.shouldShowTransferOwnership = true
+                                    print("debug: show release ownership view!")
+                                } else if cardState.ownershipStatus == .unclaimed {
+                                    // TODO: take ownership?
+                                    self.showTakeOwnershipAlert = true
+                                    print("debug: show take ownership view!")
+                                } else {
+                                    self.showCardNeedsToBeScannedAlert = true
+                                    print("debug: show card needs to be scanned!")
+                                }
+                            }
+                        )
                         .frame(width: geometry.size.width * 0.50 - 15)
                     }
                     .padding([.horizontal], 10)
-                }.frame(height: 120)
+                } // GeometryReader
+                .frame(height: 120)
                 
                 Spacer()
                     .frame(height: 10)
                 
                 GeometryReader { geometry in
                     HStack(spacing: 10) {
-                        MenuButton(title: String(localized: "howToUse"), iconName: "ic_howto", iconWidth: 34, iconHeight: 34, backgroundColor: Constants.Colors.greenMenuButton, action: {
-                            viewModel.openURL(.howToUse)
-                        })
+                        
+                        // HOW TO USE LINK
+                        MenuButton(
+                            title: String(localized: "howToUse"),
+                            iconName: "ic_howto",
+                            iconWidth: 34,
+                            iconHeight: 34,
+                            backgroundColor: Constants.Colors.greenMenuButton,
+                            action: {
+                                self.openURL(.howToUse)
+                            }
+                        )
                         .frame(width: geometry.size.width * 0.55 - 15)
                         
-                        MenuButton(title: String(localized: "settings"), iconName: "ic_settings", iconWidth: 27, iconHeight: 27, backgroundColor: Constants.Colors.blueMenuButton, action: {
-                            viewModel.onSettings()
-                        })
+                        // SETTINGS
+                        MenuButton(
+                            title: String(localized: "settings"),
+                            iconName: "ic_settings",
+                            iconWidth: 27,
+                            iconHeight: 27,
+                            backgroundColor: Constants.Colors.blueMenuButton,
+                            action: {
+                                //viewModel.onSettings()
+                                self.shouldShowSettings = true
+                                //self.viewStackHandler.navigationState = .settings
+                            }
+                        )
                         .frame(width: geometry.size.width * 0.45 - 15)
                     }
                     .padding([.horizontal], 10)
-                }.frame(height: 120)
+                }// GeometryReader
+                .frame(height: 120)
                 
                 Spacer()
                     .frame(height: 15)
                 
                 HStack(spacing: 10) {
-                    SmallMenuButton(text: String(localized: "termsOfService"), backgroundColor: Constants.Colors.darkBlueMenuButton, action: {
-                        viewModel.openURL(.terms)
-                    })
+                    SmallMenuButton(
+                        text: String(localized: "termsOfService"),
+                        backgroundColor: Constants.Colors.darkBlueMenuButton,
+                        action: {
+                            self.openURL(.terms)
+                        }
+                    )
                     
-                    SmallMenuButton(text: String(localized: "privacyPolicy"), backgroundColor: Constants.Colors.darkBlueMenuButton, action: {
-                        viewModel.openURL(.privacy)
-                    })
+                    SmallMenuButton(
+                        text: String(localized: "privacyPolicy"),
+                        backgroundColor: Constants.Colors.darkBlueMenuButton,
+                        action: {
+                            self.openURL(.privacy)
+                        }
+                    )
                 }
                 .padding([.horizontal], 10)
                 
@@ -85,7 +206,7 @@ struct MenuView: View {
                 Spacer()
                 
                 ProductButton {
-                    viewModel.openURL(.products)
+                    self.openURL(.products)
                 }
                 .frame(maxWidth: .infinity)
                 .padding([.horizontal], 10)
@@ -93,65 +214,98 @@ struct MenuView: View {
                 Spacer()
                     .frame(height: 29)
                 
-                if let cardVaults = viewModel.cardVaults {
-                    NavigationLink(
-                        destination: CardInfoView(viewModel: CardInfoViewModel(cardVaults: cardVaults)),
-                        isActive: $viewModel.shouldShowCardInfo
-                    ) {
-                        EmptyView()
-                    }
-                }
-
-                NavigationLink(
-                    destination: TransferOwnershipView(viewModel: TransferOwnershipViewModel(cardService: CardService())),
-                    isActive: $viewModel.shouldShowTransferOwnership
-                ) {
+                //if let cardVaults = viewModel.cardVaults {
+                //if cardState.hasReadCard() { // TODO: needed?
+                    //Text("HASREADCARD")
+//                    if shouldShowCardInfo {
+//                        self.viewStackHandler.navigationState = .cardInfo
+//                    }
+//                    else if shouldShowTransferOwnership {
+//                        self.viewStackHandler.navigationState = .transferOwnership
+//                    }
+                NavigationLink(destination: CardInfoView(), isActive: $shouldShowCardInfo) {
                     EmptyView()
                 }
+//                    NavigationLink(
+//                        destination: TransferOwnershipView(viewModel: TransferOwnershipViewModel(cardService: CardService())),
+//                        isActive: $viewModel.shouldShowTransferOwnership
+//                    ) {
+//                        EmptyView()
+//                    }
+                //}
+                
                 NavigationLink(
-                    destination: SettingsView(viewModel: SettingsViewModel(preferencesService: PreferencesService())),
-                    isActive: $viewModel.shouldShowSettings
-                ) {
+                    destination: TransferOwnershipView(), isActive: $shouldShowTransferOwnership) {
                     EmptyView()
                 }
-            }
-        }
+                
+                
+//                if shouldShowSettings {
+//                    self.viewStackHandler.navigationState = .settings
+//                }
+                
+                NavigationLink(destination: SettingsView(), isActive: $shouldShowSettings) {
+                    EmptyView()
+                }
+            } // VStack
+        } // ZStack
         .overlay(
             Group {
-                if viewModel.showOwnershipAlert {
+                if showNotOwnerAlert {
                     ZStack {
                         Color.black.opacity(0.4)
                             .ignoresSafeArea()
                             .onTapGesture {
-                                viewModel.showOwnershipAlert = false
+                                showNotOwnerAlert = false
                             }
                         
-                        SatoAlertView(isPresented: $viewModel.showOwnershipAlert, alert: viewModel.ownershipAlert)
+                        SatoAlertView(isPresented: $showNotOwnerAlert, alert: notOwnerAlert)
                             .padding([.leading, .trailing], 24)
                     }
                 }
-                if viewModel.showCardNeedsToBeScannedAlert {
+                else if showTakeOwnershipAlert {
                     ZStack {
                         Color.black.opacity(0.4)
                             .ignoresSafeArea()
                             .onTapGesture {
-                                viewModel.showCardNeedsToBeScannedAlert = false
+                                showTakeOwnershipAlert = false
                             }
                         
-                        SatoAlertView(isPresented: $viewModel.showCardNeedsToBeScannedAlert, alert: viewModel.cardNeedToBeScannedAlert)
+                        SatoAlertView(
+                            isPresented: $showTakeOwnershipAlert,
+                            alert: SatoAlert(
+                                title: "takeOwnership",
+                                message: "takeOwnershipText",
+                                buttonTitle: String(localized:"goToTakeOwnershipScreen"),
+                                buttonAction: {
+                                    self.viewStackHandler.navigationState = .takeOwnership
+                                }
+                            )
+                        )
+                            .padding([.leading, .trailing], 24)
+                    }
+                }
+                else if showCardNeedsToBeScannedAlert {
+                    ZStack {
+                        Color.black.opacity(0.4)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                showCardNeedsToBeScannedAlert = false
+                            }
+                        
+                        SatoAlertView(isPresented: $showCardNeedsToBeScannedAlert, alert: cardNeedToBeScannedAlert)
                             .padding([.leading, .trailing], 24)
                     }
                 }
             }
-        )
+        ) // overlay
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            self.viewModel.navigateTo(destination: .goBackHome)
+            //self.viewModel.navigateTo(destination: .goBackHome)
+            self.viewStackHandler.navigationState = .goBackHome
         }) {
             Image("ic_flipback")
         })
-        .onAppear {
-            viewModel.viewStackHandler = viewStackHandler
-        }
-    }
+
+    }// body
 }

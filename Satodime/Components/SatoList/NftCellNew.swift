@@ -16,9 +16,9 @@ struct NftCellNew: View {
     var body: some View {
         HStack {
             //token icon
-            if let icon_url = nftAsset[""] {
+            if let iconUrl = nftAsset["nftImageUrl"] {
                 AsyncImage(
-                    url: URL(string: icon_url),
+                    url: URL(string: SatodimeUtil.getNftImageUrlString(link: iconUrl)),
                     transaction: Transaction(animation: .easeInOut)
                 ) { phase in
                     switch phase {
@@ -37,23 +37,28 @@ struct NftCellNew: View {
                 }
                 .frame(width: 50, height: 50)
                 //.background(Color.white)
-                .clipShape(Circle())
-                
-            } else if let icon_path = nftAsset[""] {
-                ZStack {
-                    Circle()
-                        //.fill(cryptoCurrency.color) // TODO!
-                        .frame(width: 50, height: 50)
-                        .padding(5)
-
-                    Image(icon_path) // todo
-                        .frame(width: 22, height: 22)
-                        .foregroundColor(.white)
+                //.clipShape(Circle())
+                .onTapGesture(count: 1) {
+                    //print("tapped on nft iconUrl!")
+                    if let weblink = nftAsset["nftExplorerLink"],
+                        let weblinkUrl = URL(string: weblink) {
+                        UIApplication.shared.open(weblinkUrl)
+                    }
                 }
-                .frame(width: 50, height: 50)
                 
             } else {
-                Image(systemName: "wifi.slash") // todo: question mark icon?
+                Image(systemName: "n.circle") // todo: question mark icon?
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+                .clipShape(Circle())
+                .onTapGesture(count: 1) {
+                    //print("tapped on nft iconUrl!")
+                    if let weblink = nftAsset["nftExplorerLink"],
+                        let weblinkUrl = URL(string: weblink) {
+                        UIApplication.shared.open(weblinkUrl)
+                    }
+                }
             }
             
             
@@ -61,7 +66,7 @@ struct NftCellNew: View {
             VStack(alignment: .leading) {
                 SatoText(text: nftAsset["name"] ?? "?", style: .cellSmallTitle)
                     .font(.headline)
-                Text((nftAsset["balance"] ?? "") + " " + (nftAsset["symbole"] ?? "")) // TODO: clean
+                Text((SatodimeUtil.formatBalance(balanceString: nftAsset["balance"], decimalsString: nftAsset["decimals"], symbol: nftAsset["symbols"])))
                     .font(
                         Font.custom("Outfit-ExtraLight", size: 12)
                             .weight(.light)
@@ -71,14 +76,15 @@ struct NftCellNew: View {
             .padding(.leading, 10)
 
             Spacer()
-
-            Text((nftAsset["balance"] ?? "")) // in fiat
-                .font(
-                    Font.custom("Outfit-Medium", size: 12)
-                        .weight(.medium)
-                )
-                .foregroundColor(.white)
-                .padding(.trailing, 10)
+            
+            // TODO: value in second currency (not supported yet)
+//            Text((nftAsset["balance"] ?? "")) // in fiat
+//                .font(
+//                    Font.custom("Outfit-Medium", size: 12)
+//                        .weight(.medium)
+//                )
+//                .foregroundColor(.white)
+//                .padding(.trailing, 10)
         }
         .background(Constants.Colors.satoListBackground)
     }

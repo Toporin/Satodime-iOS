@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D16B1CD2B2449A0005FCACB /* ExploreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D16B1CC2B2449A0005FCACB /* ExploreButton.swift */; };
+		0D16B1CF2B249D3E005FCACB /* SatodimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */; };
 		0D644D472B14C7C2008CB29A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D462B14C7C2008CB29A /* Log.swift */; };
 		0D644D492B1A1E05008CB29A /* CardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D482B1A1E05008CB29A /* CardState.swift */; };
 		0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */; };
@@ -14,6 +16,7 @@
 		0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */; };
 		0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D502B1F146D008CB29A /* NftCellNew.swift */; };
 		0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D522B1F344E008CB29A /* AddFundViewNew.swift */; };
+		0D644D552B20607F008CB29A /* ActionParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D542B20607F008CB29A /* ActionParameters.swift */; };
 		0D8B4AA42A2632DC00E9E429 /* OnboardingViewPure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */; };
 		0D8B4AA52A2632DC00E9E429 /* OnboardingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */; };
 		0D8B4AA62A2632DC00E9E429 /* OnboardingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */; };
@@ -176,6 +179,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D16B1CC2B2449A0005FCACB /* ExploreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreButton.swift; sourceTree = "<group>"; };
+		0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeUtil.swift; sourceTree = "<group>"; };
 		0D644D462B14C7C2008CB29A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		0D644D482B1A1E05008CB29A /* CardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardState.swift; sourceTree = "<group>"; };
 		0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardNew.swift; sourceTree = "<group>"; };
@@ -183,6 +188,7 @@
 		0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCellNew.swift; sourceTree = "<group>"; };
 		0D644D502B1F146D008CB29A /* NftCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCellNew.swift; sourceTree = "<group>"; };
 		0D644D522B1F344E008CB29A /* AddFundViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFundViewNew.swift; sourceTree = "<group>"; };
+		0D644D542B20607F008CB29A /* ActionParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionParameters.swift; sourceTree = "<group>"; };
 		0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewPure.swift; sourceTree = "<group>"; };
 		0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataModel.swift; sourceTree = "<group>"; };
 		0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingStepView.swift; sourceTree = "<group>"; };
@@ -577,7 +583,7 @@
 			path = AddFunds;
 			sourceTree = "<group>";
 		};
-		D0C483972AD8BC0F0085F4B9 /* Seal */ = {
+		D0C483972AD8BC0F0085F4B9 /* Unseal */ = {
 			isa = PBXGroup;
 			children = (
 				D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */,
@@ -585,7 +591,7 @@
 				D06080552AD93786001A5749 /* UnsealConfirmationView.swift */,
 				D06080572AD93791001A5749 /* UnsealConfirmationViewModel.swift */,
 			);
-			path = Seal;
+			path = Unseal;
 			sourceTree = "<group>";
 		};
 		D0EB4DE62AC0837C00EA83F9 /* Journeys */ = {
@@ -594,11 +600,11 @@
 				D08CAF8C2AF3EB3C00B6CE55 /* AddFunds */,
 				D060806A2AD9864E001A5749 /* Reset */,
 				D060805D2AD947D2001A5749 /* PrivateKey */,
-				D0C483972AD8BC0F0085F4B9 /* Seal */,
+				D0C483972AD8BC0F0085F4B9 /* Unseal */,
 				D07C9C742AD85261005F5917 /* Menu */,
 				D07C9C6F2AD842E4005F5917 /* Authenticity */,
 				D0602B4E2AD1920000CF8AEC /* Ownership */,
-				D0EB4E112AC22D2800EA83F9 /* VaultSetup */,
+				D0EB4E112AC22D2800EA83F9 /* Seal */,
 				D0EB4DEA2AC1D03A00EA83F9 /* Onboarding */,
 				D0EB4DE72AC083B900EA83F9 /* Home */,
 				D0E1704E2AD7042800C53233 /* BaseViewModel.swift */,
@@ -657,6 +663,7 @@
 				D0825F642ADAE595006391D5 /* SettingsToggle.swift */,
 				D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */,
 				D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */,
+				0D16B1CC2B2449A0005FCACB /* ExploreButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -694,11 +701,12 @@
 				D0E1704C2AD6D1EB00C53233 /* ConsoleLogger.swift */,
 				D06080642AD94ED2001A5749 /* Views.swift */,
 				D06080682AD980A6001A5749 /* QRCode.swift */,
+				0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		D0EB4E112AC22D2800EA83F9 /* VaultSetup */ = {
+		D0EB4E112AC22D2800EA83F9 /* Seal */ = {
 			isa = PBXGroup;
 			children = (
 				D0EB4E122AC22F3500EA83F9 /* VaultSetupSelectChainView.swift */,
@@ -710,7 +718,7 @@
 				D0825F6C2ADD7466006391D5 /* ExpertModeView.swift */,
 				D0825F6E2ADD746E006391D5 /* ExpertModeViewModel.swift */,
 			);
-			path = VaultSetup;
+			path = Seal;
 			sourceTree = "<group>";
 		};
 		D0F62FB02ACDB26C0027EFE6 /* Cells */ = {
@@ -727,6 +735,7 @@
 				0DA7B493299A37B400CEE722 /* VaultItem.swift */,
 				D0F62FB52ACDBAA70027EFE6 /* CryptoCurrency.swift */,
 				0D644D462B14C7C2008CB29A /* Log.swift */,
+				0D644D542B20607F008CB29A /* ActionParameters.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -941,6 +950,7 @@
 				D060805C2AD941AD001A5749 /* ResetButton.swift in Sources */,
 				D0825F5F2ADAE093006391D5 /* SettingsDropdown.swift in Sources */,
 				D060805A2AD94152001A5749 /* ShowKeyButton.swift in Sources */,
+				0D16B1CF2B249D3E005FCACB /* SatodimeUtil.swift in Sources */,
 				D0825F632ADAE0F8006391D5 /* SettingsViewModel.swift in Sources */,
 				0DB03FDA29BB94C0002E56BD /* ContractsAutocomplete.swift in Sources */,
 				0D644D4D2B1E75D9008CB29A /* AssetTabView.swift in Sources */,
@@ -957,6 +967,7 @@
 				D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */,
 				0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */,
 				D0EB4E0E2AC22A9B00EA83F9 /* HomeView.swift in Sources */,
+				0D644D552B20607F008CB29A /* ActionParameters.swift in Sources */,
 				D0825F6F2ADD746E006391D5 /* ExpertModeViewModel.swift in Sources */,
 				0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */,
 				0D8B4AA52A2632DC00E9E429 /* OnboardingDataModel.swift in Sources */,
@@ -964,6 +975,7 @@
 				0DA7B49E299A37B500CEE722 /* UnknownAction.swift in Sources */,
 				0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */,
 				D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */,
+				0D16B1CD2B2449A0005FCACB /* ExploreButton.swift in Sources */,
 				D06080582AD93791001A5749 /* UnsealConfirmationViewModel.swift in Sources */,
 				D07C9C732AD84325005F5917 /* AuthenticViewModel.swift in Sources */,
 				D07C9C782AD85279005F5917 /* MenuViewModel.swift in Sources */,
@@ -1216,7 +1228,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1241,7 +1253,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1261,7 +1273,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1286,7 +1298,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1456,7 +1468,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 68UCR527YD;
@@ -1482,7 +1494,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dlvx.dev.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

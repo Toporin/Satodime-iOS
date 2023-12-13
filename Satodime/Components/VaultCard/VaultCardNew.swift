@@ -9,17 +9,49 @@ import Foundation
 import SwiftUI
 
 struct VaultCardNew: View {
-    
+    // MARK: Properties
     @EnvironmentObject var cardState: CardState
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
+    @State var showNotOwnerAlert: Bool = false
+    
+    // MARK: Litterals
     let index: UInt8
+    let action: () -> Void
     var useFullWidth: Bool = false
-
+    
+    let notOwnerAlert = SatoAlert(
+        title: "ownership",
+        message: "ownershipText",
+        buttonTitle: String(localized:"moreInfo"),
+        buttonAction: {
+            guard let url = URL(string: "https://satochip.io/satodime-ownership-explained/") else {
+                print("Invalid URL")
+                return
+            }
+            UIApplication.shared.open(url)
+        }
+    )
+    
+    // MARK: Body
     var body: some View {
         if index >= cardState.vaultArray.count {
-            VaultCardEmpty(id: Int(index), action: {}) //TODO?
+            //VaultCardEmpty(id: Int(index), action: {}) //TODO?
         } else if cardState.vaultArray[Int(index)].keyslotStatus.status == 0x00 {
-            VaultCardEmpty(id: Int(index), action: {}) //TODO: action
+            VaultCardEmpty(
+                id: Int(index),
+                action: { action()
+//                    if self.cardState.ownershipStatus == .owner {
+//                        DispatchQueue.main.async {
+//                            self.viewStackHandler.navigationState = .vaultInitialization
+//                        }
+//                    } else {
+//                        // not owner alert message
+//                        self.showNotOwnerAlert = true
+//                        print("warning: ownership transfer fail: not owner!")
+//                    }
+                }
+            ) //TODO: action
         } else {
             ZStack {
                 Image(backgroundImageName())
@@ -38,8 +70,11 @@ struct VaultCardNew: View {
                 
                 VStack {
                     HStack {
+                        // VAULT NUMBER
                         SatoText(text:  "0\(index+1)", style: .slotTitle)
                         Spacer()
+                        
+                        // ADDRESS
                         AddressView(text: cardState.vaultArray[Int(index)].address) {
                             UIPasteboard.general.string = cardState.vaultArray[Int(index)].address
                             let generator = UIImpactFeedbackGenerator(style: .medium)
@@ -49,28 +84,19 @@ struct VaultCardNew: View {
                                 generator.impactOccurred()
                             }
                         }
-                        // TODO: add button in action
-//                        if let weblink = viewModel.addressWebLink, let weblinkUrl = URL(string: weblink) {
-//                            Button(action: {
-//                                UIApplication.shared.open(weblinkUrl)
-//                            }) {
-//                                Image("ic_link")
-//                                    .resizable()
-//                                    .frame(width: 32, height: 32)
-//                            }
-//                            .buttonStyle(PlainButtonStyle())
-//                        }
                     }
                     .padding(.top, 20)
                     
                     Spacer()
                         .frame(height: 11)
                     
+                    // VAULT STATUS (sealed/Unsealed/uninitialized
                     SealStatusView(status: cardState.vaultArray[Int(index)].getStatus())
                     
                     Spacer()
                     
                     HStack {
+                        //ICON
                         VStack {
                             VStack {
                                 Spacer()
@@ -85,91 +111,21 @@ struct VaultCardNew: View {
                             }
                         }
                         Spacer()
-                        BalanceView(title: String(localized: "totalBalance"), balance: cardState.vaultArray[Int(index)].getCoinValueInSecondCurrencyString(), cryptoBalance: cardState.vaultArray[Int(index)].getCoinBalanceString())
                         
+                        // BALANCE
+                        BalanceView(
+                            title: cardState.vaultArray[Int(index)].coin.displayName, //String(localized: "totalBalance"),
+                            balanceFirst: SatodimeUtil.formatBalance(balanceDouble: cardState.vaultArray[Int(index)].balance, symbol: cardState.vaultArray[Int(index)].coin.coinSymbol),
+                            balanceSecond: SatodimeUtil.formatBalance(balanceDouble: cardState.vaultArray[Int(index)].coinValueInSecondCurrency,  symbol: cardState.vaultArray[Int(index)].selectedSecondCurrency, maxFractionDigit: 2)
+                        )
                     }
                     .padding(.bottom, 20)
                 }
                 .padding(20)
-            }
+            } // ZStack
             .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
             .clipShape(RoundedRectangle(cornerRadius: 20))
-        }
-        
-//        ZStack {
-//            Image(viewModel.cardBackground)
-//                .resizable()
-//                .aspectRatio(contentMode: .fill)
-//                .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
-//                .clipShape(RoundedRectangle(cornerRadius: 20))
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 20)
-//                        .stroke(Color.black.opacity(0.1))
-//                )
-//            
-//            RoundedRectangle(cornerRadius: 20)
-//                .foregroundColor(Color.black.opacity(0.1))
-//                .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
-//            
-//            VStack {
-//                HStack {
-//                    SatoText(text: viewModel.positionText, style: .slotTitle)
-//                    Spacer()
-//                    AddressView(text: viewModel.addressText) {
-//                        UIPasteboard.general.string = viewModel.addressText
-//                        let generator = UIImpactFeedbackGenerator(style: .medium)
-//                        generator.prepare()
-//                        generator.impactOccurred()
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-//                            generator.impactOccurred()
-//                        }
-//                    }
-//                    if let weblink = viewModel.addressWebLink, let weblinkUrl = URL(string: weblink) {
-//                        Button(action: {
-//                            UIApplication.shared.open(weblinkUrl)
-//                        }) {
-//                            Image("ic_link")
-//                                .resizable()
-//                                .frame(width: 32, height: 32)
-//                        }
-//                        .buttonStyle(PlainButtonStyle())
-//                    }
-//                }
-//                .padding(.top, 20)
-//                
-//                Spacer()
-//                    .frame(height: 11)
-//                
-//                SealStatusView(status: viewModel.sealStatus)
-//                
-//                Spacer()
-//                
-//                HStack {
-//                    VStack {
-//                        VStack {
-//                            Spacer()
-//                            Image(viewModel.imageName)
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 26, height: 26)
-//                                .foregroundColor(.white)
-//                        }
-//                        if viewModel.isTestnet {
-//                            SatoText(text: "TESTNET", style: .addressText)
-//                        }
-//                    }
-//                    Spacer()
-//                    BalanceView(title: viewModel.balanceTitle, balance: viewModel.fiatBalance, cryptoBalance: viewModel.cryptoBalance)
-//                }
-//                .padding(.bottom, 20)
-//            }
-//            .padding(20)
-//        }
-//        .onAppear {
-//            viewModel.setIndexId(index: indexPosition)
-//        }
-//        .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
-//        .clipShape(RoundedRectangle(cornerRadius: 20))
+        } // if
     } // body
     
     func backgroundImageName() -> String {

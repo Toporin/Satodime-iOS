@@ -10,8 +10,18 @@ import SwiftUI
 
 struct UnsealConfirmationView: View {
     // MARK: - Properties
-    @EnvironmentObject var viewStackHandler: ViewStackHandler
-    @ObservedObject var viewModel: UnsealConfirmationViewModel
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var cardState: CardState
+    //@EnvironmentObject var viewStackHandler: ViewStackHandler
+    //@ObservedObject var viewModel: UnsealConfirmationViewModel
+    
+    let index: Int
+    
+    // MARK: - Literals
+    let title = "congrats"
+    let subtitle = "vaultSuccessfullyUnseal"
+    let confirmationText = "youCanNowViewThePrivateKey"
+    let continueButtonTitle = String(localized: "showThePrivateKey")
     
     // MARK: - View
     var body: some View {
@@ -27,30 +37,32 @@ struct UnsealConfirmationView: View {
                 Spacer()
                     .frame(height: 37)
                 
-                SatoText(text: viewModel.title, style: .title)
+                SatoText(text: title, style: .title)
                 
                 Spacer()
                     .frame(height: 49)
                 
-                SatoText(text: viewModel.subtitle, style: .graySubtitle18)
+                SatoText(text: subtitle, style: .graySubtitle18)
                 
                 Spacer()
                     .frame(height: 58)
                 
-                VaultCard(viewModel: viewModel.vaultCardViewModel, indexPosition: viewModel.indexPosition, useFullWidth: true)
+                //VaultCard(viewModel: viewModel.vaultCardViewModel, indexPosition: index, useFullWidth: true)
+                VaultCardNew(index: UInt8(index), action: {}, useFullWidth: true)
                     .shadow(radius: 10)
                 
                 Spacer()
                     .frame(height: 62)
                 
-                SatoText(text: viewModel.confirmationText, style: .graySubtitle)
+                SatoText(text: confirmationText, style: .graySubtitle)
                     .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
                 
                 Spacer()
                 
-                SatoButton(staticWidth: 222, text: viewModel.continueButtonTitle, style: .confirm, horizontalPadding: 25) {
-                    viewStackHandler.refreshVaults = .refresh
-                    viewModel.completeFlow()
+                SatoButton(staticWidth: 222, text: continueButtonTitle, style: .confirm, horizontalPadding: 25) {
+                    //viewStackHandler.refreshVaults = .refresh
+                    //viewModel.completeFlow()
+                    self.viewStackHandler.navigationState = .privateKey
                 }
                 
                 Spacer()
@@ -59,8 +71,14 @@ struct UnsealConfirmationView: View {
             }.padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
         }
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            viewModel.viewStackHandler = viewStackHandler
-        }
+        .navigationBarItems(leading: Button(action: {
+            //self.viewModel.navigateTo(destination: .goBackHome)
+            self.viewStackHandler.navigationState = .goBackHome
+        }) {
+            Image("ic_flipback")
+        })
+//        .onAppear {
+//            viewModel.viewStackHandler = viewStackHandler
+//        }
     }
 }

@@ -19,10 +19,17 @@ protocol PLoggerService {
 
 
 // MARK: - Service
-final class LoggerService: PLoggerService, ObservableObject {
+final class LoggerService: PLoggerService {
 //    var consoleLogger = ConsoleLogger()
+    //@Published var logs = [Log]()
     
-    @Published var logs = [Log]()
+    // Singleton pattern
+    static let shared = LoggerService()
+    var logs = [Log]()
+    var lock = NSLock()
+    
+    private init() { }
+    
     
     //TODO: remove
     func getLog() -> [String] {
@@ -58,7 +65,9 @@ final class LoggerService: PLoggerService, ObservableObject {
     
     func addLog(level: LogLevel, msg: String, tag: String = "") {
         let log = Log(time: Date(), level: level, msg: msg, tag: tag)
+        self.lock.lock()
         self.logs.append(log)
+        self.lock.unlock()
     }
     
 //    func addLog(level: LogLevel, msg: String, tag: String = "") {

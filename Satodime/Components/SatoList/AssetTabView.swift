@@ -37,7 +37,7 @@ struct AssetTabView: View {
                         selectedTab = .token
                     }) {
                         VStack {
-                            SatoText(text: "Token", style: .subtitleBold)
+                            SatoText(text: "Token (\(getTokenNumber()))", style: .subtitleBold) // TODO: show number of token
                             ZStack {
                                 Rectangle().frame(height: 2).foregroundColor(Constants.Colors.separator)
                                 if selectedTab == .token {
@@ -55,7 +55,7 @@ struct AssetTabView: View {
                         }
                     }) {
                         VStack {
-                            SatoText(text: "NFT", style: .subtitleBold)
+                            SatoText(text: "NFT (\(getNftNumber()))", style: .subtitleBold) // TODO: show number of NFT
                                 .opacity(self.canSelectNFT ? 1 : 0.3)
                             ZStack {
                                 Rectangle().frame(height: 2).foregroundColor(Constants.Colors.separator)
@@ -75,8 +75,8 @@ struct AssetTabView: View {
                 
                 switch selectedTab {
                 case .token:
-                    TokenListViewNew(tokenList: getTokenList()) // TODO: add native coin in args
-                        .background(Color.clear)
+                    TokenListViewNew(tokenList: getTokenList(), tokenNative: getTokenNative() )
+                        .background(Color.clear)// TODO: different backgrounds for token & nft?
                 case .nft:
                     NftListViewNew(nftList: getNftList())
                         .background(Color.clear)
@@ -89,11 +89,43 @@ struct AssetTabView: View {
         }
     } // body
     
+    func getTokenNumber() -> Int {
+        if cardState.vaultArray.count > index {
+            return 1 + (cardState.vaultArray[index].tokenList?.count ?? 0)
+        }
+        return 0
+    }
+    
+    func getNftNumber() -> Int {
+        if cardState.vaultArray.count > index {
+            return cardState.vaultArray[index].nftList?.count ?? 0
+        }
+        return 0
+    }
+    
     func getTokenList() -> [[String:String]] {
         if cardState.vaultArray.count > index {
             return cardState.vaultArray[index].tokenList ?? [[String:String]]()
         }
         return [[String:String]]()
+    }
+    
+    func getTokenNative() -> [String:String] {
+        if index < cardState.vaultArray.count {
+            let address = cardState.vaultArray[index].address
+            var coinDict = [String:String]()
+            coinDict["name"] = cardState.vaultArray[index].coin.displayName
+            coinDict["symbol"] = cardState.vaultArray[index].coin.coinSymbol
+            coinDict["type"] = "coin" 
+            coinDict["balance"] = String(cardState.vaultArray[index].balance ?? 0)
+            coinDict["decimals"] = "0"
+            coinDict["tokenIconPath"] = cardState.vaultArray[index].coinMeta.iconColored
+            coinDict["tokenExplorerLink"] = cardState.vaultArray[index].coin.getAddressWebLink(address: address)
+            coinDict["tokenValueInSecondCurrency"] = String(cardState.vaultArray[index].coinValueInSecondCurrency ?? 0)
+            coinDict["secondCurrency"] = cardState.vaultArray[index].selectedSecondCurrency
+            return coinDict
+        }
+        return [String:String]()
     }
     
     func getNftList() -> [[String:String]] {
@@ -107,39 +139,28 @@ struct AssetTabView: View {
 
 // MARK: - TokenListView
 
-//class TokenListViewModel: ObservableObject {
-//    @Published var cellViewModels = [TokenCellViewModel]()
-//    
-//    func populateCellViewModels(from items: [TokenCellViewModel]) {
-//        self.cellViewModels = items
-//    }
-//}
-
 struct TokenListViewNew: View {
     //@ObservedObject var viewModel: TokenListViewModel
     var tokenList: [[String: String]]
-    //var tokenNative: [String:String] // todo
+    var tokenNative: [String:String] // todo
     
     var body: some View {
-        // todo: add native token (coin)
-        List(tokenList, id: \.self) { token in
-            TokenCellNew(tokenAsset: token)
-                .listRowBackground(Constants.Colors.satoListBackground)
+        VStack {
+            // First add native token (coin)
+            TokenCellNew(tokenAsset: tokenNative)
+                .padding([.leading, .trailing], 20)
+            // Then add the list of tokens
+            List(tokenList, id: \.self) { token in
+                TokenCellNew(tokenAsset: token)
+                    .listRowBackground(Constants.Colors.satoListBackground)
+            }
+            .listStyle(PlainListStyle())
+            .background(Color.clear)
         }
-        .listStyle(PlainListStyle())
-        .background(Color.clear)
     }
 }
 
 // MARK: - NFTListView
-
-//class NFTListViewModel: ObservableObject {
-//    @Published var cellViewModels = [NFTCellViewModel]()
-//    
-//    func populateCellViewModels(from urlList: [URL]) {
-//        self.cellViewModels = urlList.map { NFTCellViewModel(imageUrl: $0) }
-//    }
-//}
 
 struct NftListViewNew: View {
     //@ObservedObject var viewModel: NFTListViewModel

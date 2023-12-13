@@ -185,6 +185,51 @@ class CardService: PCardService {
         cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
     
+    func getPrivateKeyNew(index: Int, onSuccess: @escaping (PrivateKeyResult) -> Void, onFailure2: @escaping () -> Void) {
+        cardController = SatocardController(alertMessages: self.defaultAlertMessages) { [weak self] cardChannel in
+            guard let self = self else { return }
+            let cmdSet = SatocardCommandSet(cardChannel: cardChannel)
+            let parser = SatocardParser()
+            do {
+                print("START SELECT")
+                try cmdSet.select().checkOK()
+                print("START GETSTATUS")
+                _ = try cmdSet.cardGetStatus()
+                
+                _ = try cmdSet.satodimeGetStatus().checkOK()
+                print("satodimeStatus: \(cmdSet.satodimeStatus)")
+                
+                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
+                    cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
+                    print("Found an unlockSecret for this card: \(unlockSecret)")
+                } else {
+                    print("Found no unlockSecret for this card!")
+                }
+                let rapdu = try cmdSet.satodimeGetPrivkey(keyNbr: UInt8(index)).checkOK()
+                let privkeyInfo = try parser.parseSatodimeGetPrivkey(rapdu: rapdu)
+                
+                let result = PrivateKeyResult(privkey: privkeyInfo.privkey, entropy: privkeyInfo.entropy)
+                onSuccess(result)
+                cardController?.stop(alertMessage: String(localized: "nfcPrivkeyRecoverSuccess"))
+                
+                return
+            } catch {
+                logger.error("GetPrivkey error: \(error)")
+                onFailure2()
+                cardController?.stop(errorMessage: "\(String(localized: "nfcPrivkeyRecoverFailed")) \(error.localizedDescription)")
+                return
+            }
+        } onFailure: { [weak self] error in
+            guard let self = self else { return }
+            onFailure2()
+            self.logger.error("getPrivateKey() error: \(error.localizedDescription)")
+            self.cardController?.stop(errorMessage: "\(String(localized: "nfcPrivkeyRecoverFailed")) \(error.localizedDescription)")
+        }
+        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
+    }
+    
+    
     func getCardActionStateStatus(completion: @escaping (CardActionState) -> Void) {
         cardController = SatocardController(alertMessages: self.defaultAlertMessages) { [weak self] cardChannel in
             guard let self = self else { return }
@@ -196,7 +241,7 @@ class CardService: PCardService {
                 let statusApdu = try cmdSet.cardGetStatus()
                 let cardStatus = try CardStatus(rapdu: statusApdu)
                 logger.info("Status: \(cardStatus)")
-                LoggerService().log(entry: cardStatus.toString())
+                //LoggerService().log(entry: cardStatus.toString())
                 
                 /*if !cardStatus.setupDone {
                     cardController?.stop(alertMessage: String(localized: "nfcSatodimeNeedSetup"))

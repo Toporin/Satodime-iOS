@@ -16,15 +16,30 @@ struct SettingsToggle: View {
     
     var body: some View {
         HStack {
-            SatoText(text: title, style: .subtitleBold)
+//            SatoText(text: title, style: .lightSubtitle) //subtitleBold
+//                .border(Color.pink)
+//                .frame(maxWidth: .infinity)
+//                .border(Color.blue)
+//            //Text(title)
+//            
+//            Spacer()
+//                .border(Color.pink)
             
-            Spacer()
+//            Toggle(title, isOn: $isOn)
+//                .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.ledGreen))
+//                .onChange(of: isOn) { newValue in
+//                    SatoText(text: title, style: .lightSubtitle) //subtitleBold
+//                    onToggle(newValue)
+//                }
+//                .border(Color.pink)
             
-            Toggle("", isOn: $isOn)
-                .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.ledGreen))
-                .onChange(of: isOn) { newValue in
-                    onToggle(newValue)
-                }
+            Toggle(isOn: $isOn){
+                SatoText(text: title, style: .subtitleBold)
+            }
+            .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.ledGreen))
+            .onChange(of: isOn) { newValue in
+                onToggle(newValue)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, minHeight: 55, maxHeight: 55)

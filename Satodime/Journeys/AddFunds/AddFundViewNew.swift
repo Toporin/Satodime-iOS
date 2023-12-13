@@ -126,7 +126,7 @@ struct AddFundsViewNew: View {
                     
                     Spacer()
                 }
-                .padding([.leading, .trailing], Constants.Dimensions.bigSideMargin) //TODO: reduce margin so that address fits in one ligne?
+                .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin) //Constants.Dimensions.bigSideMargin //TODO: reduce margin so that address fits in one ligne?
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -135,9 +135,9 @@ struct AddFundsViewNew: View {
                 SatoText(text: "addFunds", style: .lightTitle)
             }
         }
-        .onAppear {
-            //viewModel.viewStackHandler = viewStackHandler
-        }
+//        .onAppear {// TODO: remove
+//            //viewModel.viewStackHandler = viewStackHandler
+//        }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
             //self.viewModel.navigateTo(destination: .goBackHome)
@@ -149,10 +149,12 @@ struct AddFundsViewNew: View {
     
     // helpers
     func getHeaderImageName() -> String {
+        guard index < cardState.vaultArray.count else {return "bg_red_gradient"}
         return cardState.vaultArray[index].getStatus() == .sealed ? "bg_header_addfunds" : "bg_red_gradient"
     }
     
     func getAddress() -> String {
+        guard index < cardState.vaultArray.count else {return ""}
         return cardState.vaultArray[index].address
     }
     

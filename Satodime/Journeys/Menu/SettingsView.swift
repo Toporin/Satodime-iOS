@@ -10,7 +10,20 @@ import SwiftUI
 
 struct SettingsView: View {
     // MARK: - Properties
-    @ObservedObject var viewModel: SettingsViewModel
+    //@ObservedObject var viewModel: SettingsViewModel
+    
+    let preferencesService: PPreferencesService = PreferencesService()
+    @State var selectedValue: String = ""
+    @State var showingSheet = false
+    @State var starterIntroIsOn: Bool = false
+    @State var isShowLogs: Bool = false
+    
+    // MARK: - Literals
+    let title = "settings"
+    let currencyTitle = "currency"
+    let starterIntroTitle = "starterIntro"
+    let showLogsButtonTitle = String(localized: "showLogs")
+    
     
     // MARK: - View
     var body: some View {
@@ -31,49 +44,53 @@ struct SettingsView: View {
                     .frame(height: 47)
                 
                 SettingsDropdown(
-                    title: viewModel.currencyTitle,
+                    title: currencyTitle,
                     backgroundColor: Constants.Colors.blueMenuButton,
-                    selectedValue: $viewModel.selectedValue,
-                    action: { viewModel.showingSheet.toggle() }
+                    selectedValue: $selectedValue,
+                    action: { showingSheet.toggle() }
                 )
                 
                 Spacer()
                     .frame(height: 22)
                 
                 SettingsToggle(
-                    title: viewModel.starterIntroTitle,
+                    title: starterIntroTitle,
                     backgroundColor: Constants.Colors.blueMenuButton,
-                    isOn: $viewModel.starterIntroIsOn,
+                    isOn: $starterIntroIsOn,
                     onToggle: { newValue in
-                        viewModel.setOnboarding(setOnboarding: newValue)
+                        //setOnboarding(setOnboarding: newValue)
+                        self.preferencesService.setOnboarding(newValue)
                     }
                 )
+                
+                // TODO: add debug level?
                 
                 Spacer()
                     .frame(height: 33)
                 
-                SatoButton(staticWidth: 134, text: viewModel.showLogsButtonTitle, style: .inform) {
-                    viewModel.gotoShowLogs()
+                SatoButton(staticWidth: 134, text: showLogsButtonTitle, style: .inform) {
+                    self.isShowLogs = true
                 }
                 
                 Spacer()
                 
-                NavigationLink(destination: ShowLogs(), isActive: $viewModel.isShowLogs) {
+                NavigationLink(destination: ShowLogs(), isActive: $isShowLogs) {
                     EmptyView()
                 }
             }
             .padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
-            .sheet(isPresented: $viewModel.showingSheet) {
-                SelectionSheet(isPresented: $viewModel.showingSheet, choices: Constants.Settings.currencies) { selected in
-                    viewModel.selectedValue = selected
-                    viewModel.setCurrency(currency: selected)
+            .sheet(isPresented: $showingSheet) {
+                SelectionSheet(isPresented: $showingSheet, choices: Constants.Settings.currencies) { selected in
+                    selectedValue = selected
+                    //viewModel.setCurrency(currency: selected)
+                    self.preferencesService.setCurrency(selected)
                 }
             }
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                SatoText(text: viewModel.title, style: .lightTitle)
+                SatoText(text: title, style: .lightTitle)
             }
         }
     }

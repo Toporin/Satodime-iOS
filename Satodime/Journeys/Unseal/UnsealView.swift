@@ -1,5 +1,5 @@
 //
-//  ResetView.swift
+//  UnsealView.swift
 //  Satodime
 //
 //  Created by Lionel Delvaux on 13/10/2023.
@@ -8,28 +8,26 @@
 import Foundation
 import SwiftUI
 
-struct ResetView: View {
+struct UnsealView: View {
     // MARK: - Properties
-//    @EnvironmentObject var viewStackHandler: ViewStackHandler
-//    @ObservedObject var viewModel: ResetViewModel
+    //@EnvironmentObject var viewStackHandler: ViewStackHandler
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
-    
+    //@ObservedObject var viewModel: UnsealViewModel
+    //let cardService: PCardService
     //@Published var vaultCardViewModel: VaultCardViewModel
     @State var pushConfirmationView: Bool = false
-    @State var hasUserConfirmedTerms = false
     @State var showNotOwnerAlert: Bool = false
-    //var vaultCards: VaultsList
     
     let index: Int
     
     // MARK: - Literals
     let title = "warning"
-    let subtitle = "youAreAboutToReset"
-    let resetText = "resettingThisCryptoVaultWill"
-    let informationText = "afterThatYouWillBeAbleTo"
-    let confirmationText = "iConfirmThatBackup"
-    let continueButtonTitle = String(localized: "resetTheVault")
+    let subtitle = "youAreAboutToUnseal"
+    let unsealText = "unsealingThisCryptoVaultWillReveal"
+    let transferText = "youCanThenTransferTheEntireBalance"
+    let informationText = "thisActionIsIrreversible"
+    let continueButtonTitle = String(localized: "unseal")
     
     let notOwnerAlert = SatoAlert(
         title: "ownership",
@@ -47,9 +45,12 @@ struct ResetView: View {
     // MARK: - View
     var body: some View {
         ZStack {
-            Constants.Colors.errorViewBackground
+            Constants.Colors.viewBackground
                 .ignoresSafeArea()
             
+            RadialGradient(gradient: Gradient(colors: [Constants.Colors.errorViewBackground, Constants.Colors.errorViewBackground.opacity(0)]), center: .center, startRadius: 10, endRadius: 280)
+                            .position(x: 120, y: 340)
+                            .ignoresSafeArea()
             VStack {
                 Spacer()
                     .frame(height: 37)
@@ -67,9 +68,8 @@ struct ResetView: View {
                 Spacer()
                     .frame(height: 27)
                 
-                SatoText(text: resetText, style: .graySubtitle)
+                SatoText(text: unsealText, style: .graySubtitle)
                     .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
-                
                 
                 Spacer()
                     .frame(height: 24)
@@ -81,42 +81,40 @@ struct ResetView: View {
                 Spacer()
                     .frame(height: 20)
                 
-                SatoText(text: informationText, style: .graySubtitle)
+                SatoText(text: transferText, style: .graySubtitle)
                     .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
                 
                 Spacer()
                     .frame(height: 27)
                 
-                HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, content: {
-                    SatoToggle(isOn: $hasUserConfirmedTerms, label: confirmationText)
-                })
-                
+                SatoText(text: informationText, style: .subtitle)
+                    .frame(maxWidth: .infinity, minHeight: 61, maxHeight: 61)
+                    .background(Constants.Colors.cellBackground)
+                    .cornerRadius(20)
+                                    
                 Spacer()
                 
-                SatoButton(staticWidth: 293, text: continueButtonTitle, style: .danger, action:  {
+                SatoButton(staticWidth: 146, text: continueButtonTitle, style: .danger) {
                     
                     if cardState.ownershipStatus == .owner {
-                        if hasUserConfirmedTerms {
-                            // reset
-                            cardState.resetVault(
-                                cardAuthentikeyHex: cardState.authentikeyHex,
-                                index: index,
-                                onSuccess: {
-                                    print("SUCCESS: reset vault \(index)!")
-                                    DispatchQueue.main.async {
-                                        self.pushConfirmationView = true
-                                    }
-                                },
-                                onFail: {
-                                    print("ERROR: failed to reset vault!")
-                                    //pushConfirmationView = false
-                                    // TODO: show error msg
-                                })
-                        }
+                        
+                        cardState.unsealVault(
+                            cardAuthentikeyHex: cardState.authentikeyHex,
+                            index: index,
+                            onSuccess: {
+                                DispatchQueue.main.async {
+                                    self.pushConfirmationView = true
+                                }
+                            },
+                            onFail: {
+                                print("Error: Failed to unseal slot!!")
+                            }
+                        )
                     } else {
                         self.showNotOwnerAlert = true
+                        //print("warning: ownership transfer fail: not owner!")
                     }
-                }, isEnabled: $hasUserConfirmedTerms.wrappedValue)
+                }
                 
                 Spacer()
                     .frame(height: 29)
@@ -124,16 +122,16 @@ struct ResetView: View {
             }.padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
             
 //            NavigationLink(
-//                destination: ResetConfirmationView(index: index),
+//                destination: UnsealConfirmationView(index: index),
 //                isActive: $pushConfirmationView
 //            ) {
 //                EmptyView()
 //            }
-            if (self.pushConfirmationView){
-                NavigationLink("", destination: ResetConfirmationView(index: index), isActive: .constant(true)).hidden()
+            if (self.pushConfirmationView) {
+                NavigationLink("", destination: UnsealConfirmationView(index: index), isActive: .constant(true)).hidden()
             }
             
-        }//ZStack
+        } // ZStack
         .overlay(
             Group {
                 // Alert if user is not owner

@@ -11,8 +11,62 @@ import SwiftUI
 struct ShowPrivateKeyView: View {
     // MARK: - Properties
     @Environment(\.presentationMode) var presentation
-    @EnvironmentObject var viewStackHandler: ViewStackHandler
-    @ObservedObject var viewModel: ShowPrivateKeyViewModel
+//    @EnvironmentObject var viewStackHandler: ViewStackHandler
+//    @ObservedObject var viewModel: ShowPrivateKeyViewModel
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var cardState: CardState
+    
+    // MARK: - Properties
+    @State var keyToDisplay: String = ""
+    @State var titleMode: String = ""
+    @State var subtitleMode: String = ""
+    @State var slotNumber: String = ""
+    @State var coinIcon: String = ""
+    
+    let index: Int
+    var mode: ShowPrivateKeyMode
+//    var keyResult: PrivateKeyResult?
+//    private var vault: VaultItem
+
+    // MARK: - Literals
+    let title = "showPrivateKey"
+    
+    // MARK: - Helpers
+    func copyToClipboard() {
+        UIPasteboard.general.string = self.keyToDisplay
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        generator.impactOccurred()
+        generator.impactOccurred()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            generator.impactOccurred()
+        }
+    }
+    
+    func determineKeyToDisplay() {
+//        guard let keyResult = self.keyResult else { return }
+//        self.vault.privkey = keyResult.privkey
+//        self.vault.entropy = keyResult.entropy
+        
+        guard cardState.vaultArray.count > self.index else { return }
+        
+        self.coinIcon = cardState.vaultArray[index].iconPath
+        
+        switch mode {
+        case .legacy:
+            self.titleMode = "privateKey"
+            self.subtitleMode = "(Legacy)"
+            self.keyToDisplay = cardState.vaultArray[index].getPrivateKeyString()
+        case .wif:
+            self.titleMode = "privateKey"
+            self.subtitleMode = "(Wallet Import Format)"
+            self.keyToDisplay = cardState.vaultArray[index].getWifString()
+        case .entropy:
+            self.titleMode = "entropyMode"
+            self.subtitleMode = ""
+            self.keyToDisplay = cardState.vaultArray[index].getEntropyString()
+        }
+    }
     
     // MARK: - View
     var body: some View {
@@ -38,7 +92,7 @@ struct ShowPrivateKeyView: View {
                             .frame(height: 38)
                         
                         HStack {
-                            SatoText(text: viewModel.slotNumber, style: .slotTitle)
+                            SatoText(text: "0\(index+1)", style: .slotTitle)
                             Spacer()
                         }
                         
@@ -47,7 +101,7 @@ struct ShowPrivateKeyView: View {
                         HStack {
                             SealStatusView(status: .unsealed)
                             Spacer()
-                            Image(viewModel.coinIcon)
+                            Image(coinIcon)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 26, height: 26)
@@ -80,15 +134,15 @@ struct ShowPrivateKeyView: View {
                     Spacer()
                         .frame(height: 168)
                     
-                    SatoText(text: viewModel.titleMode, style: .title)
+                    SatoText(text: titleMode, style: .title)
                     Spacer()
                         .frame(height: 2)
-                    SatoText(text: viewModel.subtitleMode, style: .lightSubtitle)
+                    SatoText(text: subtitleMode, style: .lightSubtitle)
                     
                     Spacer()
                         .frame(height: 38)
                     
-                    SatoText(text: viewModel.keyToDisplay, style: .subtitle)
+                    SatoText(text: keyToDisplay, style: .subtitle)
                     
                     Spacer()
                         .frame(height: 38)
@@ -102,7 +156,7 @@ struct ShowPrivateKeyView: View {
                             .frame(width: 2)
                         
                         Button(action: {
-                            viewModel.copyToClipboard()
+                            self.copyToClipboard()
                         }) {
                             Image("ic_copy_clipboard")
                                 .resizable()
@@ -114,7 +168,7 @@ struct ShowPrivateKeyView: View {
                     Spacer()
                         .frame(height: 16)
 
-                    if let cgImage = QRCodeHelper().getQRfromText(text: viewModel.keyToDisplay) {
+                    if let cgImage = QRCodeHelper().getQRfromText(text: keyToDisplay) {
                         Image(uiImage: UIImage(cgImage: cgImage))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -126,19 +180,22 @@ struct ShowPrivateKeyView: View {
                 }
                 .padding([.leading, .trailing], Constants.Dimensions.bigSideMargin)
             }
-        }
+        }// ZStack
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                SatoText(text: viewModel.title, style: .lightTitle)
-            }
-        }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
             self.presentation.wrappedValue.dismiss()
         }) {
             Image("ic_flipback")
         })
-    }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                SatoText(text: title, style: .lightTitle)
+            }
+        }
+        .onAppear{
+            self.determineKeyToDisplay()
+        }
+    } // body
 }
 

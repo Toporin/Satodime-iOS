@@ -10,7 +10,10 @@ import SwiftUI
 
 struct OnboardingInfoView: View {
     // MARK: - Properties
-    @ObservedObject var viewModel: OnboardingInfoViewModel
+    //@ObservedObject var viewModel: OnboardingInfoViewModel
+    // MARK: - Literals
+    let titleText = "createSealGift"
+    let subtitleText = "createUpTo3Dfifferent"
     
     // MARK: - View
     var body: some View {
@@ -22,10 +25,10 @@ struct OnboardingInfoView: View {
                     .frame(height: Constants.Dimensions.satoDimeLogoHeight)
                 Spacer()
                     .frame(height: Constants.Dimensions.verticalLogoSpacing)
-                SatoText(text: viewModel.titleText, style: .title)
+                SatoText(text: titleText, style: .title)
                 Spacer()
                     .frame(height: Constants.Dimensions.subtitleSpacing)
-                SatoText(text: viewModel.subtitleText, style: .subtitle)
+                SatoText(text: subtitleText, style: .subtitle)
                 Spacer()
                     .frame(height: 55)
                 Image("il-onboard-2")

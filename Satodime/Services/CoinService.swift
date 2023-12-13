@@ -36,7 +36,7 @@ protocol PCoinService {
 
 class CoinService: PCoinService {
     //let logger = ConsoleLogger()
-    let logger = LoggerService()
+    let logger = LoggerService.shared
     //@EnvironmentObject var logger: LoggerService
     let preferenceService = PreferencesService()
     

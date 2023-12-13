@@ -97,6 +97,12 @@ struct ShowCertificates: View {
                                 txt += "PEM: \(certificateDic["subcaPem"] ?? "(none)")"
                                 txt += "\n\n"
                                 UIPasteboard.general.string = txt
+                                let generator = UIImpactFeedbackGenerator(style: .medium)
+                                generator.prepare()
+                                generator.impactOccurred()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                    generator.impactOccurred()
+                                }
                             }
                     }
                     VStack {
@@ -146,8 +152,8 @@ struct ShowCertificates: View {
     }
 }
 
-struct ShowCertificates_Previews: PreviewProvider {
-    static var previews: some View {
-        ShowCertificates(certificateCode: PkiReturnCode.success, certificateDic: ["":""])
-    }
-}
+//struct ShowCertificates_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ShowCertificates(certificateCode: PkiReturnCode.success, certificateDic: ["":""])
+//    }
+//}

@@ -9,13 +9,14 @@ import Foundation
 import SwiftUI
 import SatochipSwift
 
+// todo remove
 enum CardReadState {
     case none
     case valid
     case invalid
 }
 
-// TODO: merge with isCardAuthentic  & CardAuthenticity ??
+// TODO: remove? //merge with isCardAuthentic  & CardAuthenticity ??
 class CardStatusObservable: ObservableObject {
     @Published var status: CardReadState = .none
     func cardStatusImage() -> String {
@@ -33,59 +34,37 @@ class CardStatusObservable: ObservableObject {
 struct SatoStatusView: View {
     
     @EnvironmentObject var cardState: CardState
-    @ObservedObject var cardStatus: CardStatusObservable
-    var onImageTap: () -> Void
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
     var body: some View {
-        HStack {
-            VStack {
-                Spacer()
-                    .frame(height: 5)
-                
-                // TODO: remove!
-                if cardStatus.status != .none {
-                    Image(cardStatus.cardStatusImage())
-                        .resizable()
-                        .frame(width: 6, height: 6)
-                }
-                
-                Spacer()
-            }
-
-            Spacer()
-                .frame(width: 0)
-            
-            ZStack {
-                Image("ic_sato_small")
-                    .resizable()
-                    .frame(width: 48, height: 48)
-                    .onTapGesture {
-                        onImageTap()
-                    }
-                
-                if cardState.certificateCode != PkiReturnCode.success {
-                //if cardStatus.status == .invalid {
-                    VStack {
-                        HStack {
-                            Spacer()
-                                .frame(width: 4)
-                            
-                            Text(String(localized: "error!"))
-                                .font(.system(size: 9))
-                                .foregroundColor(Constants.Colors.ledRed)
-                                .padding(.vertical, 3)
-                                .padding(.horizontal, 6)
-                                .background(
-                                    Color.black.opacity(0.3)
-                                        .cornerRadius(3)
-                                )
-                            Spacer()
-                        }
-                        Spacer()
+        
+        if cardState.certificateCode == .success {
+            Image("ic_sato_small")
+                .resizable()
+                .frame(width: 48, height: 48)
+                .onTapGesture {
+                    DispatchQueue.main.async {
+                        self.viewStackHandler.navigationState = .cardAuthenticity
                     }
                 }
-            }
-            .frame(width: 54, height: 48)
+        } else if cardState.certificateCode == .unknown { // TODO: somethin special?
+            Image("ic_sato_small") // TODO: orange icon?
+                .resizable()
+                .frame(width: 48, height: 48)
+                .onTapGesture {
+                    DispatchQueue.main.async {
+                        self.viewStackHandler.navigationState = .cardAuthenticity
+                    }
+                }
+        } else {
+            Image("il_not_authentic") // TODO: red icon
+                .resizable()
+                .frame(width: 48, height: 48)
+                .onTapGesture {
+                    DispatchQueue.main.async {
+                        self.viewStackHandler.navigationState = .cardAuthenticity
+                    }
+                }
         }
-    }
+    } // body
 }

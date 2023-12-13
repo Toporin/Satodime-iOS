@@ -16,6 +16,7 @@ enum RefreshVaults {
     case refresh
 }
 
+// TODO: deprecate
 class ViewStackHandler: ObservableObject {
     @Published var navigationState: NavigationState = .goBackHome
     @Published var refreshVaults: RefreshVaults = .none
@@ -26,27 +27,31 @@ class ViewStackHandlerNew: ObservableObject {
     @Published var refreshVaults: RefreshVaults = .none
 }
 
-
+// TODO: clean
 enum NavigationState {
     case goBackHome
     case onboarding
     case takeOwnership
-    case vaultInitialization
+    case vaultInitialization //TODO: rename to seal
+    case vaultSetupCongrats
     case notAuthentic
     case cardAuthenticity
+    case cardInfo
     case unseal
     case privateKey
     case reset
     case menu
+    case settings
     case addFunds
 }
 
 struct HomeView: View {
+    // MARK: - Properties
     //@StateObject var logger = LoggerService()
     
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandlerNew: ViewStackHandlerNew // todo: rename
-    @EnvironmentObject var logs: LoggerService
+//    @EnvironmentObject var logs: LoggerService
     
     // TODO: deprecate
     @ObservedObject var viewModel: HomeViewModel
@@ -54,11 +59,21 @@ struct HomeView: View {
     
     @State private var currentSlotIndex: Int = 0
     
+    // let user disable specific alert prompts for the current app session
+    @State var showTakeOwnershipAlert: Bool = true
+    @State var showNotOwnerAlert: Bool = true
+    @State var showNotAuthenticAlert: Bool = true
+    
+    // MARK: - Literals
+    let viewTitle: String = "vaults"
+    
+    // TODO: remove
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
         self.viewStackHandler = viewModel.viewStackHandler
     }
     
+    // TODO: remove
     func buildEmptyCardView(id: Int) -> some View {
         VaultCardEmpty(id: id) {
             viewModel.emptyCardSealTapped(id: id)
@@ -73,9 +88,9 @@ struct HomeView: View {
                     Constants.Colors.viewBackground
                         .ignoresSafeArea()
                     
-                    if viewModel.hasReadCard() {
+                    if self.cardState.hasReadCard() {
                         VStack {
-                            Image(viewModel.gradientToDisplay())
+                            Image(self.gradientToDisplay())
                                 .resizable()
                                 .scaledToFill()
                                 .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height*0.5)
@@ -89,14 +104,13 @@ struct HomeView: View {
                         
                         // UI: Logo + vault title + refresh button + 3-dots menu
                         HStack {
-                            SatoStatusView(cardStatus: self.viewModel.cardStatus) {
-                                self.viewModel.gotoCardAuthenticity()
-                            }
-                            //.padding(.leading, 22) // TODO: remove comment
+                            
+                            SatoStatusView()
+                                .padding(.leading, 22) // TODO: remove comment
                             
                             Spacer()
                             
-                            SatoText(text: viewModel.viewTitle, style: .title)
+                            SatoText(text: viewTitle, style: .title)
                             
                             Spacer()
                             
@@ -116,7 +130,9 @@ struct HomeView: View {
                             }
                             
                             Button(action: {
-                                viewModel.goToMenuView()
+                                //viewModel.goToMenuView()
+                                print("DEBUG click on menu")
+                                self.navigateTo(destination: .menu)
                             }) {
                                 Image("ic_dots_vertical")
                                     .resizable()
@@ -153,7 +169,22 @@ struct HomeView: View {
                         } else {
                             HStackSnap(alignment: .leading(20), spacing: 10) {
                                 ForEach(cardState.vaultArray, id: \.self){ vault in
-                                    VaultCardNew(index: vault.index)
+                                    VaultCardNew(
+                                        index: vault.index,
+                                        action: {
+                                            if cardState.ownershipStatus == .owner {
+                                                print("DEBUG click on seal new vault!")
+                                                DispatchQueue.main.async {
+                                                    self.viewStackHandlerNew.navigationState = .vaultInitialization
+                                                }
+                                                print("DEBUG click on seal new vault AFTER!")
+                                            } else {
+                                                // not owner alert message
+                                                self.showNotOwnerAlert = true
+                                                //print("warning: ownership transfer fail: not owner!")
+                                            }
+                                        }
+                                    )
                                         .shadow(radius: 10)
                                         .frame(width: 261, height: 197)
                                         .snapAlignmentHelper(id: vault.index)
@@ -210,6 +241,16 @@ struct HomeView: View {
                                         //self.viewStackHandlerNew.navigationState = .addFunds
                                         self.navigateTo(destination: .addFunds)
                                     }
+                                    
+                                    ExploreButton {
+                                        //self.viewStackHandlerNew.navigationState = .addFunds
+                                        let address = cardState.vaultArray[currentSlotIndex].address
+                                        if let weblink = cardState.vaultArray[currentSlotIndex].coin.getAddressWebLink(address: address),
+                                            let weblinkUrl = URL(string: weblink) {
+                                            UIApplication.shared.open(weblinkUrl)
+                                        }
+                                    }
+                                    
                                 }
                                 
                                 //                            if viewModel.isUnsealButtonVisible() {
@@ -223,19 +264,10 @@ struct HomeView: View {
                                         self.navigateTo(destination: .unseal)
                                     }
                                 }
-                                
-                                //                            if viewModel.isCurrentCardUnsealed() {
-                                //                                ShowKeyButton {
-                                //                                    viewModel.goToShowKey()
-                                //                                }
-                                //
-                                //                                ResetButton {
-                                //                                    viewModel.reset()
-                                //                                }
-                                //                            }
-                                if cardState.vaultArray[currentSlotIndex].getStatus() == .unsealed {
+                                else if cardState.vaultArray[currentSlotIndex].getStatus() == .unsealed {
                                     ShowKeyButton {
                                         //self.viewStackHandlerNew.navigationState = .privateKey
+                                        print("debug: homeView clicked on show privkey!")
                                         self.navigateTo(destination: .privateKey)
                                     }
                                     ResetButton {
@@ -269,8 +301,60 @@ struct HomeView: View {
                         }
                     } // end main vStack
                     
-                    // Navigation config new
-//                    if self.viewStackHandlerNew.navigationState == .onboarding {
+                    // MARK: - NAVIGATION
+                    
+                    // NAVIGATION - CONFIG SCREENS
+                    if self.viewStackHandlerNew.navigationState == .menu {
+                        NavigationLink("", destination: MenuView(), isActive: .constant(true)).hidden()
+                    }
+                    //NavigationLink("", destination: MenuView(), isActive: .constant(self.viewStackHandlerNew.navigationState == .menu)).hidden()
+                    //NavigationLink(destination: MenuView(), isActive: .constant(self.viewStackHandlerNew.navigationState == .menu)){EmptyView()}
+                    //NavigationLink(destination: MenuView(), isActive: (self.viewStackHandlerNew.navigationState == .menu)){EmptyView()} // error
+                    
+                    if self.viewStackHandlerNew.navigationState == .onboarding {
+                        NavigationLink("", destination: OnboardingContainerView(), isActive: .constant(true)).hidden()
+                    }
+                    if self.viewStackHandlerNew.navigationState == .cardAuthenticity { // TODO: used?
+                        NavigationLink("", destination: AuthenticView(), isActive: .constant(true)).hidden()
+                    }
+//                    NavigationLink("", destination: AuthenticView(), isActive: .constant(self.viewStackHandlerNew.navigationState == .cardAuthenticity)).hidden()
+                    
+                    if self.viewStackHandlerNew.navigationState == .cardInfo { // TODO: used?
+                        NavigationLink("", destination: CardInfoView(), isActive: .constant(true)).hidden()
+                    }
+                    if self.viewStackHandlerNew.navigationState == .addFunds {
+                        NavigationLink("", destination: AddFundsViewNew(index: currentSlotIndex), isActive: .constant(true)).hidden()
+                    }
+                    
+                    // TODO: remove .notAuthentic?
+//                    if self.viewStackHandlerNew.navigationState == .notAuthentic {
+//                        NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: .notAuthentic, viewStackHandler: viewModel.viewStackHandler, destinationOnClose: viewModel.vaultCards.areAllEmptyVaults() && !viewModel.doesUserRequestToSeeAuthenticScreen ? .vaultInitialization : nil)), isActive: .constant(isNotAuthentic())).hidden()
+//                    }
+                    
+                    // NAVIGATION - CARD ACTION SCREENS
+                    if self.viewStackHandlerNew.navigationState == .takeOwnership {
+                        NavigationLink("", destination: TakeOwnershipView(), isActive: .constant(true)).hidden()
+                    }
+                    if self.viewStackHandlerNew.navigationState == .vaultInitialization { //TODO: rename to .seal?
+                        NavigationLink("", destination: VaultSetupSelectChainView(index: currentSlotIndex), isActive: .constant(true)).hidden()
+                    }
+                    if self.viewStackHandlerNew.navigationState == .vaultSetupCongrats { //TODO: rename to .seal?
+                        NavigationLink("", destination: VaultSetupCongratsView(index: currentSlotIndex), isActive: .constant(true)).hidden()
+                    }
+                    if self.viewStackHandlerNew.navigationState == .unseal {
+                        NavigationLink("", destination: UnsealView(index: currentSlotIndex), isActive: .constant(true)).hidden()
+                    }
+                    if self.viewStackHandlerNew.navigationState == .privateKey {
+                        NavigationLink("", destination: ShowPrivateKeyMenuView(index: currentSlotIndex), isActive: .constant(true)).hidden()
+                    }
+                    if self.viewStackHandlerNew.navigationState == .reset {
+                        NavigationLink("", destination: ResetView(index: currentSlotIndex), isActive: .constant(true)).hidden()
+                    }
+
+                    
+                    // DEPRECATED
+                    // Navigation config
+//                    if viewModel.viewStackHandler.navigationState == .onboarding {
 //                        NavigationLink("", destination: OnboardingContainerView(viewModel: OnboardingContainerViewModel()), isActive: .constant(isOnboarding())).hidden()
 //                    }
 //                    if viewModel.viewStackHandler.navigationState == .cardAuthenticity, viewModel.cardStatus.status != .none {
@@ -299,84 +383,141 @@ struct HomeView: View {
 //                    if viewModel.viewStackHandler.navigationState == .reset, let viewModel = self.viewModel.resetViewModel {
 //                        NavigationLink("", destination: ResetView(viewModel: viewModel), isActive: .constant(isReset())).hidden()
 //                    }
-                    if self.viewStackHandlerNew.navigationState == .addFunds {
-                        NavigationLink("", destination: AddFundsViewNew(index: currentSlotIndex), isActive: .constant(true)).hidden()
-                    }
-                    
-                    // DEPRECATED
-                    // Navigation config
-                    if viewModel.viewStackHandler.navigationState == .onboarding {
-                        NavigationLink("", destination: OnboardingContainerView(viewModel: OnboardingContainerViewModel()), isActive: .constant(isOnboarding())).hidden()
-                    }
-                    if viewModel.viewStackHandler.navigationState == .cardAuthenticity, viewModel.cardStatus.status != .none {
-                        NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardStatus.status == .valid ? .isAuthentic : .notAuthentic)), isActive: .constant(isCardAuthenticity())).hidden()
-                    }
-                    if viewModel.viewStackHandler.navigationState == .notAuthentic {
-                        NavigationLink("", destination: AuthenticView(viewModel: AuthenticViewModel(authState: .notAuthentic, viewStackHandler: viewModel.viewStackHandler, destinationOnClose: viewModel.vaultCards.areAllEmptyVaults() && !viewModel.doesUserRequestToSeeAuthenticScreen ? .vaultInitialization : nil)), isActive: .constant(isNotAuthentic())).hidden()
-                    }
-                    if viewModel.viewStackHandler.navigationState == .takeOwnership, let cardVaults = viewModel.cardVaults {
-                        NavigationLink("", destination: TakeOwnershipView(viewModel: TakeOwnershipViewModel(cardService: CardService(), cardVaults: cardVaults, viewStackHandler: viewStackHandler, destinationOnClose: viewModel.cardVaults?.isCardAuthentic == .notAuthentic ? .notAuthentic : nil)), isActive: .constant(isTakeOwnership())).hidden()
-                    }
-                    if viewModel.viewStackHandler.navigationState == .vaultInitialization {
-                        NavigationLink("", destination: VaultSetupSelectChainView(viewModel: VaultSetupSelectChainViewModel(index: viewModel.currentSlotIndex, vaultCards: viewModel.vaultCards)), isActive: .constant(isVaultInitialization())).hidden()
-                    }
-                    if viewModel.viewStackHandler.navigationState == .menu {
-                        NavigationLink("", destination: MenuView(viewModel: MenuViewModel(cardVaults: viewModel.cardVaults)), isActive: .constant(isMenu())).hidden()
-                        // TODO: isMenu() returns "viewModel.viewStackHandler.navigationState == .menu"
-                        // replace with isActive: True ??
-                    }
-                    if viewModel.viewStackHandler.navigationState == .unseal, let viewModel = self.viewModel.unsealViewModel {
-                        NavigationLink("", destination: UnsealView(viewModel: viewModel), isActive: .constant(isUnseal())).hidden()
-                    }
-                    if viewModel.viewStackHandler.navigationState == .privateKey, let viewModel = self.viewModel.buildShowPrivateKeyVM(viewStackHandler: self.viewStackHandler) {
-                        NavigationLink("", destination: ShowPrivateKeyMenuView(viewModel: viewModel), isActive: .constant(isPrivateKey())).hidden()
-                    }
-                    if viewModel.viewStackHandler.navigationState == .reset, let viewModel = self.viewModel.resetViewModel {
-                        NavigationLink("", destination: ResetView(viewModel: viewModel), isActive: .constant(isReset())).hidden()
-                    }
-                    if viewModel.viewStackHandler.navigationState == .addFunds, let vaultItem = viewModel.cardVaults?.vaults[viewModel.currentSlotIndex] {
-                        switch viewModel.vaultCards.items[viewModel.currentSlotIndex] {
-                        case .vaultCard(let cardViewModel):
-                            NavigationLink("", destination: AddFundsView(viewModel: AddFundsViewModel(indexPosition: viewModel.currentSlotIndex, vault: vaultItem, card: cardViewModel, viewStackHandler: self.viewStackHandler)), isActive: .constant(isAddFunds())).hidden()
-                        case .emptyVault(_):
-                            EmptyView()
-                        }
-                    }
+//                    if viewModel.viewStackHandler.navigationState == .addFunds, let vaultItem = viewModel.cardVaults?.vaults[viewModel.currentSlotIndex] {
+//                        switch viewModel.vaultCards.items[viewModel.currentSlotIndex] {
+//                        case .vaultCard(let cardViewModel):
+//                            NavigationLink("", destination: AddFundsView(viewModel: AddFundsViewModel(indexPosition: viewModel.currentSlotIndex, vault: vaultItem, card: cardViewModel, viewStackHandler: self.viewStackHandler)), isActive: .constant(isAddFunds())).hidden()
+//                        case .emptyVault(_):
+//                            EmptyView()
+//                        }
+//                    }
                 }
                 .overlay(
+                    // MARK: OVERLAY
                     Group {
-                        if viewModel.showOwnershipAlert {
+//                        if viewModel.showOwnershipAlert {
+//                            ZStack {
+//                                Color.black.opacity(0.4)
+//                                    .ignoresSafeArea()
+//                                    .onTapGesture {
+//                                        viewModel.showOwnershipAlert = false
+//                                    }
+//                                
+//                                SatoAlertView(isPresented: $viewModel.showOwnershipAlert, alert: viewModel.ownershipAlert)
+//                                    .padding([.leading, .trailing], 24)
+//                            }
+//                        }
+                        
+                        // Show scan button overlay
+                        if cardState.vaultArray.isEmpty {
+                            VStack {
+                                
+                                Spacer()
+                                
+                                ScanButton {
+                                    //viewModel.startReadingCard()
+                                    Task {
+                                        await cardState.executeQuery()
+                                    }
+                                }
+                                
+                                Spacer()
+                                    //.frame(height: 180)
+                                
+                                // Buy button
+                                Button(action: {
+                                    if let weblinkUrl = URL(string: "https://satochip.io/product/satodime/") {
+                                        UIApplication.shared.open(weblinkUrl)
+                                    }
+                                }) {
+                                    HStack {
+                                        Text("dontHaveASatodime")
+                                        Image(systemName: "cart")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 50, height: 50)
+                                    }
+                                }
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]), startPoint: .leading, endPoint: .trailing))
+                                //.background(Color.gray)
+                                .cornerRadius(20)
+                            }
+                        }
+                        
+                        // Alert: user is not the owner of the card on this device
+                        if self.cardState.ownershipStatus == .notOwner && showNotOwnerAlert {
                             ZStack {
                                 Color.black.opacity(0.4)
                                     .ignoresSafeArea()
                                     .onTapGesture {
-                                        viewModel.showOwnershipAlert = false
+                                        showNotOwnerAlert = false
                                     }
                                 
-                                SatoAlertView(isPresented: $viewModel.showOwnershipAlert, alert: viewModel.ownershipAlert)
+                                SatoAlertView(
+                                    isPresented: $showNotOwnerAlert,
+                                    alert: SatoAlert(
+                                        title: "ownership",
+                                        message: "ownershipText",
+                                        buttonTitle: String(localized:"moreInfo"),
+                                        buttonAction: {
+                                            if let url = URL(string: "https://satochip.io/satodime-ownership-explained/") {
+                                                UIApplication.shared.open(url)
+                                            }
+                                        }
+                                    )
+                                )
                                     .padding([.leading, .trailing], 24)
                             }
-                        }
-                        // TODO: show authenticity issue here?
+                        } // if showNotOwnerAlert
                         
-                        //if !viewModel.hasReadCard() {
-                        if cardState.vaultArray.isEmpty {
-                            ScanButton {
-                                //viewModel.startReadingCard()
-                                Task {
-                                    await cardState.executeQuery()
-                                }
-                            }
+                        // TODO: take ownership here?
+                        else if self.cardState.ownershipStatus == .unclaimed && showTakeOwnershipAlert == true {
+                            //NavigationLink("", destination: TakeOwnershipView(), isActive: .constant(true)).hidden()
+                            SatoAlertView(
+                                isPresented: $showTakeOwnershipAlert,
+                                alert: SatoAlert(
+                                    title: "takeOwnershipAlert",
+                                    message: "takeOwnershipText",
+                                    buttonTitle: String(localized:"goToTakeOwnershipScreen"),
+                                    buttonAction: {
+                                        self.viewStackHandlerNew.navigationState = .takeOwnership
+                                    }
+                                )
+                            )
+                        }// take ownership alert
+                        
+                        // TODO: show authenticity issue here?
+                        if self.cardState.hasReadCard() && self.cardState.certificateCode != .success && showNotAuthenticAlert == true {
+                            SatoAlertView(
+                                isPresented: $showNotAuthenticAlert,
+                                alert: SatoAlert(
+                                    title: "notAuthenticTitle",
+                                    message: "notAuthenticText",
+                                    buttonTitle: String(localized:"goToNotAuthenticScreen"),
+                                    buttonAction: {
+                                        self.viewStackHandlerNew.navigationState = .cardInfo
+                                    }
+                                )
+                            )
                         }
-                    }
-                )
-        }
-        .environmentObject(viewModel.viewStackHandler)
+                        
+                        
+                    }// Group
+                ) //overlay
+            
+        }// ZStack
+        //.environmentObject(viewModel.viewStackHandler) // TODO: remove
         .onAppear {
-            viewModel.evaluateBaseNavigation()
+            //viewModel.evaluateBaseNavigation()
+            if isFirstUse() {
+                navigateTo(destination: .onboarding)
+            }
         }
-    }
+    }// body
     
+    // MARK: - Helpers
     func handleSnapToScrollEvent(event: SnapToScrollEvent) {
         switch event {
             case let .didLayout(layoutInfo: layoutInfo):
@@ -384,8 +525,8 @@ struct HomeView: View {
             //currentSlotIndex = 0 // debug???
             case let .swipe(index: index):
             currentSlotIndex = index
-            viewModel.currentSlotIndex = index
-            viewModel.populateTabs()
+            viewModel.currentSlotIndex = index // TODO: remove
+            viewModel.populateTabs() // TODO: remove
             print("swiped to index: \(index)")
         }
     }
@@ -396,56 +537,78 @@ struct HomeView: View {
         }
     }
     
-    // TODO: do we really need these?
-    func isCardAuthenticity() -> Bool {
-        viewModel.viewStackHandler.navigationState == .cardAuthenticity
-    }
-
-    func isOnboarding() -> Bool {
-        viewModel.viewStackHandler.navigationState == .onboarding
-    }
-
-    func isVaultInitialization() -> Bool {
-        viewModel.viewStackHandler.navigationState == .vaultInitialization
+    func isFirstUse() -> Bool {
+        let result = UserDefaults.standard.bool(forKey: Constants.Storage.isAppPreviouslyLaunched) == false
+        return result
     }
     
-    func isMenu() -> Bool {
-        viewModel.viewStackHandler.navigationState == .menu
+    func gradientToDisplay() -> String {
+        if cardState.vaultArray.isEmpty { return "" }
+        if cardState.vaultArray[currentSlotIndex].getStatus() == .uninitialized {return ""}
+        
+        switch currentSlotIndex%3 {
+        case 0:
+            return "gradient_1"
+        case 1:
+            return "gradient_2"
+        case 2:
+            return "gradient_3"
+        default:
+            return "gradient_1"
+        }
     }
     
-    func isUnseal() -> Bool {
-        viewModel.viewStackHandler.navigationState == .unseal
-    }
     
-    func isReset() -> Bool {
-        viewModel.viewStackHandler.navigationState == .reset
-    }
+//    // TODO: do we really need these?
+//    func isCardAuthenticity() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .cardAuthenticity
+//    }
+//
+//    func isOnboarding() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .onboarding
+//    }
+//
+//    func isVaultInitialization() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .vaultInitialization
+//    }
+//    
+//    func isMenu() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .menu
+//    }
+//    
+//    func isUnseal() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .unseal
+//    }
+//    
+//    func isReset() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .reset
+//    }
+//    
+//    func isPrivateKey() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .privateKey
+//    }
+//    
+//    func isTakeOwnership() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .takeOwnership
+//    }
+//    
+//    func isNotAuthentic() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .notAuthentic
+//    }
+//    
+//    func isAddFunds() -> Bool {
+//        viewModel.viewStackHandler.navigationState == .addFunds
+//    }
     
-    func isPrivateKey() -> Bool {
-        viewModel.viewStackHandler.navigationState == .privateKey
-    }
-    
-    func isTakeOwnership() -> Bool {
-        viewModel.viewStackHandler.navigationState == .takeOwnership
-    }
-    
-    func isNotAuthentic() -> Bool {
-        viewModel.viewStackHandler.navigationState == .notAuthentic
-    }
-    
-    func isAddFunds() -> Bool {
-        viewModel.viewStackHandler.navigationState == .addFunds
-    }
-    
-    // TODO: remove (unused)
-    func hasNoOwnership() -> Bool {
-        return true
-    }
-    
-    // TODO: remove (unused)
-    func isVaultInitialized() -> Bool {
-        return UserDefaults.standard.bool(forKey: "VaultInitialized")
-    }
+//    // TODO: remove (unused)
+//    func hasNoOwnership() -> Bool {
+//        return true
+//    }
+//    
+//    // TODO: remove (unused)
+//    func isVaultInitialized() -> Bool {
+//        return UserDefaults.standard.bool(forKey: "VaultInitialized")
+//    }
     
     // debug
     func debug(txt:String){

@@ -8,35 +8,65 @@
 import Foundation
 import SwiftUI
 
-struct OnboardingContainerView: View {
-    @EnvironmentObject var viewStackHandler: ViewStackHandler
-    @ObservedObject var viewModel: OnboardingContainerViewModel
+enum OnboardingViewType {
+    case welcome
+    case info
+    case nfc
+}
 
+struct OnboardingContainerView: View {
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    //@EnvironmentObject var viewStackHandler: ViewStackHandler
+    //@ObservedObject var viewModel: OnboardingContainerViewModel
+
+    let onboardingPages: [OnboardingViewType] = [.welcome, .info, .nfc]
+    var numberOfPages: Int { onboardingPages.count }
+    @State var currentPageIndex = 0
+    @State var isLastPage = false
+    
+    // MARK: - Literals
+    let startButtonTitle = String(localized: "start")
+
+    func goToNextPage() {
+        if currentPageIndex < numberOfPages - 1 {
+            currentPageIndex = currentPageIndex + 1
+        }
+        if currentPageIndex == numberOfPages - 1 {
+            isLastPage = true
+        }
+    }
+    
+    func completeOnboarding() {
+        UserDefaults.standard.set(true, forKey: Constants.Storage.isAppPreviouslyLaunched)
+        //navigateTo(destination: .goBackHome)
+        viewStackHandler.navigationState = .goBackHome
+    }
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack(spacing: 0) {
-                TabView(selection: $viewModel.currentPageIndex) {
-                    ForEach(Array(viewModel.onboardingPages.enumerated()), id: \.offset) { index, page in
+                TabView(selection: $currentPageIndex) {
+                    ForEach(Array(onboardingPages.enumerated()), id: \.offset) { index, page in
                         switch page {
                         case .welcome:
-                            OnboardingWelcomeView(viewModel: OnboardingWelcomeViewModel())
+                            OnboardingWelcomeView()
                                 .tag(index)
                         case .info:
-                            OnboardingInfoView(viewModel: OnboardingInfoViewModel())
+                            OnboardingInfoView()
                                 .tag(index)
                         case .nfc:
-                            OnboardingNFCView(viewModel: OnboardingNFCViewModel())
+                            OnboardingNFCView()
                                 .tag(index)
                         }
                     }
                 }
-                .onChange(of: viewModel.currentPageIndex) { newValue in
-                    viewModel.currentPageIndex = newValue
+                .onChange(of: currentPageIndex) { newValue in // TODO: necessary?
+                    currentPageIndex = newValue
                 }
                 .background {
                     Constants.Colors.viewBackground
                         .ignoresSafeArea()
-                    if viewModel.isLastPage {
+                    if isLastPage {
                         Image("view-background-onboard-3")
                             .resizable()
                             .scaledToFill()
@@ -54,14 +84,14 @@ struct OnboardingContainerView: View {
                 }
             }
             
-            if viewModel.isLastPage {
-                SatoButton(staticWidth: 177, text: viewModel.startButtonTitle, style: .confirm, horizontalPadding: 60) {
-                    self.viewModel.completeOnboarding()
+            if isLastPage {
+                SatoButton(staticWidth: 177, text: startButtonTitle, style: .confirm, horizontalPadding: 60) {
+                    self.completeOnboarding()
                 }
                 .padding(.bottom, Constants.Dimensions.defaultBottomMargin)
             } else {
                 Button(action: {
-                    viewModel.goToNextPage()
+                    goToNextPage()
                 }) {
                     Image("bg_btn_arrow")
                         .resizable()
@@ -72,8 +102,8 @@ struct OnboardingContainerView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            viewModel.viewStackHandler = viewStackHandler
-        }
+//        .onAppear {
+//            viewModel.viewStackHandler = viewStackHandler
+//        }
     }
 }

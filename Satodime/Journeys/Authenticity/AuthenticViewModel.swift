@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-enum AuthenticationState {
-    case isAuthentic
-    case notAuthentic
-}
+//enum AuthenticationState {
+//    case isAuthentic
+//    case notAuthentic
+//}
 
 final class AuthenticViewModel: BaseViewModel {
     

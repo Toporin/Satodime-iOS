@@ -81,7 +81,7 @@ struct VaultCard: View {
                         }
                     }
                     Spacer()
-                    BalanceView(title: viewModel.balanceTitle, balance: viewModel.fiatBalance, cryptoBalance: viewModel.cryptoBalance)
+                    BalanceView(title: viewModel.balanceTitle, balanceFirst: viewModel.fiatBalance, balanceSecond: viewModel.cryptoBalance)
                 }
                 .padding(.bottom, 20)
             }

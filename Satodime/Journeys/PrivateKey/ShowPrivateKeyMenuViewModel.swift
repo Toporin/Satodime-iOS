@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-enum ShowPrivateKeyMode: String, Hashable {
-    case legacy = "showPrivateKeyLegacy"
-    case wif = "showPrivateKeyWIF"
-    case entropy = "showEntropy"
-}
+//enum ShowPrivateKeyMode: String, Hashable {
+//    case legacy = "showPrivateKeyLegacy"
+//    case wif = "showPrivateKeyWIF"
+//    case entropy = "showEntropy"
+//}
 
 final class ShowPrivateKeyMenuViewModel: BaseViewModel {
     // MARK: - Properties

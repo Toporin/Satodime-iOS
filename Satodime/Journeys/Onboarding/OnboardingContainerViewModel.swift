@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
-enum OnboardingViewType {
-    case welcome
-    case info
-    case nfc
-}
+//enum OnboardingViewType {
+//    case welcome
+//    case info
+//    case nfc
+//}
 
 final class OnboardingContainerViewModel: BaseViewModel {
     // MARK: - Properties

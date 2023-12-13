@@ -43,7 +43,7 @@ final class VaultSetupCreateViewModel: BaseViewModel {
         }
         
         print("Will create for index : \(self.index)")
-        self.cardService.sealVault(vaultIndex: self.index, for: self.selectedCrypto, useTestNet: false, contractBytes: [UInt8](), tokenidBytes: [UInt8](), entropyBytes: [UInt8](), completion: { [weak self] result in
+        self.cardService.sealVault(vaultIndex: self.index, for: self.selectedCrypto, useTestNet: false, contractBytes: [UInt8](), tokenidBytes: [UInt8](), entropyBytes: [UInt8](), completion: { [weak self] result in // TODO: entropyBytes should not be empty!!!
             guard let self = self else { return }
             switch result {
             case .sealed(let result):

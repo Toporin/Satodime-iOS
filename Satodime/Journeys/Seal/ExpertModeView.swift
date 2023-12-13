@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// TODO: remove
 struct ExpertModeView: View {
     // MARK: - Properties
     @ObservedObject var viewModel: ExpertModeViewModel
@@ -63,12 +64,12 @@ struct ExpertModeView: View {
                 
                 Spacer()
                 
-                NavigationLink(
-                    destination: VaultSetupCongratsView(viewModel: VaultSetupCongratsViewModel(selectedCrypto: viewModel.selectedCrypto)),
-                    isActive: $viewModel.isNextViewActive
-                ) {
-                    EmptyView()
-                }
+//                NavigationLink(
+//                    destination: VaultSetupCongratsView(viewModel: VaultSetupCongratsViewModel(selectedCrypto: viewModel.selectedCrypto)),
+//                    isActive: $viewModel.isNextViewActive
+//                ) {
+//                    EmptyView()
+//                }
                 
                 SatoButton(staticWidth: 177, text: viewModel.continueButtonTitle, style: .confirm) {
                     viewModel.sealSlot()
