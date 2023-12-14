@@ -47,13 +47,6 @@
 		0DA7B4BC299A81D900CEE722 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B4BE299A81D900CEE722 /* Localizable.strings */; };
 		0DA7B4C2299A8ADA00CEE722 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */; };
 		0DB03FCA29A7F813002E56BD /* ShowLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FC929A7F813002E56BD /* ShowLogs.swift */; };
-		0DB03FD429BB70AA002E56BD /* contracts_ETH_Token in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */; };
-		0DB03FD629BB7192002E56BD /* ContractsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FD529BB7192002E56BD /* ContractsFile.swift */; };
-		0DB03FD829BB7204002E56BD /* ContractsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FD729BB7204002E56BD /* ContractsCache.swift */; };
-		0DB03FDA29BB94C0002E56BD /* ContractsAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FD929BB94C0002E56BD /* ContractsAutocomplete.swift */; };
-		0DB03FDC29BCCA9C002E56BD /* contracts_ETH_NFT in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDB29BCCA9B002E56BD /* contracts_ETH_NFT */; };
-		0DB03FDE29BF5A62002E56BD /* contracts_XCP_NFT in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */; };
-		0DB03FE029BF62E7002E56BD /* contracts_XCP_Token in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */; };
 		0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */; };
 		0DE0A93D2AFA9B3100D0845F /* SwiftCryptoTools in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A93C2AFA9B3100D0845F /* SwiftCryptoTools */; };
 		0DE0A9402AFA9B7D00D0845F /* SatochipSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */; };
@@ -194,13 +187,6 @@
 		0DA7B4BF299A821000CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DA7B4C1299A8ADA00CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0DB03FC929A7F813002E56BD /* ShowLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogs.swift; sourceTree = "<group>"; };
-		0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_ETH_Token; sourceTree = "<group>"; };
-		0DB03FD529BB7192002E56BD /* ContractsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsFile.swift; sourceTree = "<group>"; };
-		0DB03FD729BB7204002E56BD /* ContractsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsCache.swift; sourceTree = "<group>"; };
-		0DB03FD929BB94C0002E56BD /* ContractsAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsAutocomplete.swift; sourceTree = "<group>"; };
-		0DB03FDB29BCCA9B002E56BD /* contracts_ETH_NFT */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_ETH_NFT; sourceTree = "<group>"; };
-		0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_XCP_NFT; sourceTree = "<group>"; };
-		0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_XCP_Token; sourceTree = "<group>"; };
 		0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Apikeys-Info-sample.plist"; sourceTree = "<group>"; };
 		D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoStatusView.swift; sourceTree = "<group>"; };
 		D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardEmpty.swift; sourceTree = "<group>"; };
@@ -360,13 +346,6 @@
 				0DA7B45E299A366200CEE722 /* Assets.xcassets */,
 				0DA7B460299A366200CEE722 /* Satodime.entitlements */,
 				0DA7B461299A366200CEE722 /* Preview Content */,
-				0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */,
-				0DB03FD529BB7192002E56BD /* ContractsFile.swift */,
-				0DB03FD729BB7204002E56BD /* ContractsCache.swift */,
-				0DB03FD929BB94C0002E56BD /* ContractsAutocomplete.swift */,
-				0DB03FDB29BCCA9B002E56BD /* contracts_ETH_NFT */,
-				0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */,
-				0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */,
 				0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */,
 			);
 			path = Satodime;
@@ -801,15 +780,11 @@
 				0DA7B4B7299A589E00CEE722 /* Apikeys-Info.plist in Resources */,
 				D0E665682ADAA08200703A8F /* Outfit-Regular.ttf in Resources */,
 				0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */,
-				0DB03FD429BB70AA002E56BD /* contracts_ETH_Token in Resources */,
 				D0EB4DF12AC1D39D00EA83F9 /* Outfit-variable.ttf in Resources */,
 				0DA7B4C2299A8ADA00CEE722 /* InfoPlist.strings in Resources */,
 				D0F62FD22ACEF1A60027EFE6 /* Outfit-ExtraLight.ttf in Resources */,
-				0DB03FDE29BF5A62002E56BD /* contracts_XCP_NFT in Resources */,
-				0DB03FE029BF62E7002E56BD /* contracts_XCP_Token in Resources */,
 				0DA7B4BC299A81D900CEE722 /* Localizable.strings in Resources */,
 				D0F62FBA2ACDC7BA0027EFE6 /* Poppins-Bold2.ttf in Resources */,
-				0DB03FDC29BCCA9C002E56BD /* contracts_ETH_NFT in Resources */,
 				0DA7B45F299A366200CEE722 /* Assets.xcassets in Resources */,
 				D0EB4E042AC1FB7100EA83F9 /* Outfit-Medium.ttf in Resources */,
 				D0F62FC02ACDD2ED0027EFE6 /* Outfit-Bold.ttf in Resources */,
@@ -855,7 +830,6 @@
 				D0825F5F2ADAE093006391D5 /* SettingsDropdown.swift in Sources */,
 				D060805A2AD94152001A5749 /* ShowKeyButton.swift in Sources */,
 				0D16B1CF2B249D3E005FCACB /* SatodimeUtil.swift in Sources */,
-				0DB03FDA29BB94C0002E56BD /* ContractsAutocomplete.swift in Sources */,
 				0D644D4D2B1E75D9008CB29A /* AssetTabView.swift in Sources */,
 				0DA7B499299A37B500CEE722 /* ShowDetails.swift in Sources */,
 				D07C9C7A2AD857DD005F5917 /* SealButton.swift in Sources */,
@@ -899,7 +873,6 @@
 				D06080562AD93786001A5749 /* UnsealConfirmationView.swift in Sources */,
 				D0E665762ADAC7CB00703A8F /* TransferOwnershipView.swift in Sources */,
 				D0F62FB22ACDB27F0027EFE6 /* CryptoSelectionCell.swift in Sources */,
-				0DB03FD829BB7204002E56BD /* ContractsCache.swift in Sources */,
 				0DA7B4A0299A37B500CEE722 /* SideMenu.swift in Sources */,
 				D0EB4DF92AC1D66F00EA83F9 /* OnboardingInfoView.swift in Sources */,
 				D0E6656E2ADAB6C300703A8F /* ProductButton.swift in Sources */,
@@ -930,7 +903,6 @@
 				0D8B4AA62A2632DC00E9E429 /* OnboardingStepView.swift in Sources */,
 				0DA7B4A1299A37B500CEE722 /* CardInfo.swift in Sources */,
 				D0EB4E0A2AC222A900EA83F9 /* SatoButton.swift in Sources */,
-				0DB03FD629BB7192002E56BD /* ContractsFile.swift in Sources */,
 				D0602B4D2AD0A7F700CF8AEC /* VaultCardEmpty.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
