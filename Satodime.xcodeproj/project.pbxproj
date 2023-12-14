@@ -16,30 +16,13 @@
 		0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */; };
 		0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D502B1F146D008CB29A /* NftCellNew.swift */; };
 		0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D522B1F344E008CB29A /* AddFundViewNew.swift */; };
-		0D8B4AA42A2632DC00E9E429 /* OnboardingViewPure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */; };
-		0D8B4AA52A2632DC00E9E429 /* OnboardingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */; };
-		0D8B4AA62A2632DC00E9E429 /* OnboardingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */; };
 		0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45A299A365900CEE722 /* SatodimeApp.swift */; };
-		0DA7B45D299A365900CEE722 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45C299A365900CEE722 /* ContentView.swift */; };
 		0DA7B45F299A366200CEE722 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B45E299A366200CEE722 /* Assets.xcassets */; };
 		0DA7B46D299A366300CEE722 /* SatodimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B46C299A366300CEE722 /* SatodimeTests.swift */; };
 		0DA7B477299A366300CEE722 /* SatodimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B476299A366300CEE722 /* SatodimeUITests.swift */; };
 		0DA7B479299A366300CEE722 /* SatodimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B478299A366300CEE722 /* SatodimeUITestsLaunchTests.swift */; };
-		0DA7B495299A37B500CEE722 /* ActionParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B485299A37B200CEE722 /* ActionParams.swift */; };
-		0DA7B496299A37B500CEE722 /* SealSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B486299A37B200CEE722 /* SealSlot.swift */; };
-		0DA7B497299A37B500CEE722 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B487299A37B200CEE722 /* Util.swift */; };
-		0DA7B498299A37B500CEE722 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B488299A37B200CEE722 /* Settings.swift */; };
-		0DA7B499299A37B500CEE722 /* ShowDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B489299A37B300CEE722 /* ShowDetails.swift */; };
-		0DA7B49B299A37B500CEE722 /* ResetSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48B299A37B300CEE722 /* ResetSlot.swift */; };
 		0DA7B49C299A37B500CEE722 /* ShowCertificates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */; };
-		0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */; };
-		0DA7B49E299A37B500CEE722 /* UnknownAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48E299A37B300CEE722 /* UnknownAction.swift */; };
-		0DA7B49F299A37B500CEE722 /* NfcReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48F299A37B400CEE722 /* NfcReader.swift */; };
-		0DA7B4A0299A37B500CEE722 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B490299A37B400CEE722 /* SideMenu.swift */; };
-		0DA7B4A1299A37B500CEE722 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B491299A37B400CEE722 /* CardInfo.swift */; };
-		0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B492299A37B400CEE722 /* AcceptCard.swift */; };
 		0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B493299A37B400CEE722 /* VaultItem.swift */; };
-		0DA7B4A4299A37B500CEE722 /* TransferCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B494299A37B400CEE722 /* TransferCard.swift */; };
 		0DA7B4B1299A4D6D00CEE722 /* SatochipSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA7B4B0299A4D6D00CEE722 /* SatochipSwift */; };
 		0DA7B4B3299A4D7E00CEE722 /* SwiftCryptoTools in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA7B4B2299A4D7E00CEE722 /* SwiftCryptoTools */; };
 		0DA7B4B6299A4E6400CEE722 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA7B4B5299A4E6400CEE722 /* QRCode */; };
@@ -151,12 +134,8 @@
 		0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCellNew.swift; sourceTree = "<group>"; };
 		0D644D502B1F146D008CB29A /* NftCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCellNew.swift; sourceTree = "<group>"; };
 		0D644D522B1F344E008CB29A /* AddFundViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFundViewNew.swift; sourceTree = "<group>"; };
-		0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewPure.swift; sourceTree = "<group>"; };
-		0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataModel.swift; sourceTree = "<group>"; };
-		0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingStepView.swift; sourceTree = "<group>"; };
 		0DA7B457299A365900CEE722 /* Satodime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Satodime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA7B45A299A365900CEE722 /* SatodimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeApp.swift; sourceTree = "<group>"; };
-		0DA7B45C299A365900CEE722 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0DA7B45E299A366200CEE722 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0DA7B460299A366200CEE722 /* Satodime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Satodime.entitlements; sourceTree = "<group>"; };
 		0DA7B462299A366200CEE722 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -165,22 +144,9 @@
 		0DA7B472299A366300CEE722 /* SatodimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SatodimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA7B476299A366300CEE722 /* SatodimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeUITests.swift; sourceTree = "<group>"; };
 		0DA7B478299A366300CEE722 /* SatodimeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		0DA7B485299A37B200CEE722 /* ActionParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionParams.swift; sourceTree = "<group>"; };
-		0DA7B486299A37B200CEE722 /* SealSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SealSlot.swift; sourceTree = "<group>"; };
-		0DA7B487299A37B200CEE722 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		0DA7B488299A37B200CEE722 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		0DA7B489299A37B300CEE722 /* ShowDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDetails.swift; sourceTree = "<group>"; };
 		0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Apikeys-Info.plist"; sourceTree = "<group>"; };
-		0DA7B48B299A37B300CEE722 /* ResetSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSlot.swift; sourceTree = "<group>"; };
 		0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCertificates.swift; sourceTree = "<group>"; };
-		0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsealSlot.swift; sourceTree = "<group>"; };
-		0DA7B48E299A37B300CEE722 /* UnknownAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownAction.swift; sourceTree = "<group>"; };
-		0DA7B48F299A37B400CEE722 /* NfcReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NfcReader.swift; sourceTree = "<group>"; };
-		0DA7B490299A37B400CEE722 /* SideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
-		0DA7B491299A37B400CEE722 /* CardInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
-		0DA7B492299A37B400CEE722 /* AcceptCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptCard.swift; sourceTree = "<group>"; };
 		0DA7B493299A37B400CEE722 /* VaultItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaultItem.swift; sourceTree = "<group>"; };
-		0DA7B494299A37B400CEE722 /* TransferCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferCard.swift; sourceTree = "<group>"; };
 		0DA7B4A7299A38B500CEE722 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0DA7B4AC299A4B1B00CEE722 /* SatochipSwift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SatochipSwift; path = ../SatochipSwift; sourceTree = "<group>"; };
 		0DA7B4BD299A81D900CEE722 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -293,16 +259,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0D8B4AA02A2632B500E9E429 /* onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				0D8B4AA22A2632DB00E9E429 /* OnboardingDataModel.swift */,
-				0D8B4AA32A2632DC00E9E429 /* OnboardingStepView.swift */,
-				0D8B4AA12A2632DA00E9E429 /* OnboardingViewPure.swift */,
-			);
-			path = onboarding;
-			sourceTree = "<group>";
-		};
 		0DA7B44E299A365900CEE722 = {
 			isa = PBXGroup;
 			children = (
@@ -335,11 +291,9 @@
 				D0EB4DEE2AC1D36400EA83F9 /* Resources */,
 				D0EB4DEB2AC1D24600EA83F9 /* Components */,
 				D0EB4DE62AC0837C00EA83F9 /* Journeys */,
-				0D8B4AA02A2632B500E9E429 /* onboarding */,
 				0DA7B4A7299A38B500CEE722 /* Info.plist */,
 				0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */,
 				0DA7B4BE299A81D900CEE722 /* Localizable.strings */,
-				D0825F6B2ADD12F5006391D5 /* Old */,
 				D0EB4E172AC24DF600EA83F9 /* AppDelegate.swift */,
 				0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */,
 				0DA7B45A299A365900CEE722 /* SatodimeApp.swift */,
@@ -455,27 +409,6 @@
 				0D644D482B1A1E05008CB29A /* CardState.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		D0825F6B2ADD12F5006391D5 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				0DA7B492299A37B400CEE722 /* AcceptCard.swift */,
-				0DA7B485299A37B200CEE722 /* ActionParams.swift */,
-				0DA7B491299A37B400CEE722 /* CardInfo.swift */,
-				0DA7B48F299A37B400CEE722 /* NfcReader.swift */,
-				0DA7B48B299A37B300CEE722 /* ResetSlot.swift */,
-				0DA7B486299A37B200CEE722 /* SealSlot.swift */,
-				0DA7B488299A37B200CEE722 /* Settings.swift */,
-				0DA7B489299A37B300CEE722 /* ShowDetails.swift */,
-				0DA7B490299A37B400CEE722 /* SideMenu.swift */,
-				0DA7B494299A37B400CEE722 /* TransferCard.swift */,
-				0DA7B48E299A37B300CEE722 /* UnknownAction.swift */,
-				0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */,
-				0DA7B487299A37B200CEE722 /* Util.swift */,
-				0DA7B45C299A365900CEE722 /* ContentView.swift */,
-			);
-			path = Old;
 			sourceTree = "<group>";
 		};
 		D08CAF8C2AF3EB3C00B6CE55 /* AddFunds */ = {
@@ -818,7 +751,6 @@
 				D060805F2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift in Sources */,
 				D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */,
 				D0F62FBC2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift in Sources */,
-				0DA7B49F299A37B500CEE722 /* NfcReader.swift in Sources */,
 				D0F62FDA2ACF13400027EFE6 /* VaultCard.swift in Sources */,
 				D0EB4E182AC24DF600EA83F9 /* AppDelegate.swift in Sources */,
 				D06080672AD9689F001A5749 /* ScanButton.swift in Sources */,
@@ -831,7 +763,6 @@
 				D060805A2AD94152001A5749 /* ShowKeyButton.swift in Sources */,
 				0D16B1CF2B249D3E005FCACB /* SatodimeUtil.swift in Sources */,
 				0D644D4D2B1E75D9008CB29A /* AssetTabView.swift in Sources */,
-				0DA7B499299A37B500CEE722 /* ShowDetails.swift in Sources */,
 				D07C9C7A2AD857DD005F5917 /* SealButton.swift in Sources */,
 				D0EB4E132AC22F3500EA83F9 /* VaultSetupSelectChainView.swift in Sources */,
 				0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */,
@@ -840,17 +771,12 @@
 				D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */,
 				0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */,
 				D0EB4E0E2AC22A9B00EA83F9 /* HomeView.swift in Sources */,
-				0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */,
-				0D8B4AA52A2632DC00E9E429 /* OnboardingDataModel.swift in Sources */,
-				0DA7B498299A37B500CEE722 /* Settings.swift in Sources */,
-				0DA7B49E299A37B500CEE722 /* UnknownAction.swift in Sources */,
 				0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */,
 				D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */,
 				0D16B1CD2B2449A0005FCACB /* ExploreButton.swift in Sources */,
 				D0F62FB62ACDBAA70027EFE6 /* CryptoCurrency.swift in Sources */,
 				D07C9C762AD85272005F5917 /* MenuView.swift in Sources */,
 				0DA7B49C299A37B500CEE722 /* ShowCertificates.swift in Sources */,
-				0DA7B496299A37B500CEE722 /* SealSlot.swift in Sources */,
 				D0EB4DFE2AC1DFE400EA83F9 /* Colors.swift in Sources */,
 				D0C483992AD8BC2F0085F4B9 /* UnsealView.swift in Sources */,
 				D0E6656C2ADAB53700703A8F /* SmallMenuButton.swift in Sources */,
@@ -864,7 +790,6 @@
 				D0825F6A2ADB629A006391D5 /* CardVaults.swift in Sources */,
 				D0825F672ADAE7AD006391D5 /* PreferencesService.swift in Sources */,
 				D0F62FCD2ACEE5D40027EFE6 /* CardService.swift in Sources */,
-				0DA7B45D299A365900CEE722 /* ContentView.swift in Sources */,
 				D06080692AD980A6001A5749 /* QRCode.swift in Sources */,
 				D0F62FC42ACDE11E0027EFE6 /* SatoToggle.swift in Sources */,
 				D0825F612ADAE0EF006391D5 /* SettingsView.swift in Sources */,
@@ -873,18 +798,14 @@
 				D06080562AD93786001A5749 /* UnsealConfirmationView.swift in Sources */,
 				D0E665762ADAC7CB00703A8F /* TransferOwnershipView.swift in Sources */,
 				D0F62FB22ACDB27F0027EFE6 /* CryptoSelectionCell.swift in Sources */,
-				0DA7B4A0299A37B500CEE722 /* SideMenu.swift in Sources */,
 				D0EB4DF92AC1D66F00EA83F9 /* OnboardingInfoView.swift in Sources */,
 				D0E6656E2ADAB6C300703A8F /* ProductButton.swift in Sources */,
 				D065EF5B2AF81CEC006751C5 /* ButtonBox.swift in Sources */,
 				D0EB4DFB2AC1D69100EA83F9 /* OnboardingNFCView.swift in Sources */,
 				D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */,
-				0DA7B4A4299A37B500CEE722 /* TransferCard.swift in Sources */,
 				D0F62FD02ACEEE0C0027EFE6 /* SealStatusView.swift in Sources */,
 				D0EB4DED2AC1D26900EA83F9 /* SatoText.swift in Sources */,
 				0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */,
-				0DA7B497299A37B500CEE722 /* Util.swift in Sources */,
-				0DA7B495299A37B500CEE722 /* ActionParams.swift in Sources */,
 				D0F62FD82ACF11FE0027EFE6 /* BalanceView.swift in Sources */,
 				0DB03FCA29A7F813002E56BD /* ShowLogs.swift in Sources */,
 				0D644D492B1A1E05008CB29A /* CardState.swift in Sources */,
@@ -894,14 +815,9 @@
 				D06080652AD94ED2001A5749 /* Views.swift in Sources */,
 				0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */,
 				D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */,
-				0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */,
-				0DA7B49B299A37B500CEE722 /* ResetSlot.swift in Sources */,
 				D0E1704D2AD6D1EB00C53233 /* ConsoleLogger.swift in Sources */,
 				D060806C2AD9868D001A5749 /* ResetView.swift in Sources */,
-				0D8B4AA42A2632DC00E9E429 /* OnboardingViewPure.swift in Sources */,
 				D0E6656A2ADAAE5F00703A8F /* MenuButton.swift in Sources */,
-				0D8B4AA62A2632DC00E9E429 /* OnboardingStepView.swift in Sources */,
-				0DA7B4A1299A37B500CEE722 /* CardInfo.swift in Sources */,
 				D0EB4E0A2AC222A900EA83F9 /* SatoButton.swift in Sources */,
 				D0602B4D2AD0A7F700CF8AEC /* VaultCardEmpty.swift in Sources */,
 			);
