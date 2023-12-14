@@ -13,12 +13,7 @@ import Combine
 struct AssetTabView: View {
     
     @EnvironmentObject var cardState: CardState
-    
-    //@ObservedObject var nftListViewModel: NFTListViewModel
-    //@ObservedObject var tokenListViewModel: TokenListViewModel
-    
     @State private var selectedTab: SelectedTab = .token
-    //@Binding var canSelectNFT: Bool
     
     var index: Int
     var canSelectNFT: Bool
@@ -119,7 +114,7 @@ struct AssetTabView: View {
             coinDict["type"] = "coin" 
             coinDict["balance"] = String(cardState.vaultArray[index].balance ?? 0)
             coinDict["decimals"] = "0"
-            coinDict["tokenIconPath"] = cardState.vaultArray[index].coinMeta.iconColored
+            coinDict["tokenIconPath"] = cardState.vaultArray[index].coinMeta.icon
             coinDict["tokenExplorerLink"] = cardState.vaultArray[index].coin.getAddressWebLink(address: address)
             coinDict["tokenValueInSecondCurrency"] = String(cardState.vaultArray[index].coinValueInSecondCurrency ?? 0)
             coinDict["secondCurrency"] = cardState.vaultArray[index].selectedSecondCurrency

@@ -38,6 +38,7 @@ public struct VaultItem: Hashable {
         }
     }
     
+    // TODO: deprecate
     public static let statusDict: [UInt8 : String] =
                                    [0x00 : "Uninitialized",
                                     0x01 : "Sealed",
@@ -62,11 +63,6 @@ public struct VaultItem: Hashable {
     }
     public var addressUrl: URL? = nil // explorer url
     
-    // deprecated fiat value
-    //public var otherCoinSymbol: String? = nil
-    //public var exchangeRate: Double? = nil
-    //public var tokenExchangeRate: Double? = nil
-    
     public var selectedFirstCurrency: String? = nil
     public var selectedSecondCurrency: String? = nil
     public var coinValueInFirstCurrency: Double? = nil
@@ -75,11 +71,10 @@ public struct VaultItem: Hashable {
     // asset list
     public var tokenList: [[String:String]]? = nil
     public var nftList: [[String:String]]? = nil
-    // fiat value
+    // total value in tokens (excluding main coin)
     public var totalTokenValueInFirstCurrency: Double? = nil
     public var totalTokenValueInSecondCurrency: Double? = nil
-    
-    // total
+    // total value (including main coin)
     public var totalValueInFirstCurrency: Double? = nil
     public var totalValueInSecondCurrency: Double? = nil
     
@@ -134,6 +129,7 @@ public struct VaultItem: Hashable {
         }
     }
     
+    // TODO: deprecate
     public func getStatusString() -> String {
         let statusByte: UInt8 = keyslotStatus.status
         let statusString = VaultItem.statusDict[statusByte] ?? String(statusByte) //"Undefined"
@@ -171,11 +167,11 @@ public struct VaultItem: Hashable {
         }
     }
     
-    public func getBlockchainString() -> String {
-        return self.coin.displayName
-    }
+//    public func getBlockchainString() -> String {
+//        return self.coin.displayName
+//    }
     
-    //
+    // TODO: deprecate
     public func getTotalValueInFirstCurrencyString() -> String {
         var valueString = ""
         if let value = self.totalValueInFirstCurrency {
@@ -188,6 +184,7 @@ public struct VaultItem: Hashable {
         return valueString
     }
     
+    // TODO: deprecate
     public func getTotalValueInSecondCurrencyString() -> String {
         var valueString = ""
         if let value = self.totalValueInSecondCurrency,
@@ -200,6 +197,7 @@ public struct VaultItem: Hashable {
         return valueString
     }
     
+    // TODO: deprecate
     // balance info
     public func getCoinBalanceString() -> String {
         //print("in getBalanceString balance: \(self.balance ?? Double.nan)")
@@ -214,16 +212,18 @@ public struct VaultItem: Hashable {
         return balanceString
     }
     
-    public func getCoinShortBalanceString() -> String {
-        let result = " (\(self.coin.coinSymbol))"
-        return result
-    }
+//    public func getCoinShortBalanceString() -> String {
+//        let result = " (\(self.coin.coinSymbol))"
+//        return result
+//    }
     
+    // TODO: deprecate
     public func getCoinDenominationString() -> String {
         let denominationString = self.coin.displayName + " (\(self.coin.coinSymbol))"
         return denominationString
     }
     
+    // TODO: deprecate
     public func getCoinSymbol() -> String {
         return self.coin.coinSymbol
     }
@@ -241,6 +241,7 @@ public struct VaultItem: Hashable {
 //        return fiatValueString
 //    }
     
+    // TODO: deprecate
     public func getCoinValueInSecondCurrencyString() -> String {
         if let balance = coinValueInSecondCurrency,
            let selectedSecondCurrency = selectedSecondCurrency {
@@ -249,7 +250,7 @@ public struct VaultItem: Hashable {
             return ""
         }
     }
-    // TODO: remove 
+    // TODO: deprecate
     public func getNftImageUrlString(link: String) -> String {
         var nftImageUrlString = link
         // check if IPFS? => use ipfs.io gateway
@@ -270,7 +271,7 @@ public struct VaultItem: Hashable {
     }
     
     
-    //TODO: move to helpers?
+    //TODO: deprecate
     public func getTokenBalanceDouble(tokenData: [String:String]) -> Double? {
         
         if let balanceString = tokenData["balance"] {
@@ -288,6 +289,7 @@ public struct VaultItem: Hashable {
         }
     }
     
+    //TODO: deprecate
     // token balance info
     public func getTokenBalanceString(tokenData: [String:String]) -> String {
         
@@ -300,7 +302,8 @@ public struct VaultItem: Hashable {
             return "?" + " " + denomination
         }
     }
-
+    
+    //TODO: deprecate
     public func getTokenDenominationString(tokenData: [String:String]) -> String {
         //let denominationString = (tokenData["name"] ?? "?") + " " + "(\(tokenData["symbol"] ?? "?"))"
         var denominationString = ""
@@ -313,19 +316,7 @@ public struct VaultItem: Hashable {
         return denominationString
     }
     
-//    public func getTokenFiatValueString(tokenData: [String:String]) -> String {
-//        let fiatValueString: String
-//        if let balance = self.getTokenBalanceDouble(tokenData: tokenData),
-//           let exchangeRate = Double(tokenData["tokenExchangeRate"] ?? ""),
-//           let otherCoinSymbol = tokenData["currencyExchangeRate"] {
-//            let fiatValue = balance * exchangeRate
-//            fiatValueString = "(~" + String(fiatValue) + " " + otherCoinSymbol + ")"
-//            return fiatValueString
-//        } else {
-//            return ""
-//        }
-//    }
-    
+    //TODO: deprecate
     public func getTokenValueInSecondCurrencyString(tokenData: [String:String]) -> String {
         if let tokenValueInSecondCurrency = tokenData["tokenValueInSecondCurrency"],
            let secondCurrency = tokenData["secondCurrency"]{
@@ -335,7 +326,7 @@ public struct VaultItem: Hashable {
         }
     }
     
-    // private info
+    // MARK: Private key Helpers
     public func getPrivateKeyString() -> String {
         if let key = self.privkey {
             return self.coin.keyBytesToString(keyBytes: key)

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import SatochipSwift
 
+// TODO: remove
 enum AuthenticationState {
     case isAuthentic
     case notAuthentic

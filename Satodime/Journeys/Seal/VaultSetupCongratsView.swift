@@ -74,7 +74,6 @@ struct VaultSetupCongratsView: View {
                 Spacer()
                 
                 SatoButton(staticWidth: 222, text: continueButtonTitle, style: .confirm) {
-                    //viewStackHandler.refreshVaults = .refresh
                     self.viewStackHandler.navigationState = .goBackHome
                 }
                 

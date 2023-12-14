@@ -13,7 +13,7 @@ enum isCardAuthentic {
     case notAuthentic
     case unknown
 }
-
+// TODO: deprecate
 class CardVaults {
     var isOwner: Bool
     // let isCardAuthentic: Bool

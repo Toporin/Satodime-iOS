@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// TODO: deprecate
 final class AddFundsViewModel: BaseViewModel {
     // MARK: - Properties
     @Published var pubAddressToDisplay: String = ""

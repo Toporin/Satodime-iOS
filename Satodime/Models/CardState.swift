@@ -90,7 +90,7 @@ class CardState: ObservableObject {
     // used with the different methods to perform actions on the card
     var cardController: SatocardController?
     //var actionParams: ActionParams = ActionParams(index:0, action: "read")
-    var actionParams: ActionParameters = ActionParameters(index:0, action: .scanCard) // TODO: deprecate?
+    //var actionParams: ActionParameters = ActionParameters(index:0, action: .scanCard) // TODO: deprecate?
     
     
     // settings
@@ -133,17 +133,17 @@ class CardState: ObservableObject {
         session?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
     }
     
-    // onCompletion allows to execute statements after action has been performed
-    // TODO: return success or failure? or onSuccess/onFailure?
-    // TODO: deprecate
-    func scanForAction(actionParams: ActionParameters, onCompletion: @escaping () -> Void = { return }){
-        print("NfcReader scanForAction() \(actionParams.action)")
-        print("ActionParams: \(actionParams)")
-        self.actionParams = actionParams
-        sessionForAction = SatocardController(onConnect: onConnectionForAction, onFailure: onDisconnection)
-        sessionForAction?.start(alertMessage: String(localized: "Hold your Satodime near iPhone to perform action: \(actionParams.action.rawValue)"))
-        onCompletion()
-    }
+//    // onCompletion allows to execute statements after action has been performed
+//    // TODO: return success or failure? or onSuccess/onFailure?
+//    // TODO: deprecate
+//    func scanForAction(actionParams: ActionParameters, onCompletion: @escaping () -> Void = { return }){
+//        print("NfcReader scanForAction() \(actionParams.action)")
+//        print("ActionParams: \(actionParams)")
+//        self.actionParams = actionParams
+//        sessionForAction = SatocardController(onConnect: onConnectionForAction, onFailure: onDisconnection)
+//        sessionForAction?.start(alertMessage: String(localized: "Hold your Satodime near iPhone to perform action: \(actionParams.action.rawValue)"))
+//        onCompletion()
+//    }
     
     //Card connection
     func onConnection(cardChannel: CardChannel) -> Void {
@@ -271,192 +271,192 @@ class CardState: ObservableObject {
     } // end onConnection
     
     
-    // TODO: deprecate? (using distinct function for each action?)
-    func onConnectionForAction(cardChannel: CardChannel) -> Void {
-        print("START - Satodime onConnectionForAction \(actionParams.action)")
-        let cmdSet = SatocardCommandSet(cardChannel: cardChannel)
-        let parser = SatocardParser()
-        
-        do {
-            print("START SELECT")
-            try cmdSet.select().checkOK()
-            print("START GETSTATUS")
-            let statusApdu = try cmdSet.cardGetStatus()
-            print("Status: \(cmdSet.cardStatus)")
-            if actionParams.action == .takeOwnership {
-                // check if setupDone
-                if cmdSet.cardStatus?.setupDone == false {
-                    // perform setup
-                    do {
-                        //_ = try cmdSet.cardSetup(pin_tries0: 5, pin0: pin0).checkOK()
-                        _ = try cmdSet.satodimeCardSetup().checkOK()
-                        let (_, authentikey, authentikeyHex) = try cmdSet.cardGetAuthentikey()
-                        print("Authentikey: \(authentikey)")
-                        print("AuthentikeyHex: \(authentikeyHex)")
-                        // save in defaults
-                        unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
-                        defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
-                        isOwner = true
-                        ownershipStatus = .owner
-                        sessionForAction?.stop(alertMessage: String(localized: "Card ownership accepted successfully!"))
-                        return
-                    } catch {
-                        print("Error during card setup: \(error)")
-                        sessionForAction?.stop(errorMessage: String(localized: "Failed to accept card ownership with error: \(error.localizedDescription)"))
-                        return
-                    }
-                } else {
-                    print("Card transer already done!")
-                    sessionForAction?.stop(alertMessage: String(localized: "Card transfer already done!"))
-                    return
-                }
-            } // if accept
-            
-            let (_, authentikey, authentikeyHex) = try cmdSet.cardGetAuthentikey()
-            print("AuthentikeyHex: \(authentikeyHex)")
-            // check authentikey did not change between sessions (i.e. it's the same card)
-            if self.authentikeyHex != authentikeyHex {
-                print("Card mismatch! \nIs this the correct card?")
-                sessionForAction?.stop(errorMessage: String(localized: "Card mismatch! \nIs this the correct card?"))
-                return
-            }
-            _ = try cmdSet.satodimeGetStatus().checkOK()
-            print("satodimeStatus: \(cmdSet.satodimeStatus)")
-            // check for ownership
-            if let unlockSecret = unlockSecretDict[authentikeyHex]{
-                cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
-                print("Found an unlockSecret for this card: \(unlockSecret)")
-            } else {
-                print("Found no unlockSecret for this card!")
-                // TODO: stop here?!
-            }
-            let nbKeys = cmdSet.satodimeStatus.maxNumKeys
-            print("nbKeys: \(nbKeys)")
-            // todo check indexReset < nbkeys
-            
-            //perform action!
-            if actionParams.action == .sealVault {
-                do {
-                    let rapdu = try cmdSet.satodimeSealKey(keyNbr: actionParams.index, entropyUser: actionParams.entropyBytes).checkOK()
-                    print("SealSlot rapdu: \(rapdu)")
-                    print("***SealSlot***")
-//                    print("tokenidBytes : \(actionParams.tokenidBytes)")
-//                    print("contractBytes : \(actionParams.contractBytes)")
-                    let rapdu2 = try cmdSet.satodimeSetKeyslotStatusPart0(
-                        keyNbr: actionParams.index,
-                        RFU1: 0x00, RFU2: 0x00, keyAsset: 0x00,
-                        keySlip44: actionParams.getSlip44(),
-                        keyContract: [UInt8](),
-                        keyTokenid: [UInt8]()).checkOK()
-                    print("setKeyslotStatus rapdu: \(rapdu)")
-                    // partially update status
-                    let pubkey = try parser.parseSatodimeGetPubkey(rapdu: rapdu)
-                    // todo: get Coin()
-                    DispatchQueue.main.async {
-                        self.vaultArray[Int(self.actionParams.index)].pubkey = pubkey
-                        //self.vaultArray[Int(self.actionParams.index)].keyslotStatus.asset = self.actionParams.getAssetByte()
-                        self.vaultArray[Int(self.actionParams.index)].keyslotStatus.status = 0x01
-                        self.needsRefresh = true
-                    }
-                    sessionForAction?.stop(alertMessage: String(localized: "Vault sealed successfully!"))
-                    return
-                } catch {
-                    print("SealSlot error: \(error)")
-                    sessionForAction?.stop(errorMessage: String(localized: "Failed to seal vault with error: \(error.localizedDescription)"))
-                    return
-                }
-            }
-            else if actionParams.action == .unsealVault {
-                do {
-                    let rapdu = try cmdSet.satodimeUnsealKey(keyNbr: actionParams.index).checkOK()
-                    print("UnsealSlot rapdu: \(rapdu)")
-                    // update status
-                    DispatchQueue.main.async {
-                        self.vaultArray[Int(self.actionParams.index)].keyslotStatus.status = 0x02
-                    }
-                    sessionForAction?.stop(alertMessage: String(localized: "Vault unsealed successfully!"))
-                    return
-                } catch {
-                    print("UnsealSlot error: \(error)")
-                    sessionForAction?.stop(errorMessage: String(localized: "Failed to unseal vault with error: \(error.localizedDescription)"))
-                    return
-                }
-            }
-            else if actionParams.action == .resetVault {
-                do {
-                    let rapdu = try cmdSet.satodimeResetKey(keyNbr: actionParams.index).checkOK()
-                    print("ResetSlot rapdu: \(rapdu)")
-                    // update corresponding vaultItem
-                    let satodimeKeyslotStatus = try SatodimeKeyslotStatus(rapdu: cmdSet.satodimeGetKeyslotStatus(keyNbr: actionParams.index).checkOK())
-                    print("keyslotStatus after reset: \(satodimeKeyslotStatus)")
-                    // todo: hardcode (unitialized) rapdu?
-                    let pubkey = [UInt8]()
-                    var vaultItem = VaultItem(index: actionParams.index, keyslotStatus: satodimeKeyslotStatus)
-                    vaultItem.pubkey = [UInt8]()
-                    //vaultItem.address = try vaultItem.coin.pubToAddress(pubkey: pubkey) => bug?? pubkey is []
-                    //print("address: \(vaultItem.address)")
-                    DispatchQueue.main.async {
-                        self.vaultArray[Int(self.actionParams.index)] = vaultItem
-                    }
-                    sessionForAction?.stop(alertMessage: String(localized: "Vault reset successfully!"))
-                    return
-                } catch {
-                    print("ResetSlot error: \(error)")
-                    sessionForAction?.stop(errorMessage: String(localized: "Failed to reset vault slot with error: \(error.localizedDescription)"))
-                    return
-                }
-            }
-            else if actionParams.action == .getPrivateInfo {
-                do {
-                    let rapdu = try cmdSet.satodimeGetPrivkey(keyNbr: actionParams.index).checkOK()
-                    let privkeyInfo = try parser.parseSatodimeGetPrivkey(rapdu: rapdu)
-                    // update status
-                    DispatchQueue.main.async {
-                        self.vaultArray[Int(self.actionParams.index)].privkey = privkeyInfo.privkey
-                        self.vaultArray[Int(self.actionParams.index)].entropy = privkeyInfo.entropy
-                        // todo: remove
-                        print("Debug CardState privkey: \(self.vaultArray[Int(self.actionParams.index)].privkey)")
-                        print("Debug CardState entropy: \(self.vaultArray[Int(self.actionParams.index)].entropy)")
-                    }
-                    sessionForAction?.stop(alertMessage: String(localized: "Vault privkey recovered successfully!"))
-                    print("Debug CardState: Vault privkey recovered successfully!")
-                    return
-                } catch {
-                    print("GetPrivkey error: \(error)")
-                    sessionForAction?.stop(errorMessage: String(localized: "Failed to get vault private key with error: \(error.localizedDescription)"))
-                    return
-                }
-            }
-            else if actionParams.action == .releaseOwnership {
-                do {
-                    let rapdu = try cmdSet.satodimeInitiateOwnershipTransfer().checkOK()
-                    print("TransferCard rapdu: \(rapdu)")
-                    isOwner = false
-                    ownershipStatus = .unclaimed
-                    // remove pairing secret from user defaults
-                    unlockSecretDict[authentikeyHex] = nil
-                    defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
-                    sessionForAction?.stop(alertMessage: String(localized: "Ownership transfer initiated successfully!"))
-                    return
-                } catch {
-                    print("TransferCard error: \(error)")
-                    sessionForAction?.stop(errorMessage: String(localized: "Failed to transfer ownership with error: \(error.localizedDescription)"))
-                    return
-                }
-            } else {
-                // should never happen?
-                print("Unknown operation requested: \(actionParams.action)")
-                sessionForAction?.stop(alertMessage: String(localized: "Satodime disconnected"))
-                print("DEBUG SATODIME - this is the end!")
-            }
-            
-        } catch let error {
-            print("An error occurred: \(error.localizedDescription)")
-            sessionForAction?.stop(errorMessage: String(localized: "An error occured: \(error.localizedDescription)"))
-            return
-        }
-        
-    } // end onConnectionForAction
+//    // TODO: deprecate? (using distinct function for each action?)
+//    func onConnectionForAction(cardChannel: CardChannel) -> Void {
+//        print("START - Satodime onConnectionForAction \(actionParams.action)")
+//        let cmdSet = SatocardCommandSet(cardChannel: cardChannel)
+//        let parser = SatocardParser()
+//        
+//        do {
+//            print("START SELECT")
+//            try cmdSet.select().checkOK()
+//            print("START GETSTATUS")
+//            let statusApdu = try cmdSet.cardGetStatus()
+//            print("Status: \(cmdSet.cardStatus)")
+//            if actionParams.action == .takeOwnership {
+//                // check if setupDone
+//                if cmdSet.cardStatus?.setupDone == false {
+//                    // perform setup
+//                    do {
+//                        //_ = try cmdSet.cardSetup(pin_tries0: 5, pin0: pin0).checkOK()
+//                        _ = try cmdSet.satodimeCardSetup().checkOK()
+//                        let (_, authentikey, authentikeyHex) = try cmdSet.cardGetAuthentikey()
+//                        print("Authentikey: \(authentikey)")
+//                        print("AuthentikeyHex: \(authentikeyHex)")
+//                        // save in defaults
+//                        unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
+//                        defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
+//                        isOwner = true
+//                        ownershipStatus = .owner
+//                        sessionForAction?.stop(alertMessage: String(localized: "Card ownership accepted successfully!"))
+//                        return
+//                    } catch {
+//                        print("Error during card setup: \(error)")
+//                        sessionForAction?.stop(errorMessage: String(localized: "Failed to accept card ownership with error: \(error.localizedDescription)"))
+//                        return
+//                    }
+//                } else {
+//                    print("Card transer already done!")
+//                    sessionForAction?.stop(alertMessage: String(localized: "Card transfer already done!"))
+//                    return
+//                }
+//            } // if accept
+//            
+//            let (_, authentikey, authentikeyHex) = try cmdSet.cardGetAuthentikey()
+//            print("AuthentikeyHex: \(authentikeyHex)")
+//            // check authentikey did not change between sessions (i.e. it's the same card)
+//            if self.authentikeyHex != authentikeyHex {
+//                print("Card mismatch! \nIs this the correct card?")
+//                sessionForAction?.stop(errorMessage: String(localized: "Card mismatch! \nIs this the correct card?"))
+//                return
+//            }
+//            _ = try cmdSet.satodimeGetStatus().checkOK()
+//            print("satodimeStatus: \(cmdSet.satodimeStatus)")
+//            // check for ownership
+//            if let unlockSecret = unlockSecretDict[authentikeyHex]{
+//                cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
+//                print("Found an unlockSecret for this card: \(unlockSecret)")
+//            } else {
+//                print("Found no unlockSecret for this card!")
+//                // TODO: stop here?!
+//            }
+//            let nbKeys = cmdSet.satodimeStatus.maxNumKeys
+//            print("nbKeys: \(nbKeys)")
+//            // todo check indexReset < nbkeys
+//            
+//            //perform action!
+//            if actionParams.action == .sealVault {
+//                do {
+//                    let rapdu = try cmdSet.satodimeSealKey(keyNbr: actionParams.index, entropyUser: actionParams.entropyBytes).checkOK()
+//                    print("SealSlot rapdu: \(rapdu)")
+//                    print("***SealSlot***")
+////                    print("tokenidBytes : \(actionParams.tokenidBytes)")
+////                    print("contractBytes : \(actionParams.contractBytes)")
+//                    let rapdu2 = try cmdSet.satodimeSetKeyslotStatusPart0(
+//                        keyNbr: actionParams.index,
+//                        RFU1: 0x00, RFU2: 0x00, keyAsset: 0x00,
+//                        keySlip44: actionParams.getSlip44(),
+//                        keyContract: [UInt8](),
+//                        keyTokenid: [UInt8]()).checkOK()
+//                    print("setKeyslotStatus rapdu: \(rapdu)")
+//                    // partially update status
+//                    let pubkey = try parser.parseSatodimeGetPubkey(rapdu: rapdu)
+//                    // todo: get Coin()
+//                    DispatchQueue.main.async {
+//                        self.vaultArray[Int(self.actionParams.index)].pubkey = pubkey
+//                        //self.vaultArray[Int(self.actionParams.index)].keyslotStatus.asset = self.actionParams.getAssetByte()
+//                        self.vaultArray[Int(self.actionParams.index)].keyslotStatus.status = 0x01
+//                        self.needsRefresh = true
+//                    }
+//                    sessionForAction?.stop(alertMessage: String(localized: "Vault sealed successfully!"))
+//                    return
+//                } catch {
+//                    print("SealSlot error: \(error)")
+//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to seal vault with error: \(error.localizedDescription)"))
+//                    return
+//                }
+//            }
+//            else if actionParams.action == .unsealVault {
+//                do {
+//                    let rapdu = try cmdSet.satodimeUnsealKey(keyNbr: actionParams.index).checkOK()
+//                    print("UnsealSlot rapdu: \(rapdu)")
+//                    // update status
+//                    DispatchQueue.main.async {
+//                        self.vaultArray[Int(self.actionParams.index)].keyslotStatus.status = 0x02
+//                    }
+//                    sessionForAction?.stop(alertMessage: String(localized: "Vault unsealed successfully!"))
+//                    return
+//                } catch {
+//                    print("UnsealSlot error: \(error)")
+//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to unseal vault with error: \(error.localizedDescription)"))
+//                    return
+//                }
+//            }
+//            else if actionParams.action == .resetVault {
+//                do {
+//                    let rapdu = try cmdSet.satodimeResetKey(keyNbr: actionParams.index).checkOK()
+//                    print("ResetSlot rapdu: \(rapdu)")
+//                    // update corresponding vaultItem
+//                    let satodimeKeyslotStatus = try SatodimeKeyslotStatus(rapdu: cmdSet.satodimeGetKeyslotStatus(keyNbr: actionParams.index).checkOK())
+//                    print("keyslotStatus after reset: \(satodimeKeyslotStatus)")
+//                    // todo: hardcode (unitialized) rapdu?
+//                    let pubkey = [UInt8]()
+//                    var vaultItem = VaultItem(index: actionParams.index, keyslotStatus: satodimeKeyslotStatus)
+//                    vaultItem.pubkey = [UInt8]()
+//                    //vaultItem.address = try vaultItem.coin.pubToAddress(pubkey: pubkey) => bug?? pubkey is []
+//                    //print("address: \(vaultItem.address)")
+//                    DispatchQueue.main.async {
+//                        self.vaultArray[Int(self.actionParams.index)] = vaultItem
+//                    }
+//                    sessionForAction?.stop(alertMessage: String(localized: "Vault reset successfully!"))
+//                    return
+//                } catch {
+//                    print("ResetSlot error: \(error)")
+//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to reset vault slot with error: \(error.localizedDescription)"))
+//                    return
+//                }
+//            }
+//            else if actionParams.action == .getPrivateInfo {
+//                do {
+//                    let rapdu = try cmdSet.satodimeGetPrivkey(keyNbr: actionParams.index).checkOK()
+//                    let privkeyInfo = try parser.parseSatodimeGetPrivkey(rapdu: rapdu)
+//                    // update status
+//                    DispatchQueue.main.async {
+//                        self.vaultArray[Int(self.actionParams.index)].privkey = privkeyInfo.privkey
+//                        self.vaultArray[Int(self.actionParams.index)].entropy = privkeyInfo.entropy
+//                        // todo: remove
+//                        print("Debug CardState privkey: \(self.vaultArray[Int(self.actionParams.index)].privkey)")
+//                        print("Debug CardState entropy: \(self.vaultArray[Int(self.actionParams.index)].entropy)")
+//                    }
+//                    sessionForAction?.stop(alertMessage: String(localized: "Vault privkey recovered successfully!"))
+//                    print("Debug CardState: Vault privkey recovered successfully!")
+//                    return
+//                } catch {
+//                    print("GetPrivkey error: \(error)")
+//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to get vault private key with error: \(error.localizedDescription)"))
+//                    return
+//                }
+//            }
+//            else if actionParams.action == .releaseOwnership {
+//                do {
+//                    let rapdu = try cmdSet.satodimeInitiateOwnershipTransfer().checkOK()
+//                    print("TransferCard rapdu: \(rapdu)")
+//                    isOwner = false
+//                    ownershipStatus = .unclaimed
+//                    // remove pairing secret from user defaults
+//                    unlockSecretDict[authentikeyHex] = nil
+//                    defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
+//                    sessionForAction?.stop(alertMessage: String(localized: "Ownership transfer initiated successfully!"))
+//                    return
+//                } catch {
+//                    print("TransferCard error: \(error)")
+//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to transfer ownership with error: \(error.localizedDescription)"))
+//                    return
+//                }
+//            } else {
+//                // should never happen?
+//                print("Unknown operation requested: \(actionParams.action)")
+//                sessionForAction?.stop(alertMessage: String(localized: "Satodime disconnected"))
+//                print("DEBUG SATODIME - this is the end!")
+//            }
+//            
+//        } catch let error {
+//            print("An error occurred: \(error.localizedDescription)")
+//            sessionForAction?.stop(errorMessage: String(localized: "An error occured: \(error.localizedDescription)"))
+//            return
+//        }
+//        
+//    } // end onConnectionForAction
     
     ///
     ///
@@ -846,19 +846,19 @@ class CardState: ObservableObject {
         log.debug("Using address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
         
         //for debug purpose
-        if coinInfo.coin.coinSymbol == "XCP" {
-            address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
-            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
-        } else if coinInfo.coin.coinSymbol == "ETH" {
-            //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
-            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
-            //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
-            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
-            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
-        } else if coinInfo.coin.coinSymbol == "BNB" {
-            address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
-            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
-        }
+//        if coinInfo.coin.coinSymbol == "XCP" {
+//            address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
+//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
+//        } else if coinInfo.coin.coinSymbol == "ETH" {
+//            //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
+//            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
+//            //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
+//            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
+//        } else if coinInfo.coin.coinSymbol == "BNB" {
+//            address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
+//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
+//        }
         
         // fetch balance
         log.debug("Start fetching balance", tag: "CardState.fetchDataFromWeb")

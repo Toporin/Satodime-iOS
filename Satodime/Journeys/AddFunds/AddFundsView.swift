@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// TODO: deprecate
 struct AddFundsView: View {
     // MARK: - Properties
     @Environment(\.presentationMode) var presentation
@@ -132,9 +133,9 @@ struct AddFundsView: View {
                 SatoText(text: viewModel.viewTitle, style: .lightTitle)
             }
         }
-        .onAppear {
-            viewModel.viewStackHandler = viewStackHandler
-        }
+//        .onAppear {
+//            viewModel.viewStackHandler = viewStackHandler
+//        }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
             self.viewModel.navigateTo(destination: .goBackHome)

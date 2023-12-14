@@ -21,7 +21,6 @@ struct CardAuthenticity {
     let certificateDic: [String: String]
     
     func isAuthentic() -> Bool {
-        ConsoleLogger().info("isAuthentic | certificateCode: \(certificateCode.rawValue)")
         return certificateCode == .success
     }
 }

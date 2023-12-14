@@ -27,7 +27,3 @@ public struct Log: Codable, Hashable {
         return txt
     }
 }
-
-//public struct Logs: Codable {
-//    var logs: [Log]
-//}

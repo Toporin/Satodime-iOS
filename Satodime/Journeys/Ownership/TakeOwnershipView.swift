@@ -10,17 +10,10 @@ import SwiftUI
 
 struct TakeOwnershipView: View {
     // MARK: - Properties
-    //@EnvironmentObject var viewStackHandler: ViewStackHandler
-    //@ObservedObject var viewModel: TakeOwnershipViewModel
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     
-    let logger = ConsoleLogger()
-    //let cardService: PCardService
-    //var cardVaults: CardVaults
-    var destinationOnClose: NavigationState?
-    
-    // MARK: - Literals
+    // MARK: - Litterals
     let title = "takeTheOwnershipTitle"
     let subtitle = "takeTheOwnershipDescription"
     

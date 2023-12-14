@@ -55,26 +55,26 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
     }
     
     // TODO: remove
-    var iconColored: String {
-        switch self {
-        case .bitcoin:
-            return "ic_coin_btc"
-        case .ethereum:
-            return "ic_coin_eth"
-        case .litecoin:
-            return "ic_coin_ltc"
-        case .bitcoinCash:
-            return "ic_coin_bch"
-        // case .binance: // For later use
-        //     return "ic_bnb"
-        case .counterParty:
-            return "ic_coin_xcp"
-        case .empty:
-            return "ic_coin_empty" //TODO: create icon
-        case .unknown:
-            return "ic_coin_unknown" //TODO: icon
-        }
-    }
+//    var iconColored: String {
+//        switch self {
+//        case .bitcoin:
+//            return "ic_coin_btc"
+//        case .ethereum:
+//            return "ic_coin_eth"
+//        case .litecoin:
+//            return "ic_coin_ltc"
+//        case .bitcoinCash:
+//            return "ic_coin_bch"
+//        // case .binance: // For later use
+//        //     return "ic_bnb"
+//        case .counterParty:
+//            return "ic_coin_xcp"
+//        case .empty:
+//            return "ic_coin_empty" //TODO: create icon
+//        case .unknown:
+//            return "ic_coin_unknown" //TODO: icon
+//        }
+//    }
     
     var name: String {
         switch self {
@@ -140,26 +140,26 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
     }
     
     // TODO: remove? or merge cryptoCurrency with coinType!
-    var coinType: CoinType {
-        switch self {
-        case .bitcoin:
-            return .btc
-        case .ethereum:
-            return .eth
-        case .litecoin:
-            return .ltc
-        case .bitcoinCash:
-            return .bch
-        // case .binance: // For later use
-        //     Color(hex: 0xF3BA2F)
-        case .counterParty:
-            return .xcp
-        case .empty:
-            return .xcp //TODO
-        case .unknown:
-            return .xcp //TODO
-        }
-    }
+//    var coinType: CoinType {
+//        switch self {
+//        case .bitcoin:
+//            return .btc
+//        case .ethereum:
+//            return .eth
+//        case .litecoin:
+//            return .ltc
+//        case .bitcoinCash:
+//            return .bch
+//        // case .binance: // For later use
+//        //     Color(hex: 0xF3BA2F)
+//        case .counterParty:
+//            return .xcp
+//        case .empty:
+//            return .xcp //TODO
+//        case .unknown:
+//            return .xcp //TODO
+//        }
+//    }
     
     var slip44: UInt32 {
         switch self {

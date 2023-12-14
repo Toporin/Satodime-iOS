@@ -7,6 +7,7 @@
 
 import Foundation
 
+// TODO: deprecate
 class ConsoleLogger {
     func log(_ message: String) {
         #if DEBUG

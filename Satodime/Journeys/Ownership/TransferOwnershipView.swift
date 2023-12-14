@@ -13,10 +13,6 @@ struct TransferOwnershipView: View {
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     
-    // MARK: - Properties
-    //let logger = ConsoleLogger()
-    //let cardService: PCardService
-    
     // MARK: - Literals
     let title = "transferOwner"
     let subtitle = "transferOwnershipDescription"

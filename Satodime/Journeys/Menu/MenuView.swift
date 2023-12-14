@@ -24,7 +24,6 @@ struct MenuView: View {
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
-    //@State var cardVaults: CardVaults?
     @State var shouldShowCardInfo: Bool = false
     @State var shouldShowTransferOwnership: Bool = false
     @State var shouldShowSettings: Bool = false
@@ -32,17 +31,7 @@ struct MenuView: View {
     @State var showTakeOwnershipAlert: Bool = false
     @State var showCardNeedsToBeScannedAlert: Bool = false
     
-    //@EnvironmentObject var viewStackHandler: ViewStackHandler
-    //@ObservedObject var viewModel: MenuViewModel
-    
-    func openURL(_ satochipURL: SatochipURL) {
-        guard let url = satochipURL.url else {
-            print("Invalid URL")
-            return
-        }
-        UIApplication.shared.open(url)
-    }
-    
+    // MARK: - Litterals
     let notOwnerAlert = SatoAlert(
         title: "ownership",
         message: "ownershipText",
@@ -68,6 +57,15 @@ struct MenuView: View {
             UIApplication.shared.open(url)
         }
     )
+    
+    // MARK: - Helpers
+    func openURL(_ satochipURL: SatochipURL) {
+        guard let url = satochipURL.url else {
+            print("Invalid URL")
+            return
+        }
+        UIApplication.shared.open(url)
+    }
     
     // MARK: - View
     var body: some View {
@@ -214,41 +212,21 @@ struct MenuView: View {
                 Spacer()
                     .frame(height: 29)
                 
-                //if let cardVaults = viewModel.cardVaults {
-                //if cardState.hasReadCard() { // TODO: needed?
-                    //Text("HASREADCARD")
-//                    if shouldShowCardInfo {
-//                        self.viewStackHandler.navigationState = .cardInfo
-//                    }
-//                    else if shouldShowTransferOwnership {
-//                        self.viewStackHandler.navigationState = .transferOwnership
-//                    }
                 NavigationLink(destination: CardInfoView(), isActive: $shouldShowCardInfo) {
                     EmptyView()
                 }
-//                    NavigationLink(
-//                        destination: TransferOwnershipView(viewModel: TransferOwnershipViewModel(cardService: CardService())),
-//                        isActive: $viewModel.shouldShowTransferOwnership
-//                    ) {
-//                        EmptyView()
-//                    }
-                //}
                 
                 NavigationLink(
                     destination: TransferOwnershipView(), isActive: $shouldShowTransferOwnership) {
                     EmptyView()
                 }
                 
-                
-//                if shouldShowSettings {
-//                    self.viewStackHandler.navigationState = .settings
-//                }
-                
                 NavigationLink(destination: SettingsView(), isActive: $shouldShowSettings) {
                     EmptyView()
                 }
             } // VStack
         } // ZStack
+        // MARK: Overlays
         .overlay(
             Group {
                 if showNotOwnerAlert {

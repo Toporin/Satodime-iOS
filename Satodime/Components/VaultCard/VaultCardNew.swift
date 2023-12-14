@@ -20,19 +20,6 @@ struct VaultCardNew: View {
     let action: () -> Void
     var useFullWidth: Bool = false
     
-    let notOwnerAlert = SatoAlert(
-        title: "ownership",
-        message: "ownershipText",
-        buttonTitle: String(localized:"moreInfo"),
-        buttonAction: {
-            guard let url = URL(string: "https://satochip.io/satodime-ownership-explained/") else {
-                print("Invalid URL")
-                return
-            }
-            UIApplication.shared.open(url)
-        }
-    )
-    
     // MARK: Body
     var body: some View {
         if index >= cardState.vaultArray.count {
@@ -40,18 +27,8 @@ struct VaultCardNew: View {
         } else if cardState.vaultArray[Int(index)].keyslotStatus.status == 0x00 {
             VaultCardEmpty(
                 id: Int(index),
-                action: { action()
-//                    if self.cardState.ownershipStatus == .owner {
-//                        DispatchQueue.main.async {
-//                            self.viewStackHandler.navigationState = .vaultInitialization
-//                        }
-//                    } else {
-//                        // not owner alert message
-//                        self.showNotOwnerAlert = true
-//                        print("warning: ownership transfer fail: not owner!")
-//                    }
-                }
-            ) //TODO: action
+                action: {action()}
+            )
         } else {
             ZStack {
                 Image(backgroundImageName())

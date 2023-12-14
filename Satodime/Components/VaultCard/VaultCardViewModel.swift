@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 
+// TODO: deprecate
 class EmptyVaultViewModel: Hashable {
     var vaultItem: VaultItem
     
