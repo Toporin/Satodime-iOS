@@ -11,8 +11,6 @@ import SwiftUI
 struct ShowPrivateKeyView: View {
     // MARK: - Properties
     @Environment(\.presentationMode) var presentation
-//    @EnvironmentObject var viewStackHandler: ViewStackHandler
-//    @ObservedObject var viewModel: ShowPrivateKeyViewModel
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     
@@ -22,11 +20,10 @@ struct ShowPrivateKeyView: View {
     @State var subtitleMode: String = ""
     @State var slotNumber: String = ""
     @State var coinIcon: String = ""
+    @State var isTestnet: Bool = false
     
     let index: Int
     var mode: ShowPrivateKeyMode
-//    var keyResult: PrivateKeyResult?
-//    private var vault: VaultItem
 
     // MARK: - Literals
     let title = "showPrivateKey"
@@ -44,13 +41,11 @@ struct ShowPrivateKeyView: View {
     }
     
     func determineKeyToDisplay() {
-//        guard let keyResult = self.keyResult else { return }
-//        self.vault.privkey = keyResult.privkey
-//        self.vault.entropy = keyResult.entropy
         
         guard cardState.vaultArray.count > self.index else { return }
         
         self.coinIcon = cardState.vaultArray[index].iconPath
+        self.isTestnet = cardState.vaultArray[index].coin.isTestnet
         
         switch mode {
         case .legacy:
@@ -101,11 +96,16 @@ struct ShowPrivateKeyView: View {
                         HStack {
                             SealStatusView(status: .unsealed)
                             Spacer()
-                            Image(coinIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 26, height: 26)
-                                .foregroundColor(.white)
+                            VStack{
+                                Image(coinIcon)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 26, height: 26)
+                                    .foregroundColor(.white)
+                                if self.isTestnet {
+                                    SatoText(text: "TESTNET", style: .addressText)
+                                }
+                            }
                         }
                         
                         Spacer()
@@ -114,12 +114,12 @@ struct ShowPrivateKeyView: View {
                 }
                 
                 Spacer()
-            }
+            }//VStack
             
             ZStack {
                 VStack {
                     Spacer()
-                        .frame(height: 148)
+                        .frame(height: 158)// 148
                     
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .foregroundColor(Constants.Colors.bottomSheetBackground)
@@ -132,7 +132,7 @@ struct ShowPrivateKeyView: View {
                 
                 VStack(alignment: .center) {
                     Spacer()
-                        .frame(height: 168)
+                        .frame(height: 178)// 168
                     
                     SatoText(text: titleMode, style: .title)
                     Spacer()
@@ -167,7 +167,8 @@ struct ShowPrivateKeyView: View {
                     
                     Spacer()
                         .frame(height: 16)
-
+                    
+                    // QR code
                     if let cgImage = QRCodeHelper().getQRfromText(text: keyToDisplay) {
                         Image(uiImage: UIImage(cgImage: cgImage))
                             .resizable()
