@@ -34,11 +34,6 @@ struct TakeOwnershipView: View {
                 SatoText(text: subtitle, style: .subtitle)
                 Spacer()
                 SatoButton(staticWidth: 196, text: String(localized: "accept"), style: .confirm, horizontalPadding: 60) {
-                    //viewModel.acceptCard()
-//                    let actionParams = ActionParameters(index: 0xFF, action: .takeOwnership)
-//                    cardState.scanForAction(actionParams: actionParams)
-//                    // TODO: return to home??
-                    
                     cardState.takeOwnership(
                         cardAuthentikeyHex: cardState.authentikeyHex,
                         onSuccess: {
@@ -51,12 +46,10 @@ struct TakeOwnershipView: View {
                             // TODO: show alert error
                         }
                     )
-                    
                 }
                 Spacer()
                     .frame(height: 20)
                 SatoButton(staticWidth: 222, text: String(localized: "cancel"), style: .inform, horizontalPadding: 30) {
-                    //viewModel.cancel()
                     self.viewStackHandler.navigationState = .goBackHome
                 }
                 Spacer()
@@ -67,11 +60,6 @@ struct TakeOwnershipView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-//            if let destinationOnClose = viewModel.destinationOnClose {
-//                self.viewModel.navigateTo(destination: destinationOnClose)
-//            } else {
-//                self.viewModel.navigateTo(destination: .goBackHome)
-//            }
             self.viewStackHandler.navigationState = .goBackHome
         }) {
             Image("ic_flipback")
@@ -81,8 +69,5 @@ struct TakeOwnershipView: View {
                 SatoText(text: title, style: .lightTitle)
             }
         }
-//        .onAppear {
-//            viewModel.viewStackHandler = viewStackHandler
-//        }
     }
 }

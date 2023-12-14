@@ -382,63 +382,63 @@ class CardService: PCardService {
                    tokenidBytes: [UInt8] = [UInt8](),
                    entropyBytes: [UInt8] = [UInt8](repeating: 0, count: 32), completion: @escaping (CardActionState) -> Void) {
         
-        cardController = SatocardController(alertMessages: self.defaultAlertMessages) { [weak self] cardChannel in
-            guard let self = self else {
-                return
-            }
-            do {
-                let cmdSet = SatocardCommandSet(cardChannel: cardChannel)
-                let parser = SatocardParser()
-                
-                //<==
-                print("START SELECT")
-                try cmdSet.select().checkOK()
-                print("START GETSTATUS")
-                _ = try cmdSet.cardGetStatus()
-                
-                _ = try cmdSet.satodimeGetStatus().checkOK()
-                print("satodimeStatus: \(cmdSet.satodimeStatus)")
-                // check for ownership
-                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
-                    cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
-                    print("Found an unlockSecret for this card: \(unlockSecret)")
-                } else {
-                    print("Found no unlockSecret for this card!")
-                }
-                let nbKeys = cmdSet.satodimeStatus.maxNumKeys
-                print("nbKeys: \(nbKeys)")
-                // ==>
-                
-                let actionParams = ActionParams(index: UInt8(vaultIndex), action: "seal", coinString: crypto.shortIdentifier, assetString: "Coin", useTestnet: useTestNet, contractBytes: contractBytes, tokenidBytes: tokenidBytes, entropyBytes: entropyBytes)
-                
-                let rapdu = try cmdSet.satodimeSealKey(keyNbr: actionParams.index, entropyUser: actionParams.entropyBytes).checkOK()
-                print("SealSlot rapdu: \(rapdu)")
-                let rapdu2 = try cmdSet.satodimeSetKeyslotStatusPart0(keyNbr: actionParams.index, RFU1: 0x00, RFU2: 0x00, keyAsset: actionParams.getAssetByte(), keySlip44: actionParams.getSlip44(), keyContract: actionParams.contractBytes, keyTokenid: actionParams.tokenidBytes).checkOK()
-                print("setKeyslotStatus rapdu: \(rapdu)")
-                // partially update status
-                let pubkey = try parser.parseSatodimeGetPubkey(rapdu: rapdu)
-                let satodimeKeyslotStatus = try SatodimeKeyslotStatus(rapdu: cmdSet.satodimeGetKeyslotStatus(keyNbr: UInt8(vaultIndex)).checkOK())
-                var newVaultItem = VaultItem(index: UInt8(vaultIndex), keyslotStatus: satodimeKeyslotStatus)
-                
-                newVaultItem.pubkey = pubkey
-                newVaultItem.address = try newVaultItem.coin.pubToAddress(pubkey: pubkey)
-                newVaultItem.keyslotStatus.status = 0x01
-                newVaultItem.keyslotStatus.asset = actionParams.getAssetByte()
-
-                let result = SealResult(vaultIndex: vaultIndex, vaultItem: newVaultItem)
-                completion(.sealed(result: result))
-                cardController?.stop(alertMessage: String(localized: "nfcVaultSealedSuccess"))
-                return
-            } catch {
-                print("SealSlot error: \(error.localizedDescription)")
-                cardController?.stop(errorMessage: "\(String(localized: "nfcVaultSealedFailed")) \(error.localizedDescription)")
-                return
-            }
-        } onFailure: { error in
-            completion(.silentError(error: error.localizedDescription))
-        }
-        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
+//        cardController = SatocardController(alertMessages: self.defaultAlertMessages) { [weak self] cardChannel in
+//            guard let self = self else {
+//                return
+//            }
+//            do {
+//                let cmdSet = SatocardCommandSet(cardChannel: cardChannel)
+//                let parser = SatocardParser()
+//                
+//                //<==
+//                print("START SELECT")
+//                try cmdSet.select().checkOK()
+//                print("START GETSTATUS")
+//                _ = try cmdSet.cardGetStatus()
+//                
+//                _ = try cmdSet.satodimeGetStatus().checkOK()
+//                print("satodimeStatus: \(cmdSet.satodimeStatus)")
+//                // check for ownership
+//                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+//                if let auth = self.getAuthKey(cmdSet: cmdSet), let unlockSecret = unlockSecretDict[auth.keyHex]{
+//                    cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
+//                    print("Found an unlockSecret for this card: \(unlockSecret)")
+//                } else {
+//                    print("Found no unlockSecret for this card!")
+//                }
+//                let nbKeys = cmdSet.satodimeStatus.maxNumKeys
+//                print("nbKeys: \(nbKeys)")
+//                // ==>
+//                
+//                let actionParams = ActionParams(index: UInt8(vaultIndex), action: "seal", coinString: crypto.shortIdentifier, assetString: "Coin", useTestnet: useTestNet, contractBytes: contractBytes, tokenidBytes: tokenidBytes, entropyBytes: entropyBytes)
+//                
+//                let rapdu = try cmdSet.satodimeSealKey(keyNbr: actionParams.index, entropyUser: actionParams.entropyBytes).checkOK()
+//                print("SealSlot rapdu: \(rapdu)")
+//                let rapdu2 = try cmdSet.satodimeSetKeyslotStatusPart0(keyNbr: actionParams.index, RFU1: 0x00, RFU2: 0x00, keyAsset: actionParams.getAssetByte(), keySlip44: actionParams.getSlip44(), keyContract: actionParams.contractBytes, keyTokenid: actionParams.tokenidBytes).checkOK()
+//                print("setKeyslotStatus rapdu: \(rapdu)")
+//                // partially update status
+//                let pubkey = try parser.parseSatodimeGetPubkey(rapdu: rapdu)
+//                let satodimeKeyslotStatus = try SatodimeKeyslotStatus(rapdu: cmdSet.satodimeGetKeyslotStatus(keyNbr: UInt8(vaultIndex)).checkOK())
+//                var newVaultItem = VaultItem(index: UInt8(vaultIndex), keyslotStatus: satodimeKeyslotStatus)
+//                
+//                newVaultItem.pubkey = pubkey
+//                newVaultItem.address = try newVaultItem.coin.pubToAddress(pubkey: pubkey)
+//                newVaultItem.keyslotStatus.status = 0x01
+//                newVaultItem.keyslotStatus.asset = actionParams.getAssetByte()
+//
+//                let result = SealResult(vaultIndex: vaultIndex, vaultItem: newVaultItem)
+//                completion(.sealed(result: result))
+//                cardController?.stop(alertMessage: String(localized: "nfcVaultSealedSuccess"))
+//                return
+//            } catch {
+//                print("SealSlot error: \(error.localizedDescription)")
+//                cardController?.stop(errorMessage: "\(String(localized: "nfcVaultSealedFailed")) \(error.localizedDescription)")
+//                return
+//            }
+//        } onFailure: { error in
+//            completion(.silentError(error: error.localizedDescription))
+//        }
+//        cardController?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
     
     func reset(vaultIndex: Int, completion: @escaping (CardActionState) -> Void) {

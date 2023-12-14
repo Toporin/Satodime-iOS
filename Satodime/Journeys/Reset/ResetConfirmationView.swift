@@ -10,12 +10,9 @@ import SwiftUI
 
 struct ResetConfirmationView: View {
     // MARK: - Properties
-//    @EnvironmentObject var viewStackHandler: ViewStackHandler
-//    @ObservedObject var viewModel: ResetConfirmationViewModel
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     
-    //@Published var vaultCardViewModel: VaultCardViewModel
     let index: Int
     
     // MARK: - Literals
@@ -65,7 +62,6 @@ struct ResetConfirmationView: View {
                 Spacer()
                 
                 SatoButton(staticWidth: 222, text: continueButtonTitle, style: .confirm) {
-                    //viewModel.completeFlow()
                     self.viewStackHandler.navigationState = .goBackHome
                 }
                 
@@ -75,8 +71,5 @@ struct ResetConfirmationView: View {
             }.padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
         }
         .navigationBarBackButtonHidden(true)
-//        .onAppear {
-//            viewModel.viewStackHandler = viewStackHandler
-//        }
     }
 }

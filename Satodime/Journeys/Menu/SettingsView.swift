@@ -10,20 +10,18 @@ import SwiftUI
 
 struct SettingsView: View {
     // MARK: - Properties
-    //@ObservedObject var viewModel: SettingsViewModel
-    
-    let preferencesService: PPreferencesService = PreferencesService()
     @State var selectedValue: String = ""
     @State var showingSheet = false
     @State var starterIntroIsOn: Bool = false
     @State var isShowLogs: Bool = false
+    
+    let preferencesService: PPreferencesService = PreferencesService()
     
     // MARK: - Literals
     let title = "settings"
     let currencyTitle = "currency"
     let starterIntroTitle = "starterIntro"
     let showLogsButtonTitle = String(localized: "showLogs")
-    
     
     // MARK: - View
     var body: some View {
@@ -77,21 +75,20 @@ struct SettingsView: View {
                 NavigationLink(destination: ShowLogs(), isActive: $isShowLogs) {
                     EmptyView()
                 }
-            }
+            }// VStack
             .padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
             .sheet(isPresented: $showingSheet) {
                 SelectionSheet(isPresented: $showingSheet, choices: Constants.Settings.currencies) { selected in
                     selectedValue = selected
-                    //viewModel.setCurrency(currency: selected)
                     self.preferencesService.setCurrency(selected)
                 }
             }
-        }
+        } //ZStack
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 SatoText(text: title, style: .lightTitle)
             }
         }
-    }
+    }// body
 }

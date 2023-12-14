@@ -11,19 +11,13 @@ import SatochipSwift
 
 struct CardInfoView: View {
     // MARK: - Properties
-    //@ObservedObject var viewModel: CardInfoViewModel
-    
-    // MARK: - Properties
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
-    //@PubliStateshed var cardVaults: CardVaults
-    //@State var isCertDetailsViewActive = false
     @State var shouldShowAuthenticityScreen = false
     
     // MARK: - Literals
     let title = "cardInfo"
-    
     let authentikeyTitle = "authentikeyTitle" //TODO: translate
     
     let ownerTitle = "cardOwnershipStatus"
@@ -37,7 +31,6 @@ struct CardInfoView: View {
     let cardGenuineTitle = "cardAuthenticity"
     let cardGenuineText = "thisCardIsGenuine"
     let cardNotGenuineText = "thisCardIsNotGenuine"
-    
     let certButtonTitle = "certDetails"
     
     // MARK: Helpers
@@ -127,24 +120,12 @@ struct CardInfoView: View {
                     text: cardState.certificateCode == .success ? cardGenuineText : cardNotGenuineText,
                     backgroundColor: cardState.certificateCode == .success ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed)
                 {
-                    //self.gotoAuthenticityScreen()
                     self.shouldShowAuthenticityScreen = true
                 }
                     .padding([.leading, .trailing], 57)
                 
                 Spacer()
                     .frame(height: 21)
-                
-                // SHOW CERTIFICATE // TODO: remove and only use shouldShowAuthenticityScreen
-//                CardInfoBox(text: certButtonTitle, backgroundColor: Constants.Colors.blueMenuButton) {
-//                   //self.onCertButtonTapped()
-//                    if self.cardState.hasReadCard() {self.isCertDetailsViewActive = true}
-//                    // TOOD: if not card?
-//                }
-//                    .padding([.leading, .trailing], 71)
-                
-                // TODO: remove
-//                NavigationLink(destination: ShowCertificates(certificateCode: cardState.certificateCode, certificateDic: cardState.certificateDic), isActive: $isCertDetailsViewActive){EmptyView()}
                 
                 NavigationLink(destination: AuthenticView(), isActive: $shouldShowAuthenticityScreen){EmptyView()}
                 
@@ -153,7 +134,6 @@ struct CardInfoView: View {
 
             }.padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
         }
-        //.navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading:
             Button(action: {
@@ -170,6 +150,5 @@ struct CardInfoView: View {
             }
         }
     } //body
-
 }
 

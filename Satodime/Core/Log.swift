@@ -23,7 +23,7 @@ public struct Log: Codable, Hashable {
     var tag: String
     
     func toString() -> String {
-        var txt = "[\(time)] \(level.rawValue): \(tag) \(msg) \n"
+        let txt = "[\(time)] \(level.rawValue): \(tag) \(msg) \n"
         return txt
     }
 }

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// TODO: remove
 struct VaultCard: View {
     // MARK: - Properties
     @StateObject var viewModel: VaultCardViewModel

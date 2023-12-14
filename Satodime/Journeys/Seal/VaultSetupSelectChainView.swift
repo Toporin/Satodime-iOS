@@ -10,13 +10,10 @@ import SwiftUI
 
 struct VaultSetupSelectChainView: View {
     // MARK: - Properties
-//    @ObservedObject var viewModel: VaultSetupSelectChainViewModel
-//    @EnvironmentObject var viewStackHandler: ViewStackHandler
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     
     var index: Int
-    //var vaultCards: VaultsList
     
     // MARK: - Literals
     let title = "selectTheBlockchain"
@@ -36,11 +33,9 @@ struct VaultSetupSelectChainView: View {
                 Spacer()
                     .frame(height: 21)
                 
+                // Show the list of supported crypto
                 List(CryptoCurrency.allCases, id: \.id) { crypto in
                     ZStack {
-//                        NavigationLink(destination: VaultSetupCreateView(viewModel: VaultSetupCreateViewModel(cardService: CardService(), selectedCrypto: crypto, index: viewModel.index, vaultCards: viewModel.vaultCards))) {
-//                            EmptyView()
-//                        }
                         if crypto.isShowable {
                             NavigationLink(destination: VaultSetupCreateView(index: index, selectedCrypto: crypto)) {
                                 EmptyView()
@@ -53,23 +48,20 @@ struct VaultSetupSelectChainView: View {
                 }
                 .listStyle(PlainListStyle())
                 .background(Color.clear)
-            }
-        }
+                
+            }// VStack
+        }// ZStack
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(leading: Button(action: {
-            //self.viewModel.navigateTo(destination: .goBackHome)
             self.viewStackHandler.navigationState = .goBackHome
         }) {
             Image("ic_flipback")
         })
-//        .onAppear {
-//            viewModel.viewStackHandler = viewStackHandler
-//        }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 SatoText(text: title, style: .lightTitle)
             }
         }
-    }
+    }// Body
 }

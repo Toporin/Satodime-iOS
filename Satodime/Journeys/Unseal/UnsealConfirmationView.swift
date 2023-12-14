@@ -12,8 +12,6 @@ struct UnsealConfirmationView: View {
     // MARK: - Properties
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
-    //@EnvironmentObject var viewStackHandler: ViewStackHandler
-    //@ObservedObject var viewModel: UnsealConfirmationViewModel
     
     let index: Int
     
@@ -47,7 +45,6 @@ struct UnsealConfirmationView: View {
                 Spacer()
                     .frame(height: 58)
                 
-                //VaultCard(viewModel: viewModel.vaultCardViewModel, indexPosition: index, useFullWidth: true)
                 VaultCardNew(index: UInt8(index), action: {}, useFullWidth: true)
                     .shadow(radius: 10)
                 
@@ -60,8 +57,6 @@ struct UnsealConfirmationView: View {
                 Spacer()
                 
                 SatoButton(staticWidth: 222, text: continueButtonTitle, style: .confirm, horizontalPadding: 25) {
-                    //viewStackHandler.refreshVaults = .refresh
-                    //viewModel.completeFlow()
                     self.viewStackHandler.navigationState = .privateKey
                 }
                 
@@ -77,8 +72,5 @@ struct UnsealConfirmationView: View {
         }) {
             Image("ic_flipback")
         })
-//        .onAppear {
-//            viewModel.viewStackHandler = viewStackHandler
-//        }
     }
 }

@@ -15,24 +15,7 @@ struct SettingsToggle: View {
     var onToggle: (Bool) -> Void
     
     var body: some View {
-        HStack {
-//            SatoText(text: title, style: .lightSubtitle) //subtitleBold
-//                .border(Color.pink)
-//                .frame(maxWidth: .infinity)
-//                .border(Color.blue)
-//            //Text(title)
-//            
-//            Spacer()
-//                .border(Color.pink)
-            
-//            Toggle(title, isOn: $isOn)
-//                .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.ledGreen))
-//                .onChange(of: isOn) { newValue in
-//                    SatoText(text: title, style: .lightSubtitle) //subtitleBold
-//                    onToggle(newValue)
-//                }
-//                .border(Color.pink)
-            
+        HStack {            
             Toggle(isOn: $isOn){
                 SatoText(text: title, style: .subtitleBold)
             }

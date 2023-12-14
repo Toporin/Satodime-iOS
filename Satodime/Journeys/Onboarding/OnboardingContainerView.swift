@@ -16,15 +16,13 @@ enum OnboardingViewType {
 
 struct OnboardingContainerView: View {
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
-    //@EnvironmentObject var viewStackHandler: ViewStackHandler
-    //@ObservedObject var viewModel: OnboardingContainerViewModel
-
-    let onboardingPages: [OnboardingViewType] = [.welcome, .info, .nfc]
-    var numberOfPages: Int { onboardingPages.count }
+    
     @State var currentPageIndex = 0
     @State var isLastPage = false
     
     // MARK: - Literals
+    let onboardingPages: [OnboardingViewType] = [.welcome, .info, .nfc]
+    var numberOfPages: Int { onboardingPages.count }
     let startButtonTitle = String(localized: "start")
 
     func goToNextPage() {
@@ -38,7 +36,6 @@ struct OnboardingContainerView: View {
     
     func completeOnboarding() {
         UserDefaults.standard.set(true, forKey: Constants.Storage.isAppPreviouslyLaunched)
-        //navigateTo(destination: .goBackHome)
         viewStackHandler.navigationState = .goBackHome
     }
     
@@ -102,8 +99,5 @@ struct OnboardingContainerView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-//        .onAppear {
-//            viewModel.viewStackHandler = viewStackHandler
-//        }
     }
 }

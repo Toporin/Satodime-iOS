@@ -10,15 +10,10 @@ import SwiftUI
 
 struct VaultSetupCongratsView: View {
     // MARK: - Properties
-//    @ObservedObject var viewModel: VaultSetupCongratsViewModel
-//    @EnvironmentObject var viewStackHandler: ViewStackHandler
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     
-    // MARK: - Properties
     var index: Int
-    //var selectedCrypto: CryptoCurrency
-    //@State var isNextViewActive = false
     
     // MARK: - Literals
     let title = "congrats"
@@ -83,10 +78,6 @@ struct VaultSetupCongratsView: View {
             .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
         }// ZStack
         .navigationBarHidden(true)
-        .onAppear { // TODO: remove debug trace
-//            print("Debug setup vault selectedCrypto: \(selectedCrypto)!")
-//            print("Debug setup vault selectedCrypto.icon: \(selectedCrypto.icon)!")
-        }
     }// body
 }
  

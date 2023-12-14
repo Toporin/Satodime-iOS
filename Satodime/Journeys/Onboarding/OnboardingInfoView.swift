@@ -9,8 +9,6 @@ import Foundation
 import SwiftUI
 
 struct OnboardingInfoView: View {
-    // MARK: - Properties
-    //@ObservedObject var viewModel: OnboardingInfoViewModel
     // MARK: - Literals
     let titleText = "createSealGift"
     let subtitleText = "createUpTo3Dfifferent"

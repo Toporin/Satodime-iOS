@@ -13,12 +13,7 @@ struct SatoInputText: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
-//            if text.isEmpty {
-//                Text(placeholder)
-//                    .foregroundColor(.white)
-//                    .padding(.leading, 20)
-//            }
-            TextField("", text: $text, prompt: Text(placeholder).foregroundColor(.gray)) //TextField(placeholder, text: $text)
+            TextField("", text: $text, prompt: Text(placeholder).foregroundColor(.gray))
                 .padding()
                 .frame(height: 43)
                 .background(Constants.Colors.satoListBackground)

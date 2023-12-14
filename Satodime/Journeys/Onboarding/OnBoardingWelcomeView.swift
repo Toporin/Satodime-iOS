@@ -9,8 +9,6 @@ import Foundation
 import SwiftUI
 
 struct OnboardingWelcomeView: View {
-    // MARK: - Properties
-    //@ObservedObject var viewModel: OnboardingWelcomeViewModel
     // MARK: - Literals
     let titleText = "welcome"
     let subtitleText = "satodimeLetsYou"

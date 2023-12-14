@@ -9,17 +9,9 @@ import Foundation
 import SwiftUI
 import SatochipSwift
 
-// TODO: remove
-enum AuthenticationState {
-    case isAuthentic
-    case notAuthentic
-}
-
 struct AuthenticView: View {
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
-    //@EnvironmentObject var viewStackHandler: ViewStackHandler
-    //@ObservedObject var viewModel: AuthenticViewModel
     
     // MARK: Helpers
     func getReasonFromPkiReturnCode(pkiReturnCode: PkiReturnCode) -> String {

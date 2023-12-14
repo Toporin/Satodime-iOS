@@ -151,9 +151,3 @@ struct ShowCertificates: View {
         }
     }
 }
-
-//struct ShowCertificates_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ShowCertificates(certificateCode: PkiReturnCode.success, certificateDic: ["":""])
-//    }
-//}

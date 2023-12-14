@@ -34,8 +34,8 @@ struct TransferOwnershipView: View {
                     .frame(height: 37)
                 SatoText(text: subtitle, style: .graySubtitle).lineLimit(nil)
                 Spacer()
+                
                 SatoButton(staticWidth: 196, text: transferButtonTitle, style: .confirm, horizontalPadding: 60) {
-                    //viewModel.transferCard()
                     cardState.releaseOwnership(
                         cardAuthentikeyHex: cardState.authentikeyHex,
                         onSuccess: {
@@ -61,7 +61,7 @@ struct TransferOwnershipView: View {
                     .frame(height: 49)
             
             }.padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
-        }
+        }// ZStack
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
@@ -74,8 +74,5 @@ struct TransferOwnershipView: View {
                 SatoText(text: title, style: .lightTitle)
             }
         }
-//        .onAppear {
-//            viewModel.viewStackHandler = viewStackHandler
-//        }
     }// body
 }

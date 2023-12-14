@@ -8,7 +8,11 @@
 import SwiftUI
 import Combine
 
-// MARK: - SatoTabView
+// MARK: - AssetTabView
+
+enum SelectedTab {
+    case token, nft//, history
+}
 
 struct AssetTabView: View {
     
@@ -84,6 +88,14 @@ struct AssetTabView: View {
         }
     } // body
     
+    func convertOptDoubleToString(balanceDouble: Double?) -> String {
+        if let balanceDouble = balanceDouble {
+            return String(balanceDouble)
+        } else {
+            return "" // if nil
+        }
+    }
+    
     func getTokenNumber() -> Int {
         if cardState.vaultArray.count > index {
             return 1 + (cardState.vaultArray[index].tokenList?.count ?? 0)
@@ -112,11 +124,11 @@ struct AssetTabView: View {
             coinDict["name"] = cardState.vaultArray[index].coin.displayName
             coinDict["symbol"] = cardState.vaultArray[index].coin.coinSymbol
             coinDict["type"] = "coin" 
-            coinDict["balance"] = String(cardState.vaultArray[index].balance ?? 0)
+            coinDict["balance"] = convertOptDoubleToString(balanceDouble: cardState.vaultArray[index].balance)
             coinDict["decimals"] = "0"
             coinDict["tokenIconPath"] = cardState.vaultArray[index].coinMeta.icon
             coinDict["tokenExplorerLink"] = cardState.vaultArray[index].coin.getAddressWebLink(address: address)
-            coinDict["tokenValueInSecondCurrency"] = String(cardState.vaultArray[index].coinValueInSecondCurrency ?? 0)
+            coinDict["tokenValueInSecondCurrency"] = convertOptDoubleToString(balanceDouble: cardState.vaultArray[index].coinValueInSecondCurrency)
             coinDict["secondCurrency"] = cardState.vaultArray[index].selectedSecondCurrency
             return coinDict
         }
@@ -135,7 +147,6 @@ struct AssetTabView: View {
 // MARK: - TokenListView
 
 struct TokenListViewNew: View {
-    //@ObservedObject var viewModel: TokenListViewModel
     var tokenList: [[String: String]]
     var tokenNative: [String:String] // todo
     
@@ -158,11 +169,9 @@ struct TokenListViewNew: View {
 // MARK: - NFTListView
 
 struct NftListViewNew: View {
-    //@ObservedObject var viewModel: NFTListViewModel
     var nftList: [[String: String]]
     
     var body: some View {
-        //List(viewModel.cellViewModels, id: \.imageUrl) { cellVM in // imageUrl may not be unique!!
         List(nftList, id: \.self) { nft in
             NftCellNew(nftAsset: nft)
                 .listRowBackground(Constants.Colors.satoListBackground)

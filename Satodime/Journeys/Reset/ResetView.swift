@@ -10,16 +10,12 @@ import SwiftUI
 
 struct ResetView: View {
     // MARK: - Properties
-//    @EnvironmentObject var viewStackHandler: ViewStackHandler
-//    @ObservedObject var viewModel: ResetViewModel
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     
-    //@Published var vaultCardViewModel: VaultCardViewModel
     @State var pushConfirmationView: Bool = false
     @State var hasUserConfirmedTerms = false
     @State var showNotOwnerAlert: Bool = false
-    //var vaultCards: VaultsList
     
     let index: Int
     
@@ -60,7 +56,6 @@ struct ResetView: View {
                 Spacer()
                     .frame(height: 29)
                 
-                //VaultCard(viewModel: viewModel.vaultCardViewModel, indexPosition: viewModel.indexPosition, useFullWidth: true)
                 VaultCardNew(index: UInt8(index), action: {}, useFullWidth: true)
                     .shadow(radius: 10)
                 
@@ -109,8 +104,6 @@ struct ResetView: View {
                                 },
                                 onFail: {
                                     print("ERROR: failed to reset vault!")
-                                    //pushConfirmationView = false
-                                    // TODO: show error msg
                                 })
                         }
                     } else {
@@ -123,12 +116,6 @@ struct ResetView: View {
                 
             }.padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
             
-//            NavigationLink(
-//                destination: ResetConfirmationView(index: index),
-//                isActive: $pushConfirmationView
-//            ) {
-//                EmptyView()
-//            }
             if (self.pushConfirmationView){
                 NavigationLink("", destination: ResetConfirmationView(index: index), isActive: .constant(true)).hidden()
             }
@@ -153,7 +140,6 @@ struct ResetView: View {
         )// overlay
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            //self.viewModel.navigateTo(destination: .goBackHome)
             self.viewStackHandler.navigationState = .goBackHome
         }) {
             Image("ic_flipback")
@@ -163,8 +149,5 @@ struct ResetView: View {
                 SatoText(text: title, style: .lightTitle)
             }
         }
-//        .onAppear {
-//            viewModel.viewStackHandler = viewStackHandler
-//        }
     }
 }

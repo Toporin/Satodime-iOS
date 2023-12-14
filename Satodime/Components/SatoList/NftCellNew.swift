@@ -10,7 +10,6 @@ import SwiftUI
 import Combine
 
 struct NftCellNew: View {
-    //@ObservedObject var viewModel: TokenCellViewModel
     var nftAsset: [String: String]
     
     var body: some View {
@@ -36,10 +35,7 @@ struct NftCellNew: View {
                     }
                 }
                 .frame(width: 50, height: 50)
-                //.background(Color.white)
-                //.clipShape(Circle())
                 .onTapGesture(count: 1) {
-                    //print("tapped on nft iconUrl!")
                     if let weblink = nftAsset["nftExplorerLink"],
                         let weblinkUrl = URL(string: weblink) {
                         UIApplication.shared.open(weblinkUrl)
@@ -53,7 +49,6 @@ struct NftCellNew: View {
                 .frame(width: 50, height: 50)
                 .clipShape(Circle())
                 .onTapGesture(count: 1) {
-                    //print("tapped on nft iconUrl!")
                     if let weblink = nftAsset["nftExplorerLink"],
                         let weblinkUrl = URL(string: weblink) {
                         UIApplication.shared.open(weblinkUrl)
@@ -61,8 +56,7 @@ struct NftCellNew: View {
                 }
             }
             
-            
-            
+            // NAME & BALANCE
             VStack(alignment: .leading) {
                 SatoText(text: nftAsset["name"] ?? "?", style: .cellSmallTitle)
                     .font(.headline)

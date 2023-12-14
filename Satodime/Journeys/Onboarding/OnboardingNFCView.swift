@@ -10,8 +10,6 @@ import SwiftUI
 
 struct OnboardingNFCView: View {
     // MARK: - Properties
-    //@ObservedObject var viewModel: OnboardingNFCViewModel
-    
     let titleText = "usingNFC"
     let subtitleText = "toUseItText"
     

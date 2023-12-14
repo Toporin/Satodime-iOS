@@ -13,12 +13,10 @@ struct ShowLogs: View {
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
     var loggerService: PLoggerService
-//    var logArray: [String]
     var logsArray: [Log]
     
     init() {
-        self.loggerService = LoggerService.shared //LoggerService()
-        //self.logArray = loggerService.getLog() // TODO: remove
+        self.loggerService = LoggerService.shared
         self.logsArray = loggerService.getLogs()
     }
     
@@ -49,15 +47,15 @@ struct ShowLogs: View {
                 .ignoresSafeArea()
             VStack {
                 
+                // Showing all logs
                 ScrollView {
-//                    Text("Logs")
-//                        .font(.title)
                     HStack {
                         SatoText(text: "Number of entries: \(logsArray.count)", style: .graySubtitle)
                             .font(.headline)
                         Image(systemName: "doc.on.doc")
                             .foregroundColor(.white)
                             .onTapGesture(count: 1) {
+                                // copy all logs to clipboard
                                 var txt=""
                                 for log in logsArray {
                                     txt += log.toString()
@@ -82,10 +80,10 @@ struct ShowLogs: View {
                             Divider()
                         }
                     }
-                }
+                }// ScrollView
                 
-                
-            }.padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
+            }// VStack
+            .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
         }//ZStack
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -99,8 +97,5 @@ struct ShowLogs: View {
                 SatoText(text: "Logs", style: .lightTitle)
             }
         }
-        
-        
-        
-    }
+    }// body
 }

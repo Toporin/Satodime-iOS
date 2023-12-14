@@ -15,23 +15,6 @@ struct TokenCellNew: View {
     
     var body: some View {
         HStack {
-//            if let mainToken = self.viewModel.mainToken, let cryptoCurrency = CryptoCurrency(shortIdentifier: mainToken) {
-//                ZStack {
-//                    Circle()
-//                        .fill(cryptoCurrency.color)
-//                        .frame(width: 50, height: 50)
-//                        .padding(5)
-//
-//                    Image(cryptoCurrency.icon)
-//                        .frame(width: 22, height: 22)
-//                        .foregroundColor(.white)
-//                }
-//                .frame(width: 50, height: 50)
-//            } else {
-//                Image(uiImage: viewModel.image ?? UIImage())
-//                    .resizable()
-//                    .frame(width: 50, height: 50)
-//            }
             //token icon from web api
             if let icon_url = tokenAsset["tokenIconUrl"] {
                 AsyncImage(
@@ -53,7 +36,6 @@ struct TokenCellNew: View {
                     }
                 }
                 .frame(width: 50, height: 50)
-                //.background(Color.white)
                 .clipShape(Circle())
                 .onTapGesture(count: 1) {
                     print("tapped on token icon_url!")
@@ -65,14 +47,13 @@ struct TokenCellNew: View {
             } 
             // token icon from local asset
             else if let icon_path = tokenAsset["tokenIconPath"] {
-                //TODO: correct alignment with other cells
                 ZStack {
                     Circle()
-                        .fill(CryptoCurrency(shortIdentifier: (tokenAsset["symbol"] ?? ""))?.color ?? Color.white) // TODO!
+                        .fill(CryptoCurrency(shortIdentifier: (tokenAsset["symbol"] ?? ""))?.color ?? Color.white)
                         .frame(width: 50, height: 50)
                         .padding(5)
 
-                    Image(icon_path) // todo
+                    Image(icon_path)
                         .frame(width: 22, height: 22)
                         .foregroundColor(.white)
                 }
@@ -84,19 +65,7 @@ struct TokenCellNew: View {
                         UIApplication.shared.open(weblinkUrl)
                     }
                 }
-                
-//                Image(icon_path) // todo
-//                    .frame(width: 50, height: 50)
-//                    //.foregroundColor(.white)
-//                    .clipShape(Circle())
-//                    .onTapGesture(count: 1) {
-//                        print("tapped on token icon_path!")
-//                        if let weblink = tokenAsset["tokenExplorerLink"],
-//                            let weblinkUrl = URL(string: weblink) {
-//                            UIApplication.shared.open(weblinkUrl)
-//                        }
-//                    }
-                
+            // Default icon
             } else {
                 Image(systemName: "t.circle") // TODO: question mark icon?
                     .resizable()
@@ -113,12 +82,10 @@ struct TokenCellNew: View {
             }
             
             
-            // show balance
+            // show balance in token
             VStack(alignment: .leading) {
                 SatoText(text: tokenAsset["name"] ?? "?", style: .cellSmallTitle)
                     .font(.headline)
-                // show balance in token
-                //Text((tokenAsset["balance"] ?? "") + " " + (tokenAsset["symbol"] ?? "")) // TODO: clean
                 Text(SatodimeUtil.formatBalance(balanceString: tokenAsset["balance"], decimalsString: tokenAsset["decimals"], symbol: tokenAsset["symbol"], maxFractionDigit: 8))
                     .font(
                         Font.custom("Outfit-ExtraLight", size: 12)
@@ -131,7 +98,6 @@ struct TokenCellNew: View {
             Spacer()
             
             // show value in second currency
-            //Text((tokenAsset["balance"] ?? "")) // in fiat
             Text(SatodimeUtil.formatBalance(balanceString: tokenAsset["tokenValueInSecondCurrency"], decimalsString: "0", symbol: tokenAsset["secondCurrency"], maxFractionDigit: 2))
                 .font(
                     Font.custom("Outfit-Medium", size: 12)

@@ -16,25 +16,18 @@ enum ShowPrivateKeyMode: String, Hashable {
 
 struct ShowPrivateKeyMenuView: View {
     // MARK: - Properties
-//    @EnvironmentObject var viewStackHandler: ViewStackHandler
-//    @ObservedObject var viewModel: ShowPrivateKeyMenuViewModel
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     @State var showNotOwnerAlert: Bool = false
-    
-    //let cardService: PCardService
-    
-    //@Published var vaultCardViewModel: VaultCardViewModel
-    @State var selectedMode: ShowPrivateKeyMode = .legacy
-    var keyResult: PrivateKeyResult?
+        
+    @State var selectedMode: ShowPrivateKeyMode = .legacy //TODO: need to be @State?
     @State var isKeyViewPresented = false
     
     let index: Int
-    let keyDisplayOptions: [ShowPrivateKeyMode] = [.legacy, .wif, .entropy]
     
     // MARK: - Literals
     let title = "showPrivateKey"
-    
+    let keyDisplayOptions: [ShowPrivateKeyMode] = [.legacy, .wif, .entropy]
     let notOwnerAlert = SatoAlert(
         title: "ownership",
         message: "ownershipText",
@@ -69,7 +62,6 @@ struct ShowPrivateKeyMenuView: View {
                         SatoSelectionButton(mode: mode)
                             .onTapGesture {
                                 
-                                print("debug: ShowPrivateKeyMenuView click to show privkey")
                                 self.selectedMode = mode
                                 // if the private key is not already available, scan the card to fetch it
                                 if (cardState.vaultArray[index].privkey == nil) {
@@ -84,6 +76,7 @@ struct ShowPrivateKeyMenuView: View {
                                                     self.cardState.vaultArray[index].privkey = privkeyResult.privkey
                                                     self.cardState.vaultArray[index].entropy = privkeyResult.entropy
                                                     self.selectedMode = mode
+                                                    //self.isKeyViewPresented = true //TODO: view is only shown temporary?
                                                 }
                                             },
                                             onFail: {
@@ -101,7 +94,6 @@ struct ShowPrivateKeyMenuView: View {
                     }
                     
                     ButtonBox(text: String(localized: "howDoiExportPrivateKey"), iconName: "ic_link") {
-                        //viewModel.gotoExportKey()
                         if let url = URL(string: "https://satochip.io/satodime-how-to-export-private-key/") {
                             UIApplication.shared.open(url)
                         }
@@ -115,9 +107,6 @@ struct ShowPrivateKeyMenuView: View {
                 NavigationLink(destination: ShowPrivateKeyView(index: index, mode: selectedMode), isActive: $isKeyViewPresented) {
                     EmptyView()
                 }
-//                if (cardState.vaultArray[index].privkey != nil){
-//                    NavigationLink("", destination: ShowPrivateKeyView(index: index, mode: selectedMode), isActive: .constant(true)).hidden()
-//                }
             }
         } //ZStack
         .overlay(
@@ -148,10 +137,7 @@ struct ShowPrivateKeyMenuView: View {
                 SatoText(text: title, style: .lightTitle)
             }
         }
-//        .onAppear {
-//            viewModel.viewStackHandler = viewStackHandler
-//        }
-    }
+    }//body
 }
 
 // TODO: remove?

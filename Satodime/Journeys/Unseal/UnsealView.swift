@@ -10,12 +10,9 @@ import SwiftUI
 
 struct UnsealView: View {
     // MARK: - Properties
-    //@EnvironmentObject var viewStackHandler: ViewStackHandler
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
-    //@ObservedObject var viewModel: UnsealViewModel
-    //let cardService: PCardService
-    //@Published var vaultCardViewModel: VaultCardViewModel
+
     @State var pushConfirmationView: Bool = false
     @State var showNotOwnerAlert: Bool = false
     
@@ -28,7 +25,6 @@ struct UnsealView: View {
     let transferText = "youCanThenTransferTheEntireBalance"
     let informationText = "thisActionIsIrreversible"
     let continueButtonTitle = String(localized: "unseal")
-    
     let notOwnerAlert = SatoAlert(
         title: "ownership",
         message: "ownershipText",
@@ -61,7 +57,6 @@ struct UnsealView: View {
                 Spacer()
                     .frame(height: 29)
                 
-                //VaultCard(viewModel: viewModel.vaultCardViewModel, indexPosition: viewModel.indexPosition, useFullWidth: true)
                 VaultCardNew(index: UInt8(index), action: {}, useFullWidth: true)
                     .shadow(radius: 10)
                 
@@ -121,12 +116,6 @@ struct UnsealView: View {
                 
             }.padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
             
-//            NavigationLink(
-//                destination: UnsealConfirmationView(index: index),
-//                isActive: $pushConfirmationView
-//            ) {
-//                EmptyView()
-//            }
             if (self.pushConfirmationView) {
                 NavigationLink("", destination: UnsealConfirmationView(index: index), isActive: .constant(true)).hidden()
             }
@@ -151,7 +140,6 @@ struct UnsealView: View {
         )// overlay
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            //self.viewModel.navigateTo(destination: .goBackHome)
             self.viewStackHandler.navigationState = .goBackHome
         }) {
             Image("ic_flipback")
@@ -161,8 +149,5 @@ struct UnsealView: View {
                 SatoText(text: title, style: .lightTitle)
             }
         }
-//        .onAppear {
-//            viewModel.viewStackHandler = viewStackHandler
-//        }
     }
 }

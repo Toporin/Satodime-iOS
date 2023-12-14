@@ -9,9 +9,17 @@ import Foundation
 import SwiftUI
 import CryptoSwift
 
+enum NetworkMode: String, CaseIterable, SelectableItem {
+    case mainNet = "MainNet"
+    case testNet = "TestNet"
+    
+    var displayString: String {
+        return self.rawValue
+    }
+}
+    
 struct VaultSetupCreateView: View {
     // MARK: - Properties
-    //@ObservedObject var viewModel: VaultSetupCreateViewModel
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     
@@ -19,12 +27,8 @@ struct VaultSetupCreateView: View {
     var index: Int
     var selectedCrypto: CryptoCurrency
     
-    //let cardService: PCardService
-    
     @State var isExpertModeActivated = false
     @State var isNextViewActive = false // TODO: rename
-    //@State var isExpertModeViewActive = false
-    //@State var vaultCards: VaultsList
     
     // expert mode
     @State var selectedNetwork: NetworkMode = .mainNet
@@ -162,7 +166,7 @@ struct VaultSetupCreateView: View {
                     } // end isExpertModeActivated
                     
                     SatoButton(staticWidth: 177, text: continueButtonTitle, style: .confirm) {
-                        //viewModel.sealSlot()
+                        
                         let entropyBytes: [UInt8]
                         if isExpertModeActivated {
                             entropyBytes = self.extractEntropy(randomString: entropy)
@@ -175,17 +179,6 @@ struct VaultSetupCreateView: View {
                             // TODO: use btc latest coinbase info ?
                         }
                         
-                        //                    let actionParams = ActionParameters(index: UInt8(index), action: .sealVault, coinType: selectedCrypto.coinType, useTestnet: isTestnet(), entropyBytes: entropyBytes)
-                        //                    cardState.scanForAction(actionParams: actionParams)
-                        //
-                        //                    DispatchQueue.main.async {
-                        //                        // TODO: check result?
-                        //                        // TODO: if error?
-                        //                        self.isNextViewActive = true
-                        //                        print("Sealed!")
-                        //                    }
-                        //
-//                        let actionParams = ActionParameters(index: UInt8(index), action: .sealVault, coinType: selectedCrypto.coinType, useTestnet: isTestnet(), entropyBytes: entropyBytes) // TODO: remove and just compute slip44
                         cardState.sealVault(
                             cardAuthentikeyHex: cardState.authentikeyHex,
                             index: index,
@@ -205,28 +198,9 @@ struct VaultSetupCreateView: View {
                                 // TODO: show alert error
                             }
                         )
-                        //self.presentationMode.wrappedValue.dismiss()
-                    }
+                    }// SatoButton (seal)
                     
                     // TODO: cancel button?
-                    
-                    //                NavigationLink(
-                    //                    destination: VaultSetupCongratsView(selectedCrypto: selectedCrypto),
-                    //                    //destination: VaultSetupCongratsView(),
-                    //                    isActive: $isNextViewActive
-                    //                ) {
-                    //                    EmptyView()
-                    //                }
-                    //                .navigationViewStyle(.stack)
-                    
-                    // error: NavigationLink presenting a value must appear inside a NavigationContent-based NavigationView. Link will be disabled.
-                    // No image named 'ic_coin_empty' found in asset catalog for
-                    //                if (isNextViewActive){
-                    //                    NavigationLink("", destination: VaultSetupCongratsView(selectedCrypto: self.selectedCrypto), isActive: .constant(true))
-                    //                        .hidden()
-                    //                        .navigationViewStyle(.stack)
-                    //                }
-                    
                     
                     Spacer()
                         .frame(height: 29)

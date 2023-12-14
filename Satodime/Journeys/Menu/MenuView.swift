@@ -93,11 +93,9 @@ struct MenuView: View {
                             iconWidth: 34, iconHeight: 34,
                             backgroundColor: Constants.Colors.grayMenuButton,
                             action: {
-                                //self.viewModel.onCardInfo()
                                 if cardState.hasReadCard() {
                                     self.shouldShowCardInfo = true
                                 } else { //TODO: v0.1 & unclaimed ownership will trigger this
-                                    //cardNeedToBeScannedAlert.isMoreInfoBtnVisible = false
                                     showCardNeedsToBeScannedAlert = true
                                 }
                             }
@@ -112,8 +110,7 @@ struct MenuView: View {
                             iconHeight: 27,
                             backgroundColor: Constants.Colors.blueMenuButton,
                             action: {
-                                //self.viewModel.onTransferOwner()
-                                if cardState.ownershipStatus == .notOwner { //if !cardState.isOwner {
+                                if cardState.ownershipStatus == .notOwner {
                                     self.showNotOwnerAlert = true
                                     print("warning: ownership transfer fail: not owner!")
                                 } else if cardState.ownershipStatus == .owner {
@@ -279,7 +276,6 @@ struct MenuView: View {
         ) // overlay
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            //self.viewModel.navigateTo(destination: .goBackHome)
             self.viewStackHandler.navigationState = .goBackHome
         }) {
             Image("ic_flipback")
