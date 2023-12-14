@@ -41,21 +41,12 @@ public struct VaultItem: Hashable {
     public var index: UInt8
     public var coin: BaseCoin
     var coinMeta: CryptoCurrency = CryptoCurrency.empty
-    public var iconPath: String = "ic_coin_unknown" // TODO: deprecate, use coinMeta instead
     public var keyslotStatus: SatodimeKeyslotStatus
     
     // coin info
     public var pubkey: [UInt8]? = nil
     public var balance: Double? = nil // async value
-    public var address: String = "(undefined)" 
-//    {
-//        didSet { // TODO: remove??
-//            print("** didSet VaultItem address: \(address)")
-//            if address == "(unsupported)" {
-//                print("unsupported coin")
-//            }
-//        }
-//    }
+    public var address: String = "(undefined)"
     public var addressUrl: URL? = nil // explorer url
     
     public var selectedFirstCurrency: String? = nil
@@ -92,34 +83,27 @@ public struct VaultItem: Hashable {
         switch slip44WithoutTestnetBit {
         case 0x80000000:
             coin = Bitcoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_btc"
             coinMeta = .bitcoin
         case 0x80000002:
             coin = Litecoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_ltc"
             coinMeta = .litecoin
         case 0x80000009:
             coin = Counterparty(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_xcp"
             coinMeta = .counterParty
         case 0x8000003c:
             coin = Ethereum(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_eth"
             coinMeta = .ethereum
         case 0x80000091:
             coin = BitcoinCash(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_bch"
             coinMeta = .bitcoinCash
 //        case 0x8000232e:
 //            coin = BinanceSmartChain(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-//            iconPath = "ic_coin_bnb"
+//            coinMeta = .binance
         case 0xdeadbeef: // uninitialized slot!
             coin = EmptyCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_empty"
             coinMeta = .empty
         default:
             coin = UnsupportedCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_unknown"
             coinMeta = .unknown
         }
     }

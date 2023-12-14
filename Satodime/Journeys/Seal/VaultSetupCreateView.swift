@@ -161,7 +161,6 @@ struct VaultSetupCreateView: View {
                             .frame(height: 15)
                         
                         SatoInputText(text: $entropy, placeholder: entropyPlaceholder)
-                        // TODO: placeholder in entropy field
                         
                     } // end isExpertModeActivated
                     

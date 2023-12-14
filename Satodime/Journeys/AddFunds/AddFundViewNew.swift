@@ -74,7 +74,7 @@ struct AddFundsViewNew: View {
                             SealStatusView(status: cardState.vaultArray[index].getStatus())
                             Spacer()
                             VStack {
-                                Image(cardState.vaultArray[index].iconPath)
+                                Image(cardState.vaultArray[index].coinMeta.icon)
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 26, height: 26)
@@ -155,7 +155,7 @@ struct AddFundsViewNew: View {
                     
                     Spacer()
                 }
-                .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin) //Constants.Dimensions.bigSideMargin //TODO: reduce margin so that address fits in one ligne?
+                .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin) 
             }// ZStack
         }// ZStack
         .navigationBarTitleDisplayMode(.inline)

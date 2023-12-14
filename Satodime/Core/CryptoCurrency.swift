@@ -36,21 +36,21 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
     var icon: String {
         switch self {
         case .bitcoin:
-            return "ic_btc"
+            return "ic_coin_btc"
         case .ethereum:
-            return "ic_eth"
+            return "ic_coin_eth"
         case .litecoin:
-            return "ic_ltc"
+            return "ic_coin_ltc"
         case .bitcoinCash:
-            return "ic_bch"
+            return "ic_coin_bch"
         // case .binance: // For later use
-        //     return "ic_bnb"
+        //     return "ic_coin_bnb"
         case .counterParty:
-            return "ic_xcp"
+            return "ic_coin_xcp"
         case .empty:
-            return "ic_empty" //TODO: create icon
+            return "ic_coin_empty" //TODO: create icon
         case .unknown:
-            return "ic_unknown" //TODO: icon
+            return "ic_coin_unknown" //TODO: create icon
         }
     }
     

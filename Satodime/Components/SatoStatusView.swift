@@ -9,28 +9,6 @@ import Foundation
 import SwiftUI
 import SatochipSwift
 
-// todo remove
-enum CardReadState {
-    case none
-    case valid
-    case invalid
-}
-
-// TODO: remove? //merge with isCardAuthentic  & CardAuthenticity ??
-class CardStatusObservable: ObservableObject {
-    @Published var status: CardReadState = .none
-    func cardStatusImage() -> String {
-        switch status {
-        case .none:
-            return ""
-        case .valid:
-            return "ic_circle_valid"
-        case .invalid:
-            return "ic_circle_invalid"
-        }
-    }
-}
-
 struct SatoStatusView: View {
     
     @EnvironmentObject var cardState: CardState
@@ -57,7 +35,7 @@ struct SatoStatusView: View {
                     }
                 }
         } else {
-            Image("il_not_authentic") // TODO: red icon
+            Image("il_not_authentic")
                 .resizable()
                 .frame(width: 48, height: 48)
                 .onTapGesture {

@@ -9,32 +9,16 @@ import Foundation
 import SwiftUI
 import SnapToScroll
 
-// TODO: do we need this?
-enum RefreshVaults {
-    case none
-    case clear
-    case refresh
-}
-
-// TODO: deprecate
-class ViewStackHandler: ObservableObject {
-    @Published var navigationState: NavigationState = .goBackHome
-    @Published var refreshVaults: RefreshVaults = .none
-}
-
 class ViewStackHandlerNew: ObservableObject {
     @Published var navigationState: NavigationState = .goBackHome
-    @Published var refreshVaults: RefreshVaults = .none
 }
 
-// TODO: clean
 enum NavigationState {
     case goBackHome
     case onboarding
     case takeOwnership
-    case vaultInitialization //TODO: rename to seal
+    case vaultInitialization
     case vaultSetupCongrats
-    case notAuthentic
     case cardAuthenticity
     case cardInfo
     case unseal
@@ -48,7 +32,7 @@ enum NavigationState {
 struct HomeView: View {
     // MARK: - Properties
     @EnvironmentObject var cardState: CardState
-    @EnvironmentObject var viewStackHandlerNew: ViewStackHandlerNew // todo: rename
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
     // current slot shown to user
     @State private var currentSlotIndex: Int = 0
@@ -144,7 +128,7 @@ struct HomeView: View {
                                             if cardState.ownershipStatus == .owner {
                                                 print("DEBUG click on seal new vault!")
                                                 DispatchQueue.main.async {
-                                                    self.viewStackHandlerNew.navigationState = .vaultInitialization
+                                                    self.viewStackHandler.navigationState = .vaultInitialization
                                                 }
                                                 print("DEBUG click on seal new vault AFTER!")
                                             } else {
@@ -168,7 +152,6 @@ struct HomeView: View {
                         
                         // UI action buttons for current slot
                         HStack(spacing: 18) {
-                            // TODO: add link to explorer here?
                             if cardState.vaultArray.count > currentSlotIndex {
                                 if cardState.vaultArray[currentSlotIndex].getStatus() != .uninitialized {
                                     AddFundsButton {
@@ -218,39 +201,39 @@ struct HomeView: View {
                     // MARK: - NAVIGATION
                     
                     // NAVIGATION - CONFIG SCREENS
-                    if self.viewStackHandlerNew.navigationState == .menu {
+                    if self.viewStackHandler.navigationState == .menu {
                         NavigationLink("", destination: MenuView(), isActive: .constant(true)).hidden()
                     }
-                    if self.viewStackHandlerNew.navigationState == .onboarding {
+                    if self.viewStackHandler.navigationState == .onboarding {
                         NavigationLink("", destination: OnboardingContainerView(), isActive: .constant(true)).hidden()
                     }
-                    if self.viewStackHandlerNew.navigationState == .cardAuthenticity { // TODO: used?
+                    if self.viewStackHandler.navigationState == .cardAuthenticity {
                         NavigationLink("", destination: AuthenticView(), isActive: .constant(true)).hidden()
                     }
-                    if self.viewStackHandlerNew.navigationState == .cardInfo { // TODO: used?
+                    if self.viewStackHandler.navigationState == .cardInfo {
                         NavigationLink("", destination: CardInfoView(), isActive: .constant(true)).hidden()
                     }
-                    if self.viewStackHandlerNew.navigationState == .addFunds {
+                    if self.viewStackHandler.navigationState == .addFunds {
                         NavigationLink("", destination: AddFundsViewNew(index: currentSlotIndex), isActive: .constant(true)).hidden()
                     }
                     
                     // NAVIGATION - CARD ACTION SCREENS
-                    if self.viewStackHandlerNew.navigationState == .takeOwnership {
+                    if self.viewStackHandler.navigationState == .takeOwnership {
                         NavigationLink("", destination: TakeOwnershipView(), isActive: .constant(true)).hidden()
                     }
-                    if self.viewStackHandlerNew.navigationState == .vaultInitialization { //TODO: rename to .seal?
+                    if self.viewStackHandler.navigationState == .vaultInitialization {
                         NavigationLink("", destination: VaultSetupSelectChainView(index: currentSlotIndex), isActive: .constant(true)).hidden()
                     }
-                    if self.viewStackHandlerNew.navigationState == .vaultSetupCongrats { //TODO: rename to .seal?
+                    if self.viewStackHandler.navigationState == .vaultSetupCongrats {
                         NavigationLink("", destination: VaultSetupCongratsView(index: currentSlotIndex), isActive: .constant(true)).hidden()
                     }
-                    if self.viewStackHandlerNew.navigationState == .unseal {
+                    if self.viewStackHandler.navigationState == .unseal {
                         NavigationLink("", destination: UnsealView(index: currentSlotIndex), isActive: .constant(true)).hidden()
                     }
-                    if self.viewStackHandlerNew.navigationState == .privateKey {
+                    if self.viewStackHandler.navigationState == .privateKey {
                         NavigationLink("", destination: ShowPrivateKeyMenuView(index: currentSlotIndex), isActive: .constant(true)).hidden()
                     }
-                    if self.viewStackHandlerNew.navigationState == .reset {
+                    if self.viewStackHandler.navigationState == .reset {
                         NavigationLink("", destination: ResetView(index: currentSlotIndex), isActive: .constant(true)).hidden()
                     }
                 } // ZStack
@@ -321,7 +304,7 @@ struct HomeView: View {
                             }
                         } // if showNotOwnerAlert
                         
-                        // TODO: take ownership here?
+                        // Alert: card ownership is available to claim
                         else if self.cardState.ownershipStatus == .unclaimed && showTakeOwnershipAlert == true {
                             SatoAlertView(
                                 isPresented: $showTakeOwnershipAlert,
@@ -330,13 +313,13 @@ struct HomeView: View {
                                     message: "takeOwnershipText",
                                     buttonTitle: String(localized:"goToTakeOwnershipScreen"),
                                     buttonAction: {
-                                        self.viewStackHandlerNew.navigationState = .takeOwnership
+                                        self.viewStackHandler.navigationState = .takeOwnership
                                     }
                                 )
                             )
                         }// take ownership alert
                         
-                        // TODO: show authenticity issue here?
+                        // Alert: show authenticity issue
                         if self.cardState.hasReadCard() && self.cardState.certificateCode != .success && showNotAuthenticAlert == true {
                             SatoAlertView(
                                 isPresented: $showNotAuthenticAlert,
@@ -345,7 +328,7 @@ struct HomeView: View {
                                     message: "notAuthenticText",
                                     buttonTitle: String(localized:"goToNotAuthenticScreen"),
                                     buttonAction: {
-                                        self.viewStackHandlerNew.navigationState = .cardInfo
+                                        self.viewStackHandler.navigationState = .cardInfo
                                     }
                                 )
                             )
@@ -375,7 +358,7 @@ struct HomeView: View {
     
     func navigateTo(destination: NavigationState) {
         DispatchQueue.main.async {
-            self.viewStackHandlerNew.navigationState = destination
+            self.viewStackHandler.navigationState = destination
         }
     }
     

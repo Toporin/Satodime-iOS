@@ -44,7 +44,7 @@ struct ShowPrivateKeyView: View {
         
         guard cardState.vaultArray.count > self.index else { return }
         
-        self.coinIcon = cardState.vaultArray[index].iconPath
+        self.coinIcon = cardState.vaultArray[index].coinMeta.icon
         self.isTestnet = cardState.vaultArray[index].coin.isTestnet
         
         switch mode {

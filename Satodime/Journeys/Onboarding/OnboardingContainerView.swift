@@ -57,7 +57,7 @@ struct OnboardingContainerView: View {
                         }
                     }
                 }
-                .onChange(of: currentPageIndex) { newValue in // TODO: necessary?
+                .onChange(of: currentPageIndex) { newValue in
                     currentPageIndex = newValue
                 }
                 .background {

@@ -18,7 +18,7 @@ struct CardInfoView: View {
     
     // MARK: - Literals
     let title = "cardInfo"
-    let authentikeyTitle = "authentikeyTitle" //TODO: translate
+    //let authentikeyTitle = "authentikeyTitle" //TODO: translate
     
     let ownerTitle = "cardOwnershipStatus"
     let ownerText = "youAreTheCardOwner"

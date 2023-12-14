@@ -53,7 +53,7 @@ struct VaultSetupCongratsView: View {
                                     .frame(width: 66, height: 66)
                                     .padding(16)
 
-                                Image(cardState.vaultArray[index].coinMeta.icon) //TODO: DEBUG!! //Image(selectedCrypto.icon)
+                                Image(cardState.vaultArray[index].coinMeta.icon)
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(.white)
                             }

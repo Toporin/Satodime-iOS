@@ -36,7 +36,7 @@ struct AssetTabView: View {
                         selectedTab = .token
                     }) {
                         VStack {
-                            SatoText(text: "Token (\(getTokenNumber()))", style: .subtitleBold) // TODO: show number of token
+                            SatoText(text: "Token (\(getTokenNumber()))", style: .subtitleBold)
                             ZStack {
                                 Rectangle().frame(height: 2).foregroundColor(Constants.Colors.separator)
                                 if selectedTab == .token {
@@ -54,7 +54,7 @@ struct AssetTabView: View {
                         }
                     }) {
                         VStack {
-                            SatoText(text: "NFT (\(getNftNumber()))", style: .subtitleBold) // TODO: show number of NFT
+                            SatoText(text: "NFT (\(getNftNumber()))", style: .subtitleBold)
                                 .opacity(self.canSelectNFT ? 1 : 0.3)
                             ZStack {
                                 Rectangle().frame(height: 2).foregroundColor(Constants.Colors.separator)

@@ -7,15 +7,11 @@
 
 import Foundation
 
-// TODO: merge LoggerService & ConsoleLogger
-
 // MARK: - Protocol
 protocol PLoggerService {
     func getLogs() -> [Log]
     func addLog(level: LogLevel, msg: String, tag: String)
 }
-
-
 
 // MARK: - Service
 final class LoggerService: PLoggerService {
@@ -64,11 +60,6 @@ final class LoggerService: PLoggerService {
         print("🟢 " + msg)
         #endif
         self.addLog(level: LogLevel.debug, msg: msg, tag: tag)
-    }
-    
-    // alias
-    func log(_ msg: String, tag: String = ""){
-        self.debug(msg, tag: tag)
     }
     
 }

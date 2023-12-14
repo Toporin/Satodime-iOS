@@ -8,13 +8,13 @@
 import Foundation
 import SwiftUI
 
-public enum SealStatus { // TODO: move
+public enum SealStatus {
     case uninitialized
     case sealed
     case unsealed
 }
 
-struct SealStatusView: View { // TODO: rename to VaultStatusView
+struct SealStatusView: View {
     let status: SealStatus
 
     var body: some View {

@@ -77,7 +77,7 @@ struct VaultCardNew: View {
                         VStack {
                             VStack {
                                 Spacer()
-                                Image(cardState.vaultArray[Int(index)].iconPath)
+                                Image(cardState.vaultArray[Int(index)].coinMeta.icon)
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 26, height: 26)
