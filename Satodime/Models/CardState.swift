@@ -39,72 +39,24 @@ enum OwnershipStatus: String {
 class CardState: ObservableObject {
     
     @Published var isCardDataAvailable = false
-    
+    // vaults info as array
     @Published var vaultArray: [VaultItem] = [VaultItem]() //[]
-    @Published var promptForTransfer = true
-    @Published var needsRefresh = true
-    
-    // NavigationLink
-    @Published var operationRequested = false
-    @Published var operationType = ""
-    @Published var operationIndex = UInt8(0)
-    
-    // card info?
+    // card info
     @Published var cardStatus: CardStatus? = nil
-    @Published var authentikey = [UInt8]()
     @Published var authentikeyHex = ""
-    
+    // ownership
+    @Published var ownershipStatus: OwnershipStatus = .unknown
     // certificate
-    //@Published var certificates = ["", "", ""]
     @Published var certificateDic = ["":""]
     @Published var certificateCode = PkiReturnCode.unknown
-    // ownership
-    @Published var isOwner = false // deprecate
-    @Published var ownershipStatus: OwnershipStatus = .unknown
-    
-    // settings
-    //@Published var selectedCurrency: String = "USD" // deprecated
-    //@Published var selectedFirstCurrency: String = "USD"
-    //@Published var selectedSecondCurrency: String = "USD" //deprecated?
-    
-    // logs => use singleton?
-    @Published var logArray: [String] = [String]()
-    var logArrayTmp: [String] = [String]()
-    //@Published var selectedLanguage: String = "English"
-    //@Published var darkMode: Bool = true
     
     // fetch web data only after nfc polling has finished...
     let dispatchGroup = DispatchGroup()
     
     // For NFC session
     var session: SatocardController? // TODO: clean (used with scan())
-    var sessionForAction: SatocardController? // TODO: deprecate? (used with scanForAction())
     // used with the different methods to perform actions on the card
     var cardController: SatocardController?
-    //var actionParams: ActionParams = ActionParams(index:0, action: "read")
-    //var actionParams: ActionParameters = ActionParameters(index:0, action: .scanCard) // TODO: deprecate?
-    
-    
-    // settings
-    // TODO: move to own preferenceService?
-    let defaults = UserDefaults.standard
-    var isAlreadyUsed = false
-    var unlockSecretDict: [String: [UInt8]] // TODO: remove and fetch directly from default!
-    
-    init(){
-        // settings
-        isAlreadyUsed = defaults.bool(forKey: "isAlreadyUsed")
-        if isAlreadyUsed {
-            unlockSecretDict = defaults.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-        } else {
-            // set default values
-            // unlockSecret value is required to perform sensitive changes to a Satodime (seal-unseal-reset-transfer a card)
-            unlockSecretDict = [String: [UInt8]]() // [String: String]
-            defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
-            defaults.set(true, forKey: "isAlreadyUsed")
-        }
-        print("unlockSecretDict: \(unlockSecretDict)")
-    }
     
     func hasReadCard() -> Bool {
         //return self.vaultArray.count > 0
@@ -120,22 +72,10 @@ class CardState: ObservableObject {
     }
     
     func scan(){
-        print("NfcReader scan()")
+        //print("NfcReader scan()")
         session = SatocardController(onConnect: onConnection, onFailure: onDisconnection)
         session?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
     }
-    
-//    // onCompletion allows to execute statements after action has been performed
-//    // TODO: return success or failure? or onSuccess/onFailure?
-//    // TODO: deprecate
-//    func scanForAction(actionParams: ActionParameters, onCompletion: @escaping () -> Void = { return }){
-//        print("NfcReader scanForAction() \(actionParams.action)")
-//        print("ActionParams: \(actionParams)")
-//        self.actionParams = actionParams
-//        sessionForAction = SatocardController(onConnect: onConnectionForAction, onFailure: onDisconnection)
-//        sessionForAction?.start(alertMessage: String(localized: "Hold your Satodime near iPhone to perform action: \(actionParams.action.rawValue)"))
-//        onCompletion()
-//    }
     
     //Card connection
     func onConnection(cardChannel: CardChannel) -> Void {
@@ -156,9 +96,8 @@ class CardState: ObservableObject {
             }
             log.info("Status: \(cardStatus)", tag: "CardState.onConnection")
             // check if setupDone
-            if cardStatus.setupDone == false { //}&& self.promptForTransfer == true {
+            if cardStatus.setupDone == false {
                 DispatchQueue.main.async {
-                    self.isOwner = false
                     self.ownershipStatus = .unclaimed
                 }
                 // check version: v0.1-0.1 cannot proceed further without setup first
@@ -188,9 +127,8 @@ class CardState: ObservableObject {
             }
             
             // get authentikey
-            let (_, authentikey, authentikeyHex) = try cmdSet.cardGetAuthentikey()
+            let (_, _, authentikeyHex) = try cmdSet.cardGetAuthentikey()
             DispatchQueue.main.async {
-                self.authentikey = authentikey
                 self.authentikeyHex = authentikeyHex
             }
             log.info("authentikeyHex: \(authentikeyHex)", tag: "CardState.onConnection")
@@ -199,17 +137,15 @@ class CardState: ObservableObject {
             log.info("satodimeStatus: \(satodimeStatus)", tag: "CardState.onConnection")
             
             // check for ownership
-            var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+            let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
             if let unlockSecret = unlockSecretDict[authentikeyHex]{
                 satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret) // TODO: useless?
                 DispatchQueue.main.async {
-                    self.isOwner = true
                     self.ownershipStatus = .owner
                 }
                 log.info("Found an unlockSecret for this card", tag: "CardState.onConnection")
             } else {
                 DispatchQueue.main.async {
-                    self.isOwner = false
                     self.ownershipStatus = .notOwner
                 }
                 log.warning("Found no unlockSecret for this card!", tag: "CardState.onConnection")
@@ -262,194 +198,6 @@ class CardState: ObservableObject {
         
     } // end onConnection
     
-    
-//    // TODO: deprecate? (using distinct function for each action?)
-//    func onConnectionForAction(cardChannel: CardChannel) -> Void {
-//        print("START - Satodime onConnectionForAction \(actionParams.action)")
-//        let cmdSet = SatocardCommandSet(cardChannel: cardChannel)
-//        let parser = SatocardParser()
-//        
-//        do {
-//            print("START SELECT")
-//            try cmdSet.select().checkOK()
-//            print("START GETSTATUS")
-//            let statusApdu = try cmdSet.cardGetStatus()
-//            print("Status: \(cmdSet.cardStatus)")
-//            if actionParams.action == .takeOwnership {
-//                // check if setupDone
-//                if cmdSet.cardStatus?.setupDone == false {
-//                    // perform setup
-//                    do {
-//                        //_ = try cmdSet.cardSetup(pin_tries0: 5, pin0: pin0).checkOK()
-//                        _ = try cmdSet.satodimeCardSetup().checkOK()
-//                        let (_, authentikey, authentikeyHex) = try cmdSet.cardGetAuthentikey()
-//                        print("Authentikey: \(authentikey)")
-//                        print("AuthentikeyHex: \(authentikeyHex)")
-//                        // save in defaults
-//                        unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
-//                        defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
-//                        isOwner = true
-//                        ownershipStatus = .owner
-//                        sessionForAction?.stop(alertMessage: String(localized: "Card ownership accepted successfully!"))
-//                        return
-//                    } catch {
-//                        print("Error during card setup: \(error)")
-//                        sessionForAction?.stop(errorMessage: String(localized: "Failed to accept card ownership with error: \(error.localizedDescription)"))
-//                        return
-//                    }
-//                } else {
-//                    print("Card transer already done!")
-//                    sessionForAction?.stop(alertMessage: String(localized: "Card transfer already done!"))
-//                    return
-//                }
-//            } // if accept
-//            
-//            let (_, authentikey, authentikeyHex) = try cmdSet.cardGetAuthentikey()
-//            print("AuthentikeyHex: \(authentikeyHex)")
-//            // check authentikey did not change between sessions (i.e. it's the same card)
-//            if self.authentikeyHex != authentikeyHex {
-//                print("Card mismatch! \nIs this the correct card?")
-//                sessionForAction?.stop(errorMessage: String(localized: "Card mismatch! \nIs this the correct card?"))
-//                return
-//            }
-//            _ = try cmdSet.satodimeGetStatus().checkOK()
-//            print("satodimeStatus: \(cmdSet.satodimeStatus)")
-//            // check for ownership
-//            if let unlockSecret = unlockSecretDict[authentikeyHex]{
-//                cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
-//                print("Found an unlockSecret for this card: \(unlockSecret)")
-//            } else {
-//                print("Found no unlockSecret for this card!")
-//                // TODO: stop here?!
-//            }
-//            let nbKeys = cmdSet.satodimeStatus.maxNumKeys
-//            print("nbKeys: \(nbKeys)")
-//            // todo check indexReset < nbkeys
-//            
-//            //perform action!
-//            if actionParams.action == .sealVault {
-//                do {
-//                    let rapdu = try cmdSet.satodimeSealKey(keyNbr: actionParams.index, entropyUser: actionParams.entropyBytes).checkOK()
-//                    print("SealSlot rapdu: \(rapdu)")
-//                    print("***SealSlot***")
-////                    print("tokenidBytes : \(actionParams.tokenidBytes)")
-////                    print("contractBytes : \(actionParams.contractBytes)")
-//                    let rapdu2 = try cmdSet.satodimeSetKeyslotStatusPart0(
-//                        keyNbr: actionParams.index,
-//                        RFU1: 0x00, RFU2: 0x00, keyAsset: 0x00,
-//                        keySlip44: actionParams.getSlip44(),
-//                        keyContract: [UInt8](),
-//                        keyTokenid: [UInt8]()).checkOK()
-//                    print("setKeyslotStatus rapdu: \(rapdu)")
-//                    // partially update status
-//                    let pubkey = try parser.parseSatodimeGetPubkey(rapdu: rapdu)
-//                    // todo: get Coin()
-//                    DispatchQueue.main.async {
-//                        self.vaultArray[Int(self.actionParams.index)].pubkey = pubkey
-//                        //self.vaultArray[Int(self.actionParams.index)].keyslotStatus.asset = self.actionParams.getAssetByte()
-//                        self.vaultArray[Int(self.actionParams.index)].keyslotStatus.status = 0x01
-//                        self.needsRefresh = true
-//                    }
-//                    sessionForAction?.stop(alertMessage: String(localized: "Vault sealed successfully!"))
-//                    return
-//                } catch {
-//                    print("SealSlot error: \(error)")
-//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to seal vault with error: \(error.localizedDescription)"))
-//                    return
-//                }
-//            }
-//            else if actionParams.action == .unsealVault {
-//                do {
-//                    let rapdu = try cmdSet.satodimeUnsealKey(keyNbr: actionParams.index).checkOK()
-//                    print("UnsealSlot rapdu: \(rapdu)")
-//                    // update status
-//                    DispatchQueue.main.async {
-//                        self.vaultArray[Int(self.actionParams.index)].keyslotStatus.status = 0x02
-//                    }
-//                    sessionForAction?.stop(alertMessage: String(localized: "Vault unsealed successfully!"))
-//                    return
-//                } catch {
-//                    print("UnsealSlot error: \(error)")
-//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to unseal vault with error: \(error.localizedDescription)"))
-//                    return
-//                }
-//            }
-//            else if actionParams.action == .resetVault {
-//                do {
-//                    let rapdu = try cmdSet.satodimeResetKey(keyNbr: actionParams.index).checkOK()
-//                    print("ResetSlot rapdu: \(rapdu)")
-//                    // update corresponding vaultItem
-//                    let satodimeKeyslotStatus = try SatodimeKeyslotStatus(rapdu: cmdSet.satodimeGetKeyslotStatus(keyNbr: actionParams.index).checkOK())
-//                    print("keyslotStatus after reset: \(satodimeKeyslotStatus)")
-//                    // todo: hardcode (unitialized) rapdu?
-//                    let pubkey = [UInt8]()
-//                    var vaultItem = VaultItem(index: actionParams.index, keyslotStatus: satodimeKeyslotStatus)
-//                    vaultItem.pubkey = [UInt8]()
-//                    //vaultItem.address = try vaultItem.coin.pubToAddress(pubkey: pubkey) => bug?? pubkey is []
-//                    //print("address: \(vaultItem.address)")
-//                    DispatchQueue.main.async {
-//                        self.vaultArray[Int(self.actionParams.index)] = vaultItem
-//                    }
-//                    sessionForAction?.stop(alertMessage: String(localized: "Vault reset successfully!"))
-//                    return
-//                } catch {
-//                    print("ResetSlot error: \(error)")
-//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to reset vault slot with error: \(error.localizedDescription)"))
-//                    return
-//                }
-//            }
-//            else if actionParams.action == .getPrivateInfo {
-//                do {
-//                    let rapdu = try cmdSet.satodimeGetPrivkey(keyNbr: actionParams.index).checkOK()
-//                    let privkeyInfo = try parser.parseSatodimeGetPrivkey(rapdu: rapdu)
-//                    // update status
-//                    DispatchQueue.main.async {
-//                        self.vaultArray[Int(self.actionParams.index)].privkey = privkeyInfo.privkey
-//                        self.vaultArray[Int(self.actionParams.index)].entropy = privkeyInfo.entropy
-//                        // todo: remove
-//                        print("Debug CardState privkey: \(self.vaultArray[Int(self.actionParams.index)].privkey)")
-//                        print("Debug CardState entropy: \(self.vaultArray[Int(self.actionParams.index)].entropy)")
-//                    }
-//                    sessionForAction?.stop(alertMessage: String(localized: "Vault privkey recovered successfully!"))
-//                    print("Debug CardState: Vault privkey recovered successfully!")
-//                    return
-//                } catch {
-//                    print("GetPrivkey error: \(error)")
-//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to get vault private key with error: \(error.localizedDescription)"))
-//                    return
-//                }
-//            }
-//            else if actionParams.action == .releaseOwnership {
-//                do {
-//                    let rapdu = try cmdSet.satodimeInitiateOwnershipTransfer().checkOK()
-//                    print("TransferCard rapdu: \(rapdu)")
-//                    isOwner = false
-//                    ownershipStatus = .unclaimed
-//                    // remove pairing secret from user defaults
-//                    unlockSecretDict[authentikeyHex] = nil
-//                    defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
-//                    sessionForAction?.stop(alertMessage: String(localized: "Ownership transfer initiated successfully!"))
-//                    return
-//                } catch {
-//                    print("TransferCard error: \(error)")
-//                    sessionForAction?.stop(errorMessage: String(localized: "Failed to transfer ownership with error: \(error.localizedDescription)"))
-//                    return
-//                }
-//            } else {
-//                // should never happen?
-//                print("Unknown operation requested: \(actionParams.action)")
-//                sessionForAction?.stop(alertMessage: String(localized: "Satodime disconnected"))
-//                print("DEBUG SATODIME - this is the end!")
-//            }
-//            
-//        } catch let error {
-//            print("An error occurred: \(error.localizedDescription)")
-//            sessionForAction?.stop(errorMessage: String(localized: "An error occured: \(error.localizedDescription)"))
-//            return
-//        }
-//        
-//    } // end onConnectionForAction
-    
     ///
     ///
     // MARK: TAKE OWNERSHIP
@@ -484,16 +232,16 @@ class CardState: ObservableObject {
                         // save in defaults
                         var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                         unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
-                        defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
-                        isOwner = true
-                        ownershipStatus = .owner
+                        UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
+                        DispatchQueue.main.async {
+                            self.ownershipStatus = .owner
+                        }
                         cardController?.stop(alertMessage: String(localized: "Card ownership accepted successfully!"))
                         log.info("Card ownership claimed successfully for \(authentikeyHex)!", tag: "CardState.takeOwnership")
                         onSuccess()
                         return
                     } else {
                         // setup already done on card, so not possible to take ownership
-                        print("Card transer already done!")
                         log.warning("Card ownership already claimed for \(authentikeyHex)!", tag: "CardState.takeOwnership")
                         cardController?.stop(alertMessage: String(localized: "nfcTransferAlreadyDone"))
                         onFail()
@@ -548,11 +296,10 @@ class CardState: ObservableObject {
                 // releaseOwnership
                 let rapdu = try cmdSet.satodimeInitiateOwnershipTransfer().checkOK()
                 DispatchQueue.main.async {
-                    self.isOwner = false
                     self.ownershipStatus = .unclaimed
                     // remove pairing secret from user defaults
                     unlockSecretDict[authentikeyHex] = nil
-                    self.defaults.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
+                    UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
                 }
                 cardController?.stop(alertMessage: String(localized: "nfcOwnershipTransferSuccess"))
                 log.info(String(localized: "nfcOwnershipTransferSuccess"), tag: "CardState.releaseOwnership")
@@ -595,7 +342,7 @@ class CardState: ObservableObject {
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
                 // get unlockSecret
-                var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                 if let unlockSecret = unlockSecretDict[authentikeyHex]{
                     cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
                     log.info("Found an unlockSecret for this card!", tag: "CardState.sealVault")
@@ -665,7 +412,7 @@ class CardState: ObservableObject {
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
                 // get unlockSecret
-                var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                 if let unlockSecret = unlockSecretDict[authentikeyHex]{
                     cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
                     log.info("Found an unlockSecret for this card!", tag: "CardState.unsealVault")
@@ -722,7 +469,7 @@ class CardState: ObservableObject {
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
                 // get unlockSecret
-                var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                 if let unlockSecret = unlockSecretDict[authentikeyHex]{
                     cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
                     log.info("Found an unlockSecret for this card!", tag: "CardState.resetVault")
@@ -784,7 +531,7 @@ class CardState: ObservableObject {
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
                 // get unlockSecret
-                var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                 if let unlockSecret = unlockSecretDict[authentikeyHex]{
                     cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
                     log.info("Found an unlockSecret for this card!", tag: "CardState.getPrivateKey")
@@ -816,8 +563,6 @@ class CardState: ObservableObject {
     
     // MARK: ON DISCONNECTION
     func onDisconnection(error: Error) {
-        //print("DEBUG SATODIME - onDisconnection")
-        //print("Connection interrupted due to error: \(error)")
     }
     
     //
@@ -826,7 +571,6 @@ class CardState: ObservableObject {
     
     // todo: divide in subfunctions
     func fetchDataFromWeb(index: Int) async {
-        print("in fetchDataFromWeb START")
         let log = LoggerService.shared
         log.debug("Start fetching data from web for vault \(index)", tag: "CardState.fetchDataFromWeb")
 
@@ -858,7 +602,6 @@ class CardState: ObservableObject {
             balance = try await coinInfo.coin.getBalance(addr: address)
             log.debug("balance for \(address): \(String(describing: balance))", tag: "CardState.fetchDataFromWeb")
             let addressUrl = URL(string: coinInfo.coin.getAddressWebLink(address: address) ?? "")
-            //print ("addressUrl: \(addressUrl)")
             log.debug("addressUrl: \(String(describing: addressUrl))", tag: "CardState.fetchDataFromWeb")
             DispatchQueue.main.async {
                 self.vaultArray[index].balance = balance
@@ -867,22 +610,17 @@ class CardState: ObservableObject {
         } catch {
             balance = nil
             log.error("Failed to fetch balance for \(address) with error: \(error)", tag: "CardState.fetchDataFromWeb")
-            //print("Request failed with error: \(error)")
-            //print("Coin: \(coinInfo.coin.coinSymbol)")
-            //logArrayTmp.append("#\(index): balance request error: \(error)")
             DispatchQueue.main.async {
                 self.vaultArray[index].balance = nil
             }
         }
         
         // fetch exchange rates
-        // if selectedFirstCurrency == coinInfo.coin.coinSymbol, exchange rate == 1, and the coinValueInFirstCurrency == balance
+        // Note: if selectedFirstCurrency == coinInfo.coin.coinSymbol, exchange rate == 1, and the coinValueInFirstCurrency == balance
         if let balance,
             let exchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: coinInfo.coin.coinSymbol, otherCoin: selectedFirstCurrency){
-            print ("exchangeRate: \(exchangeRate1) \(selectedFirstCurrency)")
             log.debug("exchangeRate for \(address): \(String(describing: exchangeRate1)) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
             let coinValue = balance * exchangeRate1
-            print("in fetchDataFromWeb [\(index)] totalValueInFirstCurrency: \(coinValue)")
             log.debug("coinValue for \(address): \(String(describing: coinValue)) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
             DispatchQueue.main.async {
                 self.vaultArray[index].selectedFirstCurrency = selectedFirstCurrency
@@ -892,10 +630,8 @@ class CardState: ObservableObject {
         }
         if let balance,
             let exchangeRate2 = await coinInfo.coin.getExchangeRateBetween(coin: coinInfo.coin.coinSymbol, otherCoin: selectedSecondCurrency){
-            //print ("exchangeRate: \(exchangeRate2) \(selectedSecondCurrency)")
             log.debug("exchangeRate for \(address): \(String(describing: exchangeRate2)) \(selectedSecondCurrency)", tag: "CardState.fetchDataFromWeb")
             let coinValue = balance * exchangeRate2
-            //print("in fetchDataFromWeb [\(index)] totalValueInSecondCurrency: \(coinValue)")
             log.debug("coinValue for \(address): \(String(describing: coinValue)) \(selectedSecondCurrency)", tag: "CardState.fetchDataFromWeb")
             DispatchQueue.main.async {
                 self.vaultArray[index].selectedSecondCurrency = selectedSecondCurrency
@@ -906,7 +642,6 @@ class CardState: ObservableObject {
         
         // get list of token (including nfts)
         let assetList = await coinInfo.coin.getSimpleAssetList(addr: address)
-        print("NfcReader: simpleAssetList: \(assetList)")
         log.debug("simpleAssetList for \(address): \(assetList)", tag: "CardState.fetchDataFromWeb")
         DispatchQueue.main.async {
             self.vaultArray[index].tokenList = assetList
@@ -927,7 +662,6 @@ class CardState: ObservableObject {
                         var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
                         nftMerged["type"] = "nft"
                         nftList.append(nftMerged)
-                        //print("NfcReader: added nftMerged: \(nftMerged)")
                         log.debug("added nft for \(address): \(nftMerged)", tag: "CardState.fetchDataFromWeb")
                     }
                 } else { // token
@@ -935,13 +669,9 @@ class CardState: ObservableObject {
                     assetCopy["type"] = "token"
                     
                     // get price if available
-                    if let tokenBalance = SatodimeUtil.getBalanceDouble(balanceString: asset["balance"], decimalsString: asset["decimals"]), //coinInfo.getTokenBalanceDouble(tokenData: asset),
+                    if let tokenBalance = SatodimeUtil.getBalanceDouble(balanceString: asset["balance"], decimalsString: asset["decimals"]),
                         let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
                         let currencyForExchangeRate = asset["currencyForExchangeRate"] {
-                        
-//                        print("in fetchDataFromWeb [\(index)] tokenBalance: \(tokenBalance)")
-//                        print("in fetchDataFromWeb [\(index)] tokenExchangeRate: \(tokenExchangeRate)")
-//                        print("in fetchDataFromWeb [\(index)] currencyForExchangeRate: \(currencyForExchangeRate)")
                         log.debug("tokenBalance: \(tokenBalance)", tag: "CardState.fetchDataFromWeb")
                         log.debug("tokenExchangeRate: \(tokenExchangeRate) \(currencyForExchangeRate)", tag: "CardState.fetchDataFromWeb")
                         
@@ -949,15 +679,12 @@ class CardState: ObservableObject {
                         // TODO: cache result?
                         if let currencyExchangeRate1 = await coinInfo.coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
                         {
-                            //print("in fetchDataFromWeb [\(index)] currencyExchangeRate1: \(currencyExchangeRate1)")
-                            //print("in fetchDataFromWeb [\(index)] selectedFirstCurrency: \(selectedFirstCurrency)")
                             log.debug("currencyExchangeRate1: \(currencyExchangeRate1) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
                             
                             let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
                             totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
                             assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
                             assetCopy["firstCurrency"] = selectedFirstCurrency
-                            //print("in fetchDataFromWeb tokenValueInFirstCurrency: \(tokenValueInFirstCurrency)")
                             log.debug("tokenValueInFirstCurrency: \(tokenValueInFirstCurrency) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
                         }
                         
@@ -974,13 +701,10 @@ class CardState: ObservableObject {
                     }
                     
                     tokenList.append(assetCopy)
-                    //print("NfcReader: added assetCopy: \(assetCopy)")
                     log.debug("added token for \(address): \(assetCopy)", tag: "CardState.fetchDataFromWeb")
                 } // if nft else token
             } // if contract
         } // for asset
-//        print("in fetchDataFromWeb [\(index)] totalTokenValueInFirstCurrency: \(totalTokenValueInFirstCurrency)")
-//        print("in fetchDataFromWeb [\(index)] totalTokenValueInSecondCurrency: \(totalTokenValueInSecondCurrency)")
         log.debug("totalTokenValueInFirstCurrency for \(address): \(totalTokenValueInFirstCurrency)", tag: "CardState.fetchDataFromWeb")
         log.debug("totalTokenValueInSecondCurrency for \(address): \(totalTokenValueInSecondCurrency)", tag: "CardState.fetchDataFromWeb")
         
@@ -991,11 +715,7 @@ class CardState: ObservableObject {
             self.vaultArray[index].totalTokenValueInSecondCurrency = totalTokenValueInSecondCurrency
             self.vaultArray[index].totalValueInFirstCurrency = (self.vaultArray[index].totalValueInFirstCurrency ?? 0) + totalTokenValueInFirstCurrency
             self.vaultArray[index].totalValueInSecondCurrency = (self.vaultArray[index].totalValueInSecondCurrency ?? 0) + totalTokenValueInSecondCurrency
-//            print("in fetchDataFromWeb [\(index)] totalValueInFirstCurrency END: \(self.vaultArray[index].totalValueInFirstCurrency)")
-//            print("in fetchDataFromWeb [\(index)] totalValueInSecondCurrency END: \(self.vaultArray[index].totalValueInSecondCurrency)")
         }
-//        print("NfcReader: tokenList: \(tokenList)")
-//        print("NfcReader: nftList: \(nftList)")
     }
     
     @MainActor
@@ -1015,16 +735,9 @@ class CardState: ObservableObject {
                     }
                     return
                 }
-                //self.syncLogs()
             }
         }
     }
-    
-//    // TODO: something?
-//    func syncLogs() {
-//        self.logArray.append(contentsOf: self.logArrayTmp)
-//        self.logArrayTmp.removeAll()
-//    }
     
 }
 
