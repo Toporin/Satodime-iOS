@@ -7,13 +7,6 @@
 
 import Foundation
 
-//
-//  NfcReader.swift
-//  Satodime for iOS
-//
-//  Created by Satochip on 17/01/2023.
-//
-
 import Foundation
 import CoreNFC
 import SatochipSwift
@@ -55,7 +48,6 @@ class CardState: ObservableObject {
     @Published var operationRequested = false
     @Published var operationType = ""
     @Published var operationIndex = UInt8(0)
-    //@Published var operationSucceeded = false
     
     // card info?
     @Published var cardStatus: CardStatus? = nil
@@ -771,7 +763,7 @@ class CardState: ObservableObject {
     }
     
     // MARK: GET PRIVKEY
-    func getPrivateKeyNew(cardAuthentikeyHex: String, index: Int, onSuccess: @escaping (PrivateKeyResult) -> Void, onFail: @escaping () -> Void) {
+    func getPrivateKeyNew(cardAuthentikeyHex: String, index: Int, onSuccess: @escaping (SatodimePrivkeyInfo) -> Void, onFail: @escaping () -> Void) {
         let log = LoggerService.shared
         cardController = SatocardController(onConnect: { [weak self] cardChannel in
             guard let self = self else { return }
@@ -803,10 +795,9 @@ class CardState: ObservableObject {
                 let rapdu = try cmdSet.satodimeGetPrivkey(keyNbr: UInt8(index)).checkOK()
                 let privkeyInfo = try parser.parseSatodimeGetPrivkey(rapdu: rapdu)
                 
-                let result = PrivateKeyResult(privkey: privkeyInfo.privkey, entropy: privkeyInfo.entropy) // TODO: merge privkeyInfo & privateKeyResult, or make privkey update directly in method?
                 cardController?.stop(alertMessage: String(localized: "nfcPrivkeyRecoverSuccess"))
                 log.info(String(localized: "nfcPrivkeyRecoverSuccess"), tag: "CardState.getPrivateKey")
-                onSuccess(result)
+                onSuccess(privkeyInfo)
                 return
             } catch {
                 cardController?.stop(errorMessage: "\(String(localized: "nfcPrivkeyRecoverFailed")) \(error.localizedDescription)")

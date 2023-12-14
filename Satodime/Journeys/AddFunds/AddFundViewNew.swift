@@ -45,6 +45,7 @@ struct AddFundsViewNew: View {
                 .ignoresSafeArea()
             
             // VaultCard look
+            // TODO: use a VaultCardNew?
             VStack {
                 ZStack {
                     VStack {

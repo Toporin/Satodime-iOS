@@ -50,7 +50,6 @@
 		D06080702AD98C07001A5749 /* ResetConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D060806F2AD98C07001A5749 /* ResetConfirmationView.swift */; };
 		D065EF5B2AF81CEC006751C5 /* ButtonBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */; };
 		D065EF5D2AF8220A006751C5 /* LoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D065EF5C2AF8220A006751C5 /* LoggerService.swift */; };
-		D07C9C6E2AD834AA005F5917 /* CoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C6D2AD834AA005F5917 /* CoinService.swift */; };
 		D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C702AD84303005F5917 /* AuthenticView.swift */; };
 		D07C9C762AD85272005F5917 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C752AD85271005F5917 /* MenuView.swift */; };
 		D07C9C7A2AD857DD005F5917 /* SealButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C792AD857DD005F5917 /* SealButton.swift */; };
@@ -58,15 +57,12 @@
 		D0825F612ADAE0EF006391D5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F602ADAE0EF006391D5 /* SettingsView.swift */; };
 		D0825F652ADAE595006391D5 /* SettingsToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F642ADAE595006391D5 /* SettingsToggle.swift */; };
 		D0825F672ADAE7AD006391D5 /* PreferencesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F662ADAE7AD006391D5 /* PreferencesService.swift */; };
-		D0825F6A2ADB629A006391D5 /* CardVaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F692ADB629A006391D5 /* CardVaults.swift */; };
 		D0825F712ADD7BCC006391D5 /* SatoChoiceSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */; };
 		D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F722ADD7FC6006391D5 /* SatoInputText.swift */; };
-		D0825F752ADEEB7E006391D5 /* VaultCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F742ADEEB7E006391D5 /* VaultCardViewModel.swift */; };
 		D08CAF8B2AF1534000B6CE55 /* SatoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */; };
 		D08CAF922AF3EDF600B6CE55 /* AddFundsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08CAF912AF3EDF600B6CE55 /* AddFundsButton.swift */; };
 		D0C483992AD8BC2F0085F4B9 /* UnsealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */; };
 		D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */; };
-		D0E1704D2AD6D1EB00C53233 /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1704C2AD6D1EB00C53233 /* ConsoleLogger.swift */; };
 		D0E665682ADAA08200703A8F /* Outfit-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0E665672ADAA08200703A8F /* Outfit-Regular.ttf */; };
 		D0E6656A2ADAAE5F00703A8F /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E665692ADAAE5F00703A8F /* MenuButton.swift */; };
 		D0E6656C2ADAB53700703A8F /* SmallMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6656B2ADAB53700703A8F /* SmallMenuButton.swift */; };
@@ -98,13 +94,11 @@
 		D0F62FC22ACDD5DE0027EFE6 /* InfoBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FC12ACDD5DE0027EFE6 /* InfoBox.swift */; };
 		D0F62FC42ACDE11E0027EFE6 /* SatoToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FC32ACDE11E0027EFE6 /* SatoToggle.swift */; };
 		D0F62FC62ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FC52ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift */; };
-		D0F62FCD2ACEE5D40027EFE6 /* CardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FCC2ACEE5D40027EFE6 /* CardService.swift */; };
 		D0F62FD02ACEEE0C0027EFE6 /* SealStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FCF2ACEEE0C0027EFE6 /* SealStatusView.swift */; };
 		D0F62FD22ACEF1A60027EFE6 /* Outfit-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0F62FD12ACEF1A60027EFE6 /* Outfit-ExtraLight.ttf */; };
 		D0F62FD42ACEF2A80027EFE6 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FD32ACEF2A80027EFE6 /* AddressView.swift */; };
 		D0F62FD62ACEF5040027EFE6 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0F62FD52ACEF5040027EFE6 /* OpenSans-SemiBold.ttf */; };
 		D0F62FD82ACF11FE0027EFE6 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */; };
-		D0F62FDA2ACF13400027EFE6 /* VaultCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FD92ACF13400027EFE6 /* VaultCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,7 +163,6 @@
 		D060806F2AD98C07001A5749 /* ResetConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetConfirmationView.swift; sourceTree = "<group>"; };
 		D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBox.swift; sourceTree = "<group>"; };
 		D065EF5C2AF8220A006751C5 /* LoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerService.swift; sourceTree = "<group>"; };
-		D07C9C6D2AD834AA005F5917 /* CoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinService.swift; sourceTree = "<group>"; };
 		D07C9C702AD84303005F5917 /* AuthenticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticView.swift; sourceTree = "<group>"; };
 		D07C9C752AD85271005F5917 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		D07C9C792AD857DD005F5917 /* SealButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SealButton.swift; sourceTree = "<group>"; };
@@ -177,15 +170,12 @@
 		D0825F602ADAE0EF006391D5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D0825F642ADAE595006391D5 /* SettingsToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsToggle.swift; sourceTree = "<group>"; };
 		D0825F662ADAE7AD006391D5 /* PreferencesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesService.swift; sourceTree = "<group>"; };
-		D0825F692ADB629A006391D5 /* CardVaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardVaults.swift; sourceTree = "<group>"; };
 		D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoChoiceSelector.swift; sourceTree = "<group>"; };
 		D0825F722ADD7FC6006391D5 /* SatoInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoInputText.swift; sourceTree = "<group>"; };
-		D0825F742ADEEB7E006391D5 /* VaultCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardViewModel.swift; sourceTree = "<group>"; };
 		D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoAlert.swift; sourceTree = "<group>"; };
 		D08CAF912AF3EDF600B6CE55 /* AddFundsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFundsButton.swift; sourceTree = "<group>"; };
 		D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsealView.swift; sourceTree = "<group>"; };
 		D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPrivateKeyView.swift; sourceTree = "<group>"; };
-		D0E1704C2AD6D1EB00C53233 /* ConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogger.swift; sourceTree = "<group>"; };
 		D0E665672ADAA08200703A8F /* Outfit-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-Regular.ttf"; sourceTree = "<group>"; };
 		D0E665692ADAAE5F00703A8F /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		D0E6656B2ADAB53700703A8F /* SmallMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallMenuButton.swift; sourceTree = "<group>"; };
@@ -217,13 +207,11 @@
 		D0F62FC12ACDD5DE0027EFE6 /* InfoBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBox.swift; sourceTree = "<group>"; };
 		D0F62FC32ACDE11E0027EFE6 /* SatoToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoToggle.swift; sourceTree = "<group>"; };
 		D0F62FC52ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultSetupCongratsView.swift; sourceTree = "<group>"; };
-		D0F62FCC2ACEE5D40027EFE6 /* CardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardService.swift; sourceTree = "<group>"; };
 		D0F62FCF2ACEEE0C0027EFE6 /* SealStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SealStatusView.swift; sourceTree = "<group>"; };
 		D0F62FD12ACEF1A60027EFE6 /* Outfit-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-ExtraLight.ttf"; sourceTree = "<group>"; };
 		D0F62FD32ACEF2A80027EFE6 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		D0F62FD52ACEF5040027EFE6 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
-		D0F62FD92ACF13400027EFE6 /* VaultCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -405,7 +393,6 @@
 		D0825F682ADB6286006391D5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D0825F692ADB629A006391D5 /* CardVaults.swift */,
 				0D644D482B1A1E05008CB29A /* CardState.swift */,
 			);
 			path = Models;
@@ -526,7 +513,6 @@
 			isa = PBXGroup;
 			children = (
 				D0EB4DFD2AC1DFE400EA83F9 /* Colors.swift */,
-				D0E1704C2AD6D1EB00C53233 /* ConsoleLogger.swift */,
 				D06080642AD94ED2001A5749 /* Views.swift */,
 				D06080682AD980A6001A5749 /* QRCode.swift */,
 				0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */,
@@ -565,8 +551,6 @@
 		D0F62FCB2ACEE5BA0027EFE6 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D0F62FCC2ACEE5D40027EFE6 /* CardService.swift */,
-				D07C9C6D2AD834AA005F5917 /* CoinService.swift */,
 				D0825F662ADAE7AD006391D5 /* PreferencesService.swift */,
 				D065EF5C2AF8220A006751C5 /* LoggerService.swift */,
 			);
@@ -579,9 +563,7 @@
 				D0F62FCF2ACEEE0C0027EFE6 /* SealStatusView.swift */,
 				D0F62FD32ACEF2A80027EFE6 /* AddressView.swift */,
 				D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */,
-				D0F62FD92ACF13400027EFE6 /* VaultCard.swift */,
 				D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */,
-				D0825F742ADEEB7E006391D5 /* VaultCardViewModel.swift */,
 				0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */,
 			);
 			path = VaultCard;
@@ -751,13 +733,11 @@
 				D060805F2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift in Sources */,
 				D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */,
 				D0F62FBC2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift in Sources */,
-				D0F62FDA2ACF13400027EFE6 /* VaultCard.swift in Sources */,
 				D0EB4E182AC24DF600EA83F9 /* AppDelegate.swift in Sources */,
 				D06080672AD9689F001A5749 /* ScanButton.swift in Sources */,
 				D065EF5D2AF8220A006751C5 /* LoggerService.swift in Sources */,
 				0D644D472B14C7C2008CB29A /* Log.swift in Sources */,
 				D0F62FD42ACEF2A80027EFE6 /* AddressView.swift in Sources */,
-				D07C9C6E2AD834AA005F5917 /* CoinService.swift in Sources */,
 				D060805C2AD941AD001A5749 /* ResetButton.swift in Sources */,
 				D0825F5F2ADAE093006391D5 /* SettingsDropdown.swift in Sources */,
 				D060805A2AD94152001A5749 /* ShowKeyButton.swift in Sources */,
@@ -782,14 +762,11 @@
 				D0E6656C2ADAB53700703A8F /* SmallMenuButton.swift in Sources */,
 				D06080632AD949FD001A5749 /* SatoSelectionButton.swift in Sources */,
 				D0E665702ADABCA400703A8F /* CardInfoView.swift in Sources */,
-				D0825F752ADEEB7E006391D5 /* VaultCardViewModel.swift in Sources */,
 				D0F62FC62ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift in Sources */,
 				D0EB4E002AC1E02E00EA83F9 /* Constants.swift in Sources */,
 				D0E665742ADABDF500703A8F /* CardInfoBox.swift in Sources */,
 				D0EB4DF52AC1D5E100EA83F9 /* OnboardingContainerView.swift in Sources */,
-				D0825F6A2ADB629A006391D5 /* CardVaults.swift in Sources */,
 				D0825F672ADAE7AD006391D5 /* PreferencesService.swift in Sources */,
-				D0F62FCD2ACEE5D40027EFE6 /* CardService.swift in Sources */,
 				D06080692AD980A6001A5749 /* QRCode.swift in Sources */,
 				D0F62FC42ACDE11E0027EFE6 /* SatoToggle.swift in Sources */,
 				D0825F612ADAE0EF006391D5 /* SettingsView.swift in Sources */,
@@ -815,7 +792,6 @@
 				D06080652AD94ED2001A5749 /* Views.swift in Sources */,
 				0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */,
 				D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */,
-				D0E1704D2AD6D1EB00C53233 /* ConsoleLogger.swift in Sources */,
 				D060806C2AD9868D001A5749 /* ResetView.swift in Sources */,
 				D0E6656A2ADAAE5F00703A8F /* MenuButton.swift in Sources */,
 				D0EB4E0A2AC222A900EA83F9 /* SatoButton.swift in Sources */,
