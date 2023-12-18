@@ -36,7 +36,8 @@ struct AssetTabView: View {
                         selectedTab = .token
                     }) {
                         VStack {
-                            SatoText(text: "Token (\(getTokenNumber()))", style: .subtitleBold)
+                            //SatoText(text: "Token (\(getTokenNumber()))", style: .subtitleBold)
+                            SatoText(text: "Token \(getTokenNumberString())", style: .subtitleBold)
                             ZStack {
                                 Rectangle().frame(height: 2).foregroundColor(Constants.Colors.separator)
                                 if selectedTab == .token {
@@ -54,7 +55,8 @@ struct AssetTabView: View {
                         }
                     }) {
                         VStack {
-                            SatoText(text: "NFT (\(getNftNumber()))", style: .subtitleBold)
+                            //SatoText(text: "NFT (\(getNftNumber()))", style: .subtitleBold)
+                            SatoText(text: "NFT \(getNftNumberString())", style: .subtitleBold)
                                 .opacity(self.canSelectNFT ? 1 : 0.3)
                             ZStack {
                                 Rectangle().frame(height: 2).foregroundColor(Constants.Colors.separator)
@@ -74,7 +76,8 @@ struct AssetTabView: View {
                 
                 switch selectedTab {
                 case .token:
-                    TokenListViewNew(tokenList: getTokenList(), tokenNative: getTokenNative() )
+                    //TokenListViewNew(tokenList: getTokenList(), tokenNative: getTokenNative() ) // with native token
+                    TokenListViewNew(tokenList: getTokenList() ) // without native token
                         .background(Color.clear)// TODO: different backgrounds for token & nft?
                 case .nft:
                     NftListViewNew(nftList: getNftList())
@@ -98,9 +101,26 @@ struct AssetTabView: View {
     
     func getTokenNumber() -> Int {
         if cardState.vaultArray.count > index {
-            return 1 + (cardState.vaultArray[index].tokenList?.count ?? 0)
+            //return (cardState.vaultArray[index].tokenList?.count ?? 0) + 1 // with native token
+            return (cardState.vaultArray[index].tokenList?.count ?? 0) // without native token
         }
         return 0
+    }
+    
+    func getTokenNumberString() -> String {
+        if cardState.vaultArray.count > index {
+            if let tokenList = cardState.vaultArray[index].tokenList {
+                //return (cardState.vaultArray[index].tokenList?.count ?? 0) + 1 // with native token
+                if tokenList.count > 0 {
+                    return "(\(tokenList.count))" // without native token
+                } else {
+                    return ""
+                }
+            } else {
+                return ""
+            }
+        }
+        return ""
     }
     
     func getNftNumber() -> Int {
@@ -108,6 +128,21 @@ struct AssetTabView: View {
             return cardState.vaultArray[index].nftList?.count ?? 0
         }
         return 0
+    }
+    
+    func getNftNumberString() -> String {
+        if cardState.vaultArray.count > index {
+            if let nftList = cardState.vaultArray[index].nftList {
+                if nftList.count > 0 {
+                    return "(\(nftList.count))"
+                } else {
+                    return ""
+                }
+            } else {
+                return ""
+            }
+        }
+        return ""
     }
     
     func getTokenList() -> [[String:String]] {
@@ -148,13 +183,15 @@ struct AssetTabView: View {
 
 struct TokenListViewNew: View {
     var tokenList: [[String: String]]
-    var tokenNative: [String:String] // todo
+    var tokenNative: [String:String]?
     
     var body: some View {
         VStack {
             // First add native token (coin)
-            TokenCellNew(tokenAsset: tokenNative)
-                .padding([.leading, .trailing], 20)
+            if let tokenNative {
+                TokenCellNew(tokenAsset: tokenNative)
+                    .padding([.leading, .trailing], 20)
+            }
             // Then add the list of tokens
             List(tokenList, id: \.self) { token in
                 TokenCellNew(tokenAsset: token)
