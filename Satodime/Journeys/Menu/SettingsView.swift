@@ -10,6 +10,8 @@ import SwiftUI
 
 struct SettingsView: View {
     // MARK: - Properties
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    
     @State var selectedValue: String = ""
     @State var showingSheet = false
     @State var starterIntroIsOn: Bool = false
@@ -85,6 +87,14 @@ struct SettingsView: View {
             }
         } //ZStack
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action: {
+            DispatchQueue.main.async {
+                self.viewStackHandler.navigationState = .menu //.goBackHome
+            }
+        }) {
+            Image("ic_flipback")
+        })
         .toolbar {
             ToolbarItem(placement: .principal) {
                 SatoText(text: title, style: .lightTitle)
