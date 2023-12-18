@@ -24,14 +24,14 @@ struct ExploreButton: View {
                     Image("ic_link")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 43, height: 47)
+                        .frame(width: 38, height: 38) // .frame(width: 43, height: 47)
                 }
                 .frame(width: 64, height: 64)
                 
                 Spacer()
                     .frame(height: 9)
 
-                SatoText(text: "explore", style: .subtitle)
+                SatoText(text: "exploreBlockchain", style: .subtitle)
             }
         }
     }

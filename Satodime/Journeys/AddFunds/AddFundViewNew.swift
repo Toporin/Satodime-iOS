@@ -45,8 +45,12 @@ struct AddFundsViewNew: View {
                 .ignoresSafeArea()
             
             // VaultCard look
-            // TODO: use a VaultCardNew?
             VStack {
+//                // TODO: use a VaultCardNew?
+//                VaultCardNew(index: UInt8(index), action: {}, useFullWidth: true)
+//                    .shadow(radius: 10)
+//                Spacer()
+                
                 ZStack {
                     VStack {
                         Image(self.getHeaderImageName())

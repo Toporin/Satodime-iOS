@@ -69,5 +69,5 @@ struct SatoAlertView: View {
         .background(Color(hex: 0x27273C))
         .cornerRadius(20)
         .shadow(radius: 10)
-    }
+    }// body
 }
