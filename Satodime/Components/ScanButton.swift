@@ -13,8 +13,8 @@ struct ScanButton: View {
     @State private var animate = false
     @State private var scale = 1.0
     
-    private let initialSize: CGFloat = 64
-    private let maxExpansion: CGFloat = 64 * 2.5
+    private let initialSize: CGFloat = 85 //64
+    private let maxExpansion: CGFloat = 85 * 2.5 //64 * 2.5
     let delay: Double = 0.5
     let maxScale = 1.5
 
@@ -36,7 +36,7 @@ struct ScanButton: View {
                     .frame(width: initialSize, height: initialSize)
                     .shadow(radius: 10)
                 
-                Text("Click to scan") // Text("Scan")
+                Text("Click\n&\nScan") // Text("Scan")
                     .foregroundColor(.white)
                     .fontWeight(.bold)
                     .frame(minWidth: 0, maxWidth: .infinity)
