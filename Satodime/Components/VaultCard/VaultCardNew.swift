@@ -61,6 +61,17 @@ struct VaultCardNew: View {
                                 generator.impactOccurred()
                             }
                         }
+                        // EXPLORER Button
+                        if let weblinkUrl = cardState.vaultArray[Int(index)].addressUrl {
+                            Button(action: {
+                                UIApplication.shared.open(weblinkUrl)
+                            }) {
+                                Image("ic_link")
+                                    .resizable()
+                                    .frame(width: 32, height: 32)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
                     }
                     .padding(.top, 20)
                     
