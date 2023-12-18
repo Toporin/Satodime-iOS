@@ -65,16 +65,25 @@ class CardState: ObservableObject {
     
     // TODO: put in SatochipSwift.CardStatus
     func getCardVersionInt(cardStatus: CardStatus) -> Int {
-        return Int(cardStatus.protocolMajorVersion) * 256^3 +
-                Int(cardStatus.protocolMinorVersion) * 256^2 +
-                Int(cardStatus.appletMajorVersion) * 256 +
+        return Int(cardStatus.protocolMajorVersion) * (1<<24) +
+                Int(cardStatus.protocolMinorVersion) * (1<<16) +
+                Int(cardStatus.appletMajorVersion) * (1<<8) +
                 Int(cardStatus.appletMinorVersion)
     }
     
     func scan(){
         //print("NfcReader scan()")
+        DispatchQueue.main.async {
+            // reset cardState info
+            self.ownershipStatus = .unknown
+            self.certificateCode = PkiReturnCode.unknown
+            self.authentikeyHex = ""
+            // clear vaultArray before populating it
+            self.isCardDataAvailable = false
+            self.vaultArray.removeAll()
+        }
         session = SatocardController(onConnect: onConnection, onFailure: onDisconnection)
-        session?.start(alertMessage: String(localized: "Hold your Satodime near iPhone"))
+        session?.start(alertMessage: String(localized: "nfcHoldSatodime"))
     }
     
     //Card connection
@@ -101,6 +110,7 @@ class CardState: ObservableObject {
                     self.ownershipStatus = .unclaimed
                 }
                 // check version: v0.1-0.1 cannot proceed further without setup first
+                print("DEBUG CardVersionInt: \(getCardVersionInt(cardStatus: cardStatus))")
                 if getCardVersionInt(cardStatus: cardStatus) <= 0x00010001 {
                     session?.stop(alertMessage: String(localized: "nfcSatodimeNeedsSetup"))
                     log.warning("Satodime v0.1-0.1 requires user to claim ownership to continue!", tag: "CardState.onConnection")
@@ -144,20 +154,20 @@ class CardState: ObservableObject {
                     self.ownershipStatus = .owner
                 }
                 log.info("Found an unlockSecret for this card", tag: "CardState.onConnection")
-            } else {
+            } else if self.ownershipStatus == .unknown {
                 DispatchQueue.main.async {
                     self.ownershipStatus = .notOwner
                 }
                 log.warning("Found no unlockSecret for this card!", tag: "CardState.onConnection")
-            }
+            } // if self.ownershipStatus == .unclaimed, do nothing
             
             // iterate on each vault
             let nbKeys = satodimeStatus.maxNumKeys
             let satodimeKeysState = satodimeStatus.satodimeKeysState
-            DispatchQueue.main.async {   // <====
-                // clear vaultArray before populating it
-                self.isCardDataAvailable = false
-                self.vaultArray.removeAll()
+            DispatchQueue.main.async {
+//                // clear vaultArray before populating it
+//                self.isCardDataAvailable = false
+//                self.vaultArray.removeAll()
                 self.vaultArray.reserveCapacity(nbKeys)
             }
             for index in 0 ..< nbKeys {
@@ -367,6 +377,8 @@ class CardState: ObservableObject {
                 let address = try vaultItem.coin.pubToAddress(pubkey: pubkey)
                 vaultItem.address = address
                 vaultItem.balance = 0.0
+                vaultItem.coinValueInSecondCurrency = 0.0
+                vaultItem.selectedSecondCurrency = UserDefaults.standard.object(forKey: Constants.Storage.secondCurrency) as? String ?? "USD"
                 
                 // todo: get Coin()
                 DispatchQueue.main.async {
@@ -588,7 +600,8 @@ class CardState: ObservableObject {
 //            //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
 //            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
 //            //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
-//            address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+//            //address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+//            address = "0x2c4ebd4b21736e992f3efeb55de37ae66457199d" // grolex nft
 //            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
 //        } else if coinInfo.coin.coinSymbol == "BNB" {
 //            address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
