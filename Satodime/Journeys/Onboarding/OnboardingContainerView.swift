@@ -39,6 +39,7 @@ struct OnboardingContainerView: View {
         viewStackHandler.navigationState = .goBackHome
     }
     
+    // MARK: - Body
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack(spacing: 0) {
