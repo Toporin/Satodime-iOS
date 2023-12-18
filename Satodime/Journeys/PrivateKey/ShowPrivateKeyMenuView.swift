@@ -53,6 +53,7 @@ struct ShowPrivateKeyMenuView: View {
                 
                 VaultCardNew(index: UInt8(index), action: {}, useFullWidth: true)
                     .padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
+                    //.shadow(radius: 10) //TODO: shadow
                 
                 Spacer()
                     .frame(height: 27)
@@ -75,7 +76,9 @@ struct ShowPrivateKeyMenuView: View {
                                                     self.cardState.vaultArray[index].privkey = privkeyInfo.privkey
                                                     self.cardState.vaultArray[index].entropy = privkeyInfo.entropy
                                                     self.selectedMode = mode
-                                                    //self.isKeyViewPresented = true //TODO: view is only shown temporary?
+                                                }
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                    self.isKeyViewPresented = true // without delay, view is only shown temporarily
                                                 }
                                             },
                                             onFail: {
