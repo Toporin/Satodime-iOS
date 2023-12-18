@@ -13,6 +13,9 @@ struct AuthenticView: View {
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
+    @State var shouldShowDeviceInfo = false
+    @State var shouldShowSubcaInfo = false
+    
     // MARK: Helpers
     func getReasonFromPkiReturnCode(pkiReturnCode: PkiReturnCode) -> String {
         switch(pkiReturnCode) {
@@ -107,60 +110,120 @@ struct AuthenticView: View {
                     Spacer()
                         .frame(height: 33)
                     
-                    // CERTIFICATE DETAILS
-                    HStack {
-                        Text("deviceInfo")
-                            .foregroundColor(.white)
-                            .font(.title2)
-                        Image(systemName: "doc.on.doc")
-                            .foregroundColor(.white)
-                            .onTapGesture(count: 1) {
-                                UIPasteboard.general.string = getCertificateInfo(cardState: cardState)
-                                let generator = UIImpactFeedbackGenerator(style: .medium)
-                                generator.prepare()
-                                generator.impactOccurred()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                    generator.impactOccurred()
-                                }
-                            }
-                    }
+//                    // CERTIFICATE DETAILS
+//                    HStack {
+//                        Text("deviceInfo")
+//                            .foregroundColor(.white)
+//                            .font(.title2)
+//                        Image(systemName: "doc.on.doc")
+//                            .foregroundColor(.white)
+//                            .onTapGesture(count: 1) {
+//                                UIPasteboard.general.string = getCertificateInfo(cardState: cardState)
+//                                let generator = UIImpactFeedbackGenerator(style: .medium)
+//                                generator.prepare()
+//                                generator.impactOccurred()
+//                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                                    generator.impactOccurred()
+//                                }
+//                            }
+//                    }
                     
                     // DEVICE CERT
-                    VStack {
-                        Text("Pubkey: \(cardState.certificateDic["devicePubkey"] ?? "(none)")")
-                            .foregroundColor(.white)
-                            .padding(15)
-                        //Text("Signature: \(cardState.certificateDic["deviceSig"] ?? "(none)")")
-                            //.foregroundColor(.white)
-                        Text("PEM: \(cardState.certificateDic["devicePem"] ?? "(none)")")
-                            .foregroundColor(.white)
-                            .padding(15)
+                    CardInfoBox(
+                        text: self.shouldShowDeviceInfo ? "hideDeviceCert" : "showDeviceCert",
+                        backgroundColor: cardState.certificateCode == .success ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed)
+                    {
+                        self.shouldShowDeviceInfo.toggle()
                     }
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(cardState.certificateCode == .success ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed, lineWidth: 4)
-                            .padding(15)
-                    )
+                        .padding([.leading, .trailing], 57)
                     
-                    // SUBCA CERT
-                    Text("subcaInfo")
-                        .foregroundColor(.white)
-                        .font(.title2)
-                    VStack {
-                        Text("Pubkey: \(cardState.certificateDic["subcaPubkey"] ?? "(none)")")
-                            .foregroundColor(.white)
-                            .padding(15)
-                        Text("PEM: \(cardState.certificateDic["subcaPem"] ?? "(none)")")
-                            .foregroundColor(.white)
-                            .padding(15)
+                    if self.shouldShowDeviceInfo {
+                        VStack {
+                            
+                            HStack {
+                                Text("copyToClipboard")
+                                    .foregroundColor(.white)
+                                    .font(.subheadline)
+                                    .padding(15)
+                                Image(systemName: "doc.on.doc")
+                                    .foregroundColor(.white)
+                                    .onTapGesture(count: 1) {
+                                        UIPasteboard.general.string = getCertificateInfo(cardState: cardState)
+                                        let generator = UIImpactFeedbackGenerator(style: .medium)
+                                        generator.prepare()
+                                        generator.impactOccurred()
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                            generator.impactOccurred()
+                                        }
+                                    }
+                            }
+                            
+                            Text("Pubkey: \n\(cardState.certificateDic["devicePubkey"] ?? "(none)")")
+                                .foregroundColor(.white)
+                                .font(.subheadline)
+                                .padding(15)
+
+                            Text("PEM: \n\(cardState.certificateDic["devicePem"] ?? "(none)")")
+                                .foregroundColor(.white)
+                                .font(.subheadline)
+                                .padding(15)
+                        }
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(cardState.certificateCode == .success ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed, lineWidth: 4)
+                                .padding(15)
+                        )
                     }
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(cardState.certificateCode == .success ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed, lineWidth: 4)
-                            .padding(15)
-                    )
+                    
+                    Spacer()
+                        .frame(height: 33)
+                    
+                    CardInfoBox(
+                        text: self.shouldShowSubcaInfo ? "hideSubcaCert" : "showSubcaCert",
+                        backgroundColor: cardState.certificateCode == .success ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed)
+                    {
+                        self.shouldShowSubcaInfo.toggle()
+                    }
+                        .padding([.leading, .trailing], 57)
+                    
+                    if self.shouldShowSubcaInfo {
+                        VStack {
+                            HStack {
+                                Text("copyToClipboard")
+                                    .foregroundColor(.white)
+                                    .font(.subheadline)
+                                    .padding(15)
+                                Image(systemName: "doc.on.doc")
+                                    .foregroundColor(.white)
+                                    .onTapGesture(count: 1) {
+                                        UIPasteboard.general.string = getCertificateInfo(cardState: cardState)
+                                        let generator = UIImpactFeedbackGenerator(style: .medium)
+                                        generator.prepare()
+                                        generator.impactOccurred()
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                            generator.impactOccurred()
+                                        }
+                                    }
+                            }
+                            
+                            Text("Pubkey: \(cardState.certificateDic["subcaPubkey"] ?? "(none)")")
+                                .foregroundColor(.white)
+                                .font(.subheadline)
+                                .padding(15)
+                            
+                            Text("PEM: \(cardState.certificateDic["subcaPem"] ?? "(none)")")
+                                .foregroundColor(.white)
+                                .font(.subheadline)
+                                .padding(15)
+                        }
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(cardState.certificateCode == .success ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed, lineWidth: 4)
+                                .padding(15)
+                        )
+                    }
                     
                 } // VStack
             }// ScrollView
