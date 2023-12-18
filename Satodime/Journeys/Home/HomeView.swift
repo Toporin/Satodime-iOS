@@ -38,9 +38,11 @@ struct HomeView: View {
     @State private var currentSlotIndex: Int = 0
     
     // let user disable specific alert prompts for the current app session
-    @State var showTakeOwnershipAlert: Bool = true
     @State var showNotOwnerAlert: Bool = true
     @State var showNotAuthenticAlert: Bool = true
+    @State var showCardNeedsToBeScannedAlert: Bool = false
+    // show the TakeOwnershipView if card is unclaimed, this is transmitted with CardInfoView
+    @State var showTakeOwnershipAlert: Bool = true
     
     // MARK: - Literals
     let viewTitle: String = "vaults"
@@ -69,9 +71,18 @@ struct HomeView: View {
                         // UI: Logo + vault title + refresh button + 3-dots menu
                         HStack {
                             
-                            // Logo
+                            // Logo with authenticity status
                             SatoStatusView()
                                 .padding(.leading, 22)
+                                .onTapGesture(count: 1){
+                                    if !self.cardState.hasReadCard() {
+                                        showCardNeedsToBeScannedAlert = true
+                                    } else {
+                                        DispatchQueue.main.async {
+                                            self.viewStackHandler.navigationState = .cardAuthenticity
+                                        }
+                                    }
+                                }
                             
                             Spacer()
                             
@@ -86,6 +97,15 @@ struct HomeView: View {
                                     Task {
                                         await cardState.executeQuery()
                                     }
+                                    // reset flag when scanning a new card
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        showTakeOwnershipAlert = true
+                                        showNotOwnerAlert = true
+                                        showNotAuthenticAlert = true
+                                    }
+//                                    showTakeOwnershipAlert = true
+//                                    showNotOwnerAlert = true
+//                                    showNotAuthenticAlert = true
                                 }) {
                                     Image("ic_refresh")
                                         .resizable()
@@ -158,13 +178,13 @@ struct HomeView: View {
                                         self.navigateTo(destination: .addFunds)
                                     }
                                     
-                                    ExploreButton {
-                                        let address = cardState.vaultArray[currentSlotIndex].address
-                                        if let weblink = cardState.vaultArray[currentSlotIndex].coin.getAddressWebLink(address: address),
-                                            let weblinkUrl = URL(string: weblink) {
-                                            UIApplication.shared.open(weblinkUrl)
-                                        }
-                                    }
+//                                    ExploreButton {
+//                                        let address = cardState.vaultArray[currentSlotIndex].address
+//                                        if let weblink = cardState.vaultArray[currentSlotIndex].coin.getAddressWebLink(address: address),
+//                                            let weblinkUrl = URL(string: weblink) {
+//                                            UIApplication.shared.open(weblinkUrl)
+//                                        }
+//                                    }
                                     
                                 }
                                 
@@ -200,9 +220,16 @@ struct HomeView: View {
                     
                     // MARK: - NAVIGATION
                     
+                    // NAVIGATION - BASED ON STATE
+                    // if card is unclaimed, propose to take ownership (only once per card scan)
+                    if self.cardState.ownershipStatus == .unclaimed {
+                        NavigationLink("", destination: TakeOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: $showTakeOwnershipAlert)
+                            .hidden()
+                    }
+                    
                     // NAVIGATION - CONFIG SCREENS
                     if self.viewStackHandler.navigationState == .menu {
-                        NavigationLink("", destination: MenuView(), isActive: .constant(true)).hidden()
+                        NavigationLink("", destination: MenuView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: .constant(true)).hidden()
                     }
                     if self.viewStackHandler.navigationState == .onboarding {
                         NavigationLink("", destination: OnboardingContainerView(), isActive: .constant(true)).hidden()
@@ -213,13 +240,16 @@ struct HomeView: View {
                     if self.viewStackHandler.navigationState == .cardInfo {
                         NavigationLink("", destination: CardInfoView(), isActive: .constant(true)).hidden()
                     }
+                    if self.viewStackHandler.navigationState == .settings {
+                        NavigationLink("", destination: SettingsView(), isActive: .constant(true)).hidden()
+                    }
                     if self.viewStackHandler.navigationState == .addFunds {
                         NavigationLink("", destination: AddFundsViewNew(index: currentSlotIndex), isActive: .constant(true)).hidden()
                     }
                     
                     // NAVIGATION - CARD ACTION SCREENS
                     if self.viewStackHandler.navigationState == .takeOwnership {
-                        NavigationLink("", destination: TakeOwnershipView(), isActive: .constant(true)).hidden()
+                        NavigationLink("", destination: TakeOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: .constant(true)).hidden()
                     }
                     if self.viewStackHandler.navigationState == .vaultInitialization {
                         NavigationLink("", destination: VaultSetupSelectChainView(index: currentSlotIndex), isActive: .constant(true)).hidden()
@@ -248,10 +278,13 @@ struct HomeView: View {
                                 Spacer()
                                 
                                 ScanButton {
-                                    //viewModel.startReadingCard()
                                     Task {
                                         await cardState.executeQuery()
                                     }
+                                    // reset flag when scanning a new card
+                                    showTakeOwnershipAlert = true
+                                    showNotOwnerAlert = true
+                                    showNotAuthenticAlert = true
                                 }
                                 
                                 Spacer()
@@ -304,35 +337,65 @@ struct HomeView: View {
                             }
                         } // if showNotOwnerAlert
                         
-                        // Alert: card ownership is available to claim
-                        else if self.cardState.ownershipStatus == .unclaimed && showTakeOwnershipAlert == true {
-                            SatoAlertView(
-                                isPresented: $showTakeOwnershipAlert,
-                                alert: SatoAlert(
-                                    title: "takeOwnershipAlert",
-                                    message: "takeOwnershipText",
-                                    buttonTitle: String(localized:"goToTakeOwnershipScreen"),
-                                    buttonAction: {
-                                        self.viewStackHandler.navigationState = .takeOwnership
-                                    }
-                                )
-                            )
-                        }// take ownership alert
+//                        // Alert: card ownership is available to claim
+//                        else if self.cardState.ownershipStatus == .unclaimed && showTakeOwnershipAlert == true {
+//                            SatoAlertView(
+//                                isPresented: $showTakeOwnershipAlert,
+//                                alert: SatoAlert(
+//                                    title: "takeOwnershipAlert",
+//                                    message: "takeOwnershipText",
+//                                    buttonTitle: String(localized:"goToTakeOwnershipScreen"),
+//                                    buttonAction: {
+//                                        self.viewStackHandler.navigationState = .takeOwnership
+//                                    }
+//                                )
+//                            )
+//                        }// take ownership alert
                         
                         // Alert: show authenticity issue
                         if self.cardState.hasReadCard() && self.cardState.certificateCode != .success && showNotAuthenticAlert == true {
-                            SatoAlertView(
-                                isPresented: $showNotAuthenticAlert,
-                                alert: SatoAlert(
-                                    title: "notAuthenticTitle",
-                                    message: "notAuthenticText",
-                                    buttonTitle: String(localized:"goToNotAuthenticScreen"),
-                                    buttonAction: {
-                                        self.viewStackHandler.navigationState = .cardInfo
+                            ZStack {
+                                Color.black.opacity(0.4)
+                                    .ignoresSafeArea()
+                                    .onTapGesture {
+                                        showNotOwnerAlert = false
                                     }
+                                SatoAlertView(
+                                    isPresented: $showNotAuthenticAlert,
+                                    alert: SatoAlert(
+                                        title: "notAuthenticTitle",
+                                        message: "notAuthenticText",
+                                        buttonTitle: String(localized:"goToNotAuthenticScreen"),
+                                        buttonAction: {
+                                            self.viewStackHandler.navigationState = .cardInfo
+                                        }
+                                    )
                                 )
-                            )
+                                .padding([.leading, .trailing], 24)
+                            }//ZStack
                         }// authenticity alert
+                        
+                        // Alert: no card scanned
+                        if showCardNeedsToBeScannedAlert {
+                            ZStack {
+                                Color.black.opacity(0.4)
+                                    .ignoresSafeArea()
+                                    .onTapGesture {
+                                        showNotOwnerAlert = false
+                                    }
+                                SatoAlertView(
+                                    isPresented: $showCardNeedsToBeScannedAlert,
+                                    alert: SatoAlert(
+                                        title: "cardNeedToBeScannedTitle",
+                                        message: "cardNeedToBeScannedMessage",
+                                        buttonTitle: "",
+                                        buttonAction: {},
+                                        isMoreInfoBtnVisible: false
+                                    )
+                                )
+                                .padding([.leading, .trailing], 24)
+                            }//ZStack
+                        }// no card scanned alert
                         
                     }// Group
                 ) //overlay

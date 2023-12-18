@@ -13,6 +13,8 @@ struct TransferOwnershipView: View {
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     
+    @Binding var showTakeOwnershipAlert: Bool // Binding to flags for showing TakeOwnershipView
+    
     // MARK: - Literals
     let title = "transferOwner"
     let subtitle = "transferOwnershipDescription"
@@ -36,6 +38,7 @@ struct TransferOwnershipView: View {
                 Spacer()
                 
                 SatoButton(staticWidth: 196, text: transferButtonTitle, style: .confirm, horizontalPadding: 60) {
+                    showTakeOwnershipAlert = false // reset flag to avoid user being asked to take ownership just after releasing it
                     cardState.releaseOwnership(
                         cardAuthentikeyHex: cardState.authentikeyHex,
                         onSuccess: {
@@ -53,8 +56,11 @@ struct TransferOwnershipView: View {
                 Spacer()
                     .frame(height: 37)
                 
-                SatoButton(staticWidth: 196, text: "cancelButtonTitle", style: .confirm, horizontalPadding: 60) {
-                    self.viewStackHandler.navigationState = .goBackHome
+                SatoButton(staticWidth: 196, text: String(localized: "cancel"), style: .danger, horizontalPadding: 60) {
+                    showTakeOwnershipAlert = false // disable so that user is not asked again?
+                    DispatchQueue.main.async {
+                        self.viewStackHandler.navigationState = .cardInfo //.goBackHome
+                    }
                 }
                 
                 Spacer()
@@ -65,7 +71,10 @@ struct TransferOwnershipView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            self.viewStackHandler.navigationState = .goBackHome
+            showTakeOwnershipAlert = false // disable so that user is not asked again?
+            DispatchQueue.main.async {
+                self.viewStackHandler.navigationState = .cardInfo //.goBackHome
+            }
         }) {
             Image("ic_flipback")
         })

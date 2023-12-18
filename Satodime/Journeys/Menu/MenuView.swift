@@ -28,8 +28,10 @@ struct MenuView: View {
     @State var shouldShowTransferOwnership: Bool = false
     @State var shouldShowSettings: Bool = false
     @State var showNotOwnerAlert: Bool = false
-    @State var showTakeOwnershipAlert: Bool = false
     @State var showCardNeedsToBeScannedAlert: Bool = false
+    //@State var showTakeOwnershipAlert: Bool = false
+    @State var shouldShowTakeOwnership: Bool = false
+    @Binding var showTakeOwnershipAlert : Bool
     
     // MARK: - Litterals
     let notOwnerAlert = SatoAlert(
@@ -48,14 +50,15 @@ struct MenuView: View {
     let cardNeedToBeScannedAlert = SatoAlert(
         title: "cardNeedToBeScannedTitle",
         message: "cardNeedToBeScannedMessage",
-        buttonTitle: String(localized:"moreInfo"),
+        buttonTitle: "", //String(localized:"moreInfo"),
         buttonAction: {
-            guard let url = URL(string: "https://satochip.io") else {
-                print("Invalid URL")
-                return
-            }
-            UIApplication.shared.open(url)
-        }
+//            guard let url = URL(string: "https://satochip.io") else {
+//                print("Invalid URL")
+//                return
+//            }
+//            UIApplication.shared.open(url)
+        },
+        isMoreInfoBtnVisible: false
     )
     
     // MARK: - Helpers
@@ -118,7 +121,8 @@ struct MenuView: View {
                                     print("debug: show release ownership view!")
                                 } else if cardState.ownershipStatus == .unclaimed {
                                     // TODO: take ownership?
-                                    self.showTakeOwnershipAlert = true
+                                    // self.showTakeOwnershipAlert = true
+                                    self.shouldShowTakeOwnership = true
                                     print("debug: show take ownership view!")
                                 } else {
                                     self.showCardNeedsToBeScannedAlert = true
@@ -214,7 +218,13 @@ struct MenuView: View {
                 }
                 
                 NavigationLink(
-                    destination: TransferOwnershipView(), isActive: $shouldShowTransferOwnership) {
+                    destination: TransferOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: $shouldShowTransferOwnership) {
+                    EmptyView()
+                }
+                
+                NavigationLink(
+                    //destination: TakeOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: $showTakeOwnershipAlert)
+                    destination: TakeOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: $shouldShowTakeOwnership) {
                     EmptyView()
                 }
                 
@@ -238,28 +248,28 @@ struct MenuView: View {
                             .padding([.leading, .trailing], 24)
                     }
                 }
-                else if showTakeOwnershipAlert {
-                    ZStack {
-                        Color.black.opacity(0.4)
-                            .ignoresSafeArea()
-                            .onTapGesture {
-                                showTakeOwnershipAlert = false
-                            }
-                        
-                        SatoAlertView(
-                            isPresented: $showTakeOwnershipAlert,
-                            alert: SatoAlert(
-                                title: "takeOwnership",
-                                message: "takeOwnershipText",
-                                buttonTitle: String(localized:"goToTakeOwnershipScreen"),
-                                buttonAction: {
-                                    self.viewStackHandler.navigationState = .takeOwnership
-                                }
-                            )
-                        )
-                            .padding([.leading, .trailing], 24)
-                    }
-                }
+//                else if showTakeOwnershipAlert {
+//                    ZStack {
+//                        Color.black.opacity(0.4)
+//                            .ignoresSafeArea()
+//                            .onTapGesture {
+//                                showTakeOwnershipAlert = false
+//                            }
+//                        
+//                        SatoAlertView(
+//                            isPresented: $showTakeOwnershipAlert,
+//                            alert: SatoAlert(
+//                                title: "takeOwnership",
+//                                message: "takeOwnershipText",
+//                                buttonTitle: String(localized:"goToTakeOwnershipScreen"),
+//                                buttonAction: {
+//                                    self.viewStackHandler.navigationState = .takeOwnership
+//                                }
+//                            )
+//                        )
+//                            .padding([.leading, .trailing], 24)
+//                    }
+//                }
                 else if showCardNeedsToBeScannedAlert {
                     ZStack {
                         Color.black.opacity(0.4)
