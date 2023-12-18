@@ -113,7 +113,7 @@ struct VaultSetupCreateView: View {
                     
                     SettingsToggle(
                         title: "switchToExpertMode",
-                        backgroundColor: Constants.Colors.blueMenuButton,
+                        backgroundColor: Constants.Colors.cellBackground,
                         isOn: $isExpertModeActivated,
                         onToggle: { newValue in
                             // do nothing
@@ -121,12 +121,13 @@ struct VaultSetupCreateView: View {
                     )
                     
                     Spacer()
+                        .frame(height: 22)
                     
                     // expert mode
                     if isExpertModeActivated {
                         
-                        Spacer()
-                            .frame(height: 37)
+//                        Spacer()
+//                            .frame(height: 22)
                         
                         HStack {
                             SatoText(text: networkChoiceSystem, style: .subtitle, alignment: .leading)
@@ -158,9 +159,12 @@ struct VaultSetupCreateView: View {
                         }.padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
                         
                         Spacer()
-                            .frame(height: 15)
+                            .frame(height: 22)
                         
                         SatoInputText(text: $entropy, placeholder: entropyPlaceholder)
+                        
+                        Spacer()
+                            .frame(height: 22)
                         
                     } // end isExpertModeActivated
                     
