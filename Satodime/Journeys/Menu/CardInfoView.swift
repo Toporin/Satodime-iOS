@@ -23,7 +23,7 @@ struct CardInfoView: View {
     let ownerTitle = "cardOwnershipStatus"
     let ownerText = "youAreTheCardOwner"
     let notOwnerText = "youAreNotTheCardOwner"
-    let unclaimedOwnershipText = "The card has no owner, you can take ownership" //todo translation
+    let unclaimedOwnershipText = "cardHasNoOwner"
     let unknownOwnershipText = "Scan card to get ownership status"
     
     let cardVersionTitle = "cardVersion"
@@ -43,7 +43,7 @@ struct CardInfoView: View {
         case .unclaimed:
             return unclaimedOwnershipText
         case .unknown:
-            return unknownOwnershipText
+            return unknownOwnershipText // should not happen
         }
     }
     
