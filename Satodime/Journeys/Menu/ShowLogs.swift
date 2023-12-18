@@ -88,7 +88,9 @@ struct ShowLogs: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            self.viewStackHandler.navigationState = .goBackHome
+            DispatchQueue.main.async {
+                self.viewStackHandler.navigationState = .settings //.goBackHome
+            }
         }) {
             Image("ic_flipback")
         })
