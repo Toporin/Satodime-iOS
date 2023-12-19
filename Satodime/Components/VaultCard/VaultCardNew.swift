@@ -34,7 +34,8 @@ struct VaultCardNew: View {
                 Image(backgroundImageName())
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
+                    //.frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
+                    .frame(maxWidth: useFullWidth ? .infinity : 280, minHeight: 197, maxHeight: 197)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
@@ -43,7 +44,8 @@ struct VaultCardNew: View {
                 
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(Color.black.opacity(0.1))
-                    .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
+                    //.frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
+                    .frame(maxWidth: useFullWidth ? .infinity : 280, minHeight: 197, maxHeight: 197)
                 
                 VStack {
                     HStack {
