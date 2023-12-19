@@ -36,7 +36,6 @@ struct AssetTabView: View {
                         selectedTab = .token
                     }) {
                         VStack {
-                            //SatoText(text: "Token (\(getTokenNumber()))", style: .subtitleBold)
                             SatoText(text: "Token \(getTokenNumberString())", style: .subtitleBold)
                             ZStack {
                                 Rectangle().frame(height: 2).foregroundColor(Constants.Colors.separator)
@@ -55,7 +54,6 @@ struct AssetTabView: View {
                         }
                     }) {
                         VStack {
-                            //SatoText(text: "NFT (\(getNftNumber()))", style: .subtitleBold)
                             SatoText(text: "NFT \(getNftNumberString())", style: .subtitleBold)
                                 .opacity(self.canSelectNFT ? 1 : 0.3)
                             ZStack {
@@ -76,8 +74,8 @@ struct AssetTabView: View {
                 
                 switch selectedTab {
                 case .token:
-                    //TokenListViewNew(tokenList: getTokenList(), tokenNative: getTokenNative() ) // with native token
-                    TokenListViewNew(tokenList: getTokenList() ) // without native token
+                    TokenListViewNew(tokenList: getTokenList(), tokenNative: getTokenNative() ) // with native token
+                    //TokenListViewNew(tokenList: getTokenList() ) // without native token
                         .background(Color.clear)// TODO: different backgrounds for token & nft?
                 case .nft:
                     NftListViewNew(nftList: getNftList())
@@ -88,8 +86,10 @@ struct AssetTabView: View {
                 }
             }
             .background(Color.clear)
-        }
+        } //ZStack
     } // body
+    
+    // MARK: - Helpers
     
     func convertOptDoubleToString(balanceDouble: Double?) -> String {
         if let balanceDouble = balanceDouble {
@@ -99,50 +99,38 @@ struct AssetTabView: View {
         }
     }
     
-    func getTokenNumber() -> Int {
-        if cardState.vaultArray.count > index {
-            //return (cardState.vaultArray[index].tokenList?.count ?? 0) + 1 // with native token
-            return (cardState.vaultArray[index].tokenList?.count ?? 0) // without native token
-        }
-        return 0
-    }
-    
     func getTokenNumberString() -> String {
+        var count = 0
         if cardState.vaultArray.count > index {
+            if let balance = cardState.vaultArray[index].balance, balance > 0 {
+                print("DEBUG AssetTabView balance >0!!")
+                count+=1
+            }
             if let tokenList = cardState.vaultArray[index].tokenList {
-                //return (cardState.vaultArray[index].tokenList?.count ?? 0) + 1 // with native token
-                if tokenList.count > 0 {
-                    return "(\(tokenList.count))" // without native token
-                } else {
-                    return ""
-                }
-            } else {
-                return ""
+                count += tokenList.count
             }
         }
-        return ""
-    }
-    
-    func getNftNumber() -> Int {
-        if cardState.vaultArray.count > index {
-            return cardState.vaultArray[index].nftList?.count ?? 0
+        
+        if count>0 {
+            return "(\(count))"
+        } else {
+            return ""
         }
-        return 0
     }
     
     func getNftNumberString() -> String {
+        var count = 0
         if cardState.vaultArray.count > index {
             if let nftList = cardState.vaultArray[index].nftList {
-                if nftList.count > 0 {
-                    return "(\(nftList.count))"
-                } else {
-                    return ""
-                }
-            } else {
-                return ""
+                count += nftList.count
             }
         }
-        return ""
+        
+        if count > 0 {
+            return "(\(count))"
+        } else {
+            return ""
+        }
     }
     
     func getTokenList() -> [[String:String]] {
@@ -152,24 +140,6 @@ struct AssetTabView: View {
         return [[String:String]]()
     }
     
-    func getTokenNative() -> [String:String] {
-        if index < cardState.vaultArray.count {
-            let address = cardState.vaultArray[index].address
-            var coinDict = [String:String]()
-            coinDict["name"] = cardState.vaultArray[index].coin.displayName
-            coinDict["symbol"] = cardState.vaultArray[index].coin.coinSymbol
-            coinDict["type"] = "coin" 
-            coinDict["balance"] = convertOptDoubleToString(balanceDouble: cardState.vaultArray[index].balance)
-            coinDict["decimals"] = "0"
-            coinDict["tokenIconPath"] = cardState.vaultArray[index].coinMeta.icon
-            coinDict["tokenExplorerLink"] = cardState.vaultArray[index].coin.getAddressWebLink(address: address)
-            coinDict["tokenValueInSecondCurrency"] = convertOptDoubleToString(balanceDouble: cardState.vaultArray[index].coinValueInSecondCurrency)
-            coinDict["secondCurrency"] = cardState.vaultArray[index].selectedSecondCurrency
-            return coinDict
-        }
-        return [String:String]()
-    }
-    
     func getNftList() -> [[String:String]] {
         if cardState.vaultArray.count > index {
             return cardState.vaultArray[index].nftList ?? [[String:String]]()
@@ -177,7 +147,28 @@ struct AssetTabView: View {
         return [[String:String]]()
     }
     
-}
+    func getTokenNative() -> [String:String]? {
+        if index < cardState.vaultArray.count {
+            if let balance  = cardState.vaultArray[index].balance, balance > 0 { // only display if balance > 0
+                let address = cardState.vaultArray[index].address
+                var coinDict = [String:String]()
+                coinDict = [String:String]()
+                coinDict["name"] = cardState.vaultArray[index].coin.displayName
+                coinDict["symbol"] = cardState.vaultArray[index].coin.coinSymbol
+                coinDict["type"] = "coin"
+                coinDict["balance"] = convertOptDoubleToString(balanceDouble: balance)
+                coinDict["decimals"] = "0"
+                coinDict["tokenIconPath"] = cardState.vaultArray[index].coinMeta.icon
+                coinDict["tokenExplorerLink"] = cardState.vaultArray[index].coin.getAddressWebLink(address: address)
+                coinDict["tokenValueInSecondCurrency"] = convertOptDoubleToString(balanceDouble: cardState.vaultArray[index].coinValueInSecondCurrency)
+                coinDict["secondCurrency"] = cardState.vaultArray[index].selectedSecondCurrency
+                return coinDict
+            }
+        }
+        return nil
+    }
+    
+} // AssetTabView
 
 // MARK: - TokenListView
 
