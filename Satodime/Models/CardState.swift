@@ -592,16 +592,19 @@ class CardState: ObservableObject {
         var address = coinInfo.address
         log.debug("Using address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
         
-        //for debug purpose
+        //for debug purpose only
 //        if coinInfo.coin.coinSymbol == "XCP" {
 //            address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
 //            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
 //        } else if coinInfo.coin.coinSymbol == "ETH" {
 //            //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
 //            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
-//            //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
+//            address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
 //            //address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
-//            address = "0x2c4ebd4b21736e992f3efeb55de37ae66457199d" // grolex nft
+//            //address = "0x2c4ebd4b21736e992f3efeb55de37ae66457199d" // grolex nft
+//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
+//        } else if coinInfo.coin.coinSymbol == "BTC" {
+//            address = "bc1ql49ydapnjafl5t2cp9zqpjwe6pdgmxy98859v2" // whale
 //            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
 //        } else if coinInfo.coin.coinSymbol == "BNB" {
 //            address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
