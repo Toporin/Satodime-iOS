@@ -28,7 +28,7 @@ struct VaultSetupCreateView: View {
     var selectedCrypto: CryptoCurrency
     
     @State var isExpertModeActivated = false
-    @State var isNextViewActive = false // TODO: rename
+    //@State var isNextViewActive = false // TODO: rename
     
     // expert mode
     @State var selectedNetwork: NetworkMode = .mainNet
@@ -192,7 +192,7 @@ struct VaultSetupCreateView: View {
                                 print("Debug seal vault selectedCrypto: \(selectedCrypto)!")
                                 print("Debug seal vault selectedCrypto.icon: \(selectedCrypto.icon)!")
                                 DispatchQueue.main.async {
-                                    self.isNextViewActive = true
+                                    //self.isNextViewActive = true
                                     self.viewStackHandler.navigationState = .vaultSetupCongrats
                                 }
                             },

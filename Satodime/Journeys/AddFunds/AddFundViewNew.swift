@@ -75,16 +75,18 @@ struct AddFundsViewNew: View {
                         Spacer()
                             .frame(height: 4)
                         HStack {
-                            SealStatusView(status: cardState.vaultArray[index].getStatus())
-                            Spacer()
-                            VStack {
-                                Image(cardState.vaultArray[index].coinMeta.icon)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 26, height: 26)
-                                    .foregroundColor(.white)
-                                if cardState.vaultArray[index].coin.isTestnet {
-                                    SatoText(text: "TESTNET", style: .addressText)
+                            if let vault = cardState.vaultArray.get(index: index) {
+                                SealStatusView(status: vault.getStatus())
+                                Spacer()
+                                VStack {
+                                    Image(vault.coinMeta.icon)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 26, height: 26)
+                                        .foregroundColor(.white)
+                                    if vault.coin.isTestnet {
+                                        SatoText(text: "TESTNET", style: .addressText)
+                                    }
                                 }
                             }
                         }

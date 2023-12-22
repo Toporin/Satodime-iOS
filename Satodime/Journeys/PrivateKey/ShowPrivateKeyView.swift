@@ -42,7 +42,7 @@ struct ShowPrivateKeyView: View {
     
     func determineKeyToDisplay() {
         
-        guard cardState.vaultArray.count > self.index else { return }
+        guard self.index < cardState.vaultArray.count  else { return }
         
         self.coinIcon = cardState.vaultArray[index].coinMeta.icon
         self.isTestnet = cardState.vaultArray[index].coin.isTestnet

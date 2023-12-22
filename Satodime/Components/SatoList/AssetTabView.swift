@@ -101,7 +101,7 @@ struct AssetTabView: View {
     
     func getTokenNumberString() -> String {
         var count = 0
-        if cardState.vaultArray.count > index {
+        if index < cardState.vaultArray.count {
             if let balance = cardState.vaultArray[index].balance, balance > 0 {
                 print("DEBUG AssetTabView balance >0!!")
                 count+=1
@@ -120,7 +120,7 @@ struct AssetTabView: View {
     
     func getNftNumberString() -> String {
         var count = 0
-        if cardState.vaultArray.count > index {
+        if index < cardState.vaultArray.count {
             if let nftList = cardState.vaultArray[index].nftList {
                 count += nftList.count
             }
@@ -134,14 +134,14 @@ struct AssetTabView: View {
     }
     
     func getTokenList() -> [[String:String]] {
-        if cardState.vaultArray.count > index {
+        if index < cardState.vaultArray.count  {
             return cardState.vaultArray[index].tokenList ?? [[String:String]]()
         }
         return [[String:String]]()
     }
     
     func getNftList() -> [[String:String]] {
-        if cardState.vaultArray.count > index {
+        if index < cardState.vaultArray.count  {
             return cardState.vaultArray[index].nftList ?? [[String:String]]()
         }
         return [[String:String]]()

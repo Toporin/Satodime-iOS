@@ -48,14 +48,16 @@ struct VaultSetupCongratsView: View {
                         .aspectRatio(contentMode: .fit)
                         .overlay(
                             ZStack {
-                                Circle()
-                                    .fill(cardState.vaultArray[index].coinMeta.color)
-                                    .frame(width: 66, height: 66)
-                                    .padding(16)
-
-                                Image(cardState.vaultArray[index].coinMeta.icon)
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(.white)
+                                if let vault = cardState.vaultArray.get(index: index) {
+                                    Circle()
+                                        .fill(vault.coinMeta.color)
+                                        .frame(width: 66, height: 66)
+                                        .padding(16)
+                                    
+                                    Image(vault.coinMeta.icon)
+                                        .frame(width: 30, height: 30)
+                                        .foregroundColor(.white)
+                                }
                             }
                             .frame(width: 66, height: 66)
                             .position(CGPoint(x: 8, y: 210))
@@ -69,7 +71,9 @@ struct VaultSetupCongratsView: View {
                 Spacer()
                 
                 SatoButton(staticWidth: 222, text: continueButtonTitle, style: .confirm) {
-                    self.viewStackHandler.navigationState = .goBackHome
+                    DispatchQueue.main.async {
+                        self.viewStackHandler.navigationState = .goBackHome
+                    }
                 }
                 
                 Spacer()
