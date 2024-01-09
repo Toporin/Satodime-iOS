@@ -86,13 +86,22 @@ class SatodimeUtil {
     static func formatBalance(balanceDouble: Double?, symbol: String?, maxFractionDigit: Int = 8) -> String {
         
         let symbol = symbol ?? ""
+        var fractionDigit = maxFractionDigit
+        switch symbol { // todo: improve heuristic
+        case "BTC":
+            fractionDigit = 8
+        case "ETH":
+            fractionDigit = 6
+        default:
+            break
+        }
         
         if let balanceDouble {
 
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .decimal
             numberFormatter.minimumFractionDigits = 2
-            numberFormatter.maximumFractionDigits = maxFractionDigit // number of fraction digits shown
+            numberFormatter.maximumFractionDigits = fractionDigit //maxFractionDigit // number of fraction digits shown
             
             let balanceFormatted = numberFormatter.string(from: NSNumber(value: balanceDouble)) ?? "?"
             let balanceDisplay = balanceFormatted + " " + symbol
