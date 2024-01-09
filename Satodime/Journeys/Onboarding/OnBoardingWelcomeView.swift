@@ -9,8 +9,9 @@ import Foundation
 import SwiftUI
 
 struct OnboardingWelcomeView: View {
-    // MARK: - Properties
-    @ObservedObject var viewModel: OnboardingWelcomeViewModel
+    // MARK: - Literals
+    let titleText = "welcome"
+    let subtitleText = "satodimeLetsYou"
     
     // MARK: - View
     var body: some View {
@@ -22,10 +23,10 @@ struct OnboardingWelcomeView: View {
                     .frame(height: Constants.Dimensions.satoDimeLogoHeight)
                 Spacer()
                     .frame(height: Constants.Dimensions.verticalLogoSpacing)
-                SatoText(text: viewModel.titleText, style: .title)
+                SatoText(text: titleText, style: .title)
                 Spacer()
                     .frame(height: Constants.Dimensions.subtitleSpacing)
-                SatoText(text: viewModel.subtitleText, style: .subtitle)
+                SatoText(text: subtitleText, style: .subtitle)
                 Spacer()
                     .frame(height: Constants.Dimensions.verticalIllustrationSpacing)
                 Image("il-onboard-1")

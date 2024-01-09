@@ -149,6 +149,7 @@ enum SatoTextStyle {
 
 
 struct SatoText: View {
+    
     var text: String
     var style: SatoTextStyle
     var alignment: TextAlignment = .center

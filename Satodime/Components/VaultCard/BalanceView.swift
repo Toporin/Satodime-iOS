@@ -10,14 +10,14 @@ import SwiftUI
 
 struct BalanceView: View {
     let title: String
-    let balance: String
-    let cryptoBalance: String
+    let balanceFirst: String
+    let balanceSecond: String
 
     var body: some View {
         VStack(alignment: .trailing) {
             SatoText(text: title, style: .subtitle)
-            SatoText(text: balance, style: .balanceLarge)
-            SatoText(text: cryptoBalance, style: .subtitle)
+            SatoText(text: balanceFirst, style: .balanceLarge)
+            SatoText(text: balanceSecond, style: .subtitle)
         }
     }
 }

@@ -38,33 +38,16 @@ public struct VaultItem: Hashable {
         }
     }
     
-    public static let statusDict: [UInt8 : String] =
-                                   [0x00 : "Uninitialized",
-                                    0x01 : "Sealed",
-                                    0x02 : "Unsealed",]
-    
     public var index: UInt8
     public var coin: BaseCoin
-    public var iconPath: String = "ic_coin_unknown"
+    var coinMeta: CryptoCurrency = CryptoCurrency.empty
     public var keyslotStatus: SatodimeKeyslotStatus
     
     // coin info
     public var pubkey: [UInt8]? = nil
     public var balance: Double? = nil // async value
-    public var address: String = "(undefined)" {
-        didSet {
-            print("** didSet VaultItem address: \(address)")
-            if address == "(unsupported)" {
-                print("unsupported coin")
-            }
-        }
-    }
+    public var address: String = "(undefined)"
     public var addressUrl: URL? = nil // explorer url
-    
-    // deprecated fiat value
-    //public var otherCoinSymbol: String? = nil
-    //public var exchangeRate: Double? = nil
-    //public var tokenExchangeRate: Double? = nil
     
     public var selectedFirstCurrency: String? = nil
     public var selectedSecondCurrency: String? = nil
@@ -74,11 +57,10 @@ public struct VaultItem: Hashable {
     // asset list
     public var tokenList: [[String:String]]? = nil
     public var nftList: [[String:String]]? = nil
-    // fiat value
+    // total value in tokens (excluding main coin)
     public var totalTokenValueInFirstCurrency: Double? = nil
     public var totalTokenValueInSecondCurrency: Double? = nil
-    
-    // total
+    // total value (including main coin)
     public var totalValueInFirstCurrency: Double? = nil
     public var totalValueInSecondCurrency: Double? = nil
     
@@ -97,61 +79,33 @@ public struct VaultItem: Hashable {
             slip44 = keyslotStatus.slip44
         }
         let isTestnet = ((slip44 & 0x80000000)==0x00000000) ? true : false
-        switch slip44 {
+        let slip44WithoutTestnetBit = (slip44 | 0x80000000)
+        switch slip44WithoutTestnetBit {
         case 0x80000000:
-            coin = Bitcoin(isTestnet: false, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_btc"
-        case 0x00000000:
-            coin = Bitcoin(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_btctest"
+            coin = Bitcoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+            coinMeta = .bitcoin
         case 0x80000002:
-            coin = Litecoin(isTestnet: false, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_ltc"
-        case 0x00000002:
-            coin = Litecoin(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_ltctest"
+            coin = Litecoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+            coinMeta = .litecoin
         case 0x80000009:
-            coin = Counterparty(isTestnet: false, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_xcp"
-        case 0x00000009:
-            coin = Counterparty(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_xcptest"
+            coin = Counterparty(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+            coinMeta = .counterParty
         case 0x8000003c:
-            coin = Ethereum(isTestnet: false, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_eth"
-        case 0x0000003c:
-            coin = Ethereum(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_ethtest"
+            coin = Ethereum(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+            coinMeta = .ethereum
         case 0x80000091:
-            coin = BitcoinCash(isTestnet: false, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_bch"
-        case 0x00000091:
-            coin = BitcoinCash(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_bchtest"
-        case 0x8000232e:
-            coin = BinanceSmartChain(isTestnet: false, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_bch" //todo
-        case 0x0000232e:
-            coin = BinanceSmartChain(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_bchtest" // todo
+            coin = BitcoinCash(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+            coinMeta = .bitcoinCash
+//        case 0x8000232e:
+//            coin = BinanceSmartChain(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+//            coinMeta = .binance
         case 0xdeadbeef: // uninitialized slot!
-            coin = EmptyCoin(isTestnet: true, apiKeys: VaultItem.apiKeys)
-            iconPath = "ic_coin_empty"
+            coin = EmptyCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+            coinMeta = .empty
         default:
             coin = UnsupportedCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
-            if isTestnet {
-                iconPath = "ic_coin_unknowntest"
-            }
-            else {
-                iconPath = "ic_coin_unknown"
-            }
+            coinMeta = .unknown
         }
-    }
-    
-    public func getStatusString() -> String {
-        let statusByte: UInt8 = keyslotStatus.status
-        let statusString = VaultItem.statusDict[statusByte] ?? String(statusByte) //"Undefined"
-        return statusString
     }
     
     public func isInitialized() -> Bool {
@@ -163,9 +117,18 @@ public struct VaultItem: Hashable {
         return self.keyslotStatus.status == 0x01
     }
     
+    public func getStatus() -> SealStatus {
+        switch self.keyslotStatus.status {
+        case 0x01:
+            return .sealed
+        case 0x02:
+            return .unsealed
+        default:
+            return .uninitialized
+        }
+    }
     
-    // TODO
-    // coin info
+    // MARK: Public & Private keys Helpers
     public func getPublicKeyString() -> String {
         if let key = self.pubkey {
             return self.coin.keyBytesToString(keyBytes: key)
@@ -174,169 +137,6 @@ public struct VaultItem: Hashable {
         }
     }
     
-    public func getBlockchainString() -> String {
-        return self.coin.displayName
-    }
-    
-    //
-    public func getTotalValueInFirstCurrencyString() -> String {
-        var valueString = ""
-        if let value = self.totalValueInFirstCurrency {
-            valueString = String(value)
-        } else {
-            print("Debug balance is nil!")
-            valueString = "? "
-        }
-        valueString += " " + self.getCoinDenominationString()
-        return valueString
-    }
-    
-    public func getTotalValueInSecondCurrencyString() -> String {
-        var valueString = ""
-        if let value = self.totalValueInSecondCurrency,
-           let symbol = self.selectedSecondCurrency{
-            valueString = String(value) + " " + symbol
-        } else {
-            //print("Debug balance is nil!")
-            valueString = "? "
-        }
-        return valueString
-    }
-    
-    // balance info
-    public func getCoinBalanceString() -> String {
-        //print("in getBalanceString balance: \(self.balance ?? Double.nan)")
-        var balanceString: String = ""
-        if let balance = self.balance {
-            balanceString = String(balance)
-        } else {
-            //print("Debug balance is nil!")
-            balanceString = "? "
-        }
-        balanceString += " " + self.getCoinDenominationString() + " " + self.getCoinValueInSecondCurrencyString()
-        return balanceString
-    }
-    
-    public func getCoinShortBalanceString() -> String {
-        let result = " (\(self.coin.coinSymbol))"
-        return result
-    }
-    
-    public func getCoinDenominationString() -> String {
-        let denominationString = self.coin.displayName + " (\(self.coin.coinSymbol))"
-        return denominationString
-    }
-    
-    public func getCoinSymbol() -> String {
-        return self.coin.coinSymbol
-    }
-    
-//    public func getFiatValueString() -> String {
-//        let fiatValueString: String
-//        if let balance = self.balance,
-//           let exchangeRate = self.exchangeRate,
-//           let otherCoinSymbol = self.otherCoinSymbol {
-//            let fiatValue = balance * exchangeRate
-//            fiatValueString = "(~" + String(fiatValue) + " " + otherCoinSymbol + ")"
-//        } else {
-//            fiatValueString = ""
-//        }
-//        return fiatValueString
-//    }
-    
-    public func getCoinValueInSecondCurrencyString() -> String {
-        if let balance = coinValueInSecondCurrency,
-           let selectedSecondCurrency = selectedSecondCurrency {
-            return "(~ \(balance) \(selectedSecondCurrency))"
-        }else {
-            return ""
-        }
-    }
-    
-    public func getNftImageUrlString(link: String) -> String {
-        var nftImageUrlString = link
-        // check if IPFS? => use ipfs.io gateway
-        // todo: support ipfs protocol
-        if nftImageUrlString.hasPrefix("ipfs://ipfs/") {
-            //ipfs://ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png
-            //https://ipfs.io/ipfs/bafybeia4kfavwju5gjjpilerm2azdoxvpazff6fmtatqizdpbmcolpsjci/image.png
-            nftImageUrlString = String(nftImageUrlString.dropFirst(6)) // remove "ipfs:/"
-            nftImageUrlString = "https://ipfs.io" + nftImageUrlString
-        } else if nftImageUrlString.hasPrefix("ipfs://")  {
-            // ipfs://QmZ2ddtVUV1brVGjpq6vgrG6jEgEK3CqH19VURKzdwCSRf
-            // https://ipfs.io/ipfs/QmZ2ddtVUV1brVGjpq6vgrG6jEgEK3CqH19VURKzdwCSRf
-            nftImageUrlString = String(nftImageUrlString.dropFirst(6)) // remove "ipfs:/"
-            nftImageUrlString = "https://ipfs.io/ipfs" + nftImageUrlString
-        }
-        print("nftImageUrlString: \(nftImageUrlString)")
-        return nftImageUrlString
-    }
-    
-    public func getTokenBalanceDouble(tokenData: [String:String]) -> Double? {
-        
-        if let balanceString = tokenData["balance"] {
-            let decimalsString = tokenData["decimals"] ?? "0"
-            
-            if let balanceDouble = Double(balanceString),
-               let decimalsDouble = Double(decimalsString) {
-                let balance = balanceDouble / pow(Double(10),decimalsDouble)
-                return balance
-            } else {
-                return nil
-            }
-        } else {
-            return nil
-        }
-    }
-    
-    // token balance info
-    public func getTokenBalanceString(tokenData: [String:String]) -> String {
-        
-        let denomination = self.getTokenDenominationString(tokenData: tokenData)
-        if let balanceDouble = self.getTokenBalanceDouble(tokenData: tokenData){
-            let balanceString = String(balanceDouble) //todo: improve formatting
-            return balanceString + " " + denomination + " " + self.getTokenValueInSecondCurrencyString(tokenData: tokenData)
-        } else {
-            // unknown
-            return "?" + " " + denomination
-        }
-    }
-
-    public func getTokenDenominationString(tokenData: [String:String]) -> String {
-        //let denominationString = (tokenData["name"] ?? "?") + " " + "(\(tokenData["symbol"] ?? "?"))"
-        var denominationString = ""
-        if let tokenName = tokenData["name"] {
-            denominationString += tokenName + " "
-        }
-        if let tokenSymbol = tokenData["symbol"] {
-            denominationString += "(" + tokenSymbol + ") "
-        }
-        return denominationString
-    }
-    
-//    public func getTokenFiatValueString(tokenData: [String:String]) -> String {
-//        let fiatValueString: String
-//        if let balance = self.getTokenBalanceDouble(tokenData: tokenData),
-//           let exchangeRate = Double(tokenData["tokenExchangeRate"] ?? ""),
-//           let otherCoinSymbol = tokenData["currencyExchangeRate"] {
-//            let fiatValue = balance * exchangeRate
-//            fiatValueString = "(~" + String(fiatValue) + " " + otherCoinSymbol + ")"
-//            return fiatValueString
-//        } else {
-//            return ""
-//        }
-//    }
-    
-    public func getTokenValueInSecondCurrencyString(tokenData: [String:String]) -> String {
-        if let tokenValueInSecondCurrency = tokenData["tokenValueInSecondCurrency"],
-           let secondCurrency = tokenData["secondCurrency"]{
-            return "(~ \(tokenValueInSecondCurrency) \(secondCurrency))"
-        } else {
-            return ""
-        }
-    }
-    
-    // private info
     public func getPrivateKeyString() -> String {
         if let key = self.privkey {
             return self.coin.keyBytesToString(keyBytes: key)
@@ -359,7 +159,6 @@ public struct VaultItem: Hashable {
         } else {
             return "N/A"
         }
-        
     }
     
 }

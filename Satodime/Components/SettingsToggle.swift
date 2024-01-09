@@ -15,16 +15,14 @@ struct SettingsToggle: View {
     var onToggle: (Bool) -> Void
     
     var body: some View {
-        HStack {
-            SatoText(text: title, style: .subtitleBold)
-            
-            Spacer()
-            
-            Toggle("", isOn: $isOn)
-                .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.ledGreen))
-                .onChange(of: isOn) { newValue in
-                    onToggle(newValue)
-                }
+        HStack {            
+            Toggle(isOn: $isOn){
+                SatoText(text: title, style: .subtitleBold)
+            }
+            .toggleStyle(SwitchToggleStyle(tint: Constants.Colors.ledGreen))
+            .onChange(of: isOn) { newValue in
+                onToggle(newValue)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, minHeight: 55, maxHeight: 55)

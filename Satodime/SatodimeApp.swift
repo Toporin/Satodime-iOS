@@ -11,10 +11,14 @@ import SwiftUI
 struct SatodimeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+    @StateObject var cardState = CardState()
+    @StateObject var viewStackHandlerNew = ViewStackHandlerNew()
+    
     var body: some Scene {
         WindowGroup {
-            // ContentView()
-            HomeView(viewModel: HomeViewModel(cardService: CardService(), coinService: CoinService()))
+            HomeView()
+                .environmentObject(cardState)
+                .environmentObject(viewStackHandlerNew)
         }
     }
 }

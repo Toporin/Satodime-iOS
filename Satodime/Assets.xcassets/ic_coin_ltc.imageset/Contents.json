@@ -1,17 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "ic_coin_ltc.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "ic_ltc.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

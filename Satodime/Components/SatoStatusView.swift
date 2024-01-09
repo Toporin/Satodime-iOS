@@ -7,79 +7,42 @@
 
 import Foundation
 import SwiftUI
-
-enum CardReadState {
-    case none
-    case valid
-    case invalid
-}
-
-class CardStatusObservable: ObservableObject {
-    @Published var status: CardReadState = .none
-    func cardStatusImage() -> String {
-        switch status {
-        case .none:
-            return ""
-        case .valid:
-            return "ic_circle_valid"
-        case .invalid:
-            return "ic_circle_invalid"
-        }
-    }
-}
+import SatochipSwift
 
 struct SatoStatusView: View {
-    @ObservedObject var cardStatus: CardStatusObservable
-    var onImageTap: () -> Void
+    
+    @EnvironmentObject var cardState: CardState
+    //@EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
     var body: some View {
-        HStack {
-            VStack {
-                Spacer()
-                    .frame(height: 5)
-                
-                if cardStatus.status != .none {
-                    Image(cardStatus.cardStatusImage())
-                        .resizable()
-                        .frame(width: 6, height: 6)
-                }
-                
-                Spacer()
-            }
-
-            Spacer()
-                .frame(width: 0)
-            
-            ZStack {
-                Image("ic_sato_small")
-                    .resizable()
-                    .frame(width: 48, height: 48)
-                    .onTapGesture {
-                        onImageTap()
-                    }
-                
-                if cardStatus.status == .invalid {
-                    VStack {
-                        HStack {
-                            Spacer()
-                                .frame(width: 4)
-                            
-                            Text(String(localized: "error"))
-                                .font(.system(size: 9))
-                                .foregroundColor(Constants.Colors.ledRed)
-                                .padding(.vertical, 3)
-                                .padding(.horizontal, 6)
-                                .background(
-                                    Color.black.opacity(0.3)
-                                        .cornerRadius(3)
-                                )
-                            Spacer()
-                        }
-                        Spacer()
-                    }
-                }
-            }
-            .frame(width: 54, height: 48)
+        
+        if cardState.certificateCode == .success {
+            Image("ic_sato_small")
+                .resizable()
+                .frame(width: 48, height: 48)
+//                .onTapGesture {
+//                    DispatchQueue.main.async {
+//                        self.viewStackHandler.navigationState = .cardAuthenticity
+//                    }
+//                }
+        } else if cardState.certificateCode == .unknown { // TODO: somethin special?
+            Image("ic_sato_small") // TODO: orange icon?
+                .resizable()
+                .frame(width: 48, height: 48)
+//                .onTapGesture {
+//                    DispatchQueue.main.async {
+//                        self.viewStackHandler.navigationState = .cardAuthenticity
+//                    }
+//                }
+        } else {
+            Image("il_not_authentic")
+                .resizable()
+                .frame(width: 48, height: 48)
+//                .onTapGesture {
+//                    DispatchQueue.main.async {
+//                        self.viewStackHandler.navigationState = .cardAuthenticity
+//                    }
+//                }
         }
-    }
+    } // body
 }

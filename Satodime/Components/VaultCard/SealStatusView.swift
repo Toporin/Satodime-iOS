@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-enum SealStatus {
+public enum SealStatus {
+    case uninitialized
     case sealed
     case unsealed
 }

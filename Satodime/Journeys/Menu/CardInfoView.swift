@@ -7,10 +7,67 @@
 
 import Foundation
 import SwiftUI
+import SatochipSwift
 
 struct CardInfoView: View {
     // MARK: - Properties
-    @ObservedObject var viewModel: CardInfoViewModel
+    @EnvironmentObject var cardState: CardState
+    @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    
+    @State var shouldShowAuthenticityScreen = false
+    
+    // MARK: - Literals
+    let title = "cardInfo"
+    //let authentikeyTitle = "authentikeyTitle" //TODO: translate
+    
+    let ownerTitle = "cardOwnershipStatus"
+    let ownerText = "youAreTheCardOwner"
+    let notOwnerText = "youAreNotTheCardOwner"
+    let unclaimedOwnershipText = "cardHasNoOwner"
+    let unknownOwnershipText = "Scan card to get ownership status"
+    
+    let cardVersionTitle = "cardVersion"
+    
+    let cardGenuineTitle = "cardAuthenticity"
+    let cardGenuineText = "thisCardIsGenuine"
+    let cardNotGenuineText = "thisCardIsNotGenuine"
+    let certButtonTitle = "certDetails"
+    
+    // MARK: Helpers
+    func getOwnershipStatus() -> String {
+        switch cardState.ownershipStatus {
+        case .owner:
+            return ownerText
+        case .notOwner:
+            return notOwnerText
+        case .unclaimed:
+            return unclaimedOwnershipText
+        case .unknown:
+            return unknownOwnershipText // should not happen
+        }
+    }
+    
+    func getOwnershipColor() -> Color {
+        switch cardState.ownershipStatus {
+        case .owner:
+            return Constants.Colors.darkLedGreen
+        case .notOwner:
+            return Constants.Colors.ledRed
+        case .unclaimed:
+            return Constants.Colors.ledBlue
+        case .unknown:
+            return Constants.Colors.lightGray
+        }
+    }
+    
+    func getCardVersionString(cardStatus: CardStatus?) -> String {
+        if let cardStatus = cardStatus {
+            let str = "Satodime v\(cardStatus.protocolMajorVersion).\(cardStatus.protocolMinorVersion)-\(cardStatus.appletMajorVersion).\(cardStatus.appletMinorVersion)"
+            return str
+        } else {
+            return "n/a"
+        }
+    }
     
     // MARK: - View
     var body: some View {
@@ -22,25 +79,31 @@ struct CardInfoView: View {
                 Spacer()
                     .frame(height: 66)
                 
-                SatoText(text: viewModel.ownerTitle, style: .lightSubtitle)
-                
+                // OWNERSHIP
+                SatoText(text: ownerTitle, style: .lightSubtitle)
                 Spacer()
                     .frame(height: 14)
-                
-                CardInfoBox(text: viewModel.cardVaults.isOwner ? viewModel.ownerText : viewModel.notOwnerText , backgroundColor: viewModel.cardVaults.isOwner ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed)
+                CardInfoBox(text: getOwnershipStatus() , backgroundColor: getOwnershipColor())
                 
                 Spacer()
                     .frame(height: 33)
                 
-                SatoText(text: viewModel.cardVersionTitle, style: .lightSubtitle)
-                
+                // CARD VERSION
+                SatoText(text: cardVersionTitle, style: .lightSubtitle)
                 Spacer()
                     .frame(height: 14)
-                
-                CardInfoBox(text: viewModel.cardVaults.cardVersion, backgroundColor: Constants.Colors.darkLedGreen)
+                CardInfoBox(text: self.getCardVersionString(cardStatus: cardState.cardStatus), backgroundColor: Constants.Colors.blueMenuButton)
                     .padding([.leading, .trailing], 82)
                 
                 Spacer()
+                
+//                // AUTHENTIKEY
+//                SatoText(text: authentikeyTitle, style: .lightSubtitle)
+//                Spacer()
+//                    .frame(height: 14)
+//                CardInfoBox(text: cardState.authentikeyHex , backgroundColor: Constants.Colors.blueMenuButton)
+//                
+//                Spacer()
                 
                 Rectangle()
                     .frame(width: .infinity, height: 2)
@@ -49,39 +112,43 @@ struct CardInfoView: View {
                 
                 Spacer()
                 
-                SatoText(text: viewModel.cardGenuineTitle, style: .lightSubtitle)
-                
+                // CERTIFICATE STATUS
+                SatoText(text: cardGenuineTitle, style: .lightSubtitle)
                 Spacer()
                     .frame(height: 14)
-                
-                CardInfoBox(text: viewModel.cardVaults.isCardAuthentic == .authentic ? viewModel.cardGenuineText : viewModel.cardNotGenuineText, backgroundColor: viewModel.cardVaults.isCardAuthentic == .authentic ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed) {
-                    viewModel.gotoAuthenticityScreen()
+                CardInfoBox(
+                    text: cardState.certificateCode == .success ? cardGenuineText : cardNotGenuineText,
+                    backgroundColor: cardState.certificateCode == .success ? Constants.Colors.darkLedGreen : Constants.Colors.ledRed)
+                {
+                    self.shouldShowAuthenticityScreen = true
                 }
                     .padding([.leading, .trailing], 57)
                 
                 Spacer()
                     .frame(height: 21)
                 
-                CardInfoBox(text: viewModel.certButtonTitle, backgroundColor: Constants.Colors.blueMenuButton) {
-                   viewModel.onCertButtonTapped()
-                }
-                    .padding([.leading, .trailing], 71)
-                
-                NavigationLink(destination: ShowCertificates(certificateCode: viewModel.cardVaults.cardAuthenticity!.certificateCode, certificateDic: viewModel.cardVaults.cardAuthenticity!.certificateDic), isActive: $viewModel.isCertDetailsViewActive){EmptyView()}
-                
-                NavigationLink(destination: AuthenticView(viewModel: AuthenticViewModel(authState: viewModel.cardVaults.isCardAuthentic == .authentic ? .isAuthentic : .notAuthentic, viewStackHandler: viewModel.viewStackHandler)), isActive: $viewModel.shouldShowAuthenticityScreen){EmptyView()}
+                NavigationLink(destination: AuthenticView(), isActive: $shouldShowAuthenticityScreen){EmptyView()}
                 
                 Spacer()
                     .frame(height: 139)
 
             }.padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
         }
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading:
+            Button(action: {
+                DispatchQueue.main.async {
+                    viewStackHandler.navigationState = .goBackHome
+                }
+            })
+            {
+                Image("ic_flipback")
+            })
         .toolbar {
             ToolbarItem(placement: .principal) {
-                SatoText(text: viewModel.title, style: .lightTitle)
+                SatoText(text: title, style: .lightTitle)
             }
         }
-    }
+    } //body
 }
 
