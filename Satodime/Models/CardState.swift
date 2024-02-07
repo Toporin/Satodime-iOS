@@ -196,14 +196,15 @@ class CardState: ObservableObject {
             DispatchQueue.main.async {
               self.isCardDataAvailable = true
             }
-
+            
+            session?.stop(alertMessage: String(localized: "nfcVaultsListSuccess"))
+            log.info(String(localized: "nfcVaultsListSuccess"), tag: "CardState.onConnection")
+            
         } catch let error {
             session?.stop(errorMessage: "\(String(localized: "nfcErrorOccured")) \(error.localizedDescription)")
             log.error("\(String(localized: "nfcErrorOccured")) \(error.localizedDescription)", tag: "CardState.onConnection")
         }
         
-        session?.stop(alertMessage: String(localized: "nfcVaultsListSuccess"))
-        log.info(String(localized: "nfcVaultsListSuccess"), tag: "CardState.onConnection")
         dispatchGroup.leave()
         
     } // end onConnection
