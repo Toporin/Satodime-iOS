@@ -103,9 +103,6 @@ struct HomeView: View {
                                         showNotOwnerAlert = true
                                         showNotAuthenticAlert = true
                                     }
-//                                    showTakeOwnershipAlert = true
-//                                    showNotOwnerAlert = true
-//                                    showNotAuthenticAlert = true
                                 }) {
                                     Image("ic_refresh")
                                         .resizable()
