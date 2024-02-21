@@ -19,6 +19,7 @@ struct HeaderView: View {
     @Binding var showTakeOwnershipAlert: Bool
     @Binding var isVerticalModeEnabled: Bool
     @Binding var currentSlotIndex: Int
+    @Binding var isRefreshingCard: Bool
     
     // MARK: - Literals
     let viewTitle: String = "vaults"
@@ -54,6 +55,8 @@ struct HeaderView: View {
                         .padding(.trailing, 4)
                     
                     Button(action: {
+                        isRefreshingCard = true
+                        
                         Task {
                             await cardState.executeQuery()
                         }

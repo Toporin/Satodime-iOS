@@ -41,6 +41,7 @@ struct HomeView: View {
     // show the TakeOwnershipView if card is unclaimed, this is transmitted with CardInfoView
     @State var showTakeOwnershipAlert: Bool = true
     @State var isVerticalModeEnabled: Bool = false
+    @State var isRefreshingCard: Bool = false
     
     // current slot shown to user
     @State private var currentSlotIndex: Int = 0
@@ -71,7 +72,8 @@ struct HomeView: View {
                                    showCardNeedsToBeScannedAlert: self.$showCardNeedsToBeScannedAlert,
                                    showTakeOwnershipAlert: self.$showTakeOwnershipAlert,
                                    isVerticalModeEnabled: self.$isVerticalModeEnabled,
-                                   currentSlotIndex: self.$currentSlotIndex)
+                                   currentSlotIndex: self.$currentSlotIndex,
+                                   isRefreshingCard: self.$isRefreshingCard)
                         
                         Spacer()
                             .frame(height: 16)
@@ -98,9 +100,11 @@ struct HomeView: View {
                 .overlay(
                     Group {
                         // Show scan button overlay when no card has been scanned
-                        EmptyScanStateOverlay(showNotOwnerAlert: self.$showNotOwnerAlert,
-                                              showNotAuthenticAlert: self.$showNotAuthenticAlert,
-                                              showTakeOwnershipAlert: self.$showTakeOwnershipAlert)
+                        if !self.isRefreshingCard {
+                            EmptyScanStateOverlay(showNotOwnerAlert: self.$showNotOwnerAlert,
+                                                  showNotAuthenticAlert: self.$showNotAuthenticAlert,
+                                                  showTakeOwnershipAlert: self.$showTakeOwnershipAlert)
+                        }
                         
                         // Use AlertsHandler to show one or more alerts when needed
                         AlertsHandlerView(
