@@ -35,6 +35,13 @@
 		0DE0A9402AFA9B7D00D0845F /* SatochipSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */; };
 		0DE0A9462AFA9D4D00D0845F /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A9452AFA9D4D00D0845F /* BigInt */; };
 		0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */ = {isa = PBXBuildFile; productRef = 0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */; };
+		D02B283B2B86411500980C67 /* HorizontalCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283A2B86411500980C67 /* HorizontalCardsView.swift */; };
+		D02B283D2B86413F00980C67 /* CarouselCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283C2B86413F00980C67 /* CarouselCardsView.swift */; };
+		D02B283F2B86417D00980C67 /* ActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283E2B86417D00980C67 /* ActionButtonsView.swift */; };
+		D02B28412B8641A200980C67 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28402B8641A200980C67 /* HeaderView.swift */; };
+		D02B28432B8642D400980C67 /* NavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28422B8642D400980C67 /* NavigationHandler.swift */; };
+		D02B28452B86453700980C67 /* EmptyScanStateOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */; };
+		D02B28472B86467500980C67 /* AlertsHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28462B86467500980C67 /* AlertsHandlerView.swift */; };
 		D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */; };
 		D0602B4D2AD0A7F700CF8AEC /* VaultCardEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */; };
 		D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */; };
@@ -148,6 +155,13 @@
 		0DA7B4C1299A8ADA00CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0DB03FC929A7F813002E56BD /* ShowLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogs.swift; sourceTree = "<group>"; };
 		0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Apikeys-Info-sample.plist"; sourceTree = "<group>"; };
+		D02B283A2B86411500980C67 /* HorizontalCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCardsView.swift; sourceTree = "<group>"; };
+		D02B283C2B86413F00980C67 /* CarouselCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCardsView.swift; sourceTree = "<group>"; };
+		D02B283E2B86417D00980C67 /* ActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsView.swift; sourceTree = "<group>"; };
+		D02B28402B8641A200980C67 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		D02B28422B8642D400980C67 /* NavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHandler.swift; sourceTree = "<group>"; };
+		D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyScanStateOverlay.swift; sourceTree = "<group>"; };
+		D02B28462B86467500980C67 /* AlertsHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsHandlerView.swift; sourceTree = "<group>"; };
 		D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoStatusView.swift; sourceTree = "<group>"; };
 		D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardEmpty.swift; sourceTree = "<group>"; };
 		D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeOwnershipView.swift; sourceTree = "<group>"; };
@@ -436,6 +450,13 @@
 			isa = PBXGroup;
 			children = (
 				D0EB4E0D2AC22A9B00EA83F9 /* HomeView.swift */,
+				D02B283A2B86411500980C67 /* HorizontalCardsView.swift */,
+				D02B283C2B86413F00980C67 /* CarouselCardsView.swift */,
+				D02B283E2B86417D00980C67 /* ActionButtonsView.swift */,
+				D02B28402B8641A200980C67 /* HeaderView.swift */,
+				D02B28422B8642D400980C67 /* NavigationHandler.swift */,
+				D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */,
+				D02B28462B86467500980C67 /* AlertsHandlerView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -731,6 +752,7 @@
 			files = (
 				D0EB4DF72AC1D62300EA83F9 /* OnBoardingWelcomeView.swift in Sources */,
 				D060805F2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift in Sources */,
+				D02B283F2B86417D00980C67 /* ActionButtonsView.swift in Sources */,
 				D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */,
 				D0F62FBC2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift in Sources */,
 				D0EB4E182AC24DF600EA83F9 /* AppDelegate.swift in Sources */,
@@ -741,16 +763,20 @@
 				D060805C2AD941AD001A5749 /* ResetButton.swift in Sources */,
 				D0825F5F2ADAE093006391D5 /* SettingsDropdown.swift in Sources */,
 				D060805A2AD94152001A5749 /* ShowKeyButton.swift in Sources */,
+				D02B28452B86453700980C67 /* EmptyScanStateOverlay.swift in Sources */,
 				0D16B1CF2B249D3E005FCACB /* SatodimeUtil.swift in Sources */,
 				0D644D4D2B1E75D9008CB29A /* AssetTabView.swift in Sources */,
+				D02B283B2B86411500980C67 /* HorizontalCardsView.swift in Sources */,
 				D07C9C7A2AD857DD005F5917 /* SealButton.swift in Sources */,
 				D0EB4E132AC22F3500EA83F9 /* VaultSetupSelectChainView.swift in Sources */,
 				0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */,
 				D06080702AD98C07001A5749 /* ResetConfirmationView.swift in Sources */,
 				D0F62FC22ACDD5DE0027EFE6 /* InfoBox.swift in Sources */,
 				D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */,
+				D02B28472B86467500980C67 /* AlertsHandlerView.swift in Sources */,
 				0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */,
 				D0EB4E0E2AC22A9B00EA83F9 /* HomeView.swift in Sources */,
+				D02B28432B8642D400980C67 /* NavigationHandler.swift in Sources */,
 				0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */,
 				D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */,
 				0D16B1CD2B2449A0005FCACB /* ExploreButton.swift in Sources */,
@@ -771,6 +797,7 @@
 				D0F62FC42ACDE11E0027EFE6 /* SatoToggle.swift in Sources */,
 				D0825F612ADAE0EF006391D5 /* SettingsView.swift in Sources */,
 				D0825F652ADAE595006391D5 /* SettingsToggle.swift in Sources */,
+				D02B28412B8641A200980C67 /* HeaderView.swift in Sources */,
 				D0825F712ADD7BCC006391D5 /* SatoChoiceSelector.swift in Sources */,
 				D06080562AD93786001A5749 /* UnsealConfirmationView.swift in Sources */,
 				D0E665762ADAC7CB00703A8F /* TransferOwnershipView.swift in Sources */,
@@ -779,6 +806,7 @@
 				D0E6656E2ADAB6C300703A8F /* ProductButton.swift in Sources */,
 				D065EF5B2AF81CEC006751C5 /* ButtonBox.swift in Sources */,
 				D0EB4DFB2AC1D69100EA83F9 /* OnboardingNFCView.swift in Sources */,
+				D02B283D2B86413F00980C67 /* CarouselCardsView.swift in Sources */,
 				D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */,
 				D0F62FD02ACEEE0C0027EFE6 /* SealStatusView.swift in Sources */,
 				D0EB4DED2AC1D26900EA83F9 /* SatoText.swift in Sources */,
