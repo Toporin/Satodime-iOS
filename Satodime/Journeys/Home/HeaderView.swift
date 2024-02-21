@@ -17,6 +17,8 @@ struct HeaderView: View {
     @Binding var showCardNeedsToBeScannedAlert: Bool
     // show the TakeOwnershipView if card is unclaimed, this is transmitted with CardInfoView
     @Binding var showTakeOwnershipAlert: Bool
+    @Binding var isVerticalModeEnabled: Bool
+    @Binding var currentSlotIndex: Int
     
     // MARK: - Literals
     let viewTitle: String = "vaults"
@@ -47,27 +49,33 @@ struct HeaderView: View {
             
             // trigger scan card & web API
             if !cardState.vaultArray.isEmpty {
-                Button(action: {
-                    Task {
-                        await cardState.executeQuery()
-                    }
-                    // reset flag when scanning a new card
-                    // TODO: Delay execution should not be used as a solution
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        showTakeOwnershipAlert = true
-                        showNotOwnerAlert = true
-                        showNotAuthenticAlert = true
-                    }
-                }) {
-                    Image("ic_refresh")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                }.padding(.trailing, 8)
+                HStack {
+                    SatoHeaderToggle(isOn: $isVerticalModeEnabled)
+                        .padding(.trailing, 4)
+                    
+                    Button(action: {
+                        Task {
+                            await cardState.executeQuery()
+                        }
+                        // reset flag when scanning a new card
+                        // TODO: Delay execution should not be used as a solution
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            showTakeOwnershipAlert = true
+                            showNotOwnerAlert = true
+                            showNotAuthenticAlert = true
+                            currentSlotIndex = 0
+                        }
+                    }) {
+                        Image("ic_refresh")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                    }.padding(.trailing, 8)
+                }
+                .frame(maxWidth: 60)
             }
             
             // MENU
             Button(action: {
-                // self.navigateTo(destination: .menu)
                 DispatchQueue.main.async {
                     self.viewStackHandler.navigationState = .menu
                 }
@@ -76,7 +84,49 @@ struct HeaderView: View {
                     .resizable()
                     .frame(width: 24, height: 24)
             }.padding(.trailing, 22)
-        } // end hstack
+        }
         .frame(height: 48)
+    }
+}
+
+struct SatoHeaderToggle: View {
+    @Binding var isOn: Bool
+    private let animationDuration: Double = 0.2
+    let width: CGFloat = 40
+    let height: CGFloat = 21
+    let circleSize: CGFloat = 17.5
+
+    var body: some View {
+        Button(action: {
+            withAnimation(.easeOut(duration: animationDuration)) {
+                isOn.toggle()
+            }
+        }) {
+            RoundedRectangle(cornerRadius: height/2)
+                .fill(Constants.Colors.toggleBackground)
+                .frame(width: width, height: height)
+                .overlay(
+                    HStack(spacing: 0) {
+                        Image("ic_cards_horizontal")
+                            .font(.system(size: 10))
+                            .foregroundColor(.gray)
+                            .frame(width: width / 2, alignment: .center)
+                        
+                        Image("ic_cards_vertical")
+                            .font(.system(size: 10))
+                            .foregroundColor(.gray)
+                            .frame(width: width / 2, alignment: .center)
+                    }
+                )
+                .overlay(
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: circleSize, height: circleSize)
+                        .shadow(radius: 2)
+                        .offset(x: isOn ? (width / 2 - circleSize / 2 - 3) : -(width / 2 - circleSize / 2 - 3), y: 0)
+                        .animation(.easeOut(duration: animationDuration), value: isOn)
+                )
+        }
+        .frame(width: width, height: height)
     }
 }

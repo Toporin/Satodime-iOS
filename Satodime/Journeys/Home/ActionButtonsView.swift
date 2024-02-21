@@ -18,7 +18,6 @@ struct ActionButtonsView: View {
             if cardState.vaultArray.count > currentSlotIndex {
                 if cardState.vaultArray[currentSlotIndex].getStatus() != .uninitialized {
                     AddFundsButton {
-                        // self.navigateTo(destination: .addFunds)
                         DispatchQueue.main.async {
                             self.viewStackHandler.navigationState = .addFunds
                         }
@@ -27,7 +26,6 @@ struct ActionButtonsView: View {
             
                 if cardState.vaultArray[currentSlotIndex].getStatus() == .sealed {
                     UnsealButton {
-                        // self.navigateTo(destination: .unseal)
                         DispatchQueue.main.async {
                             self.viewStackHandler.navigationState = .unseal
                         }
@@ -35,13 +33,11 @@ struct ActionButtonsView: View {
                 }
                 else if cardState.vaultArray[currentSlotIndex].getStatus() == .unsealed {
                     ShowKeyButton {
-                        // self.navigateTo(destination: .privateKey)
                         DispatchQueue.main.async {
                             self.viewStackHandler.navigationState = .privateKey
                         }
                     }
                     ResetButton {
-                        // self.navigateTo(destination: .reset)
                         DispatchQueue.main.async {
                             self.viewStackHandler.navigationState = .reset
                         }

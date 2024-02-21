@@ -13,6 +13,7 @@ struct CarouselCardsView: View {
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @Binding var currentSlotIndex: Int
+    @Binding var showNotOwnerAlert: Bool
     
     var body: some View {
         VStack {
@@ -35,15 +36,12 @@ struct CarouselCardsView: View {
                             index: vault.index,
                             action: {
                                 if cardState.ownershipStatus == .owner {
-                                    print("DEBUG click on seal new vault!")
                                     DispatchQueue.main.async {
                                         self.viewStackHandler.navigationState = .vaultInitialization
                                     }
-                                    print("DEBUG click on seal new vault AFTER!")
                                 } else {
                                     // not owner alert message
-                                    // \/ TODO: Is this needed ? \/
-                                    //self.showNotOwnerAlert = true
+                                    self.showNotOwnerAlert = true
                                 }
                             }
                         )
@@ -55,7 +53,7 @@ struct CarouselCardsView: View {
                     handleSnapToScrollEvent(event: event)
                 }
                 .frame(height: 197)
-            } // end HStackSnap
+            }
         }
     }
     

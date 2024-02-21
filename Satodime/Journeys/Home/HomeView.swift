@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import SnapToScroll
+import Combine
 
 class ViewStackHandlerNew: ObservableObject {
     @Published var navigationState: NavigationState = .goBackHome
@@ -39,6 +40,7 @@ struct HomeView: View {
     @State var showCardNeedsToBeScannedAlert: Bool = false
     // show the TakeOwnershipView if card is unclaimed, this is transmitted with CardInfoView
     @State var showTakeOwnershipAlert: Bool = true
+    @State var isVerticalModeEnabled: Bool = false
     
     // current slot shown to user
     @State private var currentSlotIndex: Int = 0
@@ -64,15 +66,31 @@ struct HomeView: View {
                     
                     VStack {
                         
-                        HeaderView(showNotOwnerAlert: self.$showNotOwnerAlert, showNotAuthenticAlert: self.$showNotAuthenticAlert, showCardNeedsToBeScannedAlert: self.$showCardNeedsToBeScannedAlert, showTakeOwnershipAlert: self.$showTakeOwnershipAlert)
+                        HeaderView(showNotOwnerAlert: self.$showNotOwnerAlert,
+                                   showNotAuthenticAlert: self.$showNotAuthenticAlert,
+                                   showCardNeedsToBeScannedAlert: self.$showCardNeedsToBeScannedAlert,
+                                   showTakeOwnershipAlert: self.$showTakeOwnershipAlert,
+                                   isVerticalModeEnabled: self.$isVerticalModeEnabled,
+                                   currentSlotIndex: self.$currentSlotIndex)
                         
                         Spacer()
                             .frame(height: 16)
                         
-                        HorizontalCardsView(currentSlotIndex: self.$currentSlotIndex)
+                        if self.isVerticalModeEnabled {
+                            VerticalCardsView(currentSlotIndex: self.$currentSlotIndex,
+                                              showNotOwnerAlert: self.$showNotOwnerAlert)
+                                .onReceive(Just(isVerticalModeEnabled)) { value in
+                                    currentSlotIndex = 0 // We need to reset the current slot to 0 when switching views
+                                }
+                        } else {
+                            HorizontalCardsView(currentSlotIndex: self.$currentSlotIndex, showNotOwnerAlert: self.$showNotOwnerAlert)
+                        }
+
+                        Spacer()
                     }
                     
-                    NavigationHandlerView(currentSlotIndex: $currentSlotIndex, showTakeOwnershipAlert: $showTakeOwnershipAlert)
+                    NavigationHandlerView(currentSlotIndex: $currentSlotIndex,
+                                          showTakeOwnershipAlert: $showTakeOwnershipAlert)
                         .environmentObject(viewStackHandler)
                         .environmentObject(cardState)
 

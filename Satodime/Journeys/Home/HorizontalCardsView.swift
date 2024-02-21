@@ -11,9 +11,11 @@ import SwiftUI
 struct HorizontalCardsView: View {
     @EnvironmentObject var cardState: CardState
     @Binding var currentSlotIndex: Int
+    @Binding var showNotOwnerAlert: Bool
+    @State var shouldRefresh: Bool = false
     
     var body: some View {
-        CarouselCardsView(currentSlotIndex: $currentSlotIndex)
+        CarouselCardsView(currentSlotIndex: $currentSlotIndex, showNotOwnerAlert: self.$showNotOwnerAlert)
         
         Spacer()
             .frame(height: 16)

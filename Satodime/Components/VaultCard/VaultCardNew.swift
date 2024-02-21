@@ -27,7 +27,8 @@ struct VaultCardNew: View {
         } else if cardState.vaultArray[Int(index)].keyslotStatus.status == 0x00 {
             VaultCardEmpty(
                 id: Int(index),
-                action: {action()}
+                action: {action()},
+                useFullWidth: useFullWidth
             )
         } else {
             ZStack {
