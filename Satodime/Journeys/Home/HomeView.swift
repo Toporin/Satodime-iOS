@@ -12,6 +12,7 @@ import Combine
 
 struct HomeView: View {
     // MARK: - Properties
+    let reviewRequestService = ReviewRequestService()
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     // let user disable specific alert prompts for the current app session
@@ -22,7 +23,6 @@ struct HomeView: View {
     @State var showTakeOwnershipAlert: Bool = true
     @State var isVerticalModeEnabled: Bool = false
     @State var isRefreshingCard: Bool = false
-    
     // current slot shown to user
     @State private var currentSlotIndex: Int = 0
     
@@ -101,6 +101,7 @@ struct HomeView: View {
             if isFirstUse() {
                 navigateTo(destination: .onboarding)
             }
+            reviewRequestService.appLaunched()
         }
     }
     

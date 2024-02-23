@@ -36,6 +36,7 @@
 		0DE0A9462AFA9D4D00D0845F /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A9452AFA9D4D00D0845F /* BigInt */; };
 		0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */ = {isa = PBXBuildFile; productRef = 0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */; };
 		D017D14D2B867D8800B467D2 /* VerticalCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */; };
+		D017D14F2B88DC9A00B467D2 /* ReviewRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */; };
 		D02B283B2B86411500980C67 /* HorizontalCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283A2B86411500980C67 /* HorizontalCardsView.swift */; };
 		D02B283D2B86413F00980C67 /* CarouselCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283C2B86413F00980C67 /* CarouselCardsView.swift */; };
 		D02B283F2B86417D00980C67 /* ActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283E2B86417D00980C67 /* ActionButtonsView.swift */; };
@@ -157,6 +158,7 @@
 		0DB03FC929A7F813002E56BD /* ShowLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogs.swift; sourceTree = "<group>"; };
 		0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Apikeys-Info-sample.plist"; sourceTree = "<group>"; };
 		D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalCardsView.swift; sourceTree = "<group>"; };
+		D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRequestService.swift; sourceTree = "<group>"; };
 		D02B283A2B86411500980C67 /* HorizontalCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCardsView.swift; sourceTree = "<group>"; };
 		D02B283C2B86413F00980C67 /* CarouselCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCardsView.swift; sourceTree = "<group>"; };
 		D02B283E2B86417D00980C67 /* ActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsView.swift; sourceTree = "<group>"; };
@@ -577,6 +579,7 @@
 			children = (
 				D0825F662ADAE7AD006391D5 /* PreferencesService.swift */,
 				D065EF5C2AF8220A006751C5 /* LoggerService.swift */,
+				D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				D02B283F2B86417D00980C67 /* ActionButtonsView.swift in Sources */,
 				D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */,
 				D0F62FBC2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift in Sources */,
+				D017D14F2B88DC9A00B467D2 /* ReviewRequestService.swift in Sources */,
 				D0EB4E182AC24DF600EA83F9 /* AppDelegate.swift in Sources */,
 				D06080672AD9689F001A5749 /* ScanButton.swift in Sources */,
 				D017D14D2B867D8800B467D2 /* VerticalCardsView.swift in Sources */,
