@@ -10,11 +10,16 @@ import SwiftUI
 import SatochipSwift
 
 struct AuthenticView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
     @State var shouldShowDeviceInfo = false
     @State var shouldShowSubcaInfo = false
+    
+    // var fromView: NavigationState?
+    @Binding var shouldShowAuthenticityScreen: Bool
+    var shouldBreakNavigationLink: Bool
     
     // MARK: Helpers
     func getReasonFromPkiReturnCode(pkiReturnCode: PkiReturnCode) -> String {
@@ -232,7 +237,11 @@ struct AuthenticView: View {
         .navigationBarItems(leading: 
             Button(action: {
                 DispatchQueue.main.async {
-                    viewStackHandler.navigationState = .cardInfo //.cardInfo //.goBackHome
+                    if self.shouldBreakNavigationLink {
+                        self.presentationMode.wrappedValue.dismiss()
+                    } else {
+                        viewStackHandler.navigationState = .goBackHome
+                    }
                 }
             })
             {

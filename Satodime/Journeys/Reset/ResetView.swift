@@ -140,7 +140,9 @@ struct ResetView: View {
         )// overlay
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
-            self.viewStackHandler.navigationState = .goBackHome
+            DispatchQueue.main.async {
+                self.viewStackHandler.navigationState = .goBackHome
+            }
         }) {
             Image("ic_flipback")
         })

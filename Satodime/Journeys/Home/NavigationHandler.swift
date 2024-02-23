@@ -8,6 +8,26 @@
 import Foundation
 import SwiftUI
 
+class ViewStackHandlerNew: ObservableObject {
+    @Published var navigationState: NavigationState = .goBackHome
+}
+
+enum NavigationState {
+    case goBackHome
+    case onboarding
+    case takeOwnership
+    case vaultInitialization
+    case vaultSetupCongrats
+    case cardAuthenticity
+    case cardInfo
+    case unseal
+    case privateKey
+    case reset
+    case menu
+    case settings
+    case addFunds
+}
+
 struct NavigationHandlerView: View {
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
@@ -20,7 +40,7 @@ struct NavigationHandlerView: View {
             // NAVIGATION - BASED ON STATE
             // if card is unclaimed, propose to take ownership (only once per card scan)
             if self.cardState.ownershipStatus == .unclaimed {
-                NavigationLink("", destination: TakeOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: $showTakeOwnershipAlert)
+                NavigationLink("", destination: TakeOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert, fromView: .goBackHome), isActive: $showTakeOwnershipAlert)
                     .hidden()
             }
             
@@ -32,7 +52,7 @@ struct NavigationHandlerView: View {
                 NavigationLink("", destination: OnboardingContainerView(), isActive: .constant(true)).hidden()
             }
             if self.viewStackHandler.navigationState == .cardAuthenticity {
-                NavigationLink("", destination: AuthenticView(), isActive: .constant(true)).hidden()
+                NavigationLink("", destination: AuthenticView(shouldShowAuthenticityScreen: .constant(false), shouldBreakNavigationLink: false), isActive: .constant(true)).hidden()
             }
             if self.viewStackHandler.navigationState == .cardInfo {
                 NavigationLink("", destination: CardInfoView(), isActive: .constant(true)).hidden()

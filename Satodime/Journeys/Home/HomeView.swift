@@ -10,26 +10,6 @@ import SwiftUI
 import SnapToScroll
 import Combine
 
-class ViewStackHandlerNew: ObservableObject {
-    @Published var navigationState: NavigationState = .goBackHome
-}
-
-enum NavigationState {
-    case goBackHome
-    case onboarding
-    case takeOwnership
-    case vaultInitialization
-    case vaultSetupCongrats
-    case cardAuthenticity
-    case cardInfo
-    case unseal
-    case privateKey
-    case reset
-    case menu
-    case settings
-    case addFunds
-}
-
 struct HomeView: View {
     // MARK: - Properties
     @EnvironmentObject var cardState: CardState

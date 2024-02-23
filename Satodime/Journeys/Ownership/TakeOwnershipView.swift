@@ -14,6 +14,7 @@ struct TakeOwnershipView: View {
     @EnvironmentObject var cardState: CardState
     
     @Binding var showTakeOwnershipAlert: Bool
+    var fromView: NavigationState?
     
     // MARK: - Litterals
     let title = "takeTheOwnershipTitle"
@@ -68,7 +69,11 @@ struct TakeOwnershipView: View {
         .navigationBarItems(leading: Button(action: {
             showTakeOwnershipAlert = false // disable so that user is not asked again
             DispatchQueue.main.async {
-                self.viewStackHandler.navigationState = .cardInfo //.goBackHome
+                if let fromView = fromView {
+                    self.viewStackHandler.navigationState = fromView
+                } else {
+                    self.viewStackHandler.navigationState = .cardInfo
+                }
             }
         }) {
             Image("ic_flipback")

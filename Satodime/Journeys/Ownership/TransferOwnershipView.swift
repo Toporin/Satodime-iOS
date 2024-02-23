@@ -15,6 +15,8 @@ struct TransferOwnershipView: View {
     
     @Binding var showTakeOwnershipAlert: Bool // Binding to flags for showing TakeOwnershipView
     
+    var fromView: NavigationState?
+    
     // MARK: - Literals
     let title = "transferOwner"
     let subtitle = "transferOwnershipDescription"
@@ -72,9 +74,16 @@ struct TransferOwnershipView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
             showTakeOwnershipAlert = false // disable so that user is not asked again?
-            DispatchQueue.main.async {
-                self.viewStackHandler.navigationState = .cardInfo //.goBackHome
+            if let fromView = self.fromView, fromView == .menu {
+                DispatchQueue.main.async {
+                    self.viewStackHandler.navigationState = .menu
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.viewStackHandler.navigationState = .cardInfo //.goBackHome
+                }
             }
+            
         }) {
             Image("ic_flipback")
         })
