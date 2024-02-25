@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct SatodimeApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     @StateObject var cardState = CardState()
     @StateObject var viewStackHandlerNew = ViewStackHandlerNew()

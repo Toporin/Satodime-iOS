@@ -109,6 +109,8 @@
 		D0F62FD62ACEF5040027EFE6 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0F62FD52ACEF5040027EFE6 /* OpenSans-SemiBold.ttf */; };
 		D0F62FD82ACF11FE0027EFE6 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */; };
 		D0FEDBD92B88ED9900EAD10A /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */; };
+		D0FEDBDE2B8B8D5800EAD10A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */; };
+		D0FEDBE12B8B8F0F00EAD10A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,6 +234,7 @@
 		D0F62FD52ACEF5040027EFE6 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
+		D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +248,7 @@
 				0DA7B4B3299A4D7E00CEE722 /* SwiftCryptoTools in Frameworks */,
 				0DA7B4B6299A4E6400CEE722 /* QRCode in Frameworks */,
 				D0EB4DE52AC079B200EA83F9 /* SwiftCryptoTools in Frameworks */,
+				D0FEDBE12B8B8F0F00EAD10A /* FirebaseCrashlytics in Frameworks */,
 				0DE0A9402AFA9B7D00D0845F /* SatochipSwift in Frameworks */,
 				0DE0A93D2AFA9B3100D0845F /* SwiftCryptoTools in Frameworks */,
 			);
@@ -301,6 +305,7 @@
 				D0EB4DE62AC0837C00EA83F9 /* Journeys */,
 				0DA7B4A7299A38B500CEE722 /* Info.plist */,
 				0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */,
+				D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */,
 				0DA7B4BE299A81D900CEE722 /* Localizable.strings */,
 				D0EB4E172AC24DF600EA83F9 /* AppDelegate.swift */,
 				0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */,
@@ -609,6 +614,7 @@
 				0DA7B453299A365900CEE722 /* Sources */,
 				0DA7B454299A365900CEE722 /* Frameworks */,
 				0DA7B455299A365900CEE722 /* Resources */,
+				D0322EEB2B8B951500EBC58C /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -624,6 +630,7 @@
 				0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */,
 				0DE0A9452AFA9D4D00D0845F /* BigInt */,
 				0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */,
+				D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */,
 			);
 			productName = Satodime;
 			productReference = 0DA7B457299A365900CEE722 /* Satodime.app */;
@@ -704,6 +711,7 @@
 				0DE0A93E2AFA9B7D00D0845F /* XCLocalSwiftPackageReference "../SatochipSwift" */,
 				0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */,
 				0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */,
+				D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 0DA7B458299A365900CEE722 /* Products */;
 			projectDirPath = "";
@@ -723,6 +731,7 @@
 			files = (
 				D0F62FD62ACEF5040027EFE6 /* OpenSans-SemiBold.ttf in Resources */,
 				0DA7B4B7299A589E00CEE722 /* Apikeys-Info.plist in Resources */,
+				D0FEDBDE2B8B8D5800EAD10A /* GoogleService-Info.plist in Resources */,
 				D0E665682ADAA08200703A8F /* Outfit-Regular.ttf in Resources */,
 				0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */,
 				D0EB4DF12AC1D39D00EA83F9 /* Outfit-variable.ttf in Resources */,
@@ -753,6 +762,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D0322EEB2B8B951500EBC58C /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = Crashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0DA7B453299A365900CEE722 /* Sources */ = {
@@ -926,7 +961,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1219,7 +1254,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1419,6 +1454,14 @@
 				minimumVersion = 1.0.3;
 			};
 		};
+		D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.21.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1456,6 +1499,11 @@
 		D0EB4DE42AC079B200EA83F9 /* SwiftCryptoTools */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftCryptoTools;
+		};
+		D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
