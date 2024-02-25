@@ -10,6 +10,7 @@ import SwiftUI
 
 struct SettingsView: View {
     // MARK: - Properties
+    @Environment(\.openURL) var openURL
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
     @State var selectedValue: String = ""
@@ -58,7 +59,6 @@ struct SettingsView: View {
                     backgroundColor: Constants.Colors.blueMenuButton,
                     isOn: $starterIntroIsOn,
                     onToggle: { newValue in
-                        //setOnboarding(setOnboarding: newValue)
                         self.preferencesService.setOnboarding(newValue)
                     }
                 )
@@ -70,6 +70,14 @@ struct SettingsView: View {
                 
                 SatoButton(staticWidth: 134, text: showLogsButtonTitle, style: .inform) {
                     self.isShowLogs = true
+                }
+                
+                Spacer()
+                    .frame(height: 16)
+                
+                SatoButton(staticWidth: 134, text: "Send feedback", style: .confirm) {
+                    let supportEmail = EmailHelper.SupportEmail()
+                    supportEmail.send(openURL: self.openURL)
                 }
                 
                 Spacer()
@@ -90,7 +98,7 @@ struct SettingsView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
             DispatchQueue.main.async {
-                self.viewStackHandler.navigationState = .menu //.goBackHome
+                self.viewStackHandler.navigationState = .menu
             }
         }) {
             Image("ic_flipback")
