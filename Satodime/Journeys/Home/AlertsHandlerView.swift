@@ -14,6 +14,7 @@ struct AlertsHandlerView: View {
     @Binding var showNotOwnerAlert: Bool
     @Binding var showNotAuthenticAlert: Bool
     @Binding var showCardNeedsToBeScannedAlert: Bool
+    @Binding var showNoNetworkAlert: Bool
 
     var body: some View {
         Group {
@@ -25,6 +26,9 @@ struct AlertsHandlerView: View {
             }
             if showCardNeedsToBeScannedAlert {
                 cardNeedsToBeScannedAlert
+            }
+            if showNoNetworkAlert {
+                noNetworkAlert
             }
         }
     }
@@ -90,6 +94,27 @@ struct AlertsHandlerView: View {
                 alert: SatoAlert(
                     title: "cardNeedToBeScannedTitle",
                     message: "cardNeedToBeScannedMessage",
+                    buttonTitle: "",
+                    buttonAction: {},
+                    isMoreInfoBtnVisible: false
+                )
+            )
+            .padding([.leading, .trailing], 24)
+        }
+    }
+    
+    private var noNetworkAlert: some View {
+        ZStack {
+            Color.black.opacity(0.4)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    showNoNetworkAlert = false
+                }
+            SatoAlertView(
+                isPresented: $showNoNetworkAlert,
+                alert: SatoAlert(
+                    title: "noNetworkAlertTitle",
+                    message: "noNetworkAlertMessage",
                     buttonTitle: "",
                     buttonAction: {},
                     isMoreInfoBtnVisible: false

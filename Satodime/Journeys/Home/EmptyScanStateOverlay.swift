@@ -15,6 +15,7 @@ struct EmptyScanStateOverlay: View {
     @Binding var showNotOwnerAlert: Bool
     @Binding var showNotAuthenticAlert: Bool
     @Binding var showTakeOwnershipAlert: Bool
+    @Binding var showNoNetworkAlert: Bool
     
     var body: some View {
         if cardState.vaultArray.isEmpty {
@@ -24,7 +25,13 @@ struct EmptyScanStateOverlay: View {
                 
                 ScanButton {
                     Task {
-                        await cardState.executeQuery()
+                        let networkDataFetchResult = await cardState.executeQuery()
+                        switch networkDataFetchResult {
+                        case .success:
+                            break
+                        case .failure:
+                            self.showNoNetworkAlert = true
+                        }
                     }
                     // reset flag when scanning a new card
                     showTakeOwnershipAlert = true

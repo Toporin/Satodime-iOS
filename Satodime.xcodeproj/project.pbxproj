@@ -44,6 +44,7 @@
 		D02B28432B8642D400980C67 /* NavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28422B8642D400980C67 /* NavigationHandler.swift */; };
 		D02B28452B86453700980C67 /* EmptyScanStateOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */; };
 		D02B28472B86467500980C67 /* AlertsHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28462B86467500980C67 /* AlertsHandlerView.swift */; };
+		D0322EED2B8BA00600EBC58C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0322EEC2B8BA00600EBC58C /* NetworkManager.swift */; };
 		D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */; };
 		D0602B4D2AD0A7F700CF8AEC /* VaultCardEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */; };
 		D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */; };
@@ -169,6 +170,7 @@
 		D02B28422B8642D400980C67 /* NavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHandler.swift; sourceTree = "<group>"; };
 		D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyScanStateOverlay.swift; sourceTree = "<group>"; };
 		D02B28462B86467500980C67 /* AlertsHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsHandlerView.swift; sourceTree = "<group>"; };
+		D0322EEC2B8BA00600EBC58C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoStatusView.swift; sourceTree = "<group>"; };
 		D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardEmpty.swift; sourceTree = "<group>"; };
 		D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeOwnershipView.swift; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 				D06080642AD94ED2001A5749 /* Views.swift */,
 				D06080682AD980A6001A5749 /* QRCode.swift */,
 				0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */,
+				D0322EEC2B8BA00600EBC58C /* NetworkManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -836,6 +839,7 @@
 				D06080632AD949FD001A5749 /* SatoSelectionButton.swift in Sources */,
 				D0E665702ADABCA400703A8F /* CardInfoView.swift in Sources */,
 				D0F62FC62ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift in Sources */,
+				D0322EED2B8BA00600EBC58C /* NetworkManager.swift in Sources */,
 				D0EB4E002AC1E02E00EA83F9 /* Constants.swift in Sources */,
 				D0E665742ADABDF500703A8F /* CardInfoBox.swift in Sources */,
 				D0EB4DF52AC1D5E100EA83F9 /* OnboardingContainerView.swift in Sources */,

@@ -20,6 +20,7 @@ struct HeaderView: View {
     @Binding var isVerticalModeEnabled: Bool
     @Binding var currentSlotIndex: Int
     @Binding var isRefreshingCard: Bool
+    @Binding var showNoNetworkAlert: Bool
     
     // MARK: - Literals
     let viewTitle: String = "vaults"
@@ -58,7 +59,13 @@ struct HeaderView: View {
                         isRefreshingCard = true
                         
                         Task {
-                            await cardState.executeQuery()
+                            let networkDataFetchResult = await cardState.executeQuery()
+                            switch networkDataFetchResult {
+                            case .success:
+                                break
+                            case .failure:
+                                self.showNoNetworkAlert = true
+                            }
                         }
                         // reset flag when scanning a new card
                         // TODO: Delay execution should not be used as a solution

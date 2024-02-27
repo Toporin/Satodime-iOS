@@ -736,25 +736,27 @@ class CardState: ObservableObject {
     }
     
     @MainActor
-    func executeQuery() async {
+    func executeQuery() async -> NetworkResult {
         print("in executeQuery START")
         dispatchGroup.enter()
         self.scan()
-        dispatchGroup.notify(queue: DispatchQueue.global()){
-            Task {
-                // fetching assets info for each vault from the web in parallel
-                await withTaskGroup(of: Void.self) { group in
-                    // adding tasks to the group and fetching movies
-                    for index in 0..<self.vaultArray.count {
-                        group.addTask {
-                             await self.fetchDataFromWeb(index: index)
+        if Reachability.shared.isConnected {
+            dispatchGroup.notify(queue: DispatchQueue.global()){
+                Task {
+                    await withTaskGroup(of: Void.self) { group in
+                        for index in 0..<self.vaultArray.count {
+                            group.addTask {
+                                 await self.fetchDataFromWeb(index: index)
+                            }
                         }
+                        return
                     }
-                    return
                 }
             }
+            return .success
+        } else {
+            return .failure
         }
     }
-    
 }
 

@@ -21,6 +21,7 @@ struct HomeView: View {
     @State var showCardNeedsToBeScannedAlert: Bool = false
     // show the TakeOwnershipView if card is unclaimed, this is transmitted with CardInfoView
     @State var showTakeOwnershipAlert: Bool = true
+    @State var showNoNetworkAlert: Bool = false
     @State var isVerticalModeEnabled: Bool = false
     @State var isRefreshingCard: Bool = false
     // current slot shown to user
@@ -53,7 +54,8 @@ struct HomeView: View {
                                    showTakeOwnershipAlert: self.$showTakeOwnershipAlert,
                                    isVerticalModeEnabled: self.$isVerticalModeEnabled,
                                    currentSlotIndex: self.$currentSlotIndex,
-                                   isRefreshingCard: self.$isRefreshingCard)
+                                   isRefreshingCard: self.$isRefreshingCard,
+                                   showNoNetworkAlert: self.$showNoNetworkAlert)
                         
                         Spacer()
                             .frame(height: 16)
@@ -71,8 +73,8 @@ struct HomeView: View {
                         Spacer()
                     }
                     
-                    NavigationHandlerView(currentSlotIndex: $currentSlotIndex,
-                                          showTakeOwnershipAlert: $showTakeOwnershipAlert)
+                    NavigationHandlerView(currentSlotIndex: self.$currentSlotIndex,
+                                          showTakeOwnershipAlert: self.$showTakeOwnershipAlert)
                         .environmentObject(viewStackHandler)
                         .environmentObject(cardState)
 
@@ -83,14 +85,16 @@ struct HomeView: View {
                         if !self.isRefreshingCard {
                             EmptyScanStateOverlay(showNotOwnerAlert: self.$showNotOwnerAlert,
                                                   showNotAuthenticAlert: self.$showNotAuthenticAlert,
-                                                  showTakeOwnershipAlert: self.$showTakeOwnershipAlert)
+                                                  showTakeOwnershipAlert: self.$showTakeOwnershipAlert,
+                                                  showNoNetworkAlert: self.$showNoNetworkAlert)
                         }
                         
                         // Use AlertsHandler to show one or more alerts when needed
                         AlertsHandlerView(
-                                showNotOwnerAlert: $showNotOwnerAlert,
-                                showNotAuthenticAlert: $showNotAuthenticAlert,
-                                showCardNeedsToBeScannedAlert: $showCardNeedsToBeScannedAlert
+                            showNotOwnerAlert: self.$showNotOwnerAlert,
+                            showNotAuthenticAlert: self.$showNotAuthenticAlert,
+                            showCardNeedsToBeScannedAlert: self.$showCardNeedsToBeScannedAlert,
+                            showNoNetworkAlert: self.$showNoNetworkAlert
                             )
                             .environmentObject(cardState)
                             .environmentObject(viewStackHandler)

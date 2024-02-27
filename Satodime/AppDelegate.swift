@@ -19,6 +19,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             NSAttributedString.Key.foregroundColor: UIColor.clear,
         ], for: .normal)
         FirebaseApp.configure()
+        Reachability.shared.startNetworkReachabilityObserver()
         return true
     }
 }
