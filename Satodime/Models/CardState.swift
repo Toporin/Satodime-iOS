@@ -247,7 +247,7 @@ class CardState: ObservableObject {
                         DispatchQueue.main.async {
                             self.ownershipStatus = .owner
                         }
-                        cardController?.stop(alertMessage: String(localized: "Card ownership accepted successfully!"))
+                        cardController?.stop(alertMessage: String(localized: "nfcOwnershipAcceptSuccess"))
                         log.info("Card ownership claimed successfully for \(authentikeyHex)!", tag: "CardState.takeOwnership")
                         onSuccess()
                         return
@@ -385,7 +385,7 @@ class CardState: ObservableObject {
                 DispatchQueue.main.async {
                     self.vaultArray[Int(index)] = vaultItem
                 }
-                cardController?.stop(alertMessage: String(localized: "Vault sealed successfully!"))
+                cardController?.stop(alertMessage: String(localized: "nfcVaultSealedSuccess"))
                 log.info("vault \(index) sealed with new pubkey: \(pubkey) & address: \(address)", tag: "CardState.sealVault")
                 onSuccess()
                 return
