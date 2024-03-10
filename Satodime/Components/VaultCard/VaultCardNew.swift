@@ -71,7 +71,7 @@ struct VaultCardNew: View {
                             }) {
                                 Image("ic_link")
                                     .resizable()
-                                    .frame(width: 32, height: 32)
+                                    .frame(width: 23, height: 23)
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
