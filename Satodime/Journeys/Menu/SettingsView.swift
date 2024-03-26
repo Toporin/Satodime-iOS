@@ -75,7 +75,7 @@ struct SettingsView: View {
                 Spacer()
                     .frame(height: 16)
                 
-                SatoButton(text: "Send feedback", style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
+                SatoButton(text: String(localized: "sendFeedback"), style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                     let supportEmail = EmailHelper.SupportEmail()
                     supportEmail.send(openURL: self.openURL)
                 }
