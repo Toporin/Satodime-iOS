@@ -95,21 +95,21 @@ struct AuthenticView: View {
                             .frame(width: 150, height: 150)
                         Spacer()
                             .frame(height: 38)
-                        SatoText(text: "authenticationSuccess", style: .subtitle)
+                        SatoText(text: "authenticationSuccess", style: .lightSubtitle)
                     } else if cardState.certificateCode == .unknown { // TODO: something particuliar?
                         Image("il_not_authentic")
                             .resizable()
                             .frame(width: 150, height: 150)
                         Spacer()
                             .frame(height: 38)
-                        SatoText(text: "authenticationFailed", style: .subtitle)
+                        SatoText(text: "authenticationFailed", style: .lightSubtitle)
                     } else {
                         Image("il_not_authentic")
                             .resizable()
                             .frame(width: 150, height: 150)
                         Spacer()
                             .frame(height: 38)
-                        SatoText(text: "authenticationFailed", style: .subtitle)
+                        SatoText(text: "authenticationFailed", style: .lightSubtitle)
                     }
                     
                     Spacer()
