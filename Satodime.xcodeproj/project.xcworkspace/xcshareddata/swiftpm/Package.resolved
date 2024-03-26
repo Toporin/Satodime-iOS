@@ -181,6 +181,15 @@
       }
     },
     {
+      "identity" : "toasty",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nenosllc/Toasty.git",
+      "state" : {
+        "revision" : "7e99da7772718ae735d0aaa8b57ef6b59526deb9",
+        "version" : "2.1.0"
+      }
+    },
+    {
       "identity" : "zip",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/marmelroy/Zip.git",

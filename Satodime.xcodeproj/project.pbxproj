@@ -37,6 +37,7 @@
 		0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */ = {isa = PBXBuildFile; productRef = 0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */; };
 		D017D14D2B867D8800B467D2 /* VerticalCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */; };
 		D017D14F2B88DC9A00B467D2 /* ReviewRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */; };
+		D02A17602BB31AB600BE2852 /* Toasty in Frameworks */ = {isa = PBXBuildFile; productRef = D02A175F2BB31AB600BE2852 /* Toasty */; };
 		D02B283B2B86411500980C67 /* HorizontalCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283A2B86411500980C67 /* HorizontalCardsView.swift */; };
 		D02B283D2B86413F00980C67 /* CarouselCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283C2B86413F00980C67 /* CarouselCardsView.swift */; };
 		D02B283F2B86417D00980C67 /* ActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283E2B86417D00980C67 /* ActionButtonsView.swift */; };
@@ -244,6 +245,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D02A17602BB31AB600BE2852 /* Toasty in Frameworks */,
 				0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */,
 				0DA7B4B1299A4D6D00CEE722 /* SatochipSwift in Frameworks */,
 				0DE0A9462AFA9D4D00D0845F /* BigInt in Frameworks */,
@@ -634,6 +636,7 @@
 				0DE0A9452AFA9D4D00D0845F /* BigInt */,
 				0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */,
 				D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */,
+				D02A175F2BB31AB600BE2852 /* Toasty */,
 			);
 			productName = Satodime;
 			productReference = 0DA7B457299A365900CEE722 /* Satodime.app */;
@@ -715,6 +718,7 @@
 				0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */,
 				0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */,
 				D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D02A175E2BB31AB600BE2852 /* XCRemoteSwiftPackageReference "Toasty" */,
 			);
 			productRefGroup = 0DA7B458299A365900CEE722 /* Products */;
 			projectDirPath = "";
@@ -1458,6 +1462,14 @@
 				minimumVersion = 1.0.3;
 			};
 		};
+		D02A175E2BB31AB600BE2852 /* XCRemoteSwiftPackageReference "Toasty" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nenosllc/Toasty.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
 		D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1499,6 +1511,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */;
 			productName = SnapToScroll;
+		};
+		D02A175F2BB31AB600BE2852 /* Toasty */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D02A175E2BB31AB600BE2852 /* XCRemoteSwiftPackageReference "Toasty" */;
+			productName = Toasty;
 		};
 		D0EB4DE42AC079B200EA83F9 /* SwiftCryptoTools */ = {
 			isa = XCSwiftPackageProductDependency;

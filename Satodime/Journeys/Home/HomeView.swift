@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import SnapToScroll
 import Combine
+import Toasty
 
 struct HomeView: View {
     // MARK: - Properties
@@ -72,6 +73,9 @@ struct HomeView: View {
 
                         Spacer()
                     }
+                    .toast(isPresenting: $showNoNetworkAlert) {
+                        ToastHUD(type: .error(.orange), title: String(localized: "noNetworkAlertTitle"), subtitle: String(localized: "noNetworkAlertMessage"))
+                    }
                     
                     NavigationHandlerView(currentSlotIndex: self.$currentSlotIndex,
                                           showTakeOwnershipAlert: self.$showTakeOwnershipAlert)
@@ -93,8 +97,7 @@ struct HomeView: View {
                         AlertsHandlerView(
                             showNotOwnerAlert: self.$showNotOwnerAlert,
                             showNotAuthenticAlert: self.$showNotAuthenticAlert,
-                            showCardNeedsToBeScannedAlert: self.$showCardNeedsToBeScannedAlert,
-                            showNoNetworkAlert: self.$showNoNetworkAlert
+                            showCardNeedsToBeScannedAlert: self.$showCardNeedsToBeScannedAlert
                             )
                             .environmentObject(cardState)
                             .environmentObject(viewStackHandler)

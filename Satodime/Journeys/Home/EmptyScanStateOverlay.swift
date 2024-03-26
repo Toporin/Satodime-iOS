@@ -30,7 +30,9 @@ struct EmptyScanStateOverlay: View {
                         case .success:
                             break
                         case .failure:
-                            self.showNoNetworkAlert = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+                                self.showNoNetworkAlert = true
+                            }
                         }
                     }
                     // reset flag when scanning a new card
