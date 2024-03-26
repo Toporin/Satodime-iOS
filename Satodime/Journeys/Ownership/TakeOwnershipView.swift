@@ -36,7 +36,7 @@ struct TakeOwnershipView: View {
                     .frame(height: 37)
                 SatoText(text: subtitle, style: .subtitle)
                 Spacer()
-                SatoButton(staticWidth: 196, text: String(localized: "accept"), style: .confirm, horizontalPadding: 60) {
+                SatoButton(text: String(localized: "accept"), style: .confirm, horizontalPadding: Constants.Dimensions.firstButtonPadding) {
                     showTakeOwnershipAlert = false // disable so that user is not asked again
                     cardState.takeOwnership(
                         cardAuthentikeyHex: cardState.authentikeyHex,
@@ -53,7 +53,7 @@ struct TakeOwnershipView: View {
                 }
                 Spacer()
                     .frame(height: 20)
-                SatoButton(staticWidth: 222, text: String(localized: "cancel"), style: .danger, horizontalPadding: 30) {
+                SatoButton(text: String(localized: "cancel"), style: .danger, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                     showTakeOwnershipAlert = false // disable so that user is not asked again
                     DispatchQueue.main.async {
                         self.viewStackHandler.navigationState = .cardInfo //.goBackHome

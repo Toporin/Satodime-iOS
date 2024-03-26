@@ -70,7 +70,7 @@ struct VaultSetupCongratsView: View {
                 
                 Spacer()
                 
-                SatoButton(staticWidth: 222, text: continueButtonTitle, style: .confirm) {
+                SatoButton(text: continueButtonTitle, style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                     DispatchQueue.main.async {
                         self.viewStackHandler.navigationState = .goBackHome
                     }

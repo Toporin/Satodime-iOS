@@ -88,7 +88,7 @@ struct ResetView: View {
                 
                 Spacer()
                 
-                SatoButton(staticWidth: 293, text: continueButtonTitle, style: .danger, action:  {
+                SatoButton(text: continueButtonTitle, style: .danger, horizontalPadding: Constants.Dimensions.secondButtonPadding, action:  {
                     
                     if cardState.ownershipStatus == .owner {
                         if hasUserConfirmedTerms {

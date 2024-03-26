@@ -53,6 +53,10 @@ struct Constants {
         
         // MARK: - Sizes
         static let satoDimeLogoHeight: CGFloat = 81.0
+        
+        // MARK: - Paddings
+        static let firstButtonPadding: CGFloat = 50.0
+        static let secondButtonPadding: CGFloat = 30.0
     }
     
     // MARK: - Storage

@@ -39,7 +39,7 @@ struct TransferOwnershipView: View {
                 SatoText(text: subtitle, style: .graySubtitle).lineLimit(nil)
                 Spacer()
                 
-                SatoButton(staticWidth: 196, text: transferButtonTitle, style: .confirm, horizontalPadding: 60) {
+                SatoButton(text: transferButtonTitle, style: .confirm, horizontalPadding: Constants.Dimensions.firstButtonPadding) {
                     showTakeOwnershipAlert = false // reset flag to avoid user being asked to take ownership just after releasing it
                     cardState.releaseOwnership(
                         cardAuthentikeyHex: cardState.authentikeyHex,
@@ -58,7 +58,7 @@ struct TransferOwnershipView: View {
                 Spacer()
                     .frame(height: 37)
                 
-                SatoButton(staticWidth: 196, text: String(localized: "cancel"), style: .danger, horizontalPadding: 60) {
+                SatoButton(text: String(localized: "cancel"), style: .danger, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                     showTakeOwnershipAlert = false // disable so that user is not asked again?
                     DispatchQueue.main.async {
                         self.viewStackHandler.navigationState = .cardInfo //.goBackHome

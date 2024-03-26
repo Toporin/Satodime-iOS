@@ -89,7 +89,7 @@ struct UnsealView: View {
                                     
                 Spacer()
                 
-                SatoButton(staticWidth: 146, text: continueButtonTitle, style: .danger) {
+                SatoButton(text: continueButtonTitle, style: .danger, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                     
                     if cardState.ownershipStatus == .owner {
                         

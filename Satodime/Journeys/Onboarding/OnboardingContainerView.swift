@@ -83,7 +83,7 @@ struct OnboardingContainerView: View {
             }
             
             if isLastPage {
-                SatoButton(staticWidth: 177, text: startButtonTitle, style: .confirm, horizontalPadding: 60) {
+                SatoButton(text: startButtonTitle, style: .confirm, horizontalPadding: Constants.Dimensions.firstButtonPadding) {
                     self.completeOnboarding()
                 }
                 .padding(.bottom, Constants.Dimensions.defaultBottomMargin)

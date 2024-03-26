@@ -40,7 +40,7 @@ struct SatoAlertView: View {
                         isPresented = false
                     }) {
                         Text(alert.buttonTitle)
-                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, Constants.Dimensions.firstButtonPadding)
                             .padding()
                             .background(Constants.Colors.informButtonBackground)
                             .foregroundColor(.white)
@@ -54,12 +54,13 @@ struct SatoAlertView: View {
                     isPresented = false
                 }) {
                     Text(String(localized: "close"))
-                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, Constants.Dimensions.secondButtonPadding)
                         .padding()
                         .background(Constants.Colors.ledBlue)
                         .foregroundColor(.white)
                         .cornerRadius(24)
                 }
+                .frame(maxWidth: .infinity)
             }
             
             Spacer()

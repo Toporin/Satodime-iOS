@@ -68,14 +68,14 @@ struct SettingsView: View {
                 Spacer()
                     .frame(height: 33)
                 
-                SatoButton(staticWidth: 134, text: showLogsButtonTitle, style: .inform) {
+                SatoButton(text: showLogsButtonTitle, style: .inform, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                     self.isShowLogs = true
                 }
                 
                 Spacer()
                     .frame(height: 16)
                 
-                SatoButton(staticWidth: 134, text: "Send feedback", style: .confirm) {
+                SatoButton(text: "Send feedback", style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                     let supportEmail = EmailHelper.SupportEmail()
                     supportEmail.send(openURL: self.openURL)
                 }
