@@ -201,7 +201,7 @@ class CardState: ObservableObject {
             log.info(String(localized: "nfcVaultsListSuccess"), tag: "CardState.onConnection")
             
         } catch let error {
-            session?.stop(errorMessage: "\(String(localized: "nfcErrorOccured")) \(error.localizedDescription)")
+            session?.stop(errorMessage: "\(String(localized: "nfcErrorOccured"))")
             log.error("\(String(localized: "nfcErrorOccured")) \(error.localizedDescription)", tag: "CardState.onConnection")
         }
         
