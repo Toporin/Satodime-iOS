@@ -17,7 +17,11 @@ enum OnboardingViewType {
 struct OnboardingContainerView: View {
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
-    @State var currentPageIndex = 0
+    @State var currentPageIndex = 0 {
+        didSet {
+            self.isLastPageHandler()
+        }
+    }
     @State var isLastPage = false
     
     // MARK: - Literals
@@ -29,8 +33,14 @@ struct OnboardingContainerView: View {
         if currentPageIndex < numberOfPages - 1 {
             currentPageIndex = currentPageIndex + 1
         }
+        self.isLastPageHandler()
+    }
+    
+    private func isLastPageHandler() {
         if currentPageIndex == numberOfPages - 1 {
             isLastPage = true
+        } else {
+            isLastPage = false
         }
     }
     
