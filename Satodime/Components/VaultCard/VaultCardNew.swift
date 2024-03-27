@@ -35,7 +35,6 @@ struct VaultCardNew: View {
                 Image(backgroundImageName())
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    //.frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
                     .frame(maxWidth: useFullWidth ? .infinity : 280, minHeight: 197, maxHeight: 197)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .overlay(
@@ -45,7 +44,6 @@ struct VaultCardNew: View {
                 
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(Color.black.opacity(0.1))
-                    //.frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
                     .frame(maxWidth: useFullWidth ? .infinity : 280, minHeight: 197, maxHeight: 197)
                 
                 VStack {
@@ -105,7 +103,7 @@ struct VaultCardNew: View {
                         
                         // BALANCE
                         BalanceView(
-                            title: cardState.vaultArray[Int(index)].coin.displayName, //String(localized: "totalBalance"),
+                            title: cardState.vaultArray[Int(index)].coin.displayName,
                             balanceFirst: SatodimeUtil.formatBalance(balanceDouble: cardState.vaultArray[Int(index)].balance, symbol: cardState.vaultArray[Int(index)].coin.coinSymbol),
                             balanceSecond: SatodimeUtil.formatBalance(balanceDouble: cardState.vaultArray[Int(index)].coinValueInSecondCurrency,  symbol: cardState.vaultArray[Int(index)].selectedSecondCurrency, maxFractionDigit: 2)
                         )
