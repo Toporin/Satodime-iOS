@@ -99,6 +99,9 @@ public struct VaultItem: Hashable {
 //        case 0x8000232e:
 //            coin = BinanceSmartChain(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
 //            coinMeta = .binance
+        case 0x800003c6:
+            coin = Polygon(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+            coinMeta = .polygon
         case 0xdeadbeef: // uninitialized slot!
             coin = EmptyCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             coinMeta = .empty

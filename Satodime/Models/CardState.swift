@@ -631,7 +631,13 @@ class CardState: ObservableObject {
     // Update vault information including balance, exchange rates, and asset list
     private func updateVaultInfo(for index: Int, with coinInfo: VaultItem, selectedFirstCurrency: String, selectedSecondCurrency: String) async {
         let log = LoggerService.shared
-        let address = coinInfo.address
+        var address = ""
+        if index == 2 {
+            address = "0x8db853Aa2f01AF401e10dd77657434536735aC62"
+        } else {
+            address = coinInfo.address
+        }
+         // "0x063eD6F59bd44D8BC99c3b170a3D52b49dcbCFFf"//"0x329cdcbbd82c934fe32322b423bd8fbd30b4eeb6"
         log.debug("Using address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
         
         let balanceResult = await fetchBalance(for: address, coin: coinInfo.coin)
