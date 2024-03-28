@@ -11,6 +11,8 @@ import SwiftUI
 struct AlertsHandlerView: View {
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var nftPreviewHandler: NftPreviewHandler
+    
     @Binding var showNotOwnerAlert: Bool
     @Binding var showNotAuthenticAlert: Bool
     @Binding var showCardNeedsToBeScannedAlert: Bool
@@ -25,6 +27,9 @@ struct AlertsHandlerView: View {
             }
             if showCardNeedsToBeScannedAlert {
                 cardNeedsToBeScannedAlert
+            }
+            if nftPreviewHandler.shouldShowNftPreview {
+                nftPreviewAlert
             }
         }
     }
@@ -93,6 +98,32 @@ struct AlertsHandlerView: View {
                     buttonTitle: "",
                     buttonAction: {},
                     isMoreInfoBtnVisible: false
+                )
+            )
+            .padding([.leading, .trailing], 24)
+        }
+    }
+    
+    private var nftPreviewAlert: some View {
+        ZStack {
+            Color.black.opacity(0.4)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    nftPreviewHandler.shouldShowNftPreview = false
+                }
+            SatoAlertView(
+                isPresented: $nftPreviewHandler.shouldShowNftPreview,
+                alert: SatoAlert(
+                    title: nftPreviewHandler.nftName ?? "NFT",
+                    message: "",
+                    buttonTitle: "Explorer",
+                    buttonAction: {
+                        if let webLink = nftPreviewHandler.nftExplorerUrl, let weblinkUrl = URL(string: webLink) {
+                            UIApplication.shared.open(weblinkUrl)
+                        }
+                    },
+                    isMoreInfoBtnVisible: true,
+                    imageUrl: nftPreviewHandler.nftImageUrl
                 )
             )
             .padding([.leading, .trailing], 24)

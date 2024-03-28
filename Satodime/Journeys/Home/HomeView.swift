@@ -16,6 +16,7 @@ struct HomeView: View {
     let reviewRequestService = ReviewRequestService()
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var nftPreviewHandler: NftPreviewHandler
     // let user disable specific alert prompts for the current app session
     @State var showNotOwnerAlert: Bool = true
     @State var showNotAuthenticAlert: Bool = true
@@ -101,6 +102,7 @@ struct HomeView: View {
                             )
                             .environmentObject(cardState)
                             .environmentObject(viewStackHandler)
+                            .environmentObject(nftPreviewHandler)
                     }
                 )
         }

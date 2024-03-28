@@ -13,12 +13,14 @@ struct SatodimeApp: App {
     
     @StateObject var cardState = CardState()
     @StateObject var viewStackHandlerNew = ViewStackHandlerNew()
+    @StateObject var nftPreviewHandler = NftPreviewHandler()
     
     var body: some Scene {
         WindowGroup {
             HomeView()
                 .environmentObject(cardState)
                 .environmentObject(viewStackHandlerNew)
+                .environmentObject(nftPreviewHandler)
         }
     }
 }

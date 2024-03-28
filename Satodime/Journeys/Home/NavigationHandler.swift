@@ -12,6 +12,13 @@ class ViewStackHandlerNew: ObservableObject {
     @Published var navigationState: NavigationState = .goBackHome
 }
 
+class NftPreviewHandler: ObservableObject {
+    @Published var shouldShowNftPreview: Bool = false
+    @Published var nftExplorerUrl: String?
+    @Published var nftImageUrl: String?
+    @Published var nftName: String?
+}
+
 enum NavigationState {
     case goBackHome
     case onboarding
