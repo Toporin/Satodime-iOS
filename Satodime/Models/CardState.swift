@@ -50,6 +50,9 @@ class CardState: ObservableObject {
     @Published var certificateDic = ["":""]
     @Published var certificateCode = PkiReturnCode.unknown
     
+    // DEBUG mode
+    let DEBUGGING_MODE = false
+    
     // fetch web data only after nfc polling has finished...
     let dispatchGroup = DispatchGroup()
     
@@ -593,25 +596,6 @@ class CardState: ObservableObject {
     // MARK: WEB APIs
     //
 
-    //for debug purpose only
-//        if coinInfo.coin.coinSymbol == "XCP" {
-//            address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
-//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
-//        } else if coinInfo.coin.coinSymbol == "ETH" {
-//            //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
-//            //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
-//            address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
-//            //address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
-//            //address = "0x2c4ebd4b21736e992f3efeb55de37ae66457199d" // grolex nft
-//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
-//        } else if coinInfo.coin.coinSymbol == "BTC" {
-//            address = "bc1ql49ydapnjafl5t2cp9zqpjwe6pdgmxy98859v2" // whale
-//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
-//        } else if coinInfo.coin.coinSymbol == "BNB" {
-//            address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
-//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
-//        }
-    
     func fetchDataFromWeb(index: Int) async {
         let log = LoggerService.shared
         log.debug("Start fetching data from web for vault \(index)", tag: "CardState.fetchDataFromWeb")
@@ -631,14 +615,31 @@ class CardState: ObservableObject {
     // Update vault information including balance, exchange rates, and asset list
     private func updateVaultInfo(for index: Int, with coinInfo: VaultItem, selectedFirstCurrency: String, selectedSecondCurrency: String) async {
         let log = LoggerService.shared
-        var address = ""
-        if index == 2 {
-            address = "0x8db853Aa2f01AF401e10dd77657434536735aC62"
-        } else {
-            address = coinInfo.address
-        }
-         // "0x063eD6F59bd44D8BC99c3b170a3D52b49dcbCFFf"//"0x329cdcbbd82c934fe32322b423bd8fbd30b4eeb6"
-        log.debug("Using address \(address) for vault \(index)", tag: "CardState.fetchDataFromWeb")
+        var address = coinInfo.address
+        
+        //for debug purpose only!
+//        if DEBUGGING_MODE {
+//            if coinInfo.coin.coinSymbol == "BTC" {
+//                address = "bc1ql49ydapnjafl5t2cp9zqpjwe6pdgmxy98859v2" // whale
+//            } else if coinInfo.coin.coinSymbol == "XCP" {
+//                address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
+//            } else if coinInfo.coin.coinSymbol == "ETH" {
+//                //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
+//                //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
+//                address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
+//                //address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+//                //address = "0x2c4ebd4b21736e992f3efeb55de37ae66457199d" // grolex nft
+//            } else if coinInfo.coin.coinSymbol == "MATIC" {
+//                //address = "0x8db853Aa2f01AF401e10dd77657434536735aC62"
+//                //address = "0x86d22A8219De3683CF188778CDAdEE62D1442033"
+//                address = "0xE976c3052Df18cc2Dc878b9bc3191Bba68Ef3d80"
+//            } else if coinInfo.coin.coinSymbol == "BNB" {
+//                address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
+//            }
+//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.updateVaultInfo")
+//        } else {
+//            log.debug("Using address \(address) for vault \(index)", tag: "CardState.updateVaultInfo")
+//        }
         
         let balanceResult = await fetchBalance(for: address, coin: coinInfo.coin)
         await updateExchangeRatesAndValues(for: index, with: balanceResult.balance, coinInfo: coinInfo, selectedFirstCurrency: selectedFirstCurrency, selectedSecondCurrency: selectedSecondCurrency)

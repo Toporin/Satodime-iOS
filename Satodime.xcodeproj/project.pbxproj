@@ -16,6 +16,7 @@
 		0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */; };
 		0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D502B1F146D008CB29A /* NftCellNew.swift */; };
 		0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D522B1F344E008CB29A /* AddFundViewNew.swift */; };
+		0DA0F0C62BBC1C5000032337 /* GoogleService-Info-sample.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DA0F0C52BBC1C5000032337 /* GoogleService-Info-sample.plist */; };
 		0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45A299A365900CEE722 /* SatodimeApp.swift */; };
 		0DA7B45F299A366200CEE722 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B45E299A366200CEE722 /* Assets.xcassets */; };
 		0DA7B46D299A366300CEE722 /* SatodimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B46C299A366300CEE722 /* SatodimeTests.swift */; };
@@ -142,6 +143,8 @@
 		0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCellNew.swift; sourceTree = "<group>"; };
 		0D644D502B1F146D008CB29A /* NftCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCellNew.swift; sourceTree = "<group>"; };
 		0D644D522B1F344E008CB29A /* AddFundViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFundViewNew.swift; sourceTree = "<group>"; };
+		0DA0F0C52BBC1C5000032337 /* GoogleService-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-sample.plist"; sourceTree = "<group>"; };
+		0DA0F0C72BBC348200032337 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		0DA7B457299A365900CEE722 /* Satodime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Satodime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA7B45A299A365900CEE722 /* SatodimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeApp.swift; sourceTree = "<group>"; };
 		0DA7B45E299A366200CEE722 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -318,6 +321,8 @@
 				0DA7B460299A366200CEE722 /* Satodime.entitlements */,
 				0DA7B461299A366200CEE722 /* Preview Content */,
 				0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */,
+				0DA0F0C52BBC1C5000032337 /* GoogleService-Info-sample.plist */,
+				0DA0F0C72BBC348200032337 /* CHANGELOG.md */,
 			);
 			path = Satodime;
 			sourceTree = "<group>";
@@ -751,6 +756,7 @@
 				D0F62FC02ACDD2ED0027EFE6 /* Outfit-Bold.ttf in Resources */,
 				D0EB4DF32AC1D3FE00EA83F9 /* OpenSans-variable.ttf in Resources */,
 				D0F62FB82ACDC72D0027EFE6 /* Poppins-ExtraBold.ttf in Resources */,
+				0DA0F0C62BBC1C5000032337 /* GoogleService-Info-sample.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1055,7 +1061,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1080,7 +1086,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1100,7 +1106,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1125,7 +1131,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1295,7 +1301,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 68UCR527YD;
@@ -1321,7 +1327,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dlvx.dev.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
