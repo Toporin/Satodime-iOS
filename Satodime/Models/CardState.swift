@@ -616,7 +616,7 @@ class CardState: ObservableObject {
     private func updateVaultInfo(for index: Int, with coinInfo: VaultItem, selectedFirstCurrency: String, selectedSecondCurrency: String) async {
         let log = LoggerService.shared
         var address = coinInfo.address
-        
+
         //for debug purpose only!
 //        if DEBUGGING_MODE {
 //            if coinInfo.coin.coinSymbol == "BTC" {
@@ -642,7 +642,7 @@ class CardState: ObservableObject {
 //        }
         
         let balanceResult = await fetchBalance(for: address, coin: coinInfo.coin)
-        await updateExchangeRatesAndValues(for: index, with: balanceResult.balance, coinInfo: coinInfo, selectedFirstCurrency: selectedFirstCurrency, selectedSecondCurrency: selectedSecondCurrency)
+        await updateExchangeRatesAndValues(for: index, with: balanceResult.balance, address: balanceResult.addressUrl, coinInfo: coinInfo, selectedFirstCurrency: selectedFirstCurrency, selectedSecondCurrency: selectedSecondCurrency)
         await fetchAndSortAssets(for: index, address: address, coin: coinInfo.coin)
     }
     
@@ -652,6 +652,7 @@ class CardState: ObservableObject {
         do {
             let balance = try await coin.getBalance(addr: address)
             let addressUrl = URL(string: coin.getAddressWebLink(address: address) ?? "")
+            
             log.debug("Fetched balance: \(balance) and URL: \(String(describing: addressUrl))", tag: "CardState.fetchDataFromWeb")
             return (balance, addressUrl)
         } catch {
@@ -660,7 +661,7 @@ class CardState: ObservableObject {
         }
     }
     
-    private func updateExchangeRatesAndValues(for index: Int, with balance: Double?, coinInfo: VaultItem, selectedFirstCurrency: String, selectedSecondCurrency: String) async {
+    private func updateExchangeRatesAndValues(for index: Int, with balance: Double?, address: URL?, coinInfo: VaultItem, selectedFirstCurrency: String, selectedSecondCurrency: String) async {
         guard let balance = balance else {
             DispatchQueue.main.async {
                 self.vaultArray[index].balance = nil
@@ -678,6 +679,7 @@ class CardState: ObservableObject {
         
         DispatchQueue.main.async {
             self.vaultArray[index].balance = balance
+            self.vaultArray[index].addressUrl = address
             
             self.vaultArray[index].selectedFirstCurrency = selectedFirstCurrency
             self.vaultArray[index].coinValueInFirstCurrency = coinValueInFirstCurrency

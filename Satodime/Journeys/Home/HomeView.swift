@@ -74,7 +74,7 @@ struct HomeView: View {
 
                         Spacer()
                     }
-                    .toast(isPresenting: $showNoNetworkAlert) {
+                    .toast(isPresenting: $showNoNetworkAlert, duration: 8.0) {
                         ToastHUD(type: .error(.orange), title: String(localized: "noNetworkAlertTitle"), subtitle: String(localized: "noNetworkAlertMessage"))
                     }
                     

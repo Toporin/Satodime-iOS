@@ -44,7 +44,7 @@ struct NftCellNew: View {
                     if let weblink = nftAsset["nftExplorerLink"] {
                         self.nftPreviewHandler.nftExplorerUrl = weblink
                     }
-                    if let name = nftAsset["nftName"] {
+                    if let name = nftAsset["name"] {
                         self.nftPreviewHandler.nftName = name
                     }
                     self.nftPreviewHandler.shouldShowNftPreview = true
@@ -63,7 +63,7 @@ struct NftCellNew: View {
                     if let weblink = nftAsset["nftExplorerLink"] {
                         self.nftPreviewHandler.nftExplorerUrl = weblink
                     }
-                    if let name = nftAsset["nftName"] {
+                    if let name = nftAsset["name"] {
                         self.nftPreviewHandler.nftName = name
                     }
                     self.nftPreviewHandler.shouldShowNftPreview = true
@@ -72,7 +72,7 @@ struct NftCellNew: View {
             
             // NAME & BALANCE
             VStack(alignment: .leading) {
-                SatoText(text: nftAsset["nftName"] ?? "?", style: .cellSmallTitle)
+                SatoText(text: nftAsset["name"] ?? "?", style: .cellSmallTitle)
                     .font(.headline)
                 Text((SatodimeUtil.formatBalance(balanceString: nftAsset["balance"], decimalsString: nftAsset["decimals"], symbol: nftAsset["symbols"])))
                     .font(
