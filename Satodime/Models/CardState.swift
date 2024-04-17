@@ -618,28 +618,29 @@ class CardState: ObservableObject {
         var address = coinInfo.address
 
         //for debug purpose only!
-//        if DEBUGGING_MODE {
-//            if coinInfo.coin.coinSymbol == "BTC" {
-//                address = "bc1ql49ydapnjafl5t2cp9zqpjwe6pdgmxy98859v2" // whale
-//            } else if coinInfo.coin.coinSymbol == "XCP" {
-//                address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
-//            } else if coinInfo.coin.coinSymbol == "ETH" {
-//                //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
-//                //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
-//                address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
-//                //address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
-//                //address = "0x2c4ebd4b21736e992f3efeb55de37ae66457199d" // grolex nft
-//            } else if coinInfo.coin.coinSymbol == "MATIC" {
-//                //address = "0x8db853Aa2f01AF401e10dd77657434536735aC62"
-//                //address = "0x86d22A8219De3683CF188778CDAdEE62D1442033"
-//                address = "0xE976c3052Df18cc2Dc878b9bc3191Bba68Ef3d80"
-//            } else if coinInfo.coin.coinSymbol == "BNB" {
-//                address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
-//            }
-//            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.updateVaultInfo")
-//        } else {
-//            log.debug("Using address \(address) for vault \(index)", tag: "CardState.updateVaultInfo")
-//        }
+        if DEBUGGING_MODE {
+            if coinInfo.coin.coinSymbol == "BTC" {
+                address = "bc1ql49ydapnjafl5t2cp9zqpjwe6pdgmxy98859v2" // whale
+            } else if coinInfo.coin.coinSymbol == "XCP" {
+                address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
+            } else if coinInfo.coin.coinSymbol == "ETH" {
+                //address = "0xd5b06c8c83e78e92747d12a11fcd0b03002d48cf"
+                //address = "0x86b4d38e451c707e4914ffceab9479e3a8685f98"
+                //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
+                address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
+                //address = "0x2c4ebd4b21736e992f3efeb55de37ae66457199d" // grolex nft
+            } else if coinInfo.coin.coinSymbol == "MATIC" {
+                //address = "0x8db853Aa2f01AF401e10dd77657434536735aC62"
+                //address = "0x86d22A8219De3683CF188778CDAdEE62D1442033"
+                //address = "0xE976c3052Df18cc2Dc878b9bc3191Bba68Ef3d80" // DolZ nft
+                address = "0xF977814e90dA44bFA03b6295A0616a897441aceC" // Binance hot wallet with USDT
+            } else if coinInfo.coin.coinSymbol == "BNB" {
+                address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
+            }
+            log.warning("Using mockup address \(address) for vault \(index)", tag: "CardState.updateVaultInfo")
+        } else {
+            log.debug("Using address \(address) for vault \(index)", tag: "CardState.updateVaultInfo")
+        }
         
         let balanceResult = await fetchBalance(for: address, coin: coinInfo.coin)
         await updateExchangeRatesAndValues(for: index, with: balanceResult.balance, address: balanceResult.addressUrl, coinInfo: coinInfo, selectedFirstCurrency: selectedFirstCurrency, selectedSecondCurrency: selectedSecondCurrency)
@@ -683,11 +684,11 @@ class CardState: ObservableObject {
             
             self.vaultArray[index].selectedFirstCurrency = selectedFirstCurrency
             self.vaultArray[index].coinValueInFirstCurrency = coinValueInFirstCurrency
-            self.vaultArray[index].totalValueInFirstCurrency = coinValueInFirstCurrency
+            self.vaultArray[index].totalValueInFirstCurrency = coinValueInFirstCurrency // todo: deprecate?
             
             self.vaultArray[index].selectedSecondCurrency = selectedSecondCurrency
             self.vaultArray[index].coinValueInSecondCurrency = coinValueInSecondCurrency
-            self.vaultArray[index].totalValueInSecondCurrency = coinValueInSecondCurrency
+            self.vaultArray[index].totalValueInSecondCurrency = coinValueInSecondCurrency // todo: deprecate?
         }
         
         log.debug("Updated exchange rates and values for vault \(index)", tag: "CardState.updateExchangeRatesAndValues")
@@ -700,23 +701,74 @@ class CardState: ObservableObject {
         
         var nftList: [[String: String]] = []
         var tokenList: [[String: String]] = []
-        var totalTokenValueInFirstCurrency: Double = 0.0
-        var totalTokenValueInSecondCurrency: Double = 0.0
+        var totalTokenValueInFirstCurrency: Double = 0.0 // todo: deprecate?
+        var totalTokenValueInSecondCurrency: Double = 0.0 // todo: deprecate?
+        
+        let selectedFirstCurrency = coin.coinSymbol
+        let selectedSecondCurrency = UserDefaults.standard.string(forKey: Constants.Storage.secondCurrency) ?? "USD"
+        
+        // The explorer for Matic returns all NFTs related to a given address
+        // todo: improve SwiftCryptoTools API
+        if coin.coinSymbol == "MATIC" {
+            nftList = await coin.getNftList(addr: address, contract: "") // fetch all NFTs in one request
+        }
         
         for asset in assetList {
             if let contract = asset["contract"]{
-                var nftListByContract = await coin.getNftList(addr: address, contract: contract)
-                nftList += nftListByContract
-            }
-            if let tokenType = asset["type"], tokenType == "token" {
-                tokenList.append(asset)
-            }
-        }
-        
-        if assetList.isEmpty {
-            var nftListByContract = await coin.getNftList(addr: address, contract: "")
-            nftList += nftListByContract
-        }
+                
+                var nftListByContract: [[String:String]] = []
+                if coin.coinSymbol != "MATIC" {
+                    nftListByContract = await coin.getNftList(addr: address, contract: contract)
+                }
+                
+                if nftListByContract.count>0 { // nft
+                    for nft in nftListByContract {
+                        var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
+                        nftMerged["type"] = "nft"
+                        nftList.append(nftMerged)
+                        log.debug("added nft for \(address): \(nftMerged)", tag: "CardState.fetchDataFromWeb")
+                    }
+                } else { // token
+                    var assetCopy = asset
+                    assetCopy["type"] = "token"
+
+                    // get price if available
+                    if let tokenBalance = SatodimeUtil.getBalanceDouble(balanceString: asset["balance"], decimalsString: asset["decimals"]),
+                        let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
+                        let currencyForExchangeRate = asset["currencyForExchangeRate"] {
+                        log.debug("tokenBalance: \(tokenBalance)", tag: "CardState.fetchDataFromWeb")
+                        log.debug("tokenExchangeRate: \(tokenExchangeRate) \(currencyForExchangeRate)", tag: "CardState.fetchDataFromWeb")
+
+                        // selectedFirstCurrency
+                        // TODO: cache result?
+                        if let currencyExchangeRate1 = await coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
+                        {
+                            log.debug("currencyExchangeRate1: \(currencyExchangeRate1) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
+
+                            let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
+                            totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
+                            assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
+                            assetCopy["firstCurrency"] = selectedFirstCurrency
+                            log.debug("tokenValueInFirstCurrency: \(tokenValueInFirstCurrency) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
+                        }
+
+                        // second currency
+                        if let currencyExchangeRate2 = await coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedSecondCurrency)
+                        {
+                            log.debug("currencyExchangeRate1: \(currencyExchangeRate2) \(selectedSecondCurrency)", tag: "CardState.fetchDataFromWeb")
+                            let tokenValueInSecondCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate2
+                            totalTokenValueInSecondCurrency += tokenValueInSecondCurrency
+                            assetCopy["tokenValueInSecondCurrency"] = String(tokenValueInSecondCurrency)
+                            assetCopy["secondCurrency"] = selectedSecondCurrency
+                            log.debug("tokenValueInSecondCurrency: \(tokenValueInSecondCurrency) \(selectedSecondCurrency)", tag: "CardState.fetchDataFromWeb")
+                        }
+                    }
+
+                    tokenList.append(assetCopy)
+                    log.debug("added token for \(address): \(assetCopy)", tag: "CardState.fetchDataFromWeb")
+                } // if nft else token
+            } // if contract
+        } // for asset
         
         // Remove duplicates
         nftList = Array(Set(nftList))
@@ -724,8 +776,8 @@ class CardState: ObservableObject {
         DispatchQueue.main.async {
             self.vaultArray[index].tokenList = tokenList
             self.vaultArray[index].nftList = nftList
-            self.vaultArray[index].totalTokenValueInFirstCurrency = totalTokenValueInFirstCurrency
-            self.vaultArray[index].totalTokenValueInSecondCurrency = totalTokenValueInSecondCurrency
+            self.vaultArray[index].totalTokenValueInFirstCurrency = totalTokenValueInFirstCurrency // todo: deprecate?
+            self.vaultArray[index].totalTokenValueInSecondCurrency = totalTokenValueInSecondCurrency // todo: deprecate?
         }
         
         log.debug("Sorted assets into tokens and NFTs for vault \(index)", tag: "CardState.fetchAndSortAssets")

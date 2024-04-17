@@ -92,6 +92,8 @@ class SatodimeUtil {
             fractionDigit = 8
         case "ETH":
             fractionDigit = 6
+        case "MATIC":
+            fractionDigit = 2
         default:
             break
         }
