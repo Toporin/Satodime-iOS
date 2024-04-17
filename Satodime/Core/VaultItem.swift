@@ -57,12 +57,6 @@ public struct VaultItem: Hashable {
     // asset list
     public var tokenList: [[String:String]]? = nil
     public var nftList: [[String:String]]? = nil
-    // total value in tokens (excluding main coin)
-    public var totalTokenValueInFirstCurrency: Double? = nil // todo: deprecate?
-    public var totalTokenValueInSecondCurrency: Double? = nil // todo: deprecate?
-    // total value (including main coin)
-    public var totalValueInFirstCurrency: Double? = nil // todo: deprecate?
-    public var totalValueInSecondCurrency: Double? = nil // todo: deprecate?
     
     // private info
     var privkey: [UInt8]? = nil

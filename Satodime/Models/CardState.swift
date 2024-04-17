@@ -6,8 +6,6 @@
 //
 
 import Foundation
-
-import Foundation
 import CoreNFC
 import SatochipSwift
 import SwiftCryptoTools
@@ -684,11 +682,9 @@ class CardState: ObservableObject {
             
             self.vaultArray[index].selectedFirstCurrency = selectedFirstCurrency
             self.vaultArray[index].coinValueInFirstCurrency = coinValueInFirstCurrency
-            self.vaultArray[index].totalValueInFirstCurrency = coinValueInFirstCurrency // todo: deprecate?
             
             self.vaultArray[index].selectedSecondCurrency = selectedSecondCurrency
             self.vaultArray[index].coinValueInSecondCurrency = coinValueInSecondCurrency
-            self.vaultArray[index].totalValueInSecondCurrency = coinValueInSecondCurrency // todo: deprecate?
         }
         
         log.debug("Updated exchange rates and values for vault \(index)", tag: "CardState.updateExchangeRatesAndValues")
@@ -701,8 +697,6 @@ class CardState: ObservableObject {
         
         var nftList: [[String: String]] = []
         var tokenList: [[String: String]] = []
-        var totalTokenValueInFirstCurrency: Double = 0.0 // todo: deprecate?
-        var totalTokenValueInSecondCurrency: Double = 0.0 // todo: deprecate?
         
         let selectedFirstCurrency = coin.coinSymbol
         let selectedSecondCurrency = UserDefaults.standard.string(forKey: Constants.Storage.secondCurrency) ?? "USD"
@@ -746,7 +740,6 @@ class CardState: ObservableObject {
                             log.debug("currencyExchangeRate1: \(currencyExchangeRate1) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
 
                             let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
-                            totalTokenValueInFirstCurrency += tokenValueInFirstCurrency
                             assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
                             assetCopy["firstCurrency"] = selectedFirstCurrency
                             log.debug("tokenValueInFirstCurrency: \(tokenValueInFirstCurrency) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
@@ -757,7 +750,6 @@ class CardState: ObservableObject {
                         {
                             log.debug("currencyExchangeRate1: \(currencyExchangeRate2) \(selectedSecondCurrency)", tag: "CardState.fetchDataFromWeb")
                             let tokenValueInSecondCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate2
-                            totalTokenValueInSecondCurrency += tokenValueInSecondCurrency
                             assetCopy["tokenValueInSecondCurrency"] = String(tokenValueInSecondCurrency)
                             assetCopy["secondCurrency"] = selectedSecondCurrency
                             log.debug("tokenValueInSecondCurrency: \(tokenValueInSecondCurrency) \(selectedSecondCurrency)", tag: "CardState.fetchDataFromWeb")
@@ -776,8 +768,6 @@ class CardState: ObservableObject {
         DispatchQueue.main.async {
             self.vaultArray[index].tokenList = tokenList
             self.vaultArray[index].nftList = nftList
-            self.vaultArray[index].totalTokenValueInFirstCurrency = totalTokenValueInFirstCurrency // todo: deprecate?
-            self.vaultArray[index].totalTokenValueInSecondCurrency = totalTokenValueInSecondCurrency // todo: deprecate?
         }
         
         log.debug("Sorted assets into tokens and NFTs for vault \(index)", tag: "CardState.fetchAndSortAssets")
