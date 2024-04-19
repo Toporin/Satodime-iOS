@@ -630,8 +630,10 @@ class CardState: ObservableObject {
             } else if coinInfo.coin.coinSymbol == "MATIC" {
                 //address = "0x8db853Aa2f01AF401e10dd77657434536735aC62"
                 //address = "0x86d22A8219De3683CF188778CDAdEE62D1442033"
-                //address = "0xE976c3052Df18cc2Dc878b9bc3191Bba68Ef3d80" // DolZ nft
-                address = "0xF977814e90dA44bFA03b6295A0616a897441aceC" // Binance hot wallet with USDT
+                address = "0xE976c3052Df18cc2Dc878b9bc3191Bba68Ef3d80" // DolZ nft
+                //address = "0x440D4955a914D5e29F861aC024A608aE41c56cB6" // PookyBall nft contract
+                //address = "0xd7f1cbca340c831d77c0d8d3dc843a07873ade44" // PookyBall nft vault
+                //address = "0xF977814e90dA44bFA03b6295A0616a897441aceC" // Binance hot wallet with USDT
             } else if coinInfo.coin.coinSymbol == "BNB" {
                 address = "0x560eE56e87256E69AC6CC7aA00c54361fFe9af94" // usdc
             }
