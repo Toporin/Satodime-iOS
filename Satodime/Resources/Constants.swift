@@ -34,6 +34,7 @@ struct Constants {
         static let unsealTextColor = Color(hex: 0x9F76A1)
         static let resetTextColor = Color(hex: 0xFF2D52)
         static let bottomSheetBackground = Color(hex: 0x292B3D)
+        static let toggleBackground = Color(hex: 0x3D445B)
     }
     
     // MARK: - Dimensions
@@ -52,6 +53,10 @@ struct Constants {
         
         // MARK: - Sizes
         static let satoDimeLogoHeight: CGFloat = 81.0
+        
+        // MARK: - Paddings
+        static let firstButtonPadding: CGFloat = 50.0
+        static let secondButtonPadding: CGFloat = 30.0
     }
     
     // MARK: - Storage

@@ -10,6 +10,8 @@ import SwiftUI
 import Combine
 
 struct NftCellNew: View {
+    @EnvironmentObject var nftPreviewHandler: NftPreviewHandler
+    
     var nftAsset: [String: String]
     
     var body: some View {
@@ -36,10 +38,16 @@ struct NftCellNew: View {
                 }
                 .frame(width: 50, height: 50)
                 .onTapGesture(count: 1) {
-                    if let weblink = nftAsset["nftExplorerLink"],
-                        let weblinkUrl = URL(string: weblink) {
-                        UIApplication.shared.open(weblinkUrl)
+                    if let imageUrl = nftAsset["nftImageUrl"] {
+                        self.nftPreviewHandler.nftImageUrl = imageUrl
                     }
+                    if let weblink = nftAsset["nftExplorerLink"] {
+                        self.nftPreviewHandler.nftExplorerUrl = weblink
+                    }
+                    if let name = nftAsset["name"] {
+                        self.nftPreviewHandler.nftName = name
+                    }
+                    self.nftPreviewHandler.shouldShowNftPreview = true
                 }
                 
             } else {
@@ -49,10 +57,16 @@ struct NftCellNew: View {
                 .frame(width: 50, height: 50)
                 .clipShape(Circle())
                 .onTapGesture(count: 1) {
-                    if let weblink = nftAsset["nftExplorerLink"],
-                        let weblinkUrl = URL(string: weblink) {
-                        UIApplication.shared.open(weblinkUrl)
+                    if let imageUrl = nftAsset["nftImageUrl"] {
+                        self.nftPreviewHandler.nftImageUrl = imageUrl
                     }
+                    if let weblink = nftAsset["nftExplorerLink"] {
+                        self.nftPreviewHandler.nftExplorerUrl = weblink
+                    }
+                    if let name = nftAsset["name"] {
+                        self.nftPreviewHandler.nftName = name
+                    }
+                    self.nftPreviewHandler.shouldShowNftPreview = true
                 }
             }
             

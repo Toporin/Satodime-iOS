@@ -16,6 +16,7 @@
 		0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */; };
 		0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D502B1F146D008CB29A /* NftCellNew.swift */; };
 		0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D522B1F344E008CB29A /* AddFundViewNew.swift */; };
+		0DA0F0C62BBC1C5000032337 /* GoogleService-Info-sample.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DA0F0C52BBC1C5000032337 /* GoogleService-Info-sample.plist */; };
 		0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45A299A365900CEE722 /* SatodimeApp.swift */; };
 		0DA7B45F299A366200CEE722 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B45E299A366200CEE722 /* Assets.xcassets */; };
 		0DA7B46D299A366300CEE722 /* SatodimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B46C299A366300CEE722 /* SatodimeTests.swift */; };
@@ -35,6 +36,17 @@
 		0DE0A9402AFA9B7D00D0845F /* SatochipSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */; };
 		0DE0A9462AFA9D4D00D0845F /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A9452AFA9D4D00D0845F /* BigInt */; };
 		0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */ = {isa = PBXBuildFile; productRef = 0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */; };
+		D017D14D2B867D8800B467D2 /* VerticalCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */; };
+		D017D14F2B88DC9A00B467D2 /* ReviewRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */; };
+		D02A17602BB31AB600BE2852 /* Toasty in Frameworks */ = {isa = PBXBuildFile; productRef = D02A175F2BB31AB600BE2852 /* Toasty */; };
+		D02B283B2B86411500980C67 /* HorizontalCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283A2B86411500980C67 /* HorizontalCardsView.swift */; };
+		D02B283D2B86413F00980C67 /* CarouselCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283C2B86413F00980C67 /* CarouselCardsView.swift */; };
+		D02B283F2B86417D00980C67 /* ActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283E2B86417D00980C67 /* ActionButtonsView.swift */; };
+		D02B28412B8641A200980C67 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28402B8641A200980C67 /* HeaderView.swift */; };
+		D02B28432B8642D400980C67 /* NavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28422B8642D400980C67 /* NavigationHandler.swift */; };
+		D02B28452B86453700980C67 /* EmptyScanStateOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */; };
+		D02B28472B86467500980C67 /* AlertsHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28462B86467500980C67 /* AlertsHandlerView.swift */; };
+		D0322EED2B8BA00600EBC58C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0322EEC2B8BA00600EBC58C /* NetworkManager.swift */; };
 		D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */; };
 		D0602B4D2AD0A7F700CF8AEC /* VaultCardEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */; };
 		D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */; };
@@ -99,6 +111,9 @@
 		D0F62FD42ACEF2A80027EFE6 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FD32ACEF2A80027EFE6 /* AddressView.swift */; };
 		D0F62FD62ACEF5040027EFE6 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0F62FD52ACEF5040027EFE6 /* OpenSans-SemiBold.ttf */; };
 		D0F62FD82ACF11FE0027EFE6 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */; };
+		D0FEDBD92B88ED9900EAD10A /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */; };
+		D0FEDBDE2B8B8D5800EAD10A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */; };
+		D0FEDBE12B8B8F0F00EAD10A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +143,8 @@
 		0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCellNew.swift; sourceTree = "<group>"; };
 		0D644D502B1F146D008CB29A /* NftCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCellNew.swift; sourceTree = "<group>"; };
 		0D644D522B1F344E008CB29A /* AddFundViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFundViewNew.swift; sourceTree = "<group>"; };
+		0DA0F0C52BBC1C5000032337 /* GoogleService-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-sample.plist"; sourceTree = "<group>"; };
+		0DA0F0C72BBC348200032337 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		0DA7B457299A365900CEE722 /* Satodime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Satodime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA7B45A299A365900CEE722 /* SatodimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeApp.swift; sourceTree = "<group>"; };
 		0DA7B45E299A366200CEE722 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,6 +165,16 @@
 		0DA7B4C1299A8ADA00CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0DB03FC929A7F813002E56BD /* ShowLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogs.swift; sourceTree = "<group>"; };
 		0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Apikeys-Info-sample.plist"; sourceTree = "<group>"; };
+		D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalCardsView.swift; sourceTree = "<group>"; };
+		D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRequestService.swift; sourceTree = "<group>"; };
+		D02B283A2B86411500980C67 /* HorizontalCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCardsView.swift; sourceTree = "<group>"; };
+		D02B283C2B86413F00980C67 /* CarouselCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCardsView.swift; sourceTree = "<group>"; };
+		D02B283E2B86417D00980C67 /* ActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsView.swift; sourceTree = "<group>"; };
+		D02B28402B8641A200980C67 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		D02B28422B8642D400980C67 /* NavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHandler.swift; sourceTree = "<group>"; };
+		D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyScanStateOverlay.swift; sourceTree = "<group>"; };
+		D02B28462B86467500980C67 /* AlertsHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsHandlerView.swift; sourceTree = "<group>"; };
+		D0322EEC2B8BA00600EBC58C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoStatusView.swift; sourceTree = "<group>"; };
 		D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardEmpty.swift; sourceTree = "<group>"; };
 		D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeOwnershipView.swift; sourceTree = "<group>"; };
@@ -212,6 +239,8 @@
 		D0F62FD32ACEF2A80027EFE6 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		D0F62FD52ACEF5040027EFE6 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
+		D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
+		D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,12 +248,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D02A17602BB31AB600BE2852 /* Toasty in Frameworks */,
 				0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */,
 				0DA7B4B1299A4D6D00CEE722 /* SatochipSwift in Frameworks */,
 				0DE0A9462AFA9D4D00D0845F /* BigInt in Frameworks */,
 				0DA7B4B3299A4D7E00CEE722 /* SwiftCryptoTools in Frameworks */,
 				0DA7B4B6299A4E6400CEE722 /* QRCode in Frameworks */,
 				D0EB4DE52AC079B200EA83F9 /* SwiftCryptoTools in Frameworks */,
+				D0FEDBE12B8B8F0F00EAD10A /* FirebaseCrashlytics in Frameworks */,
 				0DE0A9402AFA9B7D00D0845F /* SatochipSwift in Frameworks */,
 				0DE0A93D2AFA9B3100D0845F /* SwiftCryptoTools in Frameworks */,
 			);
@@ -281,6 +312,7 @@
 				D0EB4DE62AC0837C00EA83F9 /* Journeys */,
 				0DA7B4A7299A38B500CEE722 /* Info.plist */,
 				0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */,
+				D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */,
 				0DA7B4BE299A81D900CEE722 /* Localizable.strings */,
 				D0EB4E172AC24DF600EA83F9 /* AppDelegate.swift */,
 				0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */,
@@ -289,6 +321,8 @@
 				0DA7B460299A366200CEE722 /* Satodime.entitlements */,
 				0DA7B461299A366200CEE722 /* Preview Content */,
 				0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */,
+				0DA0F0C52BBC1C5000032337 /* GoogleService-Info-sample.plist */,
+				0DA0F0C72BBC348200032337 /* CHANGELOG.md */,
 			);
 			path = Satodime;
 			sourceTree = "<group>";
@@ -436,6 +470,14 @@
 			isa = PBXGroup;
 			children = (
 				D0EB4E0D2AC22A9B00EA83F9 /* HomeView.swift */,
+				D02B283A2B86411500980C67 /* HorizontalCardsView.swift */,
+				D02B283C2B86413F00980C67 /* CarouselCardsView.swift */,
+				D02B283E2B86417D00980C67 /* ActionButtonsView.swift */,
+				D02B28402B8641A200980C67 /* HeaderView.swift */,
+				D02B28422B8642D400980C67 /* NavigationHandler.swift */,
+				D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */,
+				D02B28462B86467500980C67 /* AlertsHandlerView.swift */,
+				D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -516,6 +558,7 @@
 				D06080642AD94ED2001A5749 /* Views.swift */,
 				D06080682AD980A6001A5749 /* QRCode.swift */,
 				0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */,
+				D0322EEC2B8BA00600EBC58C /* NetworkManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -553,6 +596,8 @@
 			children = (
 				D0825F662ADAE7AD006391D5 /* PreferencesService.swift */,
 				D065EF5C2AF8220A006751C5 /* LoggerService.swift */,
+				D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */,
+				D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -579,6 +624,7 @@
 				0DA7B453299A365900CEE722 /* Sources */,
 				0DA7B454299A365900CEE722 /* Frameworks */,
 				0DA7B455299A365900CEE722 /* Resources */,
+				D0322EEB2B8B951500EBC58C /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -594,6 +640,8 @@
 				0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */,
 				0DE0A9452AFA9D4D00D0845F /* BigInt */,
 				0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */,
+				D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */,
+				D02A175F2BB31AB600BE2852 /* Toasty */,
 			);
 			productName = Satodime;
 			productReference = 0DA7B457299A365900CEE722 /* Satodime.app */;
@@ -674,6 +722,8 @@
 				0DE0A93E2AFA9B7D00D0845F /* XCLocalSwiftPackageReference "../SatochipSwift" */,
 				0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */,
 				0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */,
+				D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D02A175E2BB31AB600BE2852 /* XCRemoteSwiftPackageReference "Toasty" */,
 			);
 			productRefGroup = 0DA7B458299A365900CEE722 /* Products */;
 			projectDirPath = "";
@@ -693,6 +743,7 @@
 			files = (
 				D0F62FD62ACEF5040027EFE6 /* OpenSans-SemiBold.ttf in Resources */,
 				0DA7B4B7299A589E00CEE722 /* Apikeys-Info.plist in Resources */,
+				D0FEDBDE2B8B8D5800EAD10A /* GoogleService-Info.plist in Resources */,
 				D0E665682ADAA08200703A8F /* Outfit-Regular.ttf in Resources */,
 				0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */,
 				D0EB4DF12AC1D39D00EA83F9 /* Outfit-variable.ttf in Resources */,
@@ -705,6 +756,7 @@
 				D0F62FC02ACDD2ED0027EFE6 /* Outfit-Bold.ttf in Resources */,
 				D0EB4DF32AC1D3FE00EA83F9 /* OpenSans-variable.ttf in Resources */,
 				D0F62FB82ACDC72D0027EFE6 /* Poppins-ExtraBold.ttf in Resources */,
+				0DA0F0C62BBC1C5000032337 /* GoogleService-Info-sample.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,6 +776,32 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D0322EEB2B8B951500EBC58C /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = Crashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0DA7B453299A365900CEE722 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -731,26 +809,34 @@
 			files = (
 				D0EB4DF72AC1D62300EA83F9 /* OnBoardingWelcomeView.swift in Sources */,
 				D060805F2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift in Sources */,
+				D02B283F2B86417D00980C67 /* ActionButtonsView.swift in Sources */,
 				D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */,
 				D0F62FBC2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift in Sources */,
+				D017D14F2B88DC9A00B467D2 /* ReviewRequestService.swift in Sources */,
 				D0EB4E182AC24DF600EA83F9 /* AppDelegate.swift in Sources */,
 				D06080672AD9689F001A5749 /* ScanButton.swift in Sources */,
+				D017D14D2B867D8800B467D2 /* VerticalCardsView.swift in Sources */,
 				D065EF5D2AF8220A006751C5 /* LoggerService.swift in Sources */,
 				0D644D472B14C7C2008CB29A /* Log.swift in Sources */,
 				D0F62FD42ACEF2A80027EFE6 /* AddressView.swift in Sources */,
 				D060805C2AD941AD001A5749 /* ResetButton.swift in Sources */,
 				D0825F5F2ADAE093006391D5 /* SettingsDropdown.swift in Sources */,
 				D060805A2AD94152001A5749 /* ShowKeyButton.swift in Sources */,
+				D02B28452B86453700980C67 /* EmptyScanStateOverlay.swift in Sources */,
 				0D16B1CF2B249D3E005FCACB /* SatodimeUtil.swift in Sources */,
 				0D644D4D2B1E75D9008CB29A /* AssetTabView.swift in Sources */,
+				D02B283B2B86411500980C67 /* HorizontalCardsView.swift in Sources */,
+				D0FEDBD92B88ED9900EAD10A /* EmailHelper.swift in Sources */,
 				D07C9C7A2AD857DD005F5917 /* SealButton.swift in Sources */,
 				D0EB4E132AC22F3500EA83F9 /* VaultSetupSelectChainView.swift in Sources */,
 				0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */,
 				D06080702AD98C07001A5749 /* ResetConfirmationView.swift in Sources */,
 				D0F62FC22ACDD5DE0027EFE6 /* InfoBox.swift in Sources */,
 				D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */,
+				D02B28472B86467500980C67 /* AlertsHandlerView.swift in Sources */,
 				0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */,
 				D0EB4E0E2AC22A9B00EA83F9 /* HomeView.swift in Sources */,
+				D02B28432B8642D400980C67 /* NavigationHandler.swift in Sources */,
 				0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */,
 				D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */,
 				0D16B1CD2B2449A0005FCACB /* ExploreButton.swift in Sources */,
@@ -763,6 +849,7 @@
 				D06080632AD949FD001A5749 /* SatoSelectionButton.swift in Sources */,
 				D0E665702ADABCA400703A8F /* CardInfoView.swift in Sources */,
 				D0F62FC62ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift in Sources */,
+				D0322EED2B8BA00600EBC58C /* NetworkManager.swift in Sources */,
 				D0EB4E002AC1E02E00EA83F9 /* Constants.swift in Sources */,
 				D0E665742ADABDF500703A8F /* CardInfoBox.swift in Sources */,
 				D0EB4DF52AC1D5E100EA83F9 /* OnboardingContainerView.swift in Sources */,
@@ -771,6 +858,7 @@
 				D0F62FC42ACDE11E0027EFE6 /* SatoToggle.swift in Sources */,
 				D0825F612ADAE0EF006391D5 /* SettingsView.swift in Sources */,
 				D0825F652ADAE595006391D5 /* SettingsToggle.swift in Sources */,
+				D02B28412B8641A200980C67 /* HeaderView.swift in Sources */,
 				D0825F712ADD7BCC006391D5 /* SatoChoiceSelector.swift in Sources */,
 				D06080562AD93786001A5749 /* UnsealConfirmationView.swift in Sources */,
 				D0E665762ADAC7CB00703A8F /* TransferOwnershipView.swift in Sources */,
@@ -779,6 +867,7 @@
 				D0E6656E2ADAB6C300703A8F /* ProductButton.swift in Sources */,
 				D065EF5B2AF81CEC006751C5 /* ButtonBox.swift in Sources */,
 				D0EB4DFB2AC1D69100EA83F9 /* OnboardingNFCView.swift in Sources */,
+				D02B283D2B86413F00980C67 /* CarouselCardsView.swift in Sources */,
 				D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */,
 				D0F62FD02ACEEE0C0027EFE6 /* SealStatusView.swift in Sources */,
 				D0EB4DED2AC1D26900EA83F9 /* SatoText.swift in Sources */,
@@ -886,7 +975,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -972,7 +1061,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -997,7 +1086,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1017,7 +1106,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1042,7 +1131,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1179,7 +1268,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1212,7 +1301,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 68UCR527YD;
@@ -1238,7 +1327,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.1;
+				MARKETING_VERSION = 0.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dlvx.dev.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1379,6 +1468,22 @@
 				minimumVersion = 1.0.3;
 			};
 		};
+		D02A175E2BB31AB600BE2852 /* XCRemoteSwiftPackageReference "Toasty" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nenosllc/Toasty.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
+		D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.21.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1413,9 +1518,19 @@
 			package = 0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */;
 			productName = SnapToScroll;
 		};
+		D02A175F2BB31AB600BE2852 /* Toasty */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D02A175E2BB31AB600BE2852 /* XCRemoteSwiftPackageReference "Toasty" */;
+			productName = Toasty;
+		};
 		D0EB4DE42AC079B200EA83F9 /* SwiftCryptoTools */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftCryptoTools;
+		};
+		D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

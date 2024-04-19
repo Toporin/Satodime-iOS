@@ -97,7 +97,11 @@ struct TokenCellNew: View {
 
             Spacer()
             
+            // TODO: Balances are broken ?
             // show value in second currency
+            // currencyForExchangeRate
+            // balance
+            
             Text(SatodimeUtil.formatBalance(balanceString: tokenAsset["tokenValueInSecondCurrency"], decimalsString: "0", symbol: tokenAsset["secondCurrency"], maxFractionDigit: 2))
                 .font(
                     Font.custom("Outfit-Medium", size: 12)

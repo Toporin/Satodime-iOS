@@ -10,11 +10,16 @@ import SwiftUI
 import SatochipSwift
 
 struct AuthenticView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     
     @State var shouldShowDeviceInfo = false
     @State var shouldShowSubcaInfo = false
+    
+    // var fromView: NavigationState?
+    @Binding var shouldShowAuthenticityScreen: Bool
+    var shouldBreakNavigationLink: Bool
     
     // MARK: Helpers
     func getReasonFromPkiReturnCode(pkiReturnCode: PkiReturnCode) -> String {
@@ -90,21 +95,21 @@ struct AuthenticView: View {
                             .frame(width: 150, height: 150)
                         Spacer()
                             .frame(height: 38)
-                        SatoText(text: "authenticationSuccess", style: .subtitle)
+                        SatoText(text: "authenticationSuccess", style: .lightSubtitle)
                     } else if cardState.certificateCode == .unknown { // TODO: something particuliar?
                         Image("il_not_authentic")
                             .resizable()
                             .frame(width: 150, height: 150)
                         Spacer()
                             .frame(height: 38)
-                        SatoText(text: "authenticationFailed", style: .subtitle)
+                        SatoText(text: "authenticationFailed", style: .lightSubtitle)
                     } else {
                         Image("il_not_authentic")
                             .resizable()
                             .frame(width: 150, height: 150)
                         Spacer()
                             .frame(height: 38)
-                        SatoText(text: "authenticationFailed", style: .subtitle)
+                        SatoText(text: "authenticationFailed", style: .lightSubtitle)
                     }
                     
                     Spacer()
@@ -232,7 +237,11 @@ struct AuthenticView: View {
         .navigationBarItems(leading: 
             Button(action: {
                 DispatchQueue.main.async {
-                    viewStackHandler.navigationState = .cardInfo //.cardInfo //.goBackHome
+                    if self.shouldBreakNavigationLink {
+                        self.presentationMode.wrappedValue.dismiss()
+                    } else {
+                        viewStackHandler.navigationState = .goBackHome
+                    }
                 }
             })
             {

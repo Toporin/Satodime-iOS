@@ -27,7 +27,7 @@ struct AddressView: View {
             Button(action: action) {
                 Image("ic_copy_clipboard")
                     .resizable()
-                    .frame(width: 25, height: 25)
+                    .frame(width: 18, height: 18)
             }
             .buttonStyle(PlainButtonStyle())
         }

@@ -57,12 +57,6 @@ public struct VaultItem: Hashable {
     // asset list
     public var tokenList: [[String:String]]? = nil
     public var nftList: [[String:String]]? = nil
-    // total value in tokens (excluding main coin)
-    public var totalTokenValueInFirstCurrency: Double? = nil
-    public var totalTokenValueInSecondCurrency: Double? = nil
-    // total value (including main coin)
-    public var totalValueInFirstCurrency: Double? = nil
-    public var totalValueInSecondCurrency: Double? = nil
     
     // private info
     var privkey: [UInt8]? = nil
@@ -99,6 +93,9 @@ public struct VaultItem: Hashable {
 //        case 0x8000232e:
 //            coin = BinanceSmartChain(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
 //            coinMeta = .binance
+        case 0x800003c6:
+            coin = Polygon(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
+            coinMeta = .polygon
         case 0xdeadbeef: // uninitialized slot!
             coin = EmptyCoin(isTestnet: isTestnet, apiKeys: VaultItem.apiKeys)
             coinMeta = .empty

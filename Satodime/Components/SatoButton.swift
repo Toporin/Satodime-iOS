@@ -30,11 +30,11 @@ enum ButtonStyle {
 }
 
 struct SatoButton: View {
-    let staticWidth: CGFloat
     var text: String
     var style: ButtonStyle
     var horizontalPadding: CGFloat = Constants.Dimensions.defaultMargin
     var action: () -> Void
+    var staticWidth: CGFloat?
     var isEnabled: Bool?
 
     var body: some View {
@@ -47,11 +47,12 @@ struct SatoButton: View {
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.horizontal, horizontalPadding)
-                .frame(minWidth: staticWidth, minHeight: 40, maxHeight: 40)
+                .padding()
                 .background(isEnabled != nil ? (isEnabled! ? style.backgroundColor : Color.gray) : style.backgroundColor)
-                .cornerRadius(20)
+                .cornerRadius(24)
                 .opacity(isEnabled != nil ? (isEnabled! ? 1.0 : 0.5) : 1.0)
         }
+        .frame(maxWidth: .infinity)
         .disabled(isEnabled == nil ? false : !(isEnabled!))
     }
 }

@@ -56,7 +56,7 @@ struct UnsealConfirmationView: View {
                 
                 Spacer()
                 
-                SatoButton(staticWidth: 222, text: continueButtonTitle, style: .confirm, horizontalPadding: 25) {
+                SatoButton(text: continueButtonTitle, style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                     self.viewStackHandler.navigationState = .privateKey
                 }
                 

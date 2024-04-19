@@ -15,6 +15,7 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
     case bitcoinCash
     // case binance // For later use
     case counterParty
+    case polygon
     case empty
     case unknown
 
@@ -45,6 +46,8 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
             return "ic_coin_bch"
         // case .binance: // For later use
         //     return "ic_coin_bnb"
+        case .polygon:
+            return "ic_coin_polygon"
         case .counterParty:
             return "ic_coin_xcp"
         case .empty:
@@ -66,6 +69,8 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
             return "BitcoinCash"
         // case .binance: // For later use
         //     return "Binance"
+        case .polygon:
+            return "Polygon"
         case .counterParty:
             return "Counterparty"
         case .empty:
@@ -87,6 +92,8 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
             return "BCH"
         // case .binance: // For later use
         //     return "BNB"
+        case .polygon:
+            return "MATIC"
         case .counterParty:
             return "XCP"
         case .empty:
@@ -108,6 +115,8 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
             Color(hex: 0x35B795)
         // case .binance: // For later use
         //     Color(hex: 0xF3BA2F)
+        case .polygon:
+            Color(hex: 0x8247E5)
         case .counterParty:
             Color(hex: 0xD93554)
         case .empty:
@@ -127,6 +136,8 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
             return 0x80000002
         case .bitcoinCash:
             return 0x80000091
+        case .polygon:
+            return 0x800003c6
         case .counterParty:
             return 0x80000009
         case .empty:

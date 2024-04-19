@@ -14,6 +14,7 @@ struct SatoAlert {
     var buttonTitle: String
     var buttonAction: () -> Void
     var isMoreInfoBtnVisible: Bool = true
+    var imageUrl: String? = nil
 }
 
 struct SatoAlertView: View {
@@ -33,6 +34,31 @@ struct SatoAlertView: View {
             Spacer()
                 .frame(height: 16)
             
+            if let imageUrl = alert.imageUrl {
+                AsyncImage(
+                    url: URL(string: SatodimeUtil.getNftImageUrlString(link: imageUrl)),
+                    transaction: Transaction(animation: .easeInOut)
+                ) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .transition(.scale(scale: 0.1, anchor: .center))
+                    case .failure:
+                        Image(systemName: "wifi.slash")
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+                .padding(16)
+                
+                Spacer()
+                    .frame(height: 16)
+            }
+            
             VStack {
                 if alert.isMoreInfoBtnVisible {
                     Button(action: {
@@ -40,7 +66,7 @@ struct SatoAlertView: View {
                         isPresented = false
                     }) {
                         Text(alert.buttonTitle)
-                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, Constants.Dimensions.firstButtonPadding)
                             .padding()
                             .background(Constants.Colors.informButtonBackground)
                             .foregroundColor(.white)
@@ -54,12 +80,13 @@ struct SatoAlertView: View {
                     isPresented = false
                 }) {
                     Text(String(localized: "close"))
-                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, Constants.Dimensions.secondButtonPadding)
                         .padding()
                         .background(Constants.Colors.ledBlue)
                         .foregroundColor(.white)
                         .cornerRadius(24)
                 }
+                .frame(maxWidth: .infinity)
             }
             
             Spacer()

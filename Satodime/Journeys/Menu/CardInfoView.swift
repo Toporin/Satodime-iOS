@@ -127,7 +127,9 @@ struct CardInfoView: View {
                 Spacer()
                     .frame(height: 21)
                 
-                NavigationLink(destination: AuthenticView(), isActive: $shouldShowAuthenticityScreen){EmptyView()}
+                NavigationLink(destination: AuthenticView(shouldShowAuthenticityScreen: $shouldShowAuthenticityScreen, shouldBreakNavigationLink: true), isActive: $shouldShowAuthenticityScreen){
+                    EmptyView()
+                }
                 
                 Spacer()
                     .frame(height: 139)
@@ -138,7 +140,7 @@ struct CardInfoView: View {
         .navigationBarItems(leading:
             Button(action: {
                 DispatchQueue.main.async {
-                    viewStackHandler.navigationState = .goBackHome
+                    viewStackHandler.navigationState = .menu
                 }
             })
             {

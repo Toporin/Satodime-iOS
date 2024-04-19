@@ -127,7 +127,7 @@ struct AddFundsViewNew: View {
                         .frame(height: 30)
 
                     HStack(spacing: 15) {
-                        SatoText(text: "Copy to clipboard", style: .addressText)
+                        SatoText(text: "copyToClipboard", style: .addressText)
                             .lineLimit(1)
                             .frame(alignment: .trailing)
                         

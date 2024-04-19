@@ -97,6 +97,7 @@ struct MenuView: View {
                             backgroundColor: Constants.Colors.grayMenuButton,
                             action: {
                                 if cardState.hasReadCard() {
+                                    viewStackHandler.navigationState = .cardInfo
                                     self.shouldShowCardInfo = true
                                 } else { //TODO: v0.1 & unclaimed ownership will trigger this
                                     showCardNeedsToBeScannedAlert = true
@@ -122,6 +123,7 @@ struct MenuView: View {
                                 } else if cardState.ownershipStatus == .unclaimed {
                                     // TODO: take ownership?
                                     // self.showTakeOwnershipAlert = true
+                                    viewStackHandler.navigationState = .takeOwnership
                                     self.shouldShowTakeOwnership = true
                                     print("debug: show take ownership view!")
                                 } else {
@@ -163,9 +165,8 @@ struct MenuView: View {
                             iconHeight: 27,
                             backgroundColor: Constants.Colors.blueMenuButton,
                             action: {
-                                //viewModel.onSettings()
+                                self.viewStackHandler.navigationState = .settings
                                 self.shouldShowSettings = true
-                                //self.viewStackHandler.navigationState = .settings
                             }
                         )
                         .frame(width: geometry.size.width * 0.45 - 15)
@@ -218,12 +219,11 @@ struct MenuView: View {
                 }
                 
                 NavigationLink(
-                    destination: TransferOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: $shouldShowTransferOwnership) {
+                    destination: TransferOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert, fromView: .menu), isActive: $shouldShowTransferOwnership) {
                     EmptyView()
                 }
                 
                 NavigationLink(
-                    //destination: TakeOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: $showTakeOwnershipAlert)
                     destination: TakeOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert), isActive: $shouldShowTakeOwnership) {
                     EmptyView()
                 }

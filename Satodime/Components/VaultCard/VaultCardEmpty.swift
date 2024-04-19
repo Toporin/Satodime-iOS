@@ -12,12 +12,13 @@ struct VaultCardEmpty: View {
     // MARK: - Properties
     let id: Int
     var action: () -> Void
+    var useFullWidth: Bool = false
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .stroke(Color.white.opacity(0.4), lineWidth: 2)
-                .frame(width: 261, height: 197)
+                .frame(width: useFullWidth ? .infinity : 261, height: 197)
             
             VStack {
                 HStack {
@@ -39,6 +40,7 @@ struct VaultCardEmpty: View {
                 Spacer()
             }
         }
+        // .frame(maxWidth: useFullWidth ? .infinity : 261, minHeight: 197, maxHeight: 197)
     }
 }
 

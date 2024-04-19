@@ -168,7 +168,7 @@ struct VaultSetupCreateView: View {
                         
                     } // end isExpertModeActivated
                     
-                    SatoButton(staticWidth: 177, text: continueButtonTitle, style: .confirm) {
+                    SatoButton(text: continueButtonTitle, style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                         
                         let entropyBytes: [UInt8]
                         if isExpertModeActivated {

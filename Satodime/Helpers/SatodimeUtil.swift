@@ -79,7 +79,7 @@ class SatodimeUtil {
         if let balanceDouble = getBalanceDouble(balanceString: balanceString, decimalsString: decimalsString) {
             return formatBalance(balanceDouble: balanceDouble, symbol: symbol, maxFractionDigit: maxFractionDigit)
         } else {
-            return "? " + symbol
+            return "" // "? " + symbol
         }
     }
     
@@ -92,6 +92,8 @@ class SatodimeUtil {
             fractionDigit = 8
         case "ETH":
             fractionDigit = 6
+        case "MATIC":
+            fractionDigit = 2
         default:
             break
         }
@@ -107,7 +109,7 @@ class SatodimeUtil {
             let balanceDisplay = balanceFormatted + " " + symbol
             return balanceDisplay
         } else {
-            return "? " + symbol
+            return "" // "? " + symbol
         }
     }
     
