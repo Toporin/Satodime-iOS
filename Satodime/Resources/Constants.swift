@@ -68,7 +68,7 @@ struct Constants {
     
     // MARK: - URLs
     struct Links {
-        static let moreInfo = "https://satochip.io/product/satodime/"
+        static let moreInfo = String(localized: "url.moreInfo")
     }
     
     // MARK: - Slots
