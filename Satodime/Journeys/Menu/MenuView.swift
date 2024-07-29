@@ -182,6 +182,7 @@ struct MenuView: View {
                     SmallMenuButton(
                         text: String(localized: "termsOfService"),
                         backgroundColor: Constants.Colors.darkBlueMenuButton,
+                        iconName: "ic_external_link",
                         action: {
                             self.openURL(.terms)
                         }
@@ -190,6 +191,7 @@ struct MenuView: View {
                     SmallMenuButton(
                         text: String(localized: "privacyPolicy"),
                         backgroundColor: Constants.Colors.darkBlueMenuButton,
+                        iconName: "ic_external_link",
                         action: {
                             self.openURL(.privacy)
                         }
