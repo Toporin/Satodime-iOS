@@ -17,6 +17,16 @@ struct EmptyScanStateOverlay: View {
     @Binding var showTakeOwnershipAlert: Bool
     @Binding var showNoNetworkAlert: Bool
     
+    @State private var showingSafariView = false
+    var urlHandler = UrlHandler()
+    
+    private func openUrl(_ url: SatochipURL) {
+        if let urlToOpen = url.url {
+            self.urlHandler.urlToOpenInApp = urlToOpen
+            self.showingSafariView = true
+        }
+    }
+    
     var body: some View {
         if cardState.vaultArray.isEmpty {
             VStack {
@@ -47,7 +57,8 @@ struct EmptyScanStateOverlay: View {
                 // TODO: put in separate file
                 Button(action: {
                     if let weblinkUrl = URL(string: "https://satochip.io/product/satodime/") {
-                        UIApplication.shared.open(weblinkUrl)
+                        self.urlHandler.urlToOpenInApp = weblinkUrl
+                        self.showingSafariView = true
                     }
                 }) {
                     HStack {
@@ -62,6 +73,11 @@ struct EmptyScanStateOverlay: View {
                 .foregroundColor(.white)
                 .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(20)
+            }
+            .sheet(isPresented: $showingSafariView) {
+                if let urlToOpenInApp = self.urlHandler.urlToOpenInApp {
+                    SafariView(url: urlToOpenInApp)
+                }
             }
         }
     }
