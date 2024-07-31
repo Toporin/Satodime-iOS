@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import Toasty
 
 struct VaultCardNew: View {
     // MARK: Properties
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var infoToastMessageHandler: InfoToastMessageHandler
     
     @State var showNotOwnerAlert: Bool = false
     
@@ -58,6 +60,7 @@ struct VaultCardNew: View {
                             let generator = UIImpactFeedbackGenerator(style: .medium)
                             generator.prepare()
                             generator.impactOccurred()
+                            infoToastMessageHandler.shouldShowCopiedToClipboardMessage = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                 generator.impactOccurred()
                             }

@@ -13,6 +13,7 @@ struct AuthenticView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var infoToastMessageHandler: InfoToastMessageHandler
     
     @State var shouldShowDeviceInfo = false
     @State var shouldShowSubcaInfo = false
@@ -157,6 +158,7 @@ struct AuthenticView: View {
                                         let generator = UIImpactFeedbackGenerator(style: .medium)
                                         generator.prepare()
                                         generator.impactOccurred()
+                                        infoToastMessageHandler.shouldShowCopiedToClipboardMessage = true
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                             generator.impactOccurred()
                                         }
@@ -206,11 +208,12 @@ struct AuthenticView: View {
                                         let generator = UIImpactFeedbackGenerator(style: .medium)
                                         generator.prepare()
                                         generator.impactOccurred()
+                                        infoToastMessageHandler.shouldShowCopiedToClipboardMessage = true
                                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                             generator.impactOccurred()
                                         }
                                     }
-                            }
+                            } 
                             
                             Text("Pubkey: \(cardState.certificateDic["subcaPubkey"] ?? "(none)")")
                                 .foregroundColor(.white)

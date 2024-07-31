@@ -10,6 +10,8 @@ import SwiftUI
 import SatochipSwift
 
 struct ShowCertificates: View {
+    @EnvironmentObject var infoToastMessageHandler: InfoToastMessageHandler
+    
     var certificateCode: PkiReturnCode
     var certificateDic: [String:String]
     
@@ -100,6 +102,7 @@ struct ShowCertificates: View {
                                 let generator = UIImpactFeedbackGenerator(style: .medium)
                                 generator.prepare()
                                 generator.impactOccurred()
+                                infoToastMessageHandler.shouldShowCopiedToClipboardMessage = true
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                     generator.impactOccurred()
                                 }

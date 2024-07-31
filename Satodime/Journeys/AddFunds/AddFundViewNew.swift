@@ -13,6 +13,7 @@ struct AddFundsViewNew: View {
     @Environment(\.presentationMode) var presentation
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
+    @EnvironmentObject var infoToastMessageHandler: InfoToastMessageHandler
 
     var index: Int
     
@@ -33,6 +34,7 @@ struct AddFundsViewNew: View {
         generator.prepare()
         generator.impactOccurred()
         generator.impactOccurred()
+        infoToastMessageHandler.shouldShowCopiedToClipboardMessage = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             generator.impactOccurred()
         }

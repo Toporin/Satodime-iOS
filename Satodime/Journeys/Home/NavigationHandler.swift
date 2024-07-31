@@ -19,6 +19,10 @@ class NftPreviewHandler: ObservableObject {
     @Published var nftName: String?
 }
 
+class InfoToastMessageHandler: ObservableObject {
+    @Published var shouldShowCopiedToClipboardMessage: Bool = false
+}
+
 enum NavigationState {
     case goBackHome
     case onboarding

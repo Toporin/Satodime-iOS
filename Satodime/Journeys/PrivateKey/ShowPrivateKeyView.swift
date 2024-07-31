@@ -13,6 +13,7 @@ struct ShowPrivateKeyView: View {
     @Environment(\.presentationMode) var presentation
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
+    @EnvironmentObject var infoToastMessageHandler: InfoToastMessageHandler
     
     // MARK: - Properties
     @State var keyToDisplay: String = ""
@@ -35,6 +36,7 @@ struct ShowPrivateKeyView: View {
         generator.prepare()
         generator.impactOccurred()
         generator.impactOccurred()
+        infoToastMessageHandler.shouldShowCopiedToClipboardMessage = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             generator.impactOccurred()
         }

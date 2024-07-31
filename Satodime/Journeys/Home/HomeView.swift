@@ -17,6 +17,7 @@ struct HomeView: View {
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var nftPreviewHandler: NftPreviewHandler
+    @EnvironmentObject var infoToastMessageHandler: InfoToastMessageHandler
     // let user disable specific alert prompts for the current app session
     @State var showNotOwnerAlert: Bool = true
     @State var showNotAuthenticAlert: Bool = true
@@ -111,6 +112,9 @@ struct HomeView: View {
                 navigateTo(destination: .onboarding)
             }
             reviewRequestService.appLaunched()
+        }
+        .toast(isPresenting: $infoToastMessageHandler.shouldShowCopiedToClipboardMessage, duration: 2.0) {
+            ToastHUD(type: .complete(Constants.Colors.confirmButtonBackground), title: nil, subtitle: String(localized: "copiedToClipboardAlertMessage"))
         }
     }
     

@@ -14,6 +14,7 @@ struct SatodimeApp: App {
     @StateObject var cardState = CardState()
     @StateObject var viewStackHandlerNew = ViewStackHandlerNew()
     @StateObject var nftPreviewHandler = NftPreviewHandler()
+    @StateObject var infoToastMessageHandler = InfoToastMessageHandler()
     
     var body: some Scene {
         WindowGroup {
@@ -21,6 +22,7 @@ struct SatodimeApp: App {
                 .environmentObject(cardState)
                 .environmentObject(viewStackHandlerNew)
                 .environmentObject(nftPreviewHandler)
+                .environmentObject(infoToastMessageHandler)
         }
     }
 }
