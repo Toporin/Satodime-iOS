@@ -213,7 +213,7 @@ struct AuthenticView: View {
                                             generator.impactOccurred()
                                         }
                                     }
-                            } 
+                            }
                             
                             Text("Pubkey: \(cardState.certificateDic["subcaPubkey"] ?? "(none)")")
                                 .foregroundColor(.white)

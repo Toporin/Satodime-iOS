@@ -64,6 +64,7 @@ struct Constants {
         static let isAppPreviouslyLaunched = "IS_APP_PREVIOUSLY_LAUNCHED"
         static let secondCurrency = "secondCurrency"
         static let unlockSecretDict = "unlockSecretDict"
+        static let verticalModePreferred = "verticalModePreferred"
     }
     
     // MARK: - URLs

@@ -23,6 +23,26 @@ class InfoToastMessageHandler: ObservableObject {
     @Published var shouldShowCopiedToClipboardMessage: Bool = false
 }
 
+class ViewModeHandler: ObservableObject, Hashable, Equatable {
+    @Published var isVerticalModeEnabled: Bool {
+        didSet {
+            PreferencesService().setVerticalMode(isVerticalModeEnabled)
+        }
+    }
+    
+    init() {
+        self.isVerticalModeEnabled = PreferencesService().getVerticalMode()
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(isVerticalModeEnabled)
+    }
+    
+    static func == (lhs: ViewModeHandler, rhs: ViewModeHandler) -> Bool {
+        lhs.isVerticalModeEnabled == rhs.isVerticalModeEnabled
+    }
+}
+
 enum NavigationState {
     case goBackHome
     case onboarding

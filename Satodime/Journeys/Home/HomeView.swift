@@ -11,6 +11,8 @@ import SnapToScroll
 import Combine
 import Toasty
 
+
+
 struct HomeView: View {
     // MARK: - Properties
     let reviewRequestService = ReviewRequestService()
@@ -25,7 +27,9 @@ struct HomeView: View {
     // show the TakeOwnershipView if card is unclaimed, this is transmitted with CardInfoView
     @State var showTakeOwnershipAlert: Bool = true
     @State var showNoNetworkAlert: Bool = false
-    @State var isVerticalModeEnabled: Bool = false
+    let preferencesService: PPreferencesService = PreferencesService()
+    // @State var isVerticalModeEnabled: Bool = false
+    @StateObject var viewModeHandler = ViewModeHandler()
     @State var isRefreshingCard: Bool = false
     // current slot shown to user
     @State private var currentSlotIndex: Int = 0
@@ -55,7 +59,7 @@ struct HomeView: View {
                                    showNotAuthenticAlert: self.$showNotAuthenticAlert,
                                    showCardNeedsToBeScannedAlert: self.$showCardNeedsToBeScannedAlert,
                                    showTakeOwnershipAlert: self.$showTakeOwnershipAlert,
-                                   isVerticalModeEnabled: self.$isVerticalModeEnabled,
+                                   viewModeHandler: self.viewModeHandler,
                                    currentSlotIndex: self.$currentSlotIndex,
                                    isRefreshingCard: self.$isRefreshingCard,
                                    showNoNetworkAlert: self.$showNoNetworkAlert)
@@ -63,10 +67,10 @@ struct HomeView: View {
                         Spacer()
                             .frame(height: 16)
                         
-                        if self.isVerticalModeEnabled {
+                        if self.viewModeHandler.isVerticalModeEnabled {
                             VerticalCardsView(currentSlotIndex: self.$currentSlotIndex,
                                               showNotOwnerAlert: self.$showNotOwnerAlert)
-                                .onReceive(Just(isVerticalModeEnabled)) { value in
+                                .onReceive(Just(self.viewModeHandler.isVerticalModeEnabled)) { value in
                                     currentSlotIndex = 0 // We need to reset the current slot to 0 when switching views
                                 }
                         } else {
@@ -75,6 +79,7 @@ struct HomeView: View {
 
                         Spacer()
                     }
+                    .id(viewModeHandler)
                     .toast(isPresenting: $showNoNetworkAlert, duration: 8.0) {
                         ToastHUD(type: .error(.orange), title: String(localized: "noNetworkAlertTitle"), subtitle: String(localized: "noNetworkAlertMessage"))
                     }
