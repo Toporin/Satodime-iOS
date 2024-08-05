@@ -11,6 +11,23 @@ import SnapToScroll
 import Combine
 import Toasty
 
+class AppState: ObservableObject {
+    @Published var isFirstUse: Bool {
+        didSet {
+            UserDefaults.standard.set(isFirstUse, forKey: Constants.Storage.isAppPreviouslyLaunched)
+        }
+    }
+    @Published var currency: String {
+        didSet {
+            PreferencesService().setCurrency(currency)
+        }
+    }
+    
+    init() {
+        self.isFirstUse = PreferencesService().getOnboarding()
+        self.currency = PreferencesService().getCurrency()
+    }
+}
 
 
 struct HomeView: View {
@@ -20,6 +37,7 @@ struct HomeView: View {
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var nftPreviewHandler: NftPreviewHandler
     @EnvironmentObject var infoToastMessageHandler: InfoToastMessageHandler
+    @EnvironmentObject var appState: AppState
     // let user disable specific alert prompts for the current app session
     @State var showNotOwnerAlert: Bool = true
     @State var showNotAuthenticAlert: Bool = true
@@ -33,6 +51,7 @@ struct HomeView: View {
     @State var isRefreshingCard: Bool = false
     // current slot shown to user
     @State private var currentSlotIndex: Int = 0
+    @State var refresherId: UUID = UUID()
     
     // MARK: Body
     var body: some View {
@@ -88,8 +107,10 @@ struct HomeView: View {
                                           showTakeOwnershipAlert: self.$showTakeOwnershipAlert)
                         .environmentObject(viewStackHandler)
                         .environmentObject(cardState)
+                        .environmentObject(appState)
 
                 }
+                .id(refresherId)
                 .overlay(
                     Group {
                         // Show scan button overlay when no card has been scanned
@@ -117,6 +138,32 @@ struct HomeView: View {
                 navigateTo(destination: .onboarding)
             }
             reviewRequestService.appLaunched()
+        }
+        .onChange(of: appState.isFirstUse) { newValue in
+            if newValue {
+                navigateTo(destination: .onboarding)
+            }
+        }
+        .onChange(of: appState.currency) { currency in
+            self.refresherId = UUID()
+            guard !cardState.vaultArray.isEmpty else { return }
+            var bufferVaultsArray: [VaultItem] = []
+            for vault in cardState.vaultArray {
+                var bufferVaultItem = VaultItem(index: vault.index, keyslotStatus: vault.keyslotStatus)
+                bufferVaultItem.address = vault.address
+                bufferVaultItem.balance = vault.balance
+                bufferVaultItem.selectedSecondCurrency = currency
+                bufferVaultItem.coinValueInSecondCurrency = 0.0
+                bufferVaultsArray.append(bufferVaultItem)
+            }
+            cardState.vaultArray = bufferVaultsArray
+            currentSlotIndex = 0
+            for index in 0..<cardState.vaultArray.count-1 {
+                print("*** Index ** is \(index)")
+                Task {
+                    await cardState.fetchDataFromWeb(index: index)
+                }
+            }
         }
         .toast(isPresenting: $infoToastMessageHandler.shouldShowCopiedToClipboardMessage, duration: 2.0) {
             ToastHUD(type: .complete(Constants.Colors.confirmButtonBackground), title: nil, subtitle: String(localized: "copiedToClipboardAlertMessage"))
