@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CryptoKit
 
 struct AddFundsViewNew: View {
     // MARK: - Properties
@@ -17,10 +18,18 @@ struct AddFundsViewNew: View {
 
     var index: Int
     
+    @State private var showingSafariView = false
+    var urlHandler = UrlHandler()
+
     // MARK: Helpers
     func getHeaderImageName() -> String {
         guard index < cardState.vaultArray.count else {return "bg_red_gradient"}
         return cardState.vaultArray[index].getStatus() == .sealed ? "bg_header_addfunds" : "bg_red_gradient"
+    }
+    
+    func getCoinSymbol() -> String {
+        guard index < cardState.vaultArray.count else {return ""}
+        return cardState.vaultArray[index].coin.coinSymbol
     }
     
     func getAddress() -> String {
@@ -37,6 +46,40 @@ struct AddFundsViewNew: View {
         infoToastMessageHandler.shouldShowCopiedToClipboardMessage = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             generator.impactOccurred()
+        }
+    }
+    
+    private func openUrl() {
+        let apiKey = ""
+        let hmacKey = ""
+        let cryptoAddress = getAddress()
+        let currencyCodeTo = getCoinSymbol()
+        var url = "https://widget.paybis.com/"
+
+        var query = "?partnerId=\(apiKey)" +
+        "&cryptoAddress=\(cryptoAddress)" +
+        "&currencyCodeFrom=EUR" +
+        "&currencyCodeTo=\(currencyCodeTo)"
+        guard let decodedKeyData = Data(base64Encoded: hmacKey) else {
+            return
+        }
+        guard let hmacKeyData = Data(base64Encoded: hmacKey),
+              let queryData = query.data(using: .utf8) else {
+            return
+        }
+        
+        let key = SymmetricKey(data: hmacKeyData)
+        let signature = HMAC<SHA256>.authenticationCode(for: queryData, using: key)
+        let signatureData = Data(signature)
+        let encodedSignature = signatureData.base64EncodedString().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        
+        query += "&signature=\(encodedSignature)"
+        
+        if let urlToOpen = URL(string: url + query) {
+            urlHandler.urlToOpenInApp = urlToOpen
+            showingSafariView = true
+        } else {
+            print("Invalid URL: \(uri)")
         }
     }
     
@@ -115,57 +158,69 @@ struct AddFundsViewNew: View {
                         .edgesIgnoringSafeArea(.all)
 
                 }
-                
-                VStack(alignment: .center) {
-                    Spacer()
-                        .frame(height: 178)//168
-                    
-                    SatoText(text: "depositAddress", style: .title)
-                    Spacer()
-                        .frame(height: 22)
-                    SatoText(text: self.getAddress(), style: .subtitle)
+                ScrollView {
+                    VStack(alignment: .center) {
+                        Spacer()
+                            .frame(height: 178)//168
+                        
+                        SatoText(text: "depositAddress", style: .title)
+                        Spacer()
+                            .frame(height: 22)
+                        SatoText(text: self.getAddress(), style: .subtitle)
 
-                    Spacer()
-                        .frame(height: 30)
+                        Spacer()
+                            .frame(height: 30)
 
-                    HStack(spacing: 15) {
-                        SatoText(text: "copyToClipboard", style: .addressText)
-                            .lineLimit(1)
-                            .frame(alignment: .trailing)
+                        HStack(spacing: 15) {
+                            SatoText(text: "copyToClipboard", style: .addressText)
+                                .lineLimit(1)
+                                .frame(alignment: .trailing)
+                            
+                            Spacer()
+                                .frame(width: 2)
+                            
+                            Button(action: {
+                                self.copyAddressToClipboard()
+                            }) {
+                                Image("ic_copy_clipboard")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
                         
                         Spacer()
-                            .frame(width: 2)
-                        
-                        Button(action: {
-                            self.copyAddressToClipboard()
-                        }) {
-                            Image("ic_copy_clipboard")
-                                .resizable()
-                                .frame(width: 25, height: 25)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                    
-                    Spacer()
-                        .frame(height: 30)
+                            .frame(height: 30)
 
-                    if let cgImage = QRCodeHelper().getQRfromText(text: self.getAddress()) {
-                        Image(uiImage: UIImage(cgImage: cgImage))
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 219, height: 219, alignment: .center)
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                        if let cgImage = QRCodeHelper().getQRfromText(text: self.getAddress()) {
+                            Image(uiImage: UIImage(cgImage: cgImage))
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 219, height: 219, alignment: .center)
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                        }
+                        Spacer()
+                            .frame(height: 16)
+                        SatoText(text: "serviceProvidedByPaybis", style: .lightSubtitle)
+                        SatoButton(text: String(localized: "buyFromPaybis") + " \(getCoinSymbol())", style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
+                            openUrl()
+                        }
+                        
+                        Spacer()
+                            .frame(height: 16)
+                        SatoText(text: "youOrAnybodyCanDepositFunds", style: .lightSubtitle)
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
-                        .frame(height: 30)
-                    SatoText(text: "youOrAnybodyCanDepositFunds", style: .lightSubtitle)
-                    
-                    Spacer()
+                    .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
                 }
-                .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin) 
             }// ZStack
         }// ZStack
+        .sheet(isPresented: $showingSafariView) {
+            if let urlToOpenInApp = self.urlHandler.urlToOpenInApp {
+                SafariView(url: urlToOpenInApp)
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
