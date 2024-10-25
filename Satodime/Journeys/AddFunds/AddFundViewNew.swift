@@ -71,7 +71,7 @@ struct AddFundsViewNew: View {
         let key = SymmetricKey(data: hmacKeyData)
         let signature = HMAC<SHA256>.authenticationCode(for: queryData, using: key)
         let signatureData = Data(signature)
-        let encodedSignature = signatureData.base64EncodedString().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let encodedSignature = signatureData.base64EncodedString().addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) ?? ""
         
         query += "&signature=\(encodedSignature)"
         
