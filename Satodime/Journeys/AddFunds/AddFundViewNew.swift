@@ -79,7 +79,7 @@ struct AddFundsViewNew: View {
             urlHandler.urlToOpenInApp = urlToOpen
             showingSafariView = true
         } else {
-            print("Invalid URL: \(uri)")
+            print("Invalid URL: \(url)")
         }
     }
     
