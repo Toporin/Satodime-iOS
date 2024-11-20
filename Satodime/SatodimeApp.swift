@@ -9,10 +9,18 @@ import SwiftUI
 
 @main
 struct SatodimeApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+    @StateObject var cardState = CardState()
+    @StateObject var viewStackHandlerNew = ViewStackHandlerNew()
+    @StateObject var nftPreviewHandler = NftPreviewHandler()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
+                .environmentObject(cardState)
+                .environmentObject(viewStackHandlerNew)
+                .environmentObject(nftPreviewHandler)
         }
     }
 }

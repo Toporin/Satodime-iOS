@@ -3,31 +3,27 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D16B1CD2B2449A0005FCACB /* ExploreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D16B1CC2B2449A0005FCACB /* ExploreButton.swift */; };
+		0D16B1CF2B249D3E005FCACB /* SatodimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */; };
+		0D644D472B14C7C2008CB29A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D462B14C7C2008CB29A /* Log.swift */; };
+		0D644D492B1A1E05008CB29A /* CardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D482B1A1E05008CB29A /* CardState.swift */; };
+		0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */; };
+		0D644D4D2B1E75D9008CB29A /* AssetTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4C2B1E75D9008CB29A /* AssetTabView.swift */; };
+		0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */; };
+		0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D502B1F146D008CB29A /* NftCellNew.swift */; };
+		0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D522B1F344E008CB29A /* AddFundViewNew.swift */; };
+		0DA0F0C62BBC1C5000032337 /* GoogleService-Info-sample.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DA0F0C52BBC1C5000032337 /* GoogleService-Info-sample.plist */; };
 		0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45A299A365900CEE722 /* SatodimeApp.swift */; };
-		0DA7B45D299A365900CEE722 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B45C299A365900CEE722 /* ContentView.swift */; };
 		0DA7B45F299A366200CEE722 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B45E299A366200CEE722 /* Assets.xcassets */; };
 		0DA7B46D299A366300CEE722 /* SatodimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B46C299A366300CEE722 /* SatodimeTests.swift */; };
 		0DA7B477299A366300CEE722 /* SatodimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B476299A366300CEE722 /* SatodimeUITests.swift */; };
 		0DA7B479299A366300CEE722 /* SatodimeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B478299A366300CEE722 /* SatodimeUITestsLaunchTests.swift */; };
-		0DA7B495299A37B500CEE722 /* ActionParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B485299A37B200CEE722 /* ActionParams.swift */; };
-		0DA7B496299A37B500CEE722 /* SealSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B486299A37B200CEE722 /* SealSlot.swift */; };
-		0DA7B497299A37B500CEE722 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B487299A37B200CEE722 /* Util.swift */; };
-		0DA7B498299A37B500CEE722 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B488299A37B200CEE722 /* Settings.swift */; };
-		0DA7B499299A37B500CEE722 /* ShowDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B489299A37B300CEE722 /* ShowDetails.swift */; };
-		0DA7B49B299A37B500CEE722 /* ResetSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48B299A37B300CEE722 /* ResetSlot.swift */; };
 		0DA7B49C299A37B500CEE722 /* ShowCertificates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */; };
-		0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */; };
-		0DA7B49E299A37B500CEE722 /* UnknownAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48E299A37B300CEE722 /* UnknownAction.swift */; };
-		0DA7B49F299A37B500CEE722 /* NfcReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B48F299A37B400CEE722 /* NfcReader.swift */; };
-		0DA7B4A0299A37B500CEE722 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B490299A37B400CEE722 /* SideMenu.swift */; };
-		0DA7B4A1299A37B500CEE722 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B491299A37B400CEE722 /* CardInfo.swift */; };
-		0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B492299A37B400CEE722 /* AcceptCard.swift */; };
 		0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B493299A37B400CEE722 /* VaultItem.swift */; };
-		0DA7B4A4299A37B500CEE722 /* TransferCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7B494299A37B400CEE722 /* TransferCard.swift */; };
 		0DA7B4B1299A4D6D00CEE722 /* SatochipSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA7B4B0299A4D6D00CEE722 /* SatochipSwift */; };
 		0DA7B4B3299A4D7E00CEE722 /* SwiftCryptoTools in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA7B4B2299A4D7E00CEE722 /* SwiftCryptoTools */; };
 		0DA7B4B6299A4E6400CEE722 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA7B4B5299A4E6400CEE722 /* QRCode */; };
@@ -35,14 +31,89 @@
 		0DA7B4BC299A81D900CEE722 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B4BE299A81D900CEE722 /* Localizable.strings */; };
 		0DA7B4C2299A8ADA00CEE722 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */; };
 		0DB03FCA29A7F813002E56BD /* ShowLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FC929A7F813002E56BD /* ShowLogs.swift */; };
-		0DB03FD429BB70AA002E56BD /* contracts_ETH_Token in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */; };
-		0DB03FD629BB7192002E56BD /* ContractsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FD529BB7192002E56BD /* ContractsFile.swift */; };
-		0DB03FD829BB7204002E56BD /* ContractsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FD729BB7204002E56BD /* ContractsCache.swift */; };
-		0DB03FDA29BB94C0002E56BD /* ContractsAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB03FD929BB94C0002E56BD /* ContractsAutocomplete.swift */; };
-		0DB03FDC29BCCA9C002E56BD /* contracts_ETH_NFT in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDB29BCCA9B002E56BD /* contracts_ETH_NFT */; };
-		0DB03FDE29BF5A62002E56BD /* contracts_XCP_NFT in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */; };
-		0DB03FE029BF62E7002E56BD /* contracts_XCP_Token in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */; };
 		0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */; };
+		0DE0A93D2AFA9B3100D0845F /* SwiftCryptoTools in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A93C2AFA9B3100D0845F /* SwiftCryptoTools */; };
+		0DE0A9402AFA9B7D00D0845F /* SatochipSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */; };
+		0DE0A9462AFA9D4D00D0845F /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE0A9452AFA9D4D00D0845F /* BigInt */; };
+		0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */ = {isa = PBXBuildFile; productRef = 0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */; };
+		D017D14D2B867D8800B467D2 /* VerticalCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */; };
+		D017D14F2B88DC9A00B467D2 /* ReviewRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */; };
+		D02A17602BB31AB600BE2852 /* Toasty in Frameworks */ = {isa = PBXBuildFile; productRef = D02A175F2BB31AB600BE2852 /* Toasty */; };
+		D02B283B2B86411500980C67 /* HorizontalCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283A2B86411500980C67 /* HorizontalCardsView.swift */; };
+		D02B283D2B86413F00980C67 /* CarouselCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283C2B86413F00980C67 /* CarouselCardsView.swift */; };
+		D02B283F2B86417D00980C67 /* ActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B283E2B86417D00980C67 /* ActionButtonsView.swift */; };
+		D02B28412B8641A200980C67 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28402B8641A200980C67 /* HeaderView.swift */; };
+		D02B28432B8642D400980C67 /* NavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28422B8642D400980C67 /* NavigationHandler.swift */; };
+		D02B28452B86453700980C67 /* EmptyScanStateOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */; };
+		D02B28472B86467500980C67 /* AlertsHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02B28462B86467500980C67 /* AlertsHandlerView.swift */; };
+		D0322EED2B8BA00600EBC58C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0322EEC2B8BA00600EBC58C /* NetworkManager.swift */; };
+		D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */; };
+		D0602B4D2AD0A7F700CF8AEC /* VaultCardEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */; };
+		D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */; };
+		D06080562AD93786001A5749 /* UnsealConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06080552AD93786001A5749 /* UnsealConfirmationView.swift */; };
+		D060805A2AD94152001A5749 /* ShowKeyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06080592AD94152001A5749 /* ShowKeyButton.swift */; };
+		D060805C2AD941AD001A5749 /* ResetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D060805B2AD941AD001A5749 /* ResetButton.swift */; };
+		D060805F2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D060805E2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift */; };
+		D06080632AD949FD001A5749 /* SatoSelectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06080622AD949FD001A5749 /* SatoSelectionButton.swift */; };
+		D06080652AD94ED2001A5749 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06080642AD94ED2001A5749 /* Views.swift */; };
+		D06080672AD9689F001A5749 /* ScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06080662AD9689F001A5749 /* ScanButton.swift */; };
+		D06080692AD980A6001A5749 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06080682AD980A6001A5749 /* QRCode.swift */; };
+		D060806C2AD9868D001A5749 /* ResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D060806B2AD9868D001A5749 /* ResetView.swift */; };
+		D06080702AD98C07001A5749 /* ResetConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D060806F2AD98C07001A5749 /* ResetConfirmationView.swift */; };
+		D065EF5B2AF81CEC006751C5 /* ButtonBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */; };
+		D065EF5D2AF8220A006751C5 /* LoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D065EF5C2AF8220A006751C5 /* LoggerService.swift */; };
+		D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C702AD84303005F5917 /* AuthenticView.swift */; };
+		D07C9C762AD85272005F5917 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C752AD85271005F5917 /* MenuView.swift */; };
+		D07C9C7A2AD857DD005F5917 /* SealButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C9C792AD857DD005F5917 /* SealButton.swift */; };
+		D0825F5F2ADAE093006391D5 /* SettingsDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F5E2ADAE093006391D5 /* SettingsDropdown.swift */; };
+		D0825F612ADAE0EF006391D5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F602ADAE0EF006391D5 /* SettingsView.swift */; };
+		D0825F652ADAE595006391D5 /* SettingsToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F642ADAE595006391D5 /* SettingsToggle.swift */; };
+		D0825F672ADAE7AD006391D5 /* PreferencesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F662ADAE7AD006391D5 /* PreferencesService.swift */; };
+		D0825F712ADD7BCC006391D5 /* SatoChoiceSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */; };
+		D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0825F722ADD7FC6006391D5 /* SatoInputText.swift */; };
+		D08CAF8B2AF1534000B6CE55 /* SatoAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */; };
+		D08CAF922AF3EDF600B6CE55 /* AddFundsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08CAF912AF3EDF600B6CE55 /* AddFundsButton.swift */; };
+		D0C483992AD8BC2F0085F4B9 /* UnsealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */; };
+		D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */; };
+		D0E665682ADAA08200703A8F /* Outfit-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0E665672ADAA08200703A8F /* Outfit-Regular.ttf */; };
+		D0E6656A2ADAAE5F00703A8F /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E665692ADAAE5F00703A8F /* MenuButton.swift */; };
+		D0E6656C2ADAB53700703A8F /* SmallMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6656B2ADAB53700703A8F /* SmallMenuButton.swift */; };
+		D0E6656E2ADAB6C300703A8F /* ProductButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6656D2ADAB6C300703A8F /* ProductButton.swift */; };
+		D0E665702ADABCA400703A8F /* CardInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6656F2ADABCA400703A8F /* CardInfoView.swift */; };
+		D0E665742ADABDF500703A8F /* CardInfoBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E665732ADABDF500703A8F /* CardInfoBox.swift */; };
+		D0E665762ADAC7CB00703A8F /* TransferOwnershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E665752ADAC7CB00703A8F /* TransferOwnershipView.swift */; };
+		D0EB4DE52AC079B200EA83F9 /* SwiftCryptoTools in Frameworks */ = {isa = PBXBuildFile; productRef = D0EB4DE42AC079B200EA83F9 /* SwiftCryptoTools */; };
+		D0EB4DED2AC1D26900EA83F9 /* SatoText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4DEC2AC1D26900EA83F9 /* SatoText.swift */; };
+		D0EB4DF12AC1D39D00EA83F9 /* Outfit-variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0EB4DF02AC1D39D00EA83F9 /* Outfit-variable.ttf */; };
+		D0EB4DF32AC1D3FE00EA83F9 /* OpenSans-variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0EB4DF22AC1D3FE00EA83F9 /* OpenSans-variable.ttf */; };
+		D0EB4DF52AC1D5E100EA83F9 /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4DF42AC1D5E100EA83F9 /* OnboardingContainerView.swift */; };
+		D0EB4DF72AC1D62300EA83F9 /* OnBoardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4DF62AC1D62300EA83F9 /* OnBoardingWelcomeView.swift */; };
+		D0EB4DF92AC1D66F00EA83F9 /* OnboardingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4DF82AC1D66F00EA83F9 /* OnboardingInfoView.swift */; };
+		D0EB4DFB2AC1D69100EA83F9 /* OnboardingNFCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4DFA2AC1D69100EA83F9 /* OnboardingNFCView.swift */; };
+		D0EB4DFE2AC1DFE400EA83F9 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4DFD2AC1DFE400EA83F9 /* Colors.swift */; };
+		D0EB4E002AC1E02E00EA83F9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4DFF2AC1E02E00EA83F9 /* Constants.swift */; };
+		D0EB4E042AC1FB7100EA83F9 /* Outfit-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0EB4E032AC1FB7100EA83F9 /* Outfit-Medium.ttf */; };
+		D0EB4E0A2AC222A900EA83F9 /* SatoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4E092AC222A900EA83F9 /* SatoButton.swift */; };
+		D0EB4E0E2AC22A9B00EA83F9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4E0D2AC22A9B00EA83F9 /* HomeView.swift */; };
+		D0EB4E132AC22F3500EA83F9 /* VaultSetupSelectChainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4E122AC22F3500EA83F9 /* VaultSetupSelectChainView.swift */; };
+		D0EB4E182AC24DF600EA83F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EB4E172AC24DF600EA83F9 /* AppDelegate.swift */; };
+		D0F62FB22ACDB27F0027EFE6 /* CryptoSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FB12ACDB27F0027EFE6 /* CryptoSelectionCell.swift */; };
+		D0F62FB62ACDBAA70027EFE6 /* CryptoCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FB52ACDBAA70027EFE6 /* CryptoCurrency.swift */; };
+		D0F62FB82ACDC72D0027EFE6 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0F62FB72ACDC72D0027EFE6 /* Poppins-ExtraBold.ttf */; };
+		D0F62FBA2ACDC7BA0027EFE6 /* Poppins-Bold2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0F62FB92ACDC7BA0027EFE6 /* Poppins-Bold2.ttf */; };
+		D0F62FBC2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FBB2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift */; };
+		D0F62FC02ACDD2ED0027EFE6 /* Outfit-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0F62FBF2ACDD2ED0027EFE6 /* Outfit-Bold.ttf */; };
+		D0F62FC22ACDD5DE0027EFE6 /* InfoBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FC12ACDD5DE0027EFE6 /* InfoBox.swift */; };
+		D0F62FC42ACDE11E0027EFE6 /* SatoToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FC32ACDE11E0027EFE6 /* SatoToggle.swift */; };
+		D0F62FC62ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FC52ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift */; };
+		D0F62FD02ACEEE0C0027EFE6 /* SealStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FCF2ACEEE0C0027EFE6 /* SealStatusView.swift */; };
+		D0F62FD22ACEF1A60027EFE6 /* Outfit-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0F62FD12ACEF1A60027EFE6 /* Outfit-ExtraLight.ttf */; };
+		D0F62FD42ACEF2A80027EFE6 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FD32ACEF2A80027EFE6 /* AddressView.swift */; };
+		D0F62FD62ACEF5040027EFE6 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0F62FD52ACEF5040027EFE6 /* OpenSans-SemiBold.ttf */; };
+		D0F62FD82ACF11FE0027EFE6 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */; };
+		D0FEDBD92B88ED9900EAD10A /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */; };
+		D0FEDBDE2B8B8D5800EAD10A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */; };
+		D0FEDBE12B8B8F0F00EAD10A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,9 +134,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D16B1CC2B2449A0005FCACB /* ExploreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreButton.swift; sourceTree = "<group>"; };
+		0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeUtil.swift; sourceTree = "<group>"; };
+		0D644D462B14C7C2008CB29A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		0D644D482B1A1E05008CB29A /* CardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardState.swift; sourceTree = "<group>"; };
+		0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardNew.swift; sourceTree = "<group>"; };
+		0D644D4C2B1E75D9008CB29A /* AssetTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTabView.swift; sourceTree = "<group>"; };
+		0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCellNew.swift; sourceTree = "<group>"; };
+		0D644D502B1F146D008CB29A /* NftCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftCellNew.swift; sourceTree = "<group>"; };
+		0D644D522B1F344E008CB29A /* AddFundViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFundViewNew.swift; sourceTree = "<group>"; };
+		0DA0F0C52BBC1C5000032337 /* GoogleService-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-sample.plist"; sourceTree = "<group>"; };
+		0DA0F0C72BBC348200032337 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		0DA7B457299A365900CEE722 /* Satodime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Satodime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA7B45A299A365900CEE722 /* SatodimeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeApp.swift; sourceTree = "<group>"; };
-		0DA7B45C299A365900CEE722 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0DA7B45E299A366200CEE722 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0DA7B460299A366200CEE722 /* Satodime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Satodime.entitlements; sourceTree = "<group>"; };
 		0DA7B462299A366200CEE722 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -74,37 +155,92 @@
 		0DA7B472299A366300CEE722 /* SatodimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SatodimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DA7B476299A366300CEE722 /* SatodimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeUITests.swift; sourceTree = "<group>"; };
 		0DA7B478299A366300CEE722 /* SatodimeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		0DA7B485299A37B200CEE722 /* ActionParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionParams.swift; sourceTree = "<group>"; };
-		0DA7B486299A37B200CEE722 /* SealSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SealSlot.swift; sourceTree = "<group>"; };
-		0DA7B487299A37B200CEE722 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		0DA7B488299A37B200CEE722 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		0DA7B489299A37B300CEE722 /* ShowDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDetails.swift; sourceTree = "<group>"; };
 		0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Apikeys-Info.plist"; sourceTree = "<group>"; };
-		0DA7B48B299A37B300CEE722 /* ResetSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSlot.swift; sourceTree = "<group>"; };
 		0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCertificates.swift; sourceTree = "<group>"; };
-		0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsealSlot.swift; sourceTree = "<group>"; };
-		0DA7B48E299A37B300CEE722 /* UnknownAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownAction.swift; sourceTree = "<group>"; };
-		0DA7B48F299A37B400CEE722 /* NfcReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NfcReader.swift; sourceTree = "<group>"; };
-		0DA7B490299A37B400CEE722 /* SideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
-		0DA7B491299A37B400CEE722 /* CardInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
-		0DA7B492299A37B400CEE722 /* AcceptCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptCard.swift; sourceTree = "<group>"; };
 		0DA7B493299A37B400CEE722 /* VaultItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaultItem.swift; sourceTree = "<group>"; };
-		0DA7B494299A37B400CEE722 /* TransferCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferCard.swift; sourceTree = "<group>"; };
 		0DA7B4A7299A38B500CEE722 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0DA7B4AC299A4B1B00CEE722 /* SatochipSwift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SatochipSwift; path = ../SatochipSwift; sourceTree = "<group>"; };
-		0DA7B4AE299A4CF500CEE722 /* SwiftCryptoTools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftCryptoTools; path = "../../keycard-xcode14/SwiftCryptoTools"; sourceTree = "<group>"; };
 		0DA7B4BD299A81D900CEE722 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DA7B4BF299A821000CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DA7B4C1299A8ADA00CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0DB03FC929A7F813002E56BD /* ShowLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogs.swift; sourceTree = "<group>"; };
-		0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_ETH_Token; sourceTree = "<group>"; };
-		0DB03FD529BB7192002E56BD /* ContractsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsFile.swift; sourceTree = "<group>"; };
-		0DB03FD729BB7204002E56BD /* ContractsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsCache.swift; sourceTree = "<group>"; };
-		0DB03FD929BB94C0002E56BD /* ContractsAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractsAutocomplete.swift; sourceTree = "<group>"; };
-		0DB03FDB29BCCA9B002E56BD /* contracts_ETH_NFT */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_ETH_NFT; sourceTree = "<group>"; };
-		0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_XCP_NFT; sourceTree = "<group>"; };
-		0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */ = {isa = PBXFileReference; lastKnownFileType = text; path = contracts_XCP_Token; sourceTree = "<group>"; };
 		0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Apikeys-Info-sample.plist"; sourceTree = "<group>"; };
+		D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalCardsView.swift; sourceTree = "<group>"; };
+		D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRequestService.swift; sourceTree = "<group>"; };
+		D02B283A2B86411500980C67 /* HorizontalCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCardsView.swift; sourceTree = "<group>"; };
+		D02B283C2B86413F00980C67 /* CarouselCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCardsView.swift; sourceTree = "<group>"; };
+		D02B283E2B86417D00980C67 /* ActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsView.swift; sourceTree = "<group>"; };
+		D02B28402B8641A200980C67 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		D02B28422B8642D400980C67 /* NavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHandler.swift; sourceTree = "<group>"; };
+		D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyScanStateOverlay.swift; sourceTree = "<group>"; };
+		D02B28462B86467500980C67 /* AlertsHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsHandlerView.swift; sourceTree = "<group>"; };
+		D0322EEC2B8BA00600EBC58C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoStatusView.swift; sourceTree = "<group>"; };
+		D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardEmpty.swift; sourceTree = "<group>"; };
+		D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeOwnershipView.swift; sourceTree = "<group>"; };
+		D06080552AD93786001A5749 /* UnsealConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsealConfirmationView.swift; sourceTree = "<group>"; };
+		D06080592AD94152001A5749 /* ShowKeyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowKeyButton.swift; sourceTree = "<group>"; };
+		D060805B2AD941AD001A5749 /* ResetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetButton.swift; sourceTree = "<group>"; };
+		D060805E2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPrivateKeyMenuView.swift; sourceTree = "<group>"; };
+		D06080622AD949FD001A5749 /* SatoSelectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoSelectionButton.swift; sourceTree = "<group>"; };
+		D06080642AD94ED2001A5749 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
+		D06080662AD9689F001A5749 /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
+		D06080682AD980A6001A5749 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
+		D060806B2AD9868D001A5749 /* ResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetView.swift; sourceTree = "<group>"; };
+		D060806F2AD98C07001A5749 /* ResetConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetConfirmationView.swift; sourceTree = "<group>"; };
+		D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBox.swift; sourceTree = "<group>"; };
+		D065EF5C2AF8220A006751C5 /* LoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerService.swift; sourceTree = "<group>"; };
+		D07C9C702AD84303005F5917 /* AuthenticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticView.swift; sourceTree = "<group>"; };
+		D07C9C752AD85271005F5917 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		D07C9C792AD857DD005F5917 /* SealButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SealButton.swift; sourceTree = "<group>"; };
+		D0825F5E2ADAE093006391D5 /* SettingsDropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDropdown.swift; sourceTree = "<group>"; };
+		D0825F602ADAE0EF006391D5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D0825F642ADAE595006391D5 /* SettingsToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsToggle.swift; sourceTree = "<group>"; };
+		D0825F662ADAE7AD006391D5 /* PreferencesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesService.swift; sourceTree = "<group>"; };
+		D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoChoiceSelector.swift; sourceTree = "<group>"; };
+		D0825F722ADD7FC6006391D5 /* SatoInputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoInputText.swift; sourceTree = "<group>"; };
+		D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoAlert.swift; sourceTree = "<group>"; };
+		D08CAF912AF3EDF600B6CE55 /* AddFundsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFundsButton.swift; sourceTree = "<group>"; };
+		D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsealView.swift; sourceTree = "<group>"; };
+		D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPrivateKeyView.swift; sourceTree = "<group>"; };
+		D0E665672ADAA08200703A8F /* Outfit-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-Regular.ttf"; sourceTree = "<group>"; };
+		D0E665692ADAAE5F00703A8F /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
+		D0E6656B2ADAB53700703A8F /* SmallMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallMenuButton.swift; sourceTree = "<group>"; };
+		D0E6656D2ADAB6C300703A8F /* ProductButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductButton.swift; sourceTree = "<group>"; };
+		D0E6656F2ADABCA400703A8F /* CardInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfoView.swift; sourceTree = "<group>"; };
+		D0E665732ADABDF500703A8F /* CardInfoBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfoBox.swift; sourceTree = "<group>"; };
+		D0E665752ADAC7CB00703A8F /* TransferOwnershipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferOwnershipView.swift; sourceTree = "<group>"; };
+		D0EB4DEC2AC1D26900EA83F9 /* SatoText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoText.swift; sourceTree = "<group>"; };
+		D0EB4DF02AC1D39D00EA83F9 /* Outfit-variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-variable.ttf"; sourceTree = "<group>"; };
+		D0EB4DF22AC1D3FE00EA83F9 /* OpenSans-variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-variable.ttf"; sourceTree = "<group>"; };
+		D0EB4DF42AC1D5E100EA83F9 /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
+		D0EB4DF62AC1D62300EA83F9 /* OnBoardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingWelcomeView.swift; sourceTree = "<group>"; };
+		D0EB4DF82AC1D66F00EA83F9 /* OnboardingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInfoView.swift; sourceTree = "<group>"; };
+		D0EB4DFA2AC1D69100EA83F9 /* OnboardingNFCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNFCView.swift; sourceTree = "<group>"; };
+		D0EB4DFD2AC1DFE400EA83F9 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		D0EB4DFF2AC1E02E00EA83F9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D0EB4E032AC1FB7100EA83F9 /* Outfit-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-Medium.ttf"; sourceTree = "<group>"; };
+		D0EB4E092AC222A900EA83F9 /* SatoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoButton.swift; sourceTree = "<group>"; };
+		D0EB4E0D2AC22A9B00EA83F9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		D0EB4E122AC22F3500EA83F9 /* VaultSetupSelectChainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultSetupSelectChainView.swift; sourceTree = "<group>"; };
+		D0EB4E162AC2370400EA83F9 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		D0EB4E172AC24DF600EA83F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D0F62FB12ACDB27F0027EFE6 /* CryptoSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoSelectionCell.swift; sourceTree = "<group>"; };
+		D0F62FB52ACDBAA70027EFE6 /* CryptoCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCurrency.swift; sourceTree = "<group>"; };
+		D0F62FB72ACDC72D0027EFE6 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
+		D0F62FB92ACDC7BA0027EFE6 /* Poppins-Bold2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold2.ttf"; sourceTree = "<group>"; };
+		D0F62FBB2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultSetupCreateView.swift; sourceTree = "<group>"; };
+		D0F62FBF2ACDD2ED0027EFE6 /* Outfit-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-Bold.ttf"; sourceTree = "<group>"; };
+		D0F62FC12ACDD5DE0027EFE6 /* InfoBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBox.swift; sourceTree = "<group>"; };
+		D0F62FC32ACDE11E0027EFE6 /* SatoToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatoToggle.swift; sourceTree = "<group>"; };
+		D0F62FC52ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultSetupCongratsView.swift; sourceTree = "<group>"; };
+		D0F62FCF2ACEEE0C0027EFE6 /* SealStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SealStatusView.swift; sourceTree = "<group>"; };
+		D0F62FD12ACEF1A60027EFE6 /* Outfit-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-ExtraLight.ttf"; sourceTree = "<group>"; };
+		D0F62FD32ACEF2A80027EFE6 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		D0F62FD52ACEF5040027EFE6 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
+		D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
+		D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,9 +248,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D02A17602BB31AB600BE2852 /* Toasty in Frameworks */,
+				0DEC091C2AFA9EB400B5DEAD /* SnapToScroll in Frameworks */,
 				0DA7B4B1299A4D6D00CEE722 /* SatochipSwift in Frameworks */,
+				0DE0A9462AFA9D4D00D0845F /* BigInt in Frameworks */,
 				0DA7B4B3299A4D7E00CEE722 /* SwiftCryptoTools in Frameworks */,
 				0DA7B4B6299A4E6400CEE722 /* QRCode in Frameworks */,
+				D0EB4DE52AC079B200EA83F9 /* SwiftCryptoTools in Frameworks */,
+				D0FEDBE12B8B8F0F00EAD10A /* FirebaseCrashlytics in Frameworks */,
+				0DE0A9402AFA9B7D00D0845F /* SatochipSwift in Frameworks */,
+				0DE0A93D2AFA9B3100D0845F /* SwiftCryptoTools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,39 +303,26 @@
 		0DA7B459299A365900CEE722 /* Satodime */ = {
 			isa = PBXGroup;
 			children = (
+				D0825F682ADB6286006391D5 /* Models */,
+				D0F62FCB2ACEE5BA0027EFE6 /* Services */,
+				D0F62FB42ACDBA980027EFE6 /* Core */,
+				D0EB4DFC2AC1DFD200EA83F9 /* Helpers */,
+				D0EB4DEE2AC1D36400EA83F9 /* Resources */,
+				D0EB4DEB2AC1D24600EA83F9 /* Components */,
+				D0EB4DE62AC0837C00EA83F9 /* Journeys */,
 				0DA7B4A7299A38B500CEE722 /* Info.plist */,
 				0DA7B4C0299A8ADA00CEE722 /* InfoPlist.strings */,
+				D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */,
 				0DA7B4BE299A81D900CEE722 /* Localizable.strings */,
-				0DA7B492299A37B400CEE722 /* AcceptCard.swift */,
-				0DA7B485299A37B200CEE722 /* ActionParams.swift */,
+				D0EB4E172AC24DF600EA83F9 /* AppDelegate.swift */,
 				0DA7B48A299A37B300CEE722 /* Apikeys-Info.plist */,
-				0DA7B491299A37B400CEE722 /* CardInfo.swift */,
-				0DA7B48F299A37B400CEE722 /* NfcReader.swift */,
-				0DA7B48B299A37B300CEE722 /* ResetSlot.swift */,
-				0DA7B486299A37B200CEE722 /* SealSlot.swift */,
-				0DA7B488299A37B200CEE722 /* Settings.swift */,
-				0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */,
-				0DA7B489299A37B300CEE722 /* ShowDetails.swift */,
-				0DA7B490299A37B400CEE722 /* SideMenu.swift */,
-				0DA7B494299A37B400CEE722 /* TransferCard.swift */,
-				0DA7B48E299A37B300CEE722 /* UnknownAction.swift */,
-				0DA7B48D299A37B300CEE722 /* UnsealSlot.swift */,
-				0DA7B487299A37B200CEE722 /* Util.swift */,
-				0DA7B493299A37B400CEE722 /* VaultItem.swift */,
 				0DA7B45A299A365900CEE722 /* SatodimeApp.swift */,
-				0DA7B45C299A365900CEE722 /* ContentView.swift */,
 				0DA7B45E299A366200CEE722 /* Assets.xcassets */,
 				0DA7B460299A366200CEE722 /* Satodime.entitlements */,
 				0DA7B461299A366200CEE722 /* Preview Content */,
-				0DB03FC929A7F813002E56BD /* ShowLogs.swift */,
-				0DB03FD329BB70AA002E56BD /* contracts_ETH_Token */,
-				0DB03FD529BB7192002E56BD /* ContractsFile.swift */,
-				0DB03FD729BB7204002E56BD /* ContractsCache.swift */,
-				0DB03FD929BB94C0002E56BD /* ContractsAutocomplete.swift */,
-				0DB03FDB29BCCA9B002E56BD /* contracts_ETH_NFT */,
-				0DB03FDD29BF5A61002E56BD /* contracts_XCP_NFT */,
-				0DB03FDF29BF62E7002E56BD /* contracts_XCP_Token */,
 				0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */,
+				0DA0F0C52BBC1C5000032337 /* GoogleService-Info-sample.plist */,
+				0DA0F0C72BBC348200032337 /* CHANGELOG.md */,
 			);
 			path = Satodime;
 			sourceTree = "<group>";
@@ -226,7 +356,6 @@
 			isa = PBXGroup;
 			children = (
 				0DA7B4AC299A4B1B00CEE722 /* SatochipSwift */,
-				0DA7B4AE299A4CF500CEE722 /* SwiftCryptoTools */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -236,6 +365,253 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D0602B4E2AD1920000CF8AEC /* Ownership */ = {
+			isa = PBXGroup;
+			children = (
+				D0602B4F2AD1925B00CF8AEC /* TakeOwnershipView.swift */,
+				D0E665752ADAC7CB00703A8F /* TransferOwnershipView.swift */,
+			);
+			path = Ownership;
+			sourceTree = "<group>";
+		};
+		D060805D2AD947D2001A5749 /* PrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				D060805E2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift */,
+				D0D0FFC52AEFED22000C4BC6 /* ShowPrivateKeyView.swift */,
+			);
+			path = PrivateKey;
+			sourceTree = "<group>";
+		};
+		D060806A2AD9864E001A5749 /* Reset */ = {
+			isa = PBXGroup;
+			children = (
+				D060806B2AD9868D001A5749 /* ResetView.swift */,
+				D060806F2AD98C07001A5749 /* ResetConfirmationView.swift */,
+			);
+			path = Reset;
+			sourceTree = "<group>";
+		};
+		D07C9C6F2AD842E4005F5917 /* Authenticity */ = {
+			isa = PBXGroup;
+			children = (
+				D07C9C702AD84303005F5917 /* AuthenticView.swift */,
+			);
+			path = Authenticity;
+			sourceTree = "<group>";
+		};
+		D07C9C742AD85261005F5917 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				D07C9C752AD85271005F5917 /* MenuView.swift */,
+				D0E6656F2ADABCA400703A8F /* CardInfoView.swift */,
+				0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */,
+				0DB03FC929A7F813002E56BD /* ShowLogs.swift */,
+				D0825F602ADAE0EF006391D5 /* SettingsView.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		D07C9C7D2AD861B0005F5917 /* SatoList */ = {
+			isa = PBXGroup;
+			children = (
+				0D644D4C2B1E75D9008CB29A /* AssetTabView.swift */,
+				0D644D4E2B1E7A5A008CB29A /* TokenCellNew.swift */,
+				0D644D502B1F146D008CB29A /* NftCellNew.swift */,
+			);
+			path = SatoList;
+			sourceTree = "<group>";
+		};
+		D0825F682ADB6286006391D5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0D644D482B1A1E05008CB29A /* CardState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D08CAF8C2AF3EB3C00B6CE55 /* AddFunds */ = {
+			isa = PBXGroup;
+			children = (
+				0D644D522B1F344E008CB29A /* AddFundViewNew.swift */,
+			);
+			path = AddFunds;
+			sourceTree = "<group>";
+		};
+		D0C483972AD8BC0F0085F4B9 /* Unseal */ = {
+			isa = PBXGroup;
+			children = (
+				D0C483982AD8BC2F0085F4B9 /* UnsealView.swift */,
+				D06080552AD93786001A5749 /* UnsealConfirmationView.swift */,
+			);
+			path = Unseal;
+			sourceTree = "<group>";
+		};
+		D0EB4DE62AC0837C00EA83F9 /* Journeys */ = {
+			isa = PBXGroup;
+			children = (
+				D08CAF8C2AF3EB3C00B6CE55 /* AddFunds */,
+				D060806A2AD9864E001A5749 /* Reset */,
+				D060805D2AD947D2001A5749 /* PrivateKey */,
+				D0C483972AD8BC0F0085F4B9 /* Unseal */,
+				D07C9C742AD85261005F5917 /* Menu */,
+				D07C9C6F2AD842E4005F5917 /* Authenticity */,
+				D0602B4E2AD1920000CF8AEC /* Ownership */,
+				D0EB4E112AC22D2800EA83F9 /* Seal */,
+				D0EB4DEA2AC1D03A00EA83F9 /* Onboarding */,
+				D0EB4DE72AC083B900EA83F9 /* Home */,
+			);
+			path = Journeys;
+			sourceTree = "<group>";
+		};
+		D0EB4DE72AC083B900EA83F9 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				D0EB4E0D2AC22A9B00EA83F9 /* HomeView.swift */,
+				D02B283A2B86411500980C67 /* HorizontalCardsView.swift */,
+				D02B283C2B86413F00980C67 /* CarouselCardsView.swift */,
+				D02B283E2B86417D00980C67 /* ActionButtonsView.swift */,
+				D02B28402B8641A200980C67 /* HeaderView.swift */,
+				D02B28422B8642D400980C67 /* NavigationHandler.swift */,
+				D02B28442B86453700980C67 /* EmptyScanStateOverlay.swift */,
+				D02B28462B86467500980C67 /* AlertsHandlerView.swift */,
+				D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		D0EB4DEA2AC1D03A00EA83F9 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				D0EB4DF42AC1D5E100EA83F9 /* OnboardingContainerView.swift */,
+				D0EB4DF62AC1D62300EA83F9 /* OnBoardingWelcomeView.swift */,
+				D0EB4DF82AC1D66F00EA83F9 /* OnboardingInfoView.swift */,
+				D0EB4DFA2AC1D69100EA83F9 /* OnboardingNFCView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		D0EB4DEB2AC1D24600EA83F9 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D07C9C7D2AD861B0005F5917 /* SatoList */,
+				D0F62FCE2ACEEE000027EFE6 /* VaultCard */,
+				D0F62FB02ACDB26C0027EFE6 /* Cells */,
+				D0EB4DEC2AC1D26900EA83F9 /* SatoText.swift */,
+				D0825F722ADD7FC6006391D5 /* SatoInputText.swift */,
+				D0825F702ADD7BCC006391D5 /* SatoChoiceSelector.swift */,
+				D0EB4E092AC222A900EA83F9 /* SatoButton.swift */,
+				D06080622AD949FD001A5749 /* SatoSelectionButton.swift */,
+				D0F62FC12ACDD5DE0027EFE6 /* InfoBox.swift */,
+				D0F62FC32ACDE11E0027EFE6 /* SatoToggle.swift */,
+				D0602B4A2AD09E7300CF8AEC /* SatoStatusView.swift */,
+				D08CAF912AF3EDF600B6CE55 /* AddFundsButton.swift */,
+				D07C9C792AD857DD005F5917 /* SealButton.swift */,
+				D06080592AD94152001A5749 /* ShowKeyButton.swift */,
+				D060805B2AD941AD001A5749 /* ResetButton.swift */,
+				D06080662AD9689F001A5749 /* ScanButton.swift */,
+				D0E665692ADAAE5F00703A8F /* MenuButton.swift */,
+				D0E6656B2ADAB53700703A8F /* SmallMenuButton.swift */,
+				D0E6656D2ADAB6C300703A8F /* ProductButton.swift */,
+				D0E665732ADABDF500703A8F /* CardInfoBox.swift */,
+				D0825F5E2ADAE093006391D5 /* SettingsDropdown.swift */,
+				D0825F642ADAE595006391D5 /* SettingsToggle.swift */,
+				D08CAF8A2AF1534000B6CE55 /* SatoAlert.swift */,
+				D065EF5A2AF81CEC006751C5 /* ButtonBox.swift */,
+				0D16B1CC2B2449A0005FCACB /* ExploreButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D0EB4DEE2AC1D36400EA83F9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D0EB4DEF2AC1D39100EA83F9 /* Fonts */,
+				D0EB4DFF2AC1E02E00EA83F9 /* Constants.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D0EB4DEF2AC1D39100EA83F9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D0F62FD52ACEF5040027EFE6 /* OpenSans-SemiBold.ttf */,
+				D0F62FD12ACEF1A60027EFE6 /* Outfit-ExtraLight.ttf */,
+				D0F62FBF2ACDD2ED0027EFE6 /* Outfit-Bold.ttf */,
+				D0F62FB92ACDC7BA0027EFE6 /* Poppins-Bold2.ttf */,
+				D0F62FB72ACDC72D0027EFE6 /* Poppins-ExtraBold.ttf */,
+				D0EB4E162AC2370400EA83F9 /* Poppins-Bold.ttf */,
+				D0EB4E032AC1FB7100EA83F9 /* Outfit-Medium.ttf */,
+				D0E665672ADAA08200703A8F /* Outfit-Regular.ttf */,
+				D0EB4DF22AC1D3FE00EA83F9 /* OpenSans-variable.ttf */,
+				D0EB4DF02AC1D39D00EA83F9 /* Outfit-variable.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		D0EB4DFC2AC1DFD200EA83F9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D0EB4DFD2AC1DFE400EA83F9 /* Colors.swift */,
+				D06080642AD94ED2001A5749 /* Views.swift */,
+				D06080682AD980A6001A5749 /* QRCode.swift */,
+				0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */,
+				D0322EEC2B8BA00600EBC58C /* NetworkManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D0EB4E112AC22D2800EA83F9 /* Seal */ = {
+			isa = PBXGroup;
+			children = (
+				D0EB4E122AC22F3500EA83F9 /* VaultSetupSelectChainView.swift */,
+				D0F62FBB2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift */,
+				D0F62FC52ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift */,
+			);
+			path = Seal;
+			sourceTree = "<group>";
+		};
+		D0F62FB02ACDB26C0027EFE6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D0F62FB12ACDB27F0027EFE6 /* CryptoSelectionCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		D0F62FB42ACDBA980027EFE6 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				0DA7B493299A37B400CEE722 /* VaultItem.swift */,
+				D0F62FB52ACDBAA70027EFE6 /* CryptoCurrency.swift */,
+				0D644D462B14C7C2008CB29A /* Log.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D0F62FCB2ACEE5BA0027EFE6 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D0825F662ADAE7AD006391D5 /* PreferencesService.swift */,
+				D065EF5C2AF8220A006751C5 /* LoggerService.swift */,
+				D017D14E2B88DC9A00B467D2 /* ReviewRequestService.swift */,
+				D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D0F62FCE2ACEEE000027EFE6 /* VaultCard */ = {
+			isa = PBXGroup;
+			children = (
+				D0F62FCF2ACEEE0C0027EFE6 /* SealStatusView.swift */,
+				D0F62FD32ACEF2A80027EFE6 /* AddressView.swift */,
+				D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */,
+				D0602B4C2AD0A7F700CF8AEC /* VaultCardEmpty.swift */,
+				0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */,
+			);
+			path = VaultCard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +624,7 @@
 				0DA7B453299A365900CEE722 /* Sources */,
 				0DA7B454299A365900CEE722 /* Frameworks */,
 				0DA7B455299A365900CEE722 /* Resources */,
+				D0322EEB2B8B951500EBC58C /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -258,6 +635,13 @@
 				0DA7B4B0299A4D6D00CEE722 /* SatochipSwift */,
 				0DA7B4B2299A4D7E00CEE722 /* SwiftCryptoTools */,
 				0DA7B4B5299A4E6400CEE722 /* QRCode */,
+				D0EB4DE42AC079B200EA83F9 /* SwiftCryptoTools */,
+				0DE0A93C2AFA9B3100D0845F /* SwiftCryptoTools */,
+				0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */,
+				0DE0A9452AFA9D4D00D0845F /* BigInt */,
+				0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */,
+				D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */,
+				D02A175F2BB31AB600BE2852 /* Toasty */,
 			);
 			productName = Satodime;
 			productReference = 0DA7B457299A365900CEE722 /* Satodime.app */;
@@ -334,6 +718,12 @@
 			mainGroup = 0DA7B44E299A365900CEE722;
 			packageReferences = (
 				0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */,
+				0DE0A93B2AFA9B3100D0845F /* XCLocalSwiftPackageReference "../SwiftCryptoTools" */,
+				0DE0A93E2AFA9B7D00D0845F /* XCLocalSwiftPackageReference "../SatochipSwift" */,
+				0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */,
+				0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */,
+				D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D02A175E2BB31AB600BE2852 /* XCRemoteSwiftPackageReference "Toasty" */,
 			);
 			productRefGroup = 0DA7B458299A365900CEE722 /* Products */;
 			projectDirPath = "";
@@ -351,15 +741,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0F62FD62ACEF5040027EFE6 /* OpenSans-SemiBold.ttf in Resources */,
 				0DA7B4B7299A589E00CEE722 /* Apikeys-Info.plist in Resources */,
+				D0FEDBDE2B8B8D5800EAD10A /* GoogleService-Info.plist in Resources */,
+				D0E665682ADAA08200703A8F /* Outfit-Regular.ttf in Resources */,
 				0DB03FE229D21CFD002E56BD /* Apikeys-Info-sample.plist in Resources */,
-				0DB03FD429BB70AA002E56BD /* contracts_ETH_Token in Resources */,
+				D0EB4DF12AC1D39D00EA83F9 /* Outfit-variable.ttf in Resources */,
 				0DA7B4C2299A8ADA00CEE722 /* InfoPlist.strings in Resources */,
-				0DB03FDE29BF5A62002E56BD /* contracts_XCP_NFT in Resources */,
-				0DB03FE029BF62E7002E56BD /* contracts_XCP_Token in Resources */,
+				D0F62FD22ACEF1A60027EFE6 /* Outfit-ExtraLight.ttf in Resources */,
 				0DA7B4BC299A81D900CEE722 /* Localizable.strings in Resources */,
-				0DB03FDC29BCCA9C002E56BD /* contracts_ETH_NFT in Resources */,
+				D0F62FBA2ACDC7BA0027EFE6 /* Poppins-Bold2.ttf in Resources */,
 				0DA7B45F299A366200CEE722 /* Assets.xcassets in Resources */,
+				D0EB4E042AC1FB7100EA83F9 /* Outfit-Medium.ttf in Resources */,
+				D0F62FC02ACDD2ED0027EFE6 /* Outfit-Bold.ttf in Resources */,
+				D0EB4DF32AC1D3FE00EA83F9 /* OpenSans-variable.ttf in Resources */,
+				D0F62FB82ACDC72D0027EFE6 /* Poppins-ExtraBold.ttf in Resources */,
+				0DA0F0C62BBC1C5000032337 /* GoogleService-Info-sample.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,32 +776,115 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D0322EEB2B8B951500EBC58C /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = Crashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0DA7B453299A365900CEE722 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DA7B49F299A37B500CEE722 /* NfcReader.swift in Sources */,
-				0DB03FDA29BB94C0002E56BD /* ContractsAutocomplete.swift in Sources */,
-				0DA7B499299A37B500CEE722 /* ShowDetails.swift in Sources */,
-				0DA7B49D299A37B500CEE722 /* UnsealSlot.swift in Sources */,
-				0DA7B498299A37B500CEE722 /* Settings.swift in Sources */,
-				0DA7B49E299A37B500CEE722 /* UnknownAction.swift in Sources */,
+				D0EB4DF72AC1D62300EA83F9 /* OnBoardingWelcomeView.swift in Sources */,
+				D060805F2AD947E6001A5749 /* ShowPrivateKeyMenuView.swift in Sources */,
+				D02B283F2B86417D00980C67 /* ActionButtonsView.swift in Sources */,
+				D0825F732ADD7FC6006391D5 /* SatoInputText.swift in Sources */,
+				D0F62FBC2ACDCDFE0027EFE6 /* VaultSetupCreateView.swift in Sources */,
+				D017D14F2B88DC9A00B467D2 /* ReviewRequestService.swift in Sources */,
+				D0EB4E182AC24DF600EA83F9 /* AppDelegate.swift in Sources */,
+				D06080672AD9689F001A5749 /* ScanButton.swift in Sources */,
+				D017D14D2B867D8800B467D2 /* VerticalCardsView.swift in Sources */,
+				D065EF5D2AF8220A006751C5 /* LoggerService.swift in Sources */,
+				0D644D472B14C7C2008CB29A /* Log.swift in Sources */,
+				D0F62FD42ACEF2A80027EFE6 /* AddressView.swift in Sources */,
+				D060805C2AD941AD001A5749 /* ResetButton.swift in Sources */,
+				D0825F5F2ADAE093006391D5 /* SettingsDropdown.swift in Sources */,
+				D060805A2AD94152001A5749 /* ShowKeyButton.swift in Sources */,
+				D02B28452B86453700980C67 /* EmptyScanStateOverlay.swift in Sources */,
+				0D16B1CF2B249D3E005FCACB /* SatodimeUtil.swift in Sources */,
+				0D644D4D2B1E75D9008CB29A /* AssetTabView.swift in Sources */,
+				D02B283B2B86411500980C67 /* HorizontalCardsView.swift in Sources */,
+				D0FEDBD92B88ED9900EAD10A /* EmailHelper.swift in Sources */,
+				D07C9C7A2AD857DD005F5917 /* SealButton.swift in Sources */,
+				D0EB4E132AC22F3500EA83F9 /* VaultSetupSelectChainView.swift in Sources */,
+				0D644D4F2B1E7A5A008CB29A /* TokenCellNew.swift in Sources */,
+				D06080702AD98C07001A5749 /* ResetConfirmationView.swift in Sources */,
+				D0F62FC22ACDD5DE0027EFE6 /* InfoBox.swift in Sources */,
+				D07C9C712AD84303005F5917 /* AuthenticView.swift in Sources */,
+				D02B28472B86467500980C67 /* AlertsHandlerView.swift in Sources */,
+				0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */,
+				D0EB4E0E2AC22A9B00EA83F9 /* HomeView.swift in Sources */,
+				D02B28432B8642D400980C67 /* NavigationHandler.swift in Sources */,
 				0DA7B4A3299A37B500CEE722 /* VaultItem.swift in Sources */,
+				D0602B4B2AD09E7300CF8AEC /* SatoStatusView.swift in Sources */,
+				0D16B1CD2B2449A0005FCACB /* ExploreButton.swift in Sources */,
+				D0F62FB62ACDBAA70027EFE6 /* CryptoCurrency.swift in Sources */,
+				D07C9C762AD85272005F5917 /* MenuView.swift in Sources */,
 				0DA7B49C299A37B500CEE722 /* ShowCertificates.swift in Sources */,
-				0DA7B496299A37B500CEE722 /* SealSlot.swift in Sources */,
-				0DA7B45D299A365900CEE722 /* ContentView.swift in Sources */,
-				0DB03FD829BB7204002E56BD /* ContractsCache.swift in Sources */,
-				0DA7B4A0299A37B500CEE722 /* SideMenu.swift in Sources */,
-				0DA7B4A4299A37B500CEE722 /* TransferCard.swift in Sources */,
-				0DA7B497299A37B500CEE722 /* Util.swift in Sources */,
-				0DA7B495299A37B500CEE722 /* ActionParams.swift in Sources */,
+				D0EB4DFE2AC1DFE400EA83F9 /* Colors.swift in Sources */,
+				D0C483992AD8BC2F0085F4B9 /* UnsealView.swift in Sources */,
+				D0E6656C2ADAB53700703A8F /* SmallMenuButton.swift in Sources */,
+				D06080632AD949FD001A5749 /* SatoSelectionButton.swift in Sources */,
+				D0E665702ADABCA400703A8F /* CardInfoView.swift in Sources */,
+				D0F62FC62ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift in Sources */,
+				D0322EED2B8BA00600EBC58C /* NetworkManager.swift in Sources */,
+				D0EB4E002AC1E02E00EA83F9 /* Constants.swift in Sources */,
+				D0E665742ADABDF500703A8F /* CardInfoBox.swift in Sources */,
+				D0EB4DF52AC1D5E100EA83F9 /* OnboardingContainerView.swift in Sources */,
+				D0825F672ADAE7AD006391D5 /* PreferencesService.swift in Sources */,
+				D06080692AD980A6001A5749 /* QRCode.swift in Sources */,
+				D0F62FC42ACDE11E0027EFE6 /* SatoToggle.swift in Sources */,
+				D0825F612ADAE0EF006391D5 /* SettingsView.swift in Sources */,
+				D0825F652ADAE595006391D5 /* SettingsToggle.swift in Sources */,
+				D02B28412B8641A200980C67 /* HeaderView.swift in Sources */,
+				D0825F712ADD7BCC006391D5 /* SatoChoiceSelector.swift in Sources */,
+				D06080562AD93786001A5749 /* UnsealConfirmationView.swift in Sources */,
+				D0E665762ADAC7CB00703A8F /* TransferOwnershipView.swift in Sources */,
+				D0F62FB22ACDB27F0027EFE6 /* CryptoSelectionCell.swift in Sources */,
+				D0EB4DF92AC1D66F00EA83F9 /* OnboardingInfoView.swift in Sources */,
+				D0E6656E2ADAB6C300703A8F /* ProductButton.swift in Sources */,
+				D065EF5B2AF81CEC006751C5 /* ButtonBox.swift in Sources */,
+				D0EB4DFB2AC1D69100EA83F9 /* OnboardingNFCView.swift in Sources */,
+				D02B283D2B86413F00980C67 /* CarouselCardsView.swift in Sources */,
+				D0D0FFC62AEFED22000C4BC6 /* ShowPrivateKeyView.swift in Sources */,
+				D0F62FD02ACEEE0C0027EFE6 /* SealStatusView.swift in Sources */,
+				D0EB4DED2AC1D26900EA83F9 /* SatoText.swift in Sources */,
+				0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */,
+				D0F62FD82ACF11FE0027EFE6 /* BalanceView.swift in Sources */,
 				0DB03FCA29A7F813002E56BD /* ShowLogs.swift in Sources */,
+				0D644D492B1A1E05008CB29A /* CardState.swift in Sources */,
 				0DA7B45B299A365900CEE722 /* SatodimeApp.swift in Sources */,
-				0DA7B4A2299A37B500CEE722 /* AcceptCard.swift in Sources */,
-				0DA7B49B299A37B500CEE722 /* ResetSlot.swift in Sources */,
-				0DA7B4A1299A37B500CEE722 /* CardInfo.swift in Sources */,
-				0DB03FD629BB7192002E56BD /* ContractsFile.swift in Sources */,
+				D08CAF922AF3EDF600B6CE55 /* AddFundsButton.swift in Sources */,
+				D08CAF8B2AF1534000B6CE55 /* SatoAlert.swift in Sources */,
+				D06080652AD94ED2001A5749 /* Views.swift in Sources */,
+				0D644D532B1F344E008CB29A /* AddFundViewNew.swift in Sources */,
+				D0602B502AD1925B00CF8AEC /* TakeOwnershipView.swift in Sources */,
+				D060806C2AD9868D001A5749 /* ResetView.swift in Sources */,
+				D0E6656A2ADAAE5F00703A8F /* MenuButton.swift in Sources */,
+				D0EB4E0A2AC222A900EA83F9 /* SatoButton.swift in Sources */,
+				D0602B4D2AD0A7F700CF8AEC /* VaultCardEmpty.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,7 +975,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -581,7 +1061,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -589,30 +1069,33 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Satodime/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Satodime;
+				INFOPLIST_KEY_NFCReaderUsageDescription = "Enable Satodime usage";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allows to scan QR code";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -623,7 +1106,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
 				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -631,30 +1114,33 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Satodime/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Satodime;
+				INFOPLIST_KEY_NFCReaderUsageDescription = "Enable Satodime usage";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allows to scan QR code";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -748,6 +1234,159 @@
 			};
 			name = Release;
 		};
+		D0EB4DDE2AC0769400EA83F9 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/satochip/Documents/github/app-ios/Satodime/Satodime/Info.plist";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Dev;
+		};
+		D0EB4DDF2AC0769400EA83F9 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 68UCR527YD;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Satodime/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Satodime;
+				INFOPLIST_KEY_NFCReaderUsageDescription = "Enable Satodime usage";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allows to scan QR code";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 0.2.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dlvx.dev.app.Satodime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Satodime DLVX dev";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Dev;
+		};
+		D0EB4DE02AC0769400EA83F9 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F7NK36K3VQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.SatodimeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Satodime.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Satodime";
+			};
+			name = Dev;
+		};
+		D0EB4DE12AC0769400EA83F9 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F7NK36K3VQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.SatodimeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Satodime;
+			};
+			name = Dev;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -755,6 +1394,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0DA7B47A299A366400CEE722 /* Debug */,
+				D0EB4DDE2AC0769400EA83F9 /* Dev */,
 				0DA7B47B299A366400CEE722 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -764,6 +1404,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0DA7B47D299A366400CEE722 /* Debug */,
+				D0EB4DDF2AC0769400EA83F9 /* Dev */,
 				0DA7B47E299A366400CEE722 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -773,6 +1414,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0DA7B480299A366400CEE722 /* Debug */,
+				D0EB4DE02AC0769400EA83F9 /* Dev */,
 				0DA7B481299A366400CEE722 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -782,12 +1424,24 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0DA7B483299A366400CEE722 /* Debug */,
+				D0EB4DE12AC0769400EA83F9 /* Dev */,
 				0DA7B484299A366400CEE722 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0DE0A93B2AFA9B3100D0845F /* XCLocalSwiftPackageReference "../SwiftCryptoTools" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../SwiftCryptoTools;
+		};
+		0DE0A93E2AFA9B7D00D0845F /* XCLocalSwiftPackageReference "../SatochipSwift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../SatochipSwift;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */ = {
@@ -796,6 +1450,38 @@
 			requirement = {
 				kind = exactVersion;
 				version = 12.1.1;
+			};
+		};
+		0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/attaswift/BigInt.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
+		0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftui-library/hstack-snap-to-scroll.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
+		D02A175E2BB31AB600BE2852 /* XCRemoteSwiftPackageReference "Toasty" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nenosllc/Toasty.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
+		D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.21.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -813,6 +1499,38 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */;
 			productName = QRCode;
+		};
+		0DE0A93C2AFA9B3100D0845F /* SwiftCryptoTools */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftCryptoTools;
+		};
+		0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SatochipSwift;
+		};
+		0DE0A9452AFA9D4D00D0845F /* BigInt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */;
+			productName = BigInt;
+		};
+		0DEC091B2AFA9EB400B5DEAD /* SnapToScroll */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */;
+			productName = SnapToScroll;
+		};
+		D02A175F2BB31AB600BE2852 /* Toasty */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D02A175E2BB31AB600BE2852 /* XCRemoteSwiftPackageReference "Toasty" */;
+			productName = Toasty;
+		};
+		D0EB4DE42AC079B200EA83F9 /* SwiftCryptoTools */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftCryptoTools;
+		};
+		D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_btc_cash.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
