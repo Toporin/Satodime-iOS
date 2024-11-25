@@ -27,14 +27,52 @@ struct AddFundsViewNew: View {
         return cardState.vaultArray[index].getStatus() == .sealed ? "bg_header_addfunds" : "bg_red_gradient"
     }
     
-    func getCoinSymbol() -> String {
-        guard index < cardState.vaultArray.count else {return ""}
-        return cardState.vaultArray[index].coin.coinSymbol
-    }
-    
     func getAddress() -> String {
         guard index < cardState.vaultArray.count else {return ""}
         return cardState.vaultArray[index].address
+    }
+    
+    func getAddressForPaybis() -> String {
+        guard index < cardState.vaultArray.count else {return ""}
+        
+        // for BCH, remove prefix
+        if cardState.vaultArray[index].coin.coinSymbol == "BCH" {
+            let prefix = "bitcoincash:"
+            let address = cardState.vaultArray[index].address
+            guard address.hasPrefix(prefix) else { return address }
+            return String(address.dropFirst(prefix.count))
+        }
+        
+        return cardState.vaultArray[index].address
+    }
+    
+    func getCurrencyCodeForPaybis() -> String? {
+        guard index < cardState.vaultArray.count else {return nil}
+        
+        // Testnet not supported
+        if cardState.vaultArray[index].coin.isTestnet {return nil}
+        // XCP not supported
+        if cardState.vaultArray[index].coin.coinSymbol == "XCP" {return nil}
+        // MATIC renamed to POL
+        if cardState.vaultArray[index].coin.coinSymbol == "MATIC" {return "POL"}
+        
+        return cardState.vaultArray[index].coin.coinSymbol
+    }
+    
+    func getPaybisApiKeys() -> (String, String) {
+        
+        guard let url = Bundle.main.url(forResource:"Apikeys-Info", withExtension: "plist") else {
+            print("Couldn't find file 'Apikeys-Info.plist'")
+            return ("","")
+        }
+        do {
+            let data = try Data(contentsOf:url)
+            let swiftDictionary = try PropertyListSerialization.propertyList(from: data, format: nil) as! [String:String]
+            return (swiftDictionary["API_KEY_PAYBIS_ID"] ?? "", swiftDictionary["API_KEY_PAYBIS_HMAC"] ?? "")
+        } catch {
+            print(error)
+            return ("","")
+        }
     }
     
     func copyAddressToClipboard() {
@@ -49,20 +87,16 @@ struct AddFundsViewNew: View {
         }
     }
     
-    private func openUrl() {
-        let apiKey = ""
-        let hmacKey = ""
-        let cryptoAddress = getAddress()
-        let currencyCodeTo = getCoinSymbol()
+    private func openPaybisUrl(currencyCodeTo: String) {
+        let (apiKey, hmacKey) = getPaybisApiKeys()
+        let cryptoAddress = getAddressForPaybis()
+        //let currencyCodeTo = getCoinSymbolForPaybis()
         var url = "https://widget.paybis.com/"
 
         var query = "?partnerId=\(apiKey)" +
         "&cryptoAddress=\(cryptoAddress)" +
         "&currencyCodeFrom=EUR" +
         "&currencyCodeTo=\(currencyCodeTo)"
-        guard let decodedKeyData = Data(base64Encoded: hmacKey) else {
-            return
-        }
         guard let hmacKeyData = Data(base64Encoded: hmacKey),
               let queryData = query.data(using: .utf8) else {
             return
@@ -201,14 +235,16 @@ struct AddFundsViewNew: View {
                         }
                         Spacer()
                             .frame(height: 16)
-                        SatoText(text: "serviceProvidedByPaybis", style: .lightSubtitle)
-                        SatoButton(text: String(localized: "buyFromPaybis") + " \(getCoinSymbol())", style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
-                            openUrl()
-                        }
-                        
-                        Spacer()
-                            .frame(height: 16)
                         SatoText(text: "youOrAnybodyCanDepositFunds", style: .lightSubtitle)
+                        
+                        if let currencyCodeTo = getCurrencyCodeForPaybis() {
+                            SatoButton(text: String(localized: "buyFromPaybis") + " \(currencyCodeTo)", style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
+                                openPaybisUrl(currencyCodeTo: currencyCodeTo)
+                            }
+                            Spacer()
+                                .frame(height: 16)
+                            SatoText(text: "serviceProvidedByPaybis", style: .lightSubtitle)
+                        }
                         
                         Spacer()
                     }
