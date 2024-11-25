@@ -197,18 +197,8 @@ struct AddFundsViewNew: View {
                         Spacer()
                             .frame(height: 178)//168
                         
-                        SatoText(text: "depositAddress", style: .title)
-                        Spacer()
-                            .frame(height: 22)
-                        SatoText(text: self.getAddress(), style: .subtitle)
-
-                        Spacer()
-                            .frame(height: 30)
-
                         HStack(spacing: 15) {
-                            SatoText(text: "copyToClipboard", style: .addressText)
-                                .lineLimit(1)
-                                .frame(alignment: .trailing)
+                            SatoText(text: "depositAddress", style: .title)
                             
                             Spacer()
                                 .frame(width: 2)
@@ -223,6 +213,10 @@ struct AddFundsViewNew: View {
                             .buttonStyle(PlainButtonStyle())
                         }
                         
+                        Spacer()
+                            .frame(height: 22)
+                        SatoText(text: self.getAddress(), style: .subtitle)
+
                         Spacer()
                             .frame(height: 30)
 
@@ -247,6 +241,7 @@ struct AddFundsViewNew: View {
                         }
                         
                         Spacer()
+                            .frame(height: 16)
                     }
                     .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
                 }
