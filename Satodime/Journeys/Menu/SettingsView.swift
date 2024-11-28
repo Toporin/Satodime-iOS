@@ -12,6 +12,7 @@ struct SettingsView: View {
     // MARK: - Properties
     @Environment(\.openURL) var openURL
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var appState: AppState
     
     @State var selectedValue: String = ""
     @State var showingSheet = false
@@ -47,7 +48,7 @@ struct SettingsView: View {
                 SettingsDropdown(
                     title: currencyTitle,
                     backgroundColor: Constants.Colors.blueMenuButton,
-                    selectedValue: $selectedValue,
+                    selectedValue: $appState.currency,
                     action: { showingSheet.toggle() }
                 )
                 
@@ -59,7 +60,8 @@ struct SettingsView: View {
                     backgroundColor: Constants.Colors.blueMenuButton,
                     isOn: $starterIntroIsOn,
                     onToggle: { newValue in
-                        self.preferencesService.setOnboarding(newValue)
+                        // self.preferencesService.setOnboarding(newValue)
+                        self.appState.isFirstUse = newValue
                     }
                 )
                 
@@ -89,8 +91,7 @@ struct SettingsView: View {
             .padding([.leading, .trailing], Constants.Dimensions.smallSideMargin)
             .sheet(isPresented: $showingSheet) {
                 SelectionSheet(isPresented: $showingSheet, choices: Constants.Settings.currencies) { selected in
-                    selectedValue = selected
-                    self.preferencesService.setCurrency(selected)
+                    appState.currency = selected
                 }
             }
         } //ZStack

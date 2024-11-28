@@ -19,6 +19,10 @@ enum SatochipURL: String {
     }
 }
 
+class UrlHandler {
+    var urlToOpenInApp: URL?
+}
+
 struct MenuView: View {
     // MARK: - Properties
     @EnvironmentObject var cardState: CardState
@@ -32,6 +36,8 @@ struct MenuView: View {
     //@State var showTakeOwnershipAlert: Bool = false
     @State var shouldShowTakeOwnership: Bool = false
     @Binding var showTakeOwnershipAlert : Bool
+    @State private var showingSafariView = false
+    var urlHandler = UrlHandler()
     
     // MARK: - Litterals
     let notOwnerAlert = SatoAlert(
@@ -61,13 +67,12 @@ struct MenuView: View {
         isMoreInfoBtnVisible: false
     )
     
-    // MARK: - Helpers
-    func openURL(_ satochipURL: SatochipURL) {
-        guard let url = satochipURL.url else {
-            print("Invalid URL")
-            return
+    private func openUrl(_ url: SatochipURL) {
+        if let urlToOpen = url.url {
+            // UIApplication.shared.open(urlToOpen)
+            self.urlHandler.urlToOpenInApp = urlToOpen
+            self.showingSafariView = true
         }
-        UIApplication.shared.open(url)
     }
     
     // MARK: - View
@@ -152,7 +157,7 @@ struct MenuView: View {
                             iconHeight: 34,
                             backgroundColor: Constants.Colors.greenMenuButton,
                             action: {
-                                self.openURL(.howToUse)
+                                self.openUrl(.howToUse)
                             }
                         )
                         .frame(width: geometry.size.width * 0.55 - 15)
@@ -182,16 +187,19 @@ struct MenuView: View {
                     SmallMenuButton(
                         text: String(localized: "termsOfService"),
                         backgroundColor: Constants.Colors.darkBlueMenuButton,
+                        iconName: "ic_external_link",
                         action: {
-                            self.openURL(.terms)
+                            //self.openURL(.terms)
+                            self.openUrl(.terms)
                         }
                     )
                     
                     SmallMenuButton(
                         text: String(localized: "privacyPolicy"),
                         backgroundColor: Constants.Colors.darkBlueMenuButton,
+                        iconName: "ic_external_link",
                         action: {
-                            self.openURL(.privacy)
+                            self.openUrl(.privacy)
                         }
                     )
                 }
@@ -206,7 +214,7 @@ struct MenuView: View {
                 Spacer()
                 
                 ProductButton {
-                    self.openURL(.products)
+                    self.openUrl(.products)
                 }
                 .frame(maxWidth: .infinity)
                 .padding([.horizontal], 10)
@@ -290,6 +298,11 @@ struct MenuView: View {
         }) {
             Image("ic_flipback")
         })
+        .sheet(isPresented: $showingSafariView) {
+            if let urlToOpenInApp = self.urlHandler.urlToOpenInApp {
+                SafariView(url: urlToOpenInApp)
+            }
+        }
 
     }// body
 }

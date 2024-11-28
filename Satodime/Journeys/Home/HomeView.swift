@@ -11,12 +11,33 @@ import SnapToScroll
 import Combine
 import Toasty
 
+class AppState: ObservableObject {
+    @Published var isFirstUse: Bool {
+        didSet {
+            UserDefaults.standard.set(isFirstUse, forKey: Constants.Storage.isAppPreviouslyLaunched)
+        }
+    }
+    @Published var currency: String {
+        didSet {
+            PreferencesService().setCurrency(currency)
+        }
+    }
+    
+    init() {
+        self.isFirstUse = PreferencesService().getOnboarding()
+        self.currency = PreferencesService().getCurrency()
+    }
+}
+
+
 struct HomeView: View {
     // MARK: - Properties
     let reviewRequestService = ReviewRequestService()
     @EnvironmentObject var cardState: CardState
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var nftPreviewHandler: NftPreviewHandler
+    @EnvironmentObject var infoToastMessageHandler: InfoToastMessageHandler
+    @EnvironmentObject var appState: AppState
     // let user disable specific alert prompts for the current app session
     @State var showNotOwnerAlert: Bool = true
     @State var showNotAuthenticAlert: Bool = true
@@ -24,10 +45,13 @@ struct HomeView: View {
     // show the TakeOwnershipView if card is unclaimed, this is transmitted with CardInfoView
     @State var showTakeOwnershipAlert: Bool = true
     @State var showNoNetworkAlert: Bool = false
-    @State var isVerticalModeEnabled: Bool = false
+    let preferencesService: PPreferencesService = PreferencesService()
+    // @State var isVerticalModeEnabled: Bool = false
+    @StateObject var viewModeHandler = ViewModeHandler()
     @State var isRefreshingCard: Bool = false
     // current slot shown to user
     @State private var currentSlotIndex: Int = 0
+    @State var refresherId: UUID = UUID()
     
     // MARK: Body
     var body: some View {
@@ -54,7 +78,7 @@ struct HomeView: View {
                                    showNotAuthenticAlert: self.$showNotAuthenticAlert,
                                    showCardNeedsToBeScannedAlert: self.$showCardNeedsToBeScannedAlert,
                                    showTakeOwnershipAlert: self.$showTakeOwnershipAlert,
-                                   isVerticalModeEnabled: self.$isVerticalModeEnabled,
+                                   viewModeHandler: self.viewModeHandler,
                                    currentSlotIndex: self.$currentSlotIndex,
                                    isRefreshingCard: self.$isRefreshingCard,
                                    showNoNetworkAlert: self.$showNoNetworkAlert)
@@ -62,10 +86,10 @@ struct HomeView: View {
                         Spacer()
                             .frame(height: 16)
                         
-                        if self.isVerticalModeEnabled {
+                        if self.viewModeHandler.isVerticalModeEnabled {
                             VerticalCardsView(currentSlotIndex: self.$currentSlotIndex,
                                               showNotOwnerAlert: self.$showNotOwnerAlert)
-                                .onReceive(Just(isVerticalModeEnabled)) { value in
+                                .onReceive(Just(self.viewModeHandler.isVerticalModeEnabled)) { value in
                                     currentSlotIndex = 0 // We need to reset the current slot to 0 when switching views
                                 }
                         } else {
@@ -74,6 +98,7 @@ struct HomeView: View {
 
                         Spacer()
                     }
+                    .id(viewModeHandler)
                     .toast(isPresenting: $showNoNetworkAlert, duration: 8.0) {
                         ToastHUD(type: .error(.orange), title: String(localized: "noNetworkAlertTitle"), subtitle: String(localized: "noNetworkAlertMessage"))
                     }
@@ -82,8 +107,10 @@ struct HomeView: View {
                                           showTakeOwnershipAlert: self.$showTakeOwnershipAlert)
                         .environmentObject(viewStackHandler)
                         .environmentObject(cardState)
+                        .environmentObject(appState)
 
                 }
+                .id(refresherId)
                 .overlay(
                     Group {
                         // Show scan button overlay when no card has been scanned
@@ -111,6 +138,35 @@ struct HomeView: View {
                 navigateTo(destination: .onboarding)
             }
             reviewRequestService.appLaunched()
+        }
+        .onChange(of: appState.isFirstUse) { newValue in
+            if newValue {
+                navigateTo(destination: .onboarding)
+            }
+        }
+        .onChange(of: appState.currency) { currency in
+            self.refresherId = UUID()
+            guard !cardState.vaultArray.isEmpty else { return }
+            var bufferVaultsArray: [VaultItem] = []
+            for vault in cardState.vaultArray {
+                var bufferVaultItem = VaultItem(index: vault.index, keyslotStatus: vault.keyslotStatus)
+                bufferVaultItem.address = vault.address
+                bufferVaultItem.balance = vault.balance
+                bufferVaultItem.selectedSecondCurrency = currency
+                bufferVaultItem.coinValueInSecondCurrency = 0.0
+                bufferVaultsArray.append(bufferVaultItem)
+            }
+            cardState.vaultArray = bufferVaultsArray
+            currentSlotIndex = 0
+            for index in 0..<cardState.vaultArray.count-1 {
+                print("*** Index ** is \(index)")
+                Task {
+                    await cardState.fetchDataFromWeb(index: index)
+                }
+            }
+        }
+        .toast(isPresenting: $infoToastMessageHandler.shouldShowCopiedToClipboardMessage, duration: 2.0) {
+            ToastHUD(type: .complete(Constants.Colors.confirmButtonBackground), title: nil, subtitle: String(localized: "copiedToClipboardAlertMessage"))
         }
     }
     

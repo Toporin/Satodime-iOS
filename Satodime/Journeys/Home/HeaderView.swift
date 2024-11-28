@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 struct HeaderView: View {
     @EnvironmentObject var cardState: CardState
@@ -17,7 +18,7 @@ struct HeaderView: View {
     @Binding var showCardNeedsToBeScannedAlert: Bool
     // show the TakeOwnershipView if card is unclaimed, this is transmitted with CardInfoView
     @Binding var showTakeOwnershipAlert: Bool
-    @Binding var isVerticalModeEnabled: Bool
+    @ObservedObject var viewModeHandler: ViewModeHandler
     @Binding var currentSlotIndex: Int
     @Binding var isRefreshingCard: Bool
     @Binding var showNoNetworkAlert: Bool
@@ -52,7 +53,7 @@ struct HeaderView: View {
             // trigger scan card & web API
             if !cardState.vaultArray.isEmpty {
                 HStack {
-                    SatoHeaderToggle(isOn: $isVerticalModeEnabled)
+                    SatoHeaderToggle(isOn: $viewModeHandler.isVerticalModeEnabled, isOnUiState: viewModeHandler.isVerticalModeEnabled)
                         .padding(.trailing, 4)
                     
                     Button(action: {
@@ -101,6 +102,7 @@ struct HeaderView: View {
 
 struct SatoHeaderToggle: View {
     @Binding var isOn: Bool
+    @State var isOnUiState: Bool
     private let animationDuration: Double = 0.2
     let width: CGFloat = 40
     let height: CGFloat = 21
@@ -110,6 +112,7 @@ struct SatoHeaderToggle: View {
         Button(action: {
             withAnimation(.easeOut(duration: animationDuration)) {
                 isOn.toggle()
+                isOnUiState = isOn
             }
         }) {
             RoundedRectangle(cornerRadius: height/2)
@@ -133,8 +136,8 @@ struct SatoHeaderToggle: View {
                         .fill(Color.white)
                         .frame(width: circleSize, height: circleSize)
                         .shadow(radius: 2)
-                        .offset(x: isOn ? (width / 2 - circleSize / 2 - 3) : -(width / 2 - circleSize / 2 - 3), y: 0)
-                        .animation(.easeOut(duration: animationDuration), value: isOn)
+                        .offset(x: isOnUiState ? (width / 2 - circleSize / 2 - 3) : -(width / 2 - circleSize / 2 - 3), y: 0)
+                        .animation(.easeOut(duration: animationDuration), value: isOnUiState)
                 )
         }
         .frame(width: width, height: height)
