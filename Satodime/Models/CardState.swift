@@ -100,24 +100,26 @@ class CardState: ObservableObject {
         do {
             try cmdSet.select().checkOK()
             let statusApdu = try cmdSet.cardGetStatus()
-            let cardStatus = try CardStatus(rapdu: statusApdu)
+            let cardStatus = CardStatus(rapdu: statusApdu)
             DispatchQueue.main.async {
                 self.cardStatus = cardStatus
             }
             log.info("Status: \(cardStatus)", tag: "CardState.onConnection")
             // check if setupDone
-            if cardStatus.setupDone == false {
-                DispatchQueue.main.async {
-                    self.ownershipStatus = .unclaimed
-                }
-                // check version: v0.1-0.1 cannot proceed further without setup first
-                print("DEBUG CardVersionInt: \(getCardVersionInt(cardStatus: cardStatus))")
-                if getCardVersionInt(cardStatus: cardStatus) <= 0x00010001 {
-                    session?.stop(alertMessage: String(localized: "nfcSatodimeNeedsSetup"))
-                    log.warning("Satodime v0.1-0.1 requires user to claim ownership to continue!", tag: "CardState.onConnection")
-                    // dispatchGroup is used to wait for scan() to finish before fetching web api
-                    dispatchGroup.leave()
-                    return
+            if let cardStatus = cardStatus {
+                if cardStatus.setupDone == false {
+                    DispatchQueue.main.async {
+                        self.ownershipStatus = .unclaimed
+                    }
+                    // check version: v0.1-0.1 cannot proceed further without setup first
+                    print("DEBUG CardVersionInt: \(getCardVersionInt(cardStatus: cardStatus))")
+                    if getCardVersionInt(cardStatus: cardStatus) <= 0x00010001 {
+                        session?.stop(alertMessage: String(localized: "nfcSatodimeNeedsSetup"))
+                        log.warning("Satodime v0.1-0.1 requires user to claim ownership to continue!", tag: "CardState.onConnection")
+                        // dispatchGroup is used to wait for scan() to finish before fetching web api
+                        dispatchGroup.leave()
+                        return
+                    }
                 }
             }
             
@@ -234,16 +236,18 @@ class CardState: ObservableObject {
                 do {
                     try cmdSet.select().checkOK()
                     let statusApdu = try cmdSet.cardGetStatus()
-                    let cardStatus = try CardStatus(rapdu: statusApdu)
+                    let cardStatus = CardStatus(rapdu: statusApdu)
                     log.info("Status: \(cardStatus)", tag: "CardState.takeOwnership")
                     
                     // for v0.1-0.1, authentikeyHex is not available until ownership is accepted, so this check cannot be done
-                    if getCardVersionInt(cardStatus: cardStatus) > 0x00010001 {
-                        let (_, _, authentikeyHex) = try cmdSet.cardGetAuthentikey()
-                        // check that authentikey match with previous tap
-                        guard authentikeyHex == cardAuthentikeyHex else {
-                            log.error("card Mismatch: authentikey: \(authentikeyHex) expected: \(cardAuthentikeyHex)", tag: "CardState.takeOwnership")
-                            throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
+                    if let cardStatus = cardStatus {
+                        if getCardVersionInt(cardStatus: cardStatus) > 0x00010001 {
+                            let (_, _, authentikeyHex) = try cmdSet.cardGetAuthentikey()
+                            // check that authentikey match with previous tap
+                            guard authentikeyHex == cardAuthentikeyHex else {
+                                log.error("card Mismatch: authentikey: \(authentikeyHex) expected: \(cardAuthentikeyHex)", tag: "CardState.takeOwnership")
+                                throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
+                            }
                         }
                     }
                     

@@ -29,7 +29,6 @@ public struct VaultItem: Hashable {
             do {
                 let data = try Data(contentsOf:url)
                 let swiftDictionary = try PropertyListSerialization.propertyList(from: data, format: nil) as! [String:String]
-                print("swiftDictionary: \(swiftDictionary)")
                 return swiftDictionary
             } catch {
                 print(error)

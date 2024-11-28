@@ -11,6 +11,7 @@ struct ShowLogs: View {
     
     // MARK: Properties
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var infoToastMessageHandler: InfoToastMessageHandler
     
     var loggerService: PLoggerService
     var logsArray: [Log]
@@ -64,6 +65,7 @@ struct ShowLogs: View {
                                 let generator = UIImpactFeedbackGenerator(style: .medium)
                                 generator.prepare()
                                 generator.impactOccurred()
+                                infoToastMessageHandler.shouldShowCopiedToClipboardMessage = true
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                     generator.impactOccurred()
                                 }

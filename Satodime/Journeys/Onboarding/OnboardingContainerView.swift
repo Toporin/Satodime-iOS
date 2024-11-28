@@ -16,6 +16,7 @@ enum OnboardingViewType {
 
 struct OnboardingContainerView: View {
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
+    @EnvironmentObject var appState: AppState
     
     @State var currentPageIndex = 0 {
         didSet {
@@ -45,7 +46,7 @@ struct OnboardingContainerView: View {
     }
     
     func completeOnboarding() {
-        UserDefaults.standard.set(true, forKey: Constants.Storage.isAppPreviouslyLaunched)
+        appState.isFirstUse = false
         viewStackHandler.navigationState = .goBackHome
     }
     

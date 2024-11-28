@@ -13,6 +13,8 @@ protocol PPreferencesService {
     func setCurrency(_ currency: String)
     func getOnboarding() -> Bool
     func setOnboarding(_ needToShowOnboarding: Bool)
+    func setVerticalMode(_ verticalMode: Bool)
+    func getVerticalMode() -> Bool
 }
 
 // MARK: - Service
@@ -38,6 +40,16 @@ final class PreferencesService: PPreferencesService {
     func setCurrency(_ currency: String) {
         defaults.set(currency, forKey: Constants.Storage.secondCurrency)
         print("saved new currency \(currency) in user defaults!")
+    }
+    
+    func setVerticalMode(_ verticalMode: Bool) {
+        defaults.set(verticalMode, forKey: Constants.Storage.verticalModePreferred)
+        print("saved vertical mode \(verticalMode) in user defaults!")
+    }
+    
+    func getVerticalMode() -> Bool {
+        print("get vertical mode setting \(defaults.bool(forKey: Constants.Storage.verticalModePreferred)) from user defaults!")
+        return defaults.bool(forKey: Constants.Storage.verticalModePreferred)
     }
 }
 
