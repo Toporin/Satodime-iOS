@@ -53,8 +53,6 @@ struct AddFundsViewNew: View {
         if cardState.vaultArray[index].coin.isTestnet {return nil}
         // XCP not supported
         if cardState.vaultArray[index].coin.coinSymbol == "XCP" {return nil}
-        // MATIC renamed to POL
-        if cardState.vaultArray[index].coin.coinSymbol == "MATIC" {return "POL"}
         
         return cardState.vaultArray[index].coin.coinSymbol
     }

@@ -623,6 +623,10 @@ class CardState: ObservableObject {
         if DEBUGGING_MODE {
             if coinInfo.coin.coinSymbol == "BTC" {
                 address = "bc1ql49ydapnjafl5t2cp9zqpjwe6pdgmxy98859v2" // whale
+            } else if coinInfo.coin.coinSymbol == "LTC" {
+                address = "ltc1qr07zu594qf63xm7l7x6pu3a2v39m2z6hh5pp4t" // whale
+            } else if coinInfo.coin.coinSymbol == "BCH" {
+                address = "1PUwPCNqKiC6La8wtbJEAhnBvtc8gdw19h" // whale
             } else if coinInfo.coin.coinSymbol == "XCP" {
                 address = "1Do5kUZrTyZyoPJKtk4wCuXBkt5BDRhQJ4"
             } else if coinInfo.coin.coinSymbol == "ETH" {
@@ -631,7 +635,7 @@ class CardState: ObservableObject {
                 //address = "0xE71a126D41d167Ce3CA048cCce3F61Fa83274535" // cryptopunk
                 address = "0xed1bf53Ea7fD8a290A3172B6c00F1Fb3657D538F" // usdt
                 //address = "0x2c4ebd4b21736e992f3efeb55de37ae66457199d" // grolex nft
-            } else if coinInfo.coin.coinSymbol == "MATIC" {
+            } else if coinInfo.coin.coinSymbol == "POL" {
                 //address = "0x8db853Aa2f01AF401e10dd77657434536735aC62"
                 //address = "0x86d22A8219De3683CF188778CDAdEE62D1442033"
                 address = "0xE976c3052Df18cc2Dc878b9bc3191Bba68Ef3d80" // DolZ nft
@@ -646,139 +650,127 @@ class CardState: ObservableObject {
             log.debug("Using address \(address) for vault \(index)", tag: "CardState.updateVaultInfo")
         }
         
-        let balanceResult = await fetchBalance(for: address, coin: coinInfo.coin)
-        await updateExchangeRatesAndValues(for: index, with: balanceResult.balance, address: balanceResult.addressUrl, coinInfo: coinInfo, selectedFirstCurrency: selectedFirstCurrency, selectedSecondCurrency: selectedSecondCurrency)
-        await fetchAndSortAssets(for: index, address: address, coin: coinInfo.coin)
+        await updateCoinInfoFromApi(for: index, coinInfo: coinInfo, address: address)
+        await updateAssetsFromApi(for: index, coinInfo: coinInfo, address: address)
     }
     
-    // Fetch balance for a given address and coin
-    private func fetchBalance(for address: String, coin: BaseCoin) async -> (balance: Double?, addressUrl: URL?) {
+    // fetch coinf info from web (balance, url, rates)
+    private func updateCoinInfoFromApi(for index: Int, coinInfo: VaultItem, address: String) async {
         let log = LoggerService.shared
         do {
-            let balance = try await coin.getBalance(addr: address)
-            let addressUrl = URL(string: coin.getAddressWebLink(address: address) ?? "")
+            let coin = coinInfo.coin
             
-            log.debug("Fetched balance: \(balance) and URL: \(String(describing: addressUrl))", tag: "CardState.fetchDataFromWeb")
-            return (balance, addressUrl)
+            // coin balance
+            let coinInfoDic = try await coin.getCoinInfo(addr: address)
+            let addressUrl = URL(string: coin.getAddressWebLink(addr: address) ?? "")
+            let balanceStr: String? = coinInfoDic["balance"]
+            log.debug("Fetched balance: \(String(describing: balanceStr)) and URL: \(String(describing: addressUrl))", tag: "CardState.updateCoinInfoFromApi")
+            
+            // balance in first currency: in native coin
+            let selectedFirstCurrency = coinInfo.coin.coinSymbol
+            let coinValueInFirstCurrency: Double? = Double(balanceStr ?? "")
+            
+            // balance in second currency
+            let selectedSecondCurrency = UserDefaults.standard.string(forKey: Constants.Storage.secondCurrency) ?? "USD"
+            var valueInSecondCurrency: Double? = nil
+            if let coinValueInFirstCurrency {
+                if coinValueInFirstCurrency == 0 {
+                    valueInSecondCurrency = 0
+                } else {
+                    if let exchangeRate2 = await coin.getExchangeRateBetween(coin: coin.coinSymbol, otherCoin: selectedSecondCurrency){
+                        valueInSecondCurrency = coinValueInFirstCurrency * exchangeRate2
+                    }
+                }
+            }
+            let coinValueInSecondCurrency: Double? = valueInSecondCurrency
+            
+            DispatchQueue.main.async {
+                self.vaultArray[index].balance = coinValueInFirstCurrency
+                self.vaultArray[index].addressUrl = addressUrl
+                
+                self.vaultArray[index].selectedFirstCurrency = selectedFirstCurrency
+                self.vaultArray[index].coinValueInFirstCurrency = coinValueInFirstCurrency
+                
+                self.vaultArray[index].selectedSecondCurrency = selectedSecondCurrency
+                self.vaultArray[index].coinValueInSecondCurrency = coinValueInSecondCurrency
+            }
+            log.debug("Updated exchange rates and values for vault \(index)", tag: "CardState.updateExchangeRatesAndValues")
+            
         } catch {
             log.error("Failed to fetch balance with error: \(error)", tag: "CardState.fetchDataFromWeb")
-            return (nil, nil)
         }
     }
     
-    private func updateExchangeRatesAndValues(for index: Int, with balance: Double?, address: URL?, coinInfo: VaultItem, selectedFirstCurrency: String, selectedSecondCurrency: String) async {
-        guard let balance = balance else {
-            DispatchQueue.main.async {
-                self.vaultArray[index].balance = nil
-            }
-            return
-        }
-        
+    private func updateAssetsFromApi(for index: Int, coinInfo: VaultItem, address: String) async {
         let log = LoggerService.shared
         let coin = coinInfo.coin
-        let exchangeRate1 = await coin.getExchangeRateBetween(coin: coin.coinSymbol, otherCoin: selectedFirstCurrency) ?? 1.0
-        let coinValueInFirstCurrency = balance * exchangeRate1
-        
-        let exchangeRate2 = await coin.getExchangeRateBetween(coin: coin.coinSymbol, otherCoin: selectedSecondCurrency) ?? 0.0
-        let coinValueInSecondCurrency = balance * exchangeRate2
-        
-        DispatchQueue.main.async {
-            self.vaultArray[index].balance = balance
-            self.vaultArray[index].addressUrl = address
+        do {
+            let assetList = try await coin.getAssetList(addr: address)
+            log.debug("Fetched asset list for \(address): \(assetList)", tag: "CardState.fetchAndSortAssets")
             
-            self.vaultArray[index].selectedFirstCurrency = selectedFirstCurrency
-            self.vaultArray[index].coinValueInFirstCurrency = coinValueInFirstCurrency
+            var nftList: [[String: String]] = []
+            var tokenList: [[String: String]] = []
             
-            self.vaultArray[index].selectedSecondCurrency = selectedSecondCurrency
-            self.vaultArray[index].coinValueInSecondCurrency = coinValueInSecondCurrency
-        }
-        
-        log.debug("Updated exchange rates and values for vault \(index)", tag: "CardState.updateExchangeRatesAndValues")
-    }
-    
-    private func fetchAndSortAssets(for index: Int, address: String, coin: BaseCoin) async {
-        let log = LoggerService.shared
-        let assetList = await coin.getSimpleAssetList(addr: address)
-        log.debug("Fetched asset list for \(address): \(assetList)", tag: "CardState.fetchAndSortAssets")
-        
-        var nftList: [[String: String]] = []
-        var tokenList: [[String: String]] = []
-        
-        let selectedFirstCurrency = coin.coinSymbol
-        let selectedSecondCurrency = UserDefaults.standard.string(forKey: Constants.Storage.secondCurrency) ?? "USD"
-        
-        // The explorer for Matic returns all NFTs related to a given address
-        // todo: improve SwiftCryptoTools API
-        if coin.coinSymbol == "MATIC" {
-            nftList = await coin.getNftList(addr: address, contract: "") // fetch all NFTs in one request
-        }
-        
-        for asset in assetList {
-            if let contract = asset["contract"]{
-                
-                var nftListByContract: [[String:String]] = []
-                if coin.coinSymbol != "MATIC" {
-                    nftListByContract = await coin.getNftList(addr: address, contract: contract)
-                }
-                
-                if nftListByContract.count>0 { // nft
-                    for nft in nftListByContract {
-                        var nftMerged = nft.merging(asset, uniquingKeysWith: { (first, _) in first })
-                        nftMerged["type"] = "nft"
-                        nftList.append(nftMerged)
-                        log.debug("added nft for \(address): \(nftMerged)", tag: "CardState.fetchDataFromWeb")
-                    }
-                } else { // token
+            let selectedFirstCurrency = coin.coinSymbol
+            let selectedSecondCurrency = UserDefaults.standard.string(forKey: Constants.Storage.secondCurrency) ?? "USD"
+            
+            for asset in assetList {
+                if let contract = asset["contract"]{
+                    
                     var assetCopy = asset
-                    assetCopy["type"] = "token"
-
-                    // get price if available
-                    if let tokenBalance = SatodimeUtil.getBalanceDouble(balanceString: asset["balance"], decimalsString: asset["decimals"]),
-                        let tokenExchangeRate = Double(asset["tokenExchangeRate"] ?? ""),
-                        let currencyForExchangeRate = asset["currencyForExchangeRate"] {
-                        log.debug("tokenBalance: \(tokenBalance)", tag: "CardState.fetchDataFromWeb")
-                        log.debug("tokenExchangeRate: \(tokenExchangeRate) \(currencyForExchangeRate)", tag: "CardState.fetchDataFromWeb")
-
+                    var assetType = assetCopy["type"]
+                    // get rates if available
+                    if let assetBalance = SatodimeUtil.getBalanceDouble(balanceString: assetCopy["balance"], decimalsString: "0"),
+                       let exchangeRate = Double(assetCopy["exchangeRate"] ?? ""),
+                       let currency = assetCopy["currencyForExchangeRate"]
+                    {
+                        log.debug("assetBalance: \(assetBalance)", tag: "CardState.fetchDataFromWeb")
+                        log.debug("exchangeRate: \(exchangeRate) \(currency)", tag: "CardState.fetchDataFromWeb")
+                        
                         // selectedFirstCurrency
                         // TODO: cache result?
-                        if let currencyExchangeRate1 = await coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedFirstCurrency)
+                        if let currencyExchangeRate1 = await coin.getExchangeRateBetween(coin: currency, otherCoin: selectedFirstCurrency)
                         {
                             log.debug("currencyExchangeRate1: \(currencyExchangeRate1) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
-
-                            let tokenValueInFirstCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate1
+                            let tokenValueInFirstCurrency = assetBalance * exchangeRate * currencyExchangeRate1
                             assetCopy["tokenValueInFirstCurrency"] = String(tokenValueInFirstCurrency)
                             assetCopy["firstCurrency"] = selectedFirstCurrency
                             log.debug("tokenValueInFirstCurrency: \(tokenValueInFirstCurrency) \(selectedFirstCurrency)", tag: "CardState.fetchDataFromWeb")
                         }
-
+                        
                         // second currency
-                        if let currencyExchangeRate2 = await coin.getExchangeRateBetween(coin: currencyForExchangeRate, otherCoin: selectedSecondCurrency)
+                        if let currencyExchangeRate2 = await coin.getExchangeRateBetween(coin: currency, otherCoin: selectedSecondCurrency)
                         {
                             log.debug("currencyExchangeRate1: \(currencyExchangeRate2) \(selectedSecondCurrency)", tag: "CardState.fetchDataFromWeb")
-                            let tokenValueInSecondCurrency = tokenBalance * tokenExchangeRate * currencyExchangeRate2
+                            let tokenValueInSecondCurrency = assetBalance * exchangeRate * currencyExchangeRate2
                             assetCopy["tokenValueInSecondCurrency"] = String(tokenValueInSecondCurrency)
                             assetCopy["secondCurrency"] = selectedSecondCurrency
                             log.debug("tokenValueInSecondCurrency: \(tokenValueInSecondCurrency) \(selectedSecondCurrency)", tag: "CardState.fetchDataFromWeb")
                         }
                     }
-
-                    tokenList.append(assetCopy)
-                    log.debug("added token for \(address): \(assetCopy)", tag: "CardState.fetchDataFromWeb")
-                } // if nft else token
-            } // if contract
-        } // for asset
-        
-        // Remove duplicates
-        nftList = Array(Set(nftList))
-        
-        DispatchQueue.main.async {
-            self.vaultArray[index].tokenList = tokenList
-            self.vaultArray[index].nftList = nftList
+                    
+                    if assetType == "nft" {
+                        nftList.append(assetCopy)
+                        log.debug("added nft for \(address): \(assetCopy)", tag: "CardState.fetchAndSortAssetsFromApi")
+                    } else {
+                        assetCopy["type"] = "token"
+                        tokenList.append(assetCopy)
+                        log.debug("added token for \(address): \(assetCopy)", tag: "CardState.fetchAndSortAssetsFromApi")
+                    }
+                } // if contract
+            } // for asset
+            
+            DispatchQueue.main.async {
+                self.vaultArray[index].tokenList = tokenList
+                self.vaultArray[index].nftList = nftList
+            }
+        } catch {
+            log.error("Failed to fetch asset list with error: \(error)", tag: "CardState.fetchAndSortAssetsFromApi")
         }
         
-        log.debug("Sorted assets into tokens and NFTs for vault \(index)", tag: "CardState.fetchAndSortAssets")
+        log.debug("Sorted assets into tokens and NFTs for vault \(index)", tag: "CardState.fetchAndSortAssetsFromApi")
     }
-
+    
     @MainActor
     func executeQuery() async -> NetworkResult {
         print("in executeQuery START")
