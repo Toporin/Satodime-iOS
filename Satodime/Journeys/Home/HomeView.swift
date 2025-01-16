@@ -14,7 +14,7 @@ import Toasty
 class AppState: ObservableObject {
     @Published var isFirstUse: Bool {
         didSet {
-            UserDefaults.standard.set(isFirstUse, forKey: Constants.Storage.isAppPreviouslyLaunched)
+            PreferencesService().setOnboarding(isFirstUse)
         }
     }
     @Published var currency: String {
