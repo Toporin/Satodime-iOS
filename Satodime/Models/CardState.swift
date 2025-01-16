@@ -150,20 +150,24 @@ class CardState: ObservableObject {
             log.info("satodimeStatus: \(satodimeStatus)", tag: "CardState.onConnection")
             
             // check for ownership
-            let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-            if let unlockSecret = unlockSecretDict[authentikeyHex]{
-                satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret) // TODO: useless?
-                DispatchQueue.main.async {
-                    self.ownershipStatus = .owner
+            if let cardStatus = cardStatus {
+                if cardStatus.setupDone {
+                    let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                    if let unlockSecret = unlockSecretDict[authentikeyHex]{
+                        satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret) // TODO: useless?
+                        DispatchQueue.main.async {
+                            self.ownershipStatus = .owner
+                        }
+                        log.info("Found an unlockSecret for this card", tag: "CardState.onConnection")
+                    } else if self.ownershipStatus == .unknown {
+                        DispatchQueue.main.async {
+                            self.ownershipStatus = .notOwner
+                        }
+                        log.warning("Found no unlockSecret for this card!", tag: "CardState.onConnection")
+                    } // if self.ownershipStatus == .unclaimed, do nothing
                 }
-                log.info("Found an unlockSecret for this card", tag: "CardState.onConnection")
-            } else if self.ownershipStatus == .unknown {
-                DispatchQueue.main.async {
-                    self.ownershipStatus = .notOwner
-                }
-                log.warning("Found no unlockSecret for this card!", tag: "CardState.onConnection")
-            } // if self.ownershipStatus == .unclaimed, do nothing
-            
+            }
+                    
             // iterate on each vault
             let nbKeys = satodimeStatus.maxNumKeys
             let satodimeKeysState = satodimeStatus.satodimeKeysState
