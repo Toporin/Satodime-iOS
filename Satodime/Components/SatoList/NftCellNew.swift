@@ -72,9 +72,9 @@ struct NftCellNew: View {
             
             // NAME & BALANCE
             VStack(alignment: .leading) {
-                SatoText(text: nftAsset["name"] ?? "?", style: .cellSmallTitle)
+                SatoText(text: nftAsset["nftName"] ?? nftAsset["name"] ?? nftAsset["contract"] ?? "NFT", style: .cellSmallTitle)
                     .font(.headline)
-                Text((SatodimeUtil.formatBalance(balanceString: nftAsset["balance"], decimalsString: nftAsset["decimals"], symbol: nftAsset["symbols"])))
+                Text((SatodimeUtil.formatBalance(balanceString: nftAsset["balance"], decimalsString: nftAsset["decimals"], symbol: nftAsset["symbol"])))
                     .font(
                         Font.custom("Outfit-ExtraLight", size: 12)
                             .weight(.light)
