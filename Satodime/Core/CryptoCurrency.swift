@@ -93,7 +93,7 @@ enum CryptoCurrency: String, CaseIterable, Identifiable {
         // case .binance: // For later use
         //     return "BNB"
         case .polygon:
-            return "MATIC"
+            return "POL"
         case .counterParty:
             return "XCP"
         case .empty:

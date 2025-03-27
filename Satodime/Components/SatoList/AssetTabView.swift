@@ -159,7 +159,7 @@ struct AssetTabView: View {
                 coinDict["balance"] = convertOptDoubleToString(balanceDouble: balance)
                 coinDict["decimals"] = "0"
                 coinDict["tokenIconPath"] = cardState.vaultArray[index].coinMeta.icon
-                coinDict["tokenExplorerLink"] = cardState.vaultArray[index].coin.getAddressWebLink(address: address)
+                coinDict["tokenExplorerLink"] = cardState.vaultArray[index].coin.getAddressWebLink(addr: address)
                 coinDict["tokenValueInSecondCurrency"] = convertOptDoubleToString(balanceDouble: cardState.vaultArray[index].coinValueInSecondCurrency)
                 coinDict["secondCurrency"] = cardState.vaultArray[index].selectedSecondCurrency
                 return coinDict
