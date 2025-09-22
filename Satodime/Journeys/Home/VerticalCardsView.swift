@@ -28,7 +28,13 @@ struct VerticalCardsView: View {
                                         self.viewStackHandler.navigationState = .vaultInitialization
                                     }
                                 } else {
-                                    self.showNotOwnerAlert = true
+                                    if cardState.isFixedCvc {
+                                        DispatchQueue.main.async {
+                                            self.viewStackHandler.navigationState = .vaultInitialization
+                                        }
+                                    } else {
+                                        self.showNotOwnerAlert = true
+                                    }
                                 }
                             },
                             useFullWidth: true

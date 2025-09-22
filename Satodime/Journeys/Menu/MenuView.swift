@@ -37,6 +37,10 @@ struct MenuView: View {
     @State var shouldShowTakeOwnership: Bool = false
     @Binding var showTakeOwnershipAlert : Bool
     @State private var showingSafariView = false
+    
+    // for Satodime v0.2+ with fixed CVC code
+    @State private var showUnlockDialog: Bool = false
+    
     var urlHandler = UrlHandler()
     
     // MARK: - Litterals
@@ -120,8 +124,15 @@ struct MenuView: View {
                             backgroundColor: Constants.Colors.blueMenuButton,
                             action: {
                                 if cardState.ownershipStatus == .notOwner {
-                                    self.showNotOwnerAlert = true
-                                    print("warning: ownership transfer fail: not owner!")
+                                    
+                                    if cardState.isFixedCvc {
+                                        // ask user for CVC
+                                        self.showUnlockDialog = true
+                                        
+                                    } else {
+                                        self.showNotOwnerAlert = true
+                                        print("warning: ownership transfer fail: not owner!")
+                                    }
                                 } else if cardState.ownershipStatus == .owner {
                                     self.shouldShowTransferOwnership = true
                                     print("debug: show release ownership view!")
@@ -243,7 +254,7 @@ struct MenuView: View {
         } // ZStack
         // MARK: Overlays
         .overlay(
-            Group {
+            ZStack {
                 if showNotOwnerAlert {
                     ZStack {
                         Color.black.opacity(0.4)
@@ -256,28 +267,6 @@ struct MenuView: View {
                             .padding([.leading, .trailing], 24)
                     }
                 }
-//                else if showTakeOwnershipAlert {
-//                    ZStack {
-//                        Color.black.opacity(0.4)
-//                            .ignoresSafeArea()
-//                            .onTapGesture {
-//                                showTakeOwnershipAlert = false
-//                            }
-//                        
-//                        SatoAlertView(
-//                            isPresented: $showTakeOwnershipAlert,
-//                            alert: SatoAlert(
-//                                title: "takeOwnership",
-//                                message: "takeOwnershipText",
-//                                buttonTitle: String(localized:"goToTakeOwnershipScreen"),
-//                                buttonAction: {
-//                                    self.viewStackHandler.navigationState = .takeOwnership
-//                                }
-//                            )
-//                        )
-//                            .padding([.leading, .trailing], 24)
-//                    }
-//                }
                 else if showCardNeedsToBeScannedAlert {
                     ZStack {
                         Color.black.opacity(0.4)
@@ -289,6 +278,30 @@ struct MenuView: View {
                         SatoAlertView(isPresented: $showCardNeedsToBeScannedAlert, alert: cardNeedToBeScannedAlert)
                             .padding([.leading, .trailing], 24)
                     }
+                }
+                else if showUnlockDialog {
+                    UnlockCodeDialog(
+                        isPresented: $showUnlockDialog,
+                        title: "Enter CVC Code",
+                        message: "Please enter the card CVC code to take ownership",
+                        onEnter: { cvcString in
+                            print("User entered code: \(cvcString)")
+                            // convert to bytes
+                            let cvcBytes = cvcString.toFixedByteArray(length: 20)
+                            // save in defaults
+                            var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                            unlockCodeDict[cardState.authentikeyHex] = cvcBytes
+                            UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
+                            // update ownership status
+                            // Note: we haven't check cvc validity yet
+                            DispatchQueue.main.async {
+                                cardState.ownershipStatus = .owner
+                            }
+                        },
+                        onCancel: {
+                            print("User cancelled")
+                        }
+                    )
                 }
             }
         ) // overlay

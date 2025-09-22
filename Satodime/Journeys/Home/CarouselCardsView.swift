@@ -40,8 +40,14 @@ struct CarouselCardsView: View {
                                         self.viewStackHandler.navigationState = .vaultInitialization
                                     }
                                 } else {
-                                    // not owner alert message
-                                    self.showNotOwnerAlert = true
+                                    if cardState.isFixedCvc {
+                                        DispatchQueue.main.async {
+                                            self.viewStackHandler.navigationState = .vaultInitialization
+                                        }
+                                    } else {
+                                        // not owner alert message
+                                        self.showNotOwnerAlert = true
+                                    }
                                 }
                             }
                         )

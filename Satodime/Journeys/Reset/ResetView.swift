@@ -16,6 +16,7 @@ struct ResetView: View {
     @State var pushConfirmationView: Bool = false
     @State var hasUserConfirmedTerms = false
     @State var showNotOwnerAlert: Bool = false
+    @State var showUnlockDialog: Bool = false // for Satodime v0.2+ with fixed CVC code
     
     let index: Int
     
@@ -39,6 +40,22 @@ struct ResetView: View {
             UIApplication.shared.open(url)
         }
     )
+    
+    private func resetVault(){
+        cardState.resetVault(
+            cardAuthentikeyHex: cardState.authentikeyHex,
+            index: index,
+            onSuccess: {
+                print("SUCCESS: reset vault \(index)!")
+                DispatchQueue.main.async {
+                    self.pushConfirmationView = true
+                }
+            },
+            onFail: {
+                print("ERROR: failed to reset vault!")
+            }
+        )
+    }
     
     // MARK: - View
     var body: some View {
@@ -91,24 +108,23 @@ struct ResetView: View {
                 SatoButton(text: continueButtonTitle, style: .danger, horizontalPadding: Constants.Dimensions.secondButtonPadding, action:  {
                     
                     if cardState.ownershipStatus == .owner {
-                        if hasUserConfirmedTerms {
-                            // reset
-                            cardState.resetVault(
-                                cardAuthentikeyHex: cardState.authentikeyHex,
-                                index: index,
-                                onSuccess: {
-                                    print("SUCCESS: reset vault \(index)!")
-                                    DispatchQueue.main.async {
-                                        self.pushConfirmationView = true
-                                    }
-                                },
-                                onFail: {
-                                    print("ERROR: failed to reset vault!")
-                                })
-                        }
+                        self.resetVault()
                     } else {
-                        self.showNotOwnerAlert = true
+                        // cardState.ownershipStatus == notOwner or unclaimed
+                        if cardState.isFixedCvc {
+                            if cardState.ownershipStatus == .unclaimed {
+                                // no need to ask CVC, onwership will be taken automatically in unseal process
+                                self.resetVault()
+                            }
+                            else if cardState.ownershipStatus == .notOwner {
+                                // ask user for CVC, then proceed
+                                self.showUnlockDialog = true
+                            }
+                        } else {
+                            self.showNotOwnerAlert = true
+                        }
                     }
+                    
                 }, isEnabled: $hasUserConfirmedTerms.wrappedValue)
                 
                 Spacer()
@@ -135,6 +151,31 @@ struct ResetView: View {
                         SatoAlertView(isPresented: $showNotOwnerAlert, alert: notOwnerAlert)
                             .padding([.leading, .trailing], 24)
                     }
+                } else if showUnlockDialog {
+                    UnlockCodeDialog(
+                        isPresented: $showUnlockDialog,
+                        title: "Enter CVC Code",
+                        message: "Please enter the card CVC code to proceed",
+                        onEnter: { cvcString in
+                            print("User entered code: \(cvcString)")
+                            // convert to bytes
+                            let cvcBytes = cvcString.toFixedByteArray(length: 20)
+                            // save in defaults
+                            var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                            unlockCodeDict[cardState.authentikeyHex] = cvcBytes
+                            UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
+                            // update ownership status
+                            // Note: we haven't check cvc validity yet
+                            DispatchQueue.main.async {
+                                cardState.ownershipStatus = .owner
+                            }
+                            // reset
+                            self.resetVault()
+                        },
+                        onCancel: {
+                            print("User cancelled")
+                        }
+                    )
                 }
             }
         )// overlay

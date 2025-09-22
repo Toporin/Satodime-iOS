@@ -19,6 +19,7 @@ struct ShowPrivateKeyMenuView: View {
     @EnvironmentObject var viewStackHandler: ViewStackHandlerNew
     @EnvironmentObject var cardState: CardState
     @State var showNotOwnerAlert: Bool = false
+    @State var showUnlockDialog: Bool = false // for Satodime v0.2+ with fixed CVC code
         
     @State var selectedMode: ShowPrivateKeyMode = .legacy //TODO: need to be @State?
     @State var isKeyViewPresented = false
@@ -40,6 +41,27 @@ struct ShowPrivateKeyMenuView: View {
             UIApplication.shared.open(url)
         }
     )
+    
+    private func showPrivateKey(){
+        cardState.getPrivateKey(
+            cardAuthentikeyHex: cardState.authentikeyHex,
+            index: index,
+            onSuccess: {privkeyInfo in
+                DispatchQueue.main.async {
+                    self.cardState.vaultArray[index].privkey = privkeyInfo.privkey
+                    self.cardState.vaultArray[index].entropy = privkeyInfo.entropy
+                    //self.selectedMode = mode
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.isKeyViewPresented = true // without delay, view is only shown temporarily
+                }
+            },
+            onFail: {
+                print("error privkeyResult: failed to recover privkey (are you owner??")
+            }
+        )
+    }
+    
     
     // MARK: - View
     var body: some View {
@@ -68,26 +90,22 @@ struct ShowPrivateKeyMenuView: View {
                                 if (cardState.vaultArray[index].privkey == nil) {
                                     
                                     if cardState.ownershipStatus == .owner {
-                                        cardState.getPrivateKeyNew(
-                                            cardAuthentikeyHex: cardState.authentikeyHex,
-                                            index: index,
-                                            onSuccess: {privkeyInfo in
-                                                DispatchQueue.main.async {
-                                                    self.cardState.vaultArray[index].privkey = privkeyInfo.privkey
-                                                    self.cardState.vaultArray[index].entropy = privkeyInfo.entropy
-                                                    self.selectedMode = mode
-                                                }
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                                    self.isKeyViewPresented = true // without delay, view is only shown temporarily
-                                                }
-                                            },
-                                            onFail: {
-                                                print("error privkeyResult: failed to recover privkey (are you owner??")
-                                            }
-                                        )
+                                        showPrivateKey()
                                     } else {
-                                        self.showNotOwnerAlert = true
+                                        // cardState.ownershipStatus == notOwner or unclaimed
+                                        if cardState.isFixedCvc {
+                                            if cardState.ownershipStatus == .unclaimed {
+                                                showPrivateKey() // onwership will be taken automatically in unseal process
+                                            }
+                                            else if cardState.ownershipStatus == .notOwner {
+                                                self.showUnlockDialog = true // ask user for CVC then proceed
+                                            }
+                                        } else {
+                                            self.showNotOwnerAlert = true
+                                            print("warning: failed to recover privkey: not owner!")
+                                        }
                                     }
+                                    
                                 } else {
                                     self.isKeyViewPresented = true
                                 }
@@ -125,6 +143,32 @@ struct ShowPrivateKeyMenuView: View {
                         SatoAlertView(isPresented: $showNotOwnerAlert, alert: notOwnerAlert)
                             .padding([.leading, .trailing], 24)
                     }
+                }
+                else if showUnlockDialog {
+                    UnlockCodeDialog(
+                        isPresented: $showUnlockDialog,
+                        title: "Enter CVC Code",
+                        message: "Please enter the card CVC code to proceed",
+                        onEnter: { cvcString in
+                            print("User entered code: \(cvcString)")
+                            // convert to bytes
+                            let cvcBytes = cvcString.toFixedByteArray(length: 20)
+                            // save in defaults
+                            var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                            unlockSecretDict[cardState.authentikeyHex] = cvcBytes
+                            UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockCodeDict)
+                            // update ownership status
+                            // Note: we haven't check cvc validity yet
+                            DispatchQueue.main.async {
+                                cardState.ownershipStatus = .owner
+                            }
+                            // unseal card
+                            self.showPrivateKey()
+                        },
+                        onCancel: {
+                            print("User cancelled")
+                        }
+                    )
                 }
             }
         )// overlay

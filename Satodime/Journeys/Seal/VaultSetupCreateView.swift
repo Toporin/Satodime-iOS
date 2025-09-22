@@ -34,12 +34,27 @@ struct VaultSetupCreateView: View {
     @State var selectedNetwork: NetworkMode = .mainNet
     @State var entropy: String = ""
     
+    @State var showNotOwnerAlert: Bool = false
+    @State var showUnlockDialog: Bool = false // for Satodime v0.2+ with fixed CVC code
+    
     // MARK: - Literals
     let title = "createYourVault"
     let subtitle = "youAreAboutToCreateAndSeal"
     let informationText = "onceTheVaultHasBeengenerated"
     let activateExpertModeText = String(localized: "activateTheExpertMode")
     let continueButtonTitle = String(localized: "createAndSeal")
+    let notOwnerAlert = SatoAlert(
+        title: "ownership",
+        message: "ownershipText",
+        buttonTitle: String(localized:"moreInfo"),
+        buttonAction: {
+            guard let url = URL(string: "https://satochip.io/satodime-ownership-explained/") else {
+                print("Invalid URL")
+                return
+            }
+            UIApplication.shared.open(url)
+        }
+    )
     
     // expert mode
     let expertTitle = "expertMode"
@@ -65,6 +80,41 @@ struct VaultSetupCreateView: View {
             randomBytes = randomBytes + [UInt8](repeating: 0, count: 32-randomBytes.count)
         }
         return randomBytes
+    }
+    
+    private func sealVault(){
+        
+        let entropyBytes: [UInt8]
+        if isExpertModeActivated {
+            entropyBytes = self.extractEntropy(randomString: entropy)
+        } else {
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "y, MMM d, HH:mm:ss"
+            let dateString = dateFormatter.string(from: date)
+            entropyBytes = self.extractEntropy(randomString: dateString) //use current date as default entropy
+            // TODO: use btc latest coinbase info ?
+        }
+        
+        cardState.sealVault(
+            cardAuthentikeyHex: cardState.authentikeyHex,
+            index: index,
+            slip44: isTestnet() ? (selectedCrypto.slip44 & 0x7fffffff) : selectedCrypto.slip44, // set first byte to 0 for testnet
+            entropyBytes: entropyBytes,
+            onSuccess: {
+                print("Debug seal vault  \(index) successfully!")
+                print("Debug seal vault selectedCrypto: \(selectedCrypto)!")
+                print("Debug seal vault selectedCrypto.icon: \(selectedCrypto.icon)!")
+                DispatchQueue.main.async {
+                    //self.isNextViewActive = true
+                    self.viewStackHandler.navigationState = .vaultSetupCongrats
+                }
+            },
+            onFail: {
+                print("Error failed to seal vault \(index)!")
+                // TODO: show alert error
+            }
+        )
     }
     
     // MARK: - View
@@ -170,37 +220,22 @@ struct VaultSetupCreateView: View {
                     
                     SatoButton(text: continueButtonTitle, style: .confirm, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                         
-                        let entropyBytes: [UInt8]
-                        if isExpertModeActivated {
-                            entropyBytes = self.extractEntropy(randomString: entropy)
+                        if cardState.ownershipStatus == .owner {
+                            self.sealVault()
                         } else {
-                            let date = Date()
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "y, MMM d, HH:mm:ss"
-                            let dateString = dateFormatter.string(from: date)
-                            entropyBytes = self.extractEntropy(randomString: dateString) //use current date as default entropy
-                            // TODO: use btc latest coinbase info ?
+                            // cardState.ownershipStatus == notOwner or unclaimed
+                            if cardState.isFixedCvc {
+                                if cardState.ownershipStatus == .unclaimed {
+                                    self.sealVault() // onwership will be taken automatically in unseal process
+                                }
+                                else if cardState.ownershipStatus == .notOwner {
+                                    self.showUnlockDialog = true // ask user for CVC, then proceed
+                                }
+                            } else {
+                                self.showNotOwnerAlert = true
+                            }
                         }
                         
-                        cardState.sealVault(
-                            cardAuthentikeyHex: cardState.authentikeyHex,
-                            index: index,
-                            slip44: isTestnet() ? (selectedCrypto.slip44 & 0x7fffffff) : selectedCrypto.slip44, // set first byte to 0 for testnet
-                            entropyBytes: entropyBytes,
-                            onSuccess: {
-                                print("Debug seal vault  \(index) successfully!")
-                                print("Debug seal vault selectedCrypto: \(selectedCrypto)!")
-                                print("Debug seal vault selectedCrypto.icon: \(selectedCrypto.icon)!")
-                                DispatchQueue.main.async {
-                                    //self.isNextViewActive = true
-                                    self.viewStackHandler.navigationState = .vaultSetupCongrats
-                                }
-                            },
-                            onFail: {
-                                print("Error failed to seal vault \(index)!")
-                                // TODO: show alert error
-                            }
-                        )
                     }// SatoButton (seal)
                     
                     // TODO: cancel button?
@@ -212,6 +247,47 @@ struct VaultSetupCreateView: View {
                 .padding([.leading, .trailing], Constants.Dimensions.defaultSideMargin)
             }// Scrollview
         }// ZStack
+        .overlay(
+            Group {
+                if showNotOwnerAlert {
+                    ZStack {
+                        Color.black.opacity(0.4)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                showNotOwnerAlert = false
+                            }
+                        
+                        SatoAlertView(isPresented: $showNotOwnerAlert, alert: notOwnerAlert)
+                            .padding([.leading, .trailing], 24)
+                    }
+                } else if showUnlockDialog {
+                    UnlockCodeDialog(
+                        isPresented: $showUnlockDialog,
+                        title: "Enter CVC Code",
+                        message: "Please enter the card CVC code to proceed",
+                        onEnter: { cvcString in
+                            print("User entered code: \(cvcString)")
+                            // convert to bytes
+                            let cvcBytes = cvcString.toFixedByteArray(length: 20)
+                            // save in defaults
+                            var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                            unlockCodeDict[cardState.authentikeyHex] = cvcBytes
+                            UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
+                            // update ownership status
+                            // Note: we haven't check cvc validity yet
+                            DispatchQueue.main.async {
+                                cardState.ownershipStatus = .owner
+                            }
+                            // unseal card
+                            self.sealVault()
+                        },
+                        onCancel: {
+                            print("User cancelled")
+                        }
+                    )
+                }
+            }
+        )// overlay
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {

@@ -45,6 +45,7 @@ struct HomeView: View {
     // show the TakeOwnershipView if card is unclaimed, this is transmitted with CardInfoView
     @State var showTakeOwnershipAlert: Bool = true
     @State var showNoNetworkAlert: Bool = false
+    
     let preferencesService: PPreferencesService = PreferencesService()
     // @State var isVerticalModeEnabled: Bool = false
     @StateObject var viewModeHandler = ViewModeHandler()
@@ -93,7 +94,8 @@ struct HomeView: View {
                                     currentSlotIndex = 0 // We need to reset the current slot to 0 when switching views
                                 }
                         } else {
-                            HorizontalCardsView(currentSlotIndex: self.$currentSlotIndex, showNotOwnerAlert: self.$showNotOwnerAlert)
+                            HorizontalCardsView(currentSlotIndex: self.$currentSlotIndex,
+                                                showNotOwnerAlert: self.$showNotOwnerAlert)
                         }
 
                         Spacer()

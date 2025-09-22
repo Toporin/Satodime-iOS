@@ -12,14 +12,14 @@ import SwiftCryptoTools
 import SwiftUI
 
 enum SatodimeAppError: Error {
-    case unlockSecretNotFound(String)
+    case unlockCodeNotFound(String)
     case cardMismatch(String)
 }
 
 extension SatodimeAppError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .unlockSecretNotFound(_):
+        case .unlockCodeNotFound(_):
             return NSLocalizedString("youAreNotTheCardOwner", comment: "My error")
         case .cardMismatch(_):
             return NSLocalizedString("cardMismatch", comment: "My error")
@@ -48,7 +48,11 @@ class CardState: ObservableObject {
     @Published var certificateDic = ["":""]
     @Published var certificateCode = PkiReturnCode.unknown
     
-    // DEBUG mode
+    // does card use fixed CVC code for ownership (satodime v0.2+)
+    @Published var isFixedCvc = false
+    
+    // logs mgmt
+    let log = LoggerService.shared
     let DEBUGGING_MODE = false
     
     // fetch web data only after nfc polling has finished...
@@ -81,6 +85,7 @@ class CardState: ObservableObject {
             self.authentikeyHex = ""
             // clear vaultArray before populating it
             self.isCardDataAvailable = false
+            self.isFixedCvc = false
             self.vaultArray.removeAll()
         }
         session = SatocardController(onConnect: onConnection, onFailure: onDisconnection)
@@ -89,7 +94,6 @@ class CardState: ObservableObject {
     
     //Card connection
     func onConnection(cardChannel: CardChannel) -> Void {
-        let log = LoggerService.shared
         // clear vaultArray before populating it
         //vaultArray.removeAll()
         
@@ -148,13 +152,16 @@ class CardState: ObservableObject {
             
             var satodimeStatus = try SatodimeStatus(rapdu: cmdSet.satodimeGetStatus().checkOK())
             log.info("satodimeStatus: \(satodimeStatus)", tag: "CardState.onConnection")
+            DispatchQueue.main.async {
+                self.isFixedCvc = satodimeStatus.isFixedCvc
+            }
             
             // check for ownership
             if let cardStatus = cardStatus {
                 if cardStatus.setupDone {
-                    let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                    if let unlockSecret = unlockSecretDict[authentikeyHex]{
-                        satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret) // TODO: useless?
+                    let unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                    if let unlockCode = unlockCodeDict[authentikeyHex]{
+                        satodimeStatus.setUnlockCode(unlockSecret: unlockCode) // TODO: useless?
                         DispatchQueue.main.async {
                             self.ownershipStatus = .owner
                         }
@@ -231,7 +238,6 @@ class CardState: ObservableObject {
     ///
     // MARK: TAKE OWNERSHIP
     func takeOwnership(cardAuthentikeyHex: String, onSuccess: @escaping () -> Void, onFail: @escaping () -> Void){
-        let log = LoggerService.shared
         cardController = SatocardController(
             onConnect: { [weak self] cardChannel in
                 guard let self = self else { return }
@@ -261,9 +267,9 @@ class CardState: ObservableObject {
                         _ = try cmdSet.satodimeCardSetup().checkOK()
                         let (_, _, authentikeyHex) = try cmdSet.cardGetAuthentikey() // request again since authentikey is not always available
                         // save in defaults
-                        var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                        unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
-                        UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
+                        var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                        unlockCodeDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
+                        UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
                         DispatchQueue.main.async {
                             self.ownershipStatus = .owner
                         }
@@ -297,7 +303,6 @@ class CardState: ObservableObject {
     
     // MARK: RELEASE OWNERSHIP
     func releaseOwnership(cardAuthentikeyHex: String, onSuccess: @escaping () -> Void, onFail: @escaping () -> Void){
-        let log = LoggerService.shared
         cardController = SatocardController(onConnect: { [weak self] cardChannel in
             guard let self = self else { return }
             log.info("Start releasing ownership", tag: "CardState.releaseOwnership")
@@ -315,28 +320,27 @@ class CardState: ObservableObject {
                     log.error("card Mismatch: authentikey: \(authentikeyHex) expected: \(cardAuthentikeyHex)", tag: "CardState.releaseOwnership")
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
-                // get unlockSecret
-                var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                if let unlockSecret = unlockSecretDict[authentikeyHex]{
-                    cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
-                    log.info("Found an unlockSecret for this card!", tag: "CardState.releaseOwnership")
-                } else {
-                    throw SatodimeAppError.unlockSecretNotFound(String(localized: "nfcUnlockSecretNotFound"))
-                }
+                // set unlockSecret from userDefaults
+                try setUnlockCode(cmdSet: cmdSet)
                 
                 // releaseOwnership
                 let rapdu = try cmdSet.satodimeInitiateOwnershipTransfer().checkOK()
-                DispatchQueue.main.async {
-                    self.ownershipStatus = .unclaimed
-                    // remove pairing secret from user defaults
-                    unlockSecretDict[authentikeyHex] = nil
-                    UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockSecretDict)
-                }
+                removeUnlockCodeFromUserDefaults(newOwnershipStatus: .unclaimed)
+
                 cardController?.stop(alertMessage: String(localized: "nfcOwnershipTransferSuccess"))
                 log.info(String(localized: "nfcOwnershipTransferSuccess"), tag: "CardState.releaseOwnership")
                 onSuccess()
                 return
             } catch {
+                
+                switch error {
+                case let error as StatusWord:
+                    if error == StatusWord.incorrectUnlockCode {
+                        self.removeUnlockCodeFromUserDefaults(newOwnershipStatus: .notOwner)
+                    }
+                default: break
+                }
+                
                 cardController?.stop(errorMessage: "\(String(localized: "nfcOwnershipTransferFailed")) \(error.localizedDescription)")
                 log.error("\(String(localized: "nfcOwnershipTransferFailed")) \(error.localizedDescription)", tag: "CardState.releaseOwnership")
                 onFail()
@@ -353,7 +357,6 @@ class CardState: ObservableObject {
     
     // MARK: SEAL VAULT
     func sealVault(cardAuthentikeyHex: String, index: Int, slip44: UInt32, entropyBytes: [UInt8], onSuccess: @escaping () -> Void, onFail: @escaping () -> Void) {
-        let log = LoggerService.shared
         cardController = SatocardController(onConnect: { [weak self] cardChannel in
             guard let self = self else { return }
             log.info("Start sealVault operation for vault: \(index)", tag: "CardState.sealVault")
@@ -372,14 +375,12 @@ class CardState: ObservableObject {
                     log.error("card Mismatch: authentikey: \(authentikeyHex) expected: \(cardAuthentikeyHex)", tag: "CardState.sealVault")
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
-                // get unlockSecret
-                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                if let unlockSecret = unlockSecretDict[authentikeyHex]{
-                    cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
-                    log.info("Found an unlockSecret for this card!", tag: "CardState.sealVault")
-                } else {
-                    throw SatodimeAppError.unlockSecretNotFound(String(localized: "nfcUnlockSecretNotFound"))
-                }
+                
+                // if CVC code is fixed, take ownership automatically if available
+                try takeOwnershipForFixedCvcIfAvailable(cmdSet: cmdSet)
+                
+                // set unlockSecret from userDefaults
+                try setUnlockCode(cmdSet: cmdSet)
                 
                 // seal
                 let rapdu = try cmdSet.satodimeSealKey(keyNbr: UInt8(index), entropyUser: entropyBytes).checkOK()
@@ -389,7 +390,6 @@ class CardState: ObservableObject {
                     keySlip44: slip44,
                     keyContract: [UInt8](),
                     keyTokenid: [UInt8]()).checkOK()
-                //print("setKeyslotStatus rapdu: \(rapdu2)")
                 
                 // partially update status
                 let pubkey = try parser.parseSatodimeGetPubkey(rapdu: rapdu)
@@ -410,6 +410,15 @@ class CardState: ObservableObject {
                 onSuccess()
                 return
             } catch {
+                
+                switch error {
+                case let error as StatusWord:
+                    if error == StatusWord.incorrectUnlockCode {
+                        self.removeUnlockCodeFromUserDefaults(newOwnershipStatus: .notOwner)
+                    }
+                default: break
+                }
+                
                 cardController?.stop(errorMessage: "\(String(localized: "nfcVaultSealedFailed")) \(error.localizedDescription)") // TODO: nfcVaultSealedFailed -> nfcVaultSealFailed
                 log.error("\(String(localized: "nfcVaultSealedFailed")) \(error.localizedDescription)", tag: "CardState.sealVault")
                 onFail()
@@ -426,7 +435,6 @@ class CardState: ObservableObject {
     
     // MARK: UNSEAL VAULT
     func unsealVault(cardAuthentikeyHex: String, index: Int, onSuccess: @escaping () -> Void, onFail: @escaping () -> Void) {
-        let log = LoggerService.shared
         cardController = SatocardController(onConnect: { [weak self] cardChannel in
             guard let self = self else { return }
             log.info("Start unsealVault operation for vault: \(index)", tag: "CardState.unsealVault")
@@ -444,18 +452,15 @@ class CardState: ObservableObject {
                     log.error("card Mismatch: authentikey: \(authentikeyHex) expected: \(cardAuthentikeyHex)", tag: "CardState.unsealVault")
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
-                // get unlockSecret
-                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                if let unlockSecret = unlockSecretDict[authentikeyHex]{
-                    cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
-                    log.info("Found an unlockSecret for this card!", tag: "CardState.unsealVault")
-                } else {
-                    throw SatodimeAppError.unlockSecretNotFound(String(localized: "nfcUnlockSecretNotFound"))
-                }
+                
+                // if CVC code is fixed, take ownership automatically if available
+                try takeOwnershipForFixedCvcIfAvailable(cmdSet: cmdSet)
+                
+                // set unlockSecret from userDefaults
+                try setUnlockCode(cmdSet: cmdSet)
                 
                 // unseal
                 let rapdu = try cmdSet.satodimeUnsealKey(keyNbr: UInt8(index)).checkOK()
-                //print("UnsealSlot rapdu: \(rapdu)")
                 
                 // update status
                 DispatchQueue.main.async {
@@ -466,6 +471,15 @@ class CardState: ObservableObject {
                 onSuccess()
                 return
             } catch {
+                
+                switch error {
+                case let error as StatusWord:
+                    if error == StatusWord.incorrectUnlockCode {
+                        self.removeUnlockCodeFromUserDefaults(newOwnershipStatus: .notOwner)
+                    }
+                default: break
+                }
+                
                 cardController?.stop(errorMessage: "\(String(localized: "nfcVaultUnsealFailed")) \(error.localizedDescription)")
                 log.error("\(String(localized: "nfcVaultUnsealFailed")) \(error.localizedDescription)", tag: "CardState.unsealVault")
                 log.error("DEBUG error: \(error)", tag: "CardState.unsealVault")
@@ -483,7 +497,6 @@ class CardState: ObservableObject {
     
     // MARK: RESET VAULT
     func resetVault(cardAuthentikeyHex: String, index: Int, onSuccess: @escaping () -> Void, onFail: @escaping () -> Void) {
-        let log = LoggerService.shared
         cardController = SatocardController(onConnect: { [weak self] cardChannel in
             guard let self = self else { return }
             log.info("Start resetVault operation for vault: \(index)", tag: "CardState.resetVault")
@@ -501,17 +514,14 @@ class CardState: ObservableObject {
                     log.error("card Mismatch: authentikey: \(authentikeyHex) expected: \(cardAuthentikeyHex)", tag: "CardState.resetVault")
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
-                // get unlockSecret
-                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                if let unlockSecret = unlockSecretDict[authentikeyHex]{
-                    cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
-                    log.info("Found an unlockSecret for this card!", tag: "CardState.resetVault")
-                } else {
-                    throw SatodimeAppError.unlockSecretNotFound(String(localized: "nfcUnlockSecretNotFound"))
-                }
+                
+                // if CVC code is fixed, take ownership automatically if available
+                try takeOwnershipForFixedCvcIfAvailable(cmdSet: cmdSet)
+                
+                // set unlockSecret from userDefaults
+                try setUnlockCode(cmdSet: cmdSet)
                 
                 let rapdu = try cmdSet.satodimeResetKey(keyNbr: UInt8(index)).checkOK()
-                //print("ResetSlot rapdu: \(rapdu)")
                 
                 // update corresponding vaultItem
                 let satodimeKeyslotStatus = try SatodimeKeyslotStatus(rapdu: cmdSet.satodimeGetKeyslotStatus(keyNbr: UInt8(index)).checkOK())
@@ -528,6 +538,15 @@ class CardState: ObservableObject {
                 onSuccess()
                 return
             } catch {
+                
+                switch error {
+                case let error as StatusWord:
+                    if error == StatusWord.incorrectUnlockCode {
+                        self.removeUnlockCodeFromUserDefaults(newOwnershipStatus: .notOwner)
+                    }
+                default: break
+                }
+                
                 cardController?.stop(errorMessage: "\(String(localized: "nfcVaultResetFailed")) \(error.localizedDescription)")
                 log.error("\(String(localized: "nfcVaultResetFailed")) \(error.localizedDescription)", tag: "CardState.resetVault")
                 onFail()
@@ -543,8 +562,7 @@ class CardState: ObservableObject {
     }
     
     // MARK: GET PRIVKEY
-    func getPrivateKeyNew(cardAuthentikeyHex: String, index: Int, onSuccess: @escaping (SatodimePrivkeyInfo) -> Void, onFail: @escaping () -> Void) {
-        let log = LoggerService.shared
+    func getPrivateKey(cardAuthentikeyHex: String, index: Int, onSuccess: @escaping (SatodimePrivkeyInfo) -> Void, onFail: @escaping () -> Void) {
         cardController = SatocardController(onConnect: { [weak self] cardChannel in
             guard let self = self else { return }
             log.info("Start getPrivateKey operation for vault: \(index)", tag: "CardState.getPrivateKey")
@@ -563,14 +581,12 @@ class CardState: ObservableObject {
                     log.error("card Mismatch: authentikey: \(authentikeyHex) expected: \(cardAuthentikeyHex)", tag: "CardState.getPrivateKey")
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
-                // get unlockSecret
-                let unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockSecretDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                if let unlockSecret = unlockSecretDict[authentikeyHex]{
-                    cmdSet.satodimeStatus.setUnlockSecret(unlockSecret: unlockSecret)
-                    log.info("Found an unlockSecret for this card!", tag: "CardState.getPrivateKey")
-                } else {
-                    throw SatodimeAppError.unlockSecretNotFound(String(localized: "nfcUnlockSecretNotFound"))
-                }
+                
+                // if CVC code is fixed, take ownership automatically if available
+                try takeOwnershipForFixedCvcIfAvailable(cmdSet: cmdSet)
+                
+                // set unlockSecret from userDefaults
+                try setUnlockCode(cmdSet: cmdSet)
                 
                 let rapdu = try cmdSet.satodimeGetPrivkey(keyNbr: UInt8(index)).checkOK()
                 let privkeyInfo = try parser.parseSatodimeGetPrivkey(rapdu: rapdu)
@@ -580,6 +596,15 @@ class CardState: ObservableObject {
                 onSuccess(privkeyInfo)
                 return
             } catch {
+                
+                switch error {
+                case let error as StatusWord:
+                    if error == StatusWord.incorrectUnlockCode {
+                        self.removeUnlockCodeFromUserDefaults(newOwnershipStatus: .notOwner)
+                    }
+                default: break
+                }
+                
                 cardController?.stop(errorMessage: "\(String(localized: "nfcPrivkeyRecoverFailed")) \(error.localizedDescription)")
                 log.error("\(String(localized: "nfcPrivkeyRecoverFailed")) \(error.localizedDescription)", tag: "CardState.getPrivateKey")
                 onFail()
@@ -598,12 +623,57 @@ class CardState: ObservableObject {
     func onDisconnection(error: Error) {
     }
     
+    // MARK: UTILS
+    
+    func setUnlockCode(cmdSet: SatocardCommandSet) throws {
+        var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+        if let unlockCode = unlockCodeDict[authentikeyHex]{
+            cmdSet.satodimeStatus.setUnlockCode(unlockSecret: unlockCode)
+            log.info("Found an unlockSecret for this card!", tag: "CardState.releaseOwnership")
+        } else {
+            throw SatodimeAppError.unlockCodeNotFound(String(localized: "nfcUnlockCodeNotFound"))
+        }
+    }
+    
+    func removeUnlockCodeFromUserDefaults(newOwnershipStatus: OwnershipStatus) {
+        var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+        if let unlockCode = unlockCodeDict[self.authentikeyHex]{
+            DispatchQueue.main.async {
+                self.ownershipStatus = newOwnershipStatus
+                // remove pairing secret from user defaults
+                unlockCodeDict[self.authentikeyHex] = nil
+                UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
+            }
+        }
+        if ownershipStatus == .unclaimed {
+            self.log.info("Released ownership for authentikey: \(self.authentikeyHex)")
+        } else if ownershipStatus == .notOwner {
+            self.log.warning("Removed incorrect unlock code for authentikey: \(self.authentikeyHex)")
+        }
+    }
+    
+    func takeOwnershipForFixedCvcIfAvailable(cmdSet: SatocardCommandSet) throws {
+        // if CVC code is fixed, take ownership automatically if available
+        if isFixedCvc && ownershipStatus==OwnershipStatus.unclaimed {
+            // perform setup
+            _ = try cmdSet.satodimeCardSetup().checkOK()
+            let (_, _, authentikeyHex) = try cmdSet.cardGetAuthentikey() // request again since authentikey is not always available
+            // save in defaults
+            var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+            unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
+            UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockCodeDict)
+            DispatchQueue.main.async {
+                self.ownershipStatus = .owner
+            }
+        }
+    }
+    
+    
     //
     // MARK: WEB APIs
     //
 
     func fetchDataFromWeb(index: Int) async {
-        let log = LoggerService.shared
         log.debug("Start fetching data from web for vault \(index)", tag: "CardState.fetchDataFromWeb")
         
         guard index >= 0 && index < vaultArray.count else {
@@ -620,7 +690,6 @@ class CardState: ObservableObject {
     
     // Update vault information including balance, exchange rates, and asset list
     private func updateVaultInfo(for index: Int, with coinInfo: VaultItem, selectedFirstCurrency: String, selectedSecondCurrency: String) async {
-        let log = LoggerService.shared
         var address = coinInfo.address
 
         //for debug purpose only!
@@ -660,7 +729,6 @@ class CardState: ObservableObject {
     
     // fetch coinf info from web (balance, url, rates)
     private func updateCoinInfoFromApi(for index: Int, coinInfo: VaultItem, address: String) async {
-        let log = LoggerService.shared
         do {
             let coin = coinInfo.coin
             
@@ -706,7 +774,6 @@ class CardState: ObservableObject {
     }
     
     private func updateAssetsFromApi(for index: Int, coinInfo: VaultItem, address: String) async {
-        let log = LoggerService.shared
         let coin = coinInfo.coin
         do {
             let assetList = try await coin.getAssetList(addr: address)

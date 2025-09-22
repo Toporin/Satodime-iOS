@@ -15,6 +15,7 @@ struct UnsealView: View {
 
     @State var pushConfirmationView: Bool = false
     @State var showNotOwnerAlert: Bool = false
+    @State var showUnlockDialog: Bool = false // for Satodime v0.2+ with fixed CVC code
     
     let index: Int
     
@@ -37,6 +38,21 @@ struct UnsealView: View {
             UIApplication.shared.open(url)
         }
     )
+    
+    private func unsealVault(){
+        cardState.unsealVault(
+            cardAuthentikeyHex: cardState.authentikeyHex,
+            index: index,
+            onSuccess: {
+                DispatchQueue.main.async {
+                    self.pushConfirmationView = true
+                }
+            },
+            onFail: {
+                print("Error: Failed to unseal slot!!")
+            }
+        )
+    }
     
     // MARK: - View
     var body: some View {
@@ -92,22 +108,20 @@ struct UnsealView: View {
                 SatoButton(text: continueButtonTitle, style: .danger, horizontalPadding: Constants.Dimensions.secondButtonPadding) {
                     
                     if cardState.ownershipStatus == .owner {
-                        
-                        cardState.unsealVault(
-                            cardAuthentikeyHex: cardState.authentikeyHex,
-                            index: index,
-                            onSuccess: {
-                                DispatchQueue.main.async {
-                                    self.pushConfirmationView = true
-                                }
-                            },
-                            onFail: {
-                                print("Error: Failed to unseal slot!!")
-                            }
-                        )
+                        self.unsealVault()
                     } else {
-                        self.showNotOwnerAlert = true
-                        //print("warning: ownership transfer fail: not owner!")
+                        // cardState.ownershipStatus == notOwner or unclaimed
+                        if cardState.isFixedCvc {
+                            if cardState.ownershipStatus == .unclaimed {
+                                self.unsealVault() // onwership will be taken automatically in unseal process
+                            }
+                            else if cardState.ownershipStatus == .notOwner {
+                                self.showUnlockDialog = true // ask user for CVC
+                            }
+                        } else {
+                            self.showNotOwnerAlert = true
+                            print("warning: ownership transfer fail: not owner!")
+                        }
                     }
                 }
                 
@@ -122,7 +136,7 @@ struct UnsealView: View {
             
         } // ZStack
         .overlay(
-            Group {
+            ZStack {
                 // Alert if user is not owner
                 if showNotOwnerAlert {
                     ZStack {
@@ -135,6 +149,31 @@ struct UnsealView: View {
                         SatoAlertView(isPresented: $showNotOwnerAlert, alert: notOwnerAlert)
                             .padding([.leading, .trailing], 24)
                     }
+                } else if showUnlockDialog {
+                    UnlockCodeDialog(
+                        isPresented: $showUnlockDialog,
+                        title: "Enter CVC Code",
+                        message: "Please enter the card CVC code to take ownership",
+                        onEnter: { cvcString in
+                            print("User entered code: \(cvcString)")
+                            // convert to bytes
+                            let cvcBytes = cvcString.toFixedByteArray(length: 20)
+                            // save in defaults
+                            var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                            unlockSecretDict[cardState.authentikeyHex] = cvcBytes
+                            UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockCodeDict)
+                            // update ownership status
+                            // Note: we haven't check cvc validity yet
+                            DispatchQueue.main.async {
+                                cardState.ownershipStatus = .owner
+                            }
+                            // unseal card
+                            self.unsealVault()
+                        },
+                        onCancel: {
+                            print("User cancelled")
+                        }
+                    )
                 }
             }
         )// overlay

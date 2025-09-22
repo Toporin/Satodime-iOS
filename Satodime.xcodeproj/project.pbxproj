@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0D16B1CD2B2449A0005FCACB /* ExploreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D16B1CC2B2449A0005FCACB /* ExploreButton.swift */; };
 		0D16B1CF2B249D3E005FCACB /* SatodimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */; };
+		0D3736482E7D4976000C4288 /* UnlockCodeDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3736472E7D4976000C4288 /* UnlockCodeDialog.swift */; };
+		0D37364A2E7D5449000C4288 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3736492E7D5434000C4288 /* String+Extensions.swift */; };
 		0D644D472B14C7C2008CB29A /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D462B14C7C2008CB29A /* Log.swift */; };
 		0D644D492B1A1E05008CB29A /* CardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D482B1A1E05008CB29A /* CardState.swift */; };
 		0D644D4B2B1E0542008CB29A /* VaultCardNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */; };
@@ -137,6 +139,8 @@
 /* Begin PBXFileReference section */
 		0D16B1CC2B2449A0005FCACB /* ExploreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreButton.swift; sourceTree = "<group>"; };
 		0D16B1CE2B249D3E005FCACB /* SatodimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatodimeUtil.swift; sourceTree = "<group>"; };
+		0D3736472E7D4976000C4288 /* UnlockCodeDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockCodeDialog.swift; sourceTree = "<group>"; };
+		0D3736492E7D5434000C4288 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		0D644D462B14C7C2008CB29A /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		0D644D482B1A1E05008CB29A /* CardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardState.swift; sourceTree = "<group>"; };
 		0D644D4A2B1E0542008CB29A /* VaultCardNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultCardNew.swift; sourceTree = "<group>"; };
@@ -499,6 +503,7 @@
 		D0EB4DEB2AC1D24600EA83F9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0D3736472E7D4976000C4288 /* UnlockCodeDialog.swift */,
 				D07C9C7D2AD861B0005F5917 /* SatoList */,
 				D0F62FCE2ACEEE000027EFE6 /* VaultCard */,
 				D0F62FB02ACDB26C0027EFE6 /* Cells */,
@@ -557,6 +562,7 @@
 		D0EB4DFC2AC1DFD200EA83F9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0D3736492E7D5434000C4288 /* String+Extensions.swift */,
 				D0EB4DFD2AC1DFE400EA83F9 /* Colors.swift */,
 				D06080642AD94ED2001A5749 /* Views.swift */,
 				D06080682AD980A6001A5749 /* QRCode.swift */,
@@ -850,6 +856,7 @@
 				D0EB4DFE2AC1DFE400EA83F9 /* Colors.swift in Sources */,
 				D0C483992AD8BC2F0085F4B9 /* UnsealView.swift in Sources */,
 				D0E6656C2ADAB53700703A8F /* SmallMenuButton.swift in Sources */,
+				0D3736482E7D4976000C4288 /* UnlockCodeDialog.swift in Sources */,
 				D06080632AD949FD001A5749 /* SatoSelectionButton.swift in Sources */,
 				D0E665702ADABCA400703A8F /* CardInfoView.swift in Sources */,
 				D0F62FC62ACDFD0B0027EFE6 /* VaultSetupCongratsView.swift in Sources */,
@@ -876,6 +883,7 @@
 				D0F62FD02ACEEE0C0027EFE6 /* SealStatusView.swift in Sources */,
 				D0EB4DED2AC1D26900EA83F9 /* SatoText.swift in Sources */,
 				0D644D512B1F146D008CB29A /* NftCellNew.swift in Sources */,
+				0D37364A2E7D5449000C4288 /* String+Extensions.swift in Sources */,
 				D0F62FD82ACF11FE0027EFE6 /* BalanceView.swift in Sources */,
 				0DB03FCA29A7F813002E56BD /* ShowLogs.swift in Sources */,
 				0D644D492B1A1E05008CB29A /* CardState.swift in Sources */,
