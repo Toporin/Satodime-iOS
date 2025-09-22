@@ -19,7 +19,7 @@ struct AlertsHandlerView: View {
 
     var body: some View {
         Group {
-            if cardState.ownershipStatus == .notOwner && showNotOwnerAlert {
+            if cardState.ownershipStatus == .notOwner && showNotOwnerAlert && !cardState.isFixedCvc {
                 notOwnerAlert
             }
             if cardState.hasReadCard() && cardState.certificateCode != .success && showNotAuthenticAlert {
