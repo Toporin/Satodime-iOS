@@ -159,9 +159,9 @@ struct UnsealView: View {
                             // convert to bytes
                             let cvcBytes = cvcString.toFixedByteArray(length: 20)
                             // save in defaults
-                            var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                            unlockSecretDict[cardState.authentikeyHex] = cvcBytes
-                            UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockCodeDict)
+                            var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                            unlockCodeDict[cardState.authentikeyHex] = cvcBytes
+                            UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
                             // update ownership status
                             // Note: we haven't check cvc validity yet
                             DispatchQueue.main.async {

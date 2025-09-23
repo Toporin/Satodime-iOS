@@ -161,16 +161,16 @@ class CardState: ObservableObject {
                 if cardStatus.setupDone {
                     let unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
                     if let unlockCode = unlockCodeDict[authentikeyHex]{
-                        satodimeStatus.setUnlockCode(unlockSecret: unlockCode) // TODO: useless?
+                        satodimeStatus.setUnlockCode(unlockCode: unlockCode) // TODO: useless?
                         DispatchQueue.main.async {
                             self.ownershipStatus = .owner
                         }
-                        log.info("Found an unlockSecret for this card", tag: "CardState.onConnection")
+                        log.info("Found an unlockCode for this card", tag: "CardState.onConnection")
                     } else if self.ownershipStatus == .unknown {
                         DispatchQueue.main.async {
                             self.ownershipStatus = .notOwner
                         }
-                        log.warning("Found no unlockSecret for this card!", tag: "CardState.onConnection")
+                        log.warning("Found no unlockCode for this card!", tag: "CardState.onConnection")
                     } // if self.ownershipStatus == .unclaimed, do nothing
                 }
             }
@@ -268,7 +268,7 @@ class CardState: ObservableObject {
                         let (_, _, authentikeyHex) = try cmdSet.cardGetAuthentikey() // request again since authentikey is not always available
                         // save in defaults
                         var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-                        unlockCodeDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
+                        unlockCodeDict[authentikeyHex] = cmdSet.satodimeStatus.unlockCode
                         UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
                         DispatchQueue.main.async {
                             self.ownershipStatus = .owner
@@ -320,7 +320,7 @@ class CardState: ObservableObject {
                     log.error("card Mismatch: authentikey: \(authentikeyHex) expected: \(cardAuthentikeyHex)", tag: "CardState.releaseOwnership")
                     throw SatodimeAppError.cardMismatch(String(localized: "nfcCardMismatch"))
                 }
-                // set unlockSecret from userDefaults
+                // set unlockCode from userDefaults
                 try setUnlockCode(cmdSet: cmdSet)
                 
                 // releaseOwnership
@@ -379,7 +379,7 @@ class CardState: ObservableObject {
                 // if CVC code is fixed, take ownership automatically if available
                 try takeOwnershipForFixedCvcIfAvailable(cmdSet: cmdSet)
                 
-                // set unlockSecret from userDefaults
+                // set unlockCode from userDefaults
                 try setUnlockCode(cmdSet: cmdSet)
                 
                 // seal
@@ -456,7 +456,7 @@ class CardState: ObservableObject {
                 // if CVC code is fixed, take ownership automatically if available
                 try takeOwnershipForFixedCvcIfAvailable(cmdSet: cmdSet)
                 
-                // set unlockSecret from userDefaults
+                // set unlockCode from userDefaults
                 try setUnlockCode(cmdSet: cmdSet)
                 
                 // unseal
@@ -518,7 +518,7 @@ class CardState: ObservableObject {
                 // if CVC code is fixed, take ownership automatically if available
                 try takeOwnershipForFixedCvcIfAvailable(cmdSet: cmdSet)
                 
-                // set unlockSecret from userDefaults
+                // set unlockCode from userDefaults
                 try setUnlockCode(cmdSet: cmdSet)
                 
                 let rapdu = try cmdSet.satodimeResetKey(keyNbr: UInt8(index)).checkOK()
@@ -585,7 +585,7 @@ class CardState: ObservableObject {
                 // if CVC code is fixed, take ownership automatically if available
                 try takeOwnershipForFixedCvcIfAvailable(cmdSet: cmdSet)
                 
-                // set unlockSecret from userDefaults
+                // set unlockCode from userDefaults
                 try setUnlockCode(cmdSet: cmdSet)
                 
                 let rapdu = try cmdSet.satodimeGetPrivkey(keyNbr: UInt8(index)).checkOK()
@@ -628,8 +628,8 @@ class CardState: ObservableObject {
     func setUnlockCode(cmdSet: SatocardCommandSet) throws {
         var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
         if let unlockCode = unlockCodeDict[authentikeyHex]{
-            cmdSet.satodimeStatus.setUnlockCode(unlockSecret: unlockCode)
-            log.info("Found an unlockSecret for this card!", tag: "CardState.releaseOwnership")
+            cmdSet.satodimeStatus.setUnlockCode(unlockCode: unlockCode)
+            log.info("Found an unlockCode for this card!", tag: "CardState.releaseOwnership")
         } else {
             throw SatodimeAppError.unlockCodeNotFound(String(localized: "nfcUnlockCodeNotFound"))
         }
@@ -659,9 +659,9 @@ class CardState: ObservableObject {
             _ = try cmdSet.satodimeCardSetup().checkOK()
             let (_, _, authentikeyHex) = try cmdSet.cardGetAuthentikey() // request again since authentikey is not always available
             // save in defaults
-            var unlockSecretDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
-            unlockSecretDict[authentikeyHex] = cmdSet.satodimeStatus.unlockSecret
-            UserDefaults.standard.set(unlockSecretDict, forKey: Constants.Storage.unlockCodeDict)
+            var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+            unlockCodeDict[authentikeyHex] = cmdSet.satodimeStatus.unlockCode
+            UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
             DispatchQueue.main.async {
                 self.ownershipStatus = .owner
             }
