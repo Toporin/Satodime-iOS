@@ -70,7 +70,7 @@ struct NavigationHandlerView: View {
             // MARK: - NAVIGATION
             // NAVIGATION - BASED ON STATE
             // if card is unclaimed, propose to take ownership (only once per card scan)
-            if self.cardState.ownershipStatus == .unclaimed {
+            if self.cardState.ownershipStatus == .unclaimed && !self.cardState.isFixedCvc {
                 NavigationLink("", destination: TakeOwnershipView(showTakeOwnershipAlert: $showTakeOwnershipAlert, fromView: .goBackHome), isActive: $showTakeOwnershipAlert)
                     .hidden()
             }

@@ -109,12 +109,9 @@ class CardState: ObservableObject {
                 self.cardStatus = cardStatus
             }
             log.info("Status: \(cardStatus)", tag: "CardState.onConnection")
-            // check if setupDone
+            // PATCH for Satodime v0.1-0.1: check early if setupDone
             if let cardStatus = cardStatus {
                 if cardStatus.setupDone == false {
-                    DispatchQueue.main.async {
-                        self.ownershipStatus = .unclaimed
-                    }
                     // check version: v0.1-0.1 cannot proceed further without setup first
                     print("DEBUG CardVersionInt: \(getCardVersionInt(cardStatus: cardStatus))")
                     if getCardVersionInt(cardStatus: cardStatus) <= 0x00010001 {
@@ -150,6 +147,7 @@ class CardState: ObservableObject {
             }
             log.info("authentikeyHex: \(authentikeyHex)", tag: "CardState.onConnection")
             
+            // get satodime status
             var satodimeStatus = try SatodimeStatus(rapdu: cmdSet.satodimeGetStatus().checkOK())
             log.info("satodimeStatus: \(satodimeStatus)", tag: "CardState.onConnection")
             DispatchQueue.main.async {
@@ -171,7 +169,25 @@ class CardState: ObservableObject {
                             self.ownershipStatus = .notOwner
                         }
                         log.warning("Found no unlockCode for this card!", tag: "CardState.onConnection")
-                    } // if self.ownershipStatus == .unclaimed, do nothing
+                    }
+                } else {
+                    if satodimeStatus.isFixedCvc {
+                        // if CVC code is fixed, take ownership automatically if available
+                        _ = try cmdSet.satodimeCardSetup().checkOK()
+                        // save in defaults
+                        var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
+                        unlockCodeDict[authentikeyHex] = cmdSet.satodimeStatus.unlockCode
+                        UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
+                        self.log.info("Ownership taken automatically for fixed CVC card with authentikey: \(self.authentikeyHex)")
+                        DispatchQueue.main.async {
+                            self.ownershipStatus = .owner
+                        }
+                    } else {
+                        // show ownership dialog to user
+                        DispatchQueue.main.async {
+                            self.ownershipStatus = .unclaimed
+                        }
+                    }
                 }
             }
                     
@@ -662,12 +678,12 @@ class CardState: ObservableObject {
             var unlockCodeDict = UserDefaults.standard.object(forKey: Constants.Storage.unlockCodeDict) as? [String: [UInt8]] ?? [String: [UInt8]]()
             unlockCodeDict[authentikeyHex] = cmdSet.satodimeStatus.unlockCode
             UserDefaults.standard.set(unlockCodeDict, forKey: Constants.Storage.unlockCodeDict)
+            self.log.info("Ownership taken automatically for fixed CVC card with authentikey: \(self.authentikeyHex)")
             DispatchQueue.main.async {
                 self.ownershipStatus = .owner
             }
         }
     }
-    
     
     //
     // MARK: WEB APIs
