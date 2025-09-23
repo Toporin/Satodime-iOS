@@ -49,7 +49,7 @@ struct HomeView: View {
     let preferencesService: PPreferencesService = PreferencesService()
     // @State var isVerticalModeEnabled: Bool = false
     @StateObject var viewModeHandler = ViewModeHandler()
-    @State var isRefreshingCard: Bool = false
+    @State var isRefreshingCard: Bool = false // todo remove
     // current slot shown to user
     @State private var currentSlotIndex: Int = 0
     @State var refresherId: UUID = UUID()
@@ -81,7 +81,7 @@ struct HomeView: View {
                                    showTakeOwnershipAlert: self.$showTakeOwnershipAlert,
                                    viewModeHandler: self.viewModeHandler,
                                    currentSlotIndex: self.$currentSlotIndex,
-                                   isRefreshingCard: self.$isRefreshingCard,
+                                   isRefreshingCard: self.$isRefreshingCard, // todo remove
                                    showNoNetworkAlert: self.$showNoNetworkAlert)
                         
                         Spacer()
@@ -116,12 +116,12 @@ struct HomeView: View {
                 .overlay(
                     Group {
                         // Show scan button overlay when no card has been scanned
-                        if !self.isRefreshingCard {
+//                        if !self.isRefreshingCard {
                             EmptyScanStateOverlay(showNotOwnerAlert: self.$showNotOwnerAlert,
                                                   showNotAuthenticAlert: self.$showNotAuthenticAlert,
                                                   showTakeOwnershipAlert: self.$showTakeOwnershipAlert,
                                                   showNoNetworkAlert: self.$showNoNetworkAlert)
-                        }
+//                        }
                         
                         // Use AlertsHandler to show one or more alerts when needed
                         AlertsHandlerView(

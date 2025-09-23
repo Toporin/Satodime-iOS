@@ -20,7 +20,7 @@ struct HeaderView: View {
     @Binding var showTakeOwnershipAlert: Bool
     @ObservedObject var viewModeHandler: ViewModeHandler
     @Binding var currentSlotIndex: Int
-    @Binding var isRefreshingCard: Bool
+    @Binding var isRefreshingCard: Bool // todo remove
     @Binding var showNoNetworkAlert: Bool
     
     // MARK: - Literals
@@ -57,7 +57,7 @@ struct HeaderView: View {
                         .padding(.trailing, 4)
                     
                     Button(action: {
-                        isRefreshingCard = true
+                        isRefreshingCard = true // todo remove
                         
                         Task {
                             let networkDataFetchResult = await cardState.executeQuery()
