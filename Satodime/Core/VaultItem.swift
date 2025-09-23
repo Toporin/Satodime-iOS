@@ -105,8 +105,7 @@ public struct VaultItem: Hashable {
     }
     
     public func isInitialized() -> Bool {
-        let result = self.keyslotStatus.status != 0x00 || self.keyslotStatus.status != 0
-        return result
+        return self.keyslotStatus.status != 0x00
     }
     
     public func isSealed() -> Bool {
