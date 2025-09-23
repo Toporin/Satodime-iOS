@@ -34,6 +34,7 @@ enum OwnershipStatus: String {
     case unknown
 }
 
+@MainActor
 class CardState: ObservableObject {
     
     @Published var isCardDataAvailable = false
@@ -230,6 +231,8 @@ class CardState: ObservableObject {
             session?.stop(alertMessage: String(localized: "nfcVaultsListSuccess"))
             log.info(String(localized: "nfcVaultsListSuccess"), tag: "CardState.onConnection")
             dispatchGroup.leave()
+            
+            // Fetch data for each vault
             self.fetchVaultsData()
             
         } catch let error {
@@ -848,6 +851,10 @@ class CardState: ObservableObject {
             } // for asset
             
             DispatchQueue.main.async {
+                guard index >= 0 && index < self.vaultArray.count else {
+                    self.log.error("Index out of bounds", tag: "CardState.fetchAndSortAssetsFromApi")
+                    return
+                }
                 self.vaultArray[index].tokenList = tokenList
                 self.vaultArray[index].nftList = nftList
             }

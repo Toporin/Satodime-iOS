@@ -51,7 +51,7 @@ struct HeaderView: View {
             Spacer()
             
             // trigger scan card & web API
-            if !cardState.vaultArray.isEmpty {
+//            if !cardState.vaultArray.isEmpty {
                 HStack {
                     SatoHeaderToggle(isOn: $viewModeHandler.isVerticalModeEnabled, isOnUiState: viewModeHandler.isVerticalModeEnabled)
                         .padding(.trailing, 4)
@@ -83,7 +83,7 @@ struct HeaderView: View {
                     }.padding(.trailing, 8)
                 }
                 .frame(maxWidth: 60)
-            }
+//            }
             
             // MENU
             Button(action: {
