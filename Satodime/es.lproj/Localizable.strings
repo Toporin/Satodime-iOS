@@ -1,0 +1,421 @@
+/*
+ * Loco ios export: iOS Localizable.strings
+ * Project: Satodime-iOS
+ * Release: Working copy
+ * Locale: es-CO, Spanish (Colombia)
+ * Exported by: Translation
+ * Exported at: Translation
+ */
+
+/* loco:6572f7d9aba86a89980762c0 */
+"cardInfo" = "Info";
+
+/* loco:6572f7d9aba86a89980762c1 */
+"transferOwner" = "Transferir \npropiedad";
+
+/* loco:6572f7d9aba86a89980762c2 */
+"howToUse" = "Cómo\nusar Satodime";
+
+/* loco:6572f7d9aba86a89980762c3 */
+"settings" = "Configuración";
+
+/* loco:6572f7d9aba86a89980762c4 */
+"allOurProducts" = "Todos nuestros\nproductos";
+
+/* loco:6572f7d9aba86a89980762c5 */
+"termsOfService" = "Términos de servicio";
+
+/* loco:6572f7d9aba86a89980762c6 */
+"privacyPolicy" = "Política de privacidad";
+
+/* loco:6572f7d9aba86a89980762c7 */
+"welcome" = "Bienvenido";
+
+/* loco:6572f7d9aba86a89980762c8 */
+"satodimeLetsYou" = "Satodime le permite crear fácilmente bóvedas para almacenar sus criptomonedas. Soporta los criptoactivos más innovadores.";
+
+/* loco:6572f7d9aba86a89980762c9 */
+"createSealGift" = "Crear, sellar y regalar";
+
+/* loco:6572f7d9aba86a89980762ca */
+"createUpTo3Dfifferent" = "Cree hasta 3 bóvedas diferentes para almacenar criptomonedas y NFT. Transfiera la propiedad y entréguela de forma segura a cualquier persona.";
+
+/* loco:6572f7d9aba86a89980762cb */
+"moreInfo" = "Más información";
+
+"url.moreInfo" = "https://youtu.be/-H7z7_RuDJw";
+
+/* loco:6572f7d9aba86a89980762cc */
+"usingNFC" = "Usar NFC";
+
+/* loco:6572f7d9aba86a89980762cd */
+"toUseItText" = "Para usarlo, coloque la tarjeta sobre su teléfono cuando se le solicite y manténgala en el lector durante toda la operación.";
+
+/* loco:6572f7d9aba86a89980762ce */
+"start" = "Iniciar";
+
+/* loco:6572f7d9aba86a89980762cf */
+"selectTheBlockchain" = "Seleccionar la blockchain";
+
+/* loco:6572f7d9aba86a89980762d0 */
+"selectTheCrypto" = "Seleccione la criptomoneda que desea almacenar.";
+
+/* loco:6572f7d9aba86a89980762d1 */
+"createYourVault" = "Crear su bóveda";
+
+/* loco:6572f7d9aba86a89980762d2 */
+"youAreAboutToCreateAndSeal" = "Está a punto de crear y sellar una bóveda. Se generará automáticamente un nuevo par de claves.";
+
+/* loco:6572f7d9aba86a89980762d3 */
+"onceTheVaultHasBeengenerated" = "Una vez que la **bóveda** haya sido generada, la **clave privada** correspondiente queda oculta en la **memoria** del **chip** **Satodime**.";
+
+/* loco:6572f7d9aba86a89980762d4 */
+"activateTheExpertMode" = "Activar el modo experto";
+
+/* loco:6572f7d9aba86a89980762d5 */
+"createAndSeal" = "Crear y sellar";
+
+/* loco:6572f7d9aba86a89980762d6 */
+"congrats" = "¡Felicitaciones!";
+
+/* loco:6572f7d9aba86a89980762d7 */
+"yourVaultsHasBeenCreated" = "Su bóveda ha sido creada y sellada exitosamente.";
+
+/* loco:6572f7d9aba86a89980762d8 */
+"rememberPrivateKeys" = "Recuerde que sus **claves privadas** serán accesibles una vez que haya **desellado** su **bóveda**.";
+
+/* loco:6572f7d9aba86a89980762d9 */
+"showMyVault" = "Mostrar mi bóveda";
+
+/* loco:6572f7d9aba86a89980762da */
+"expertMode" = "Modo experto";
+
+/* loco:6572f7d9aba86a89980762db */
+"theExpertModeAllowsYou" = "El modo experto le permite:\n1. Seleccionar la red\n2. Proporcionar la entropía para la generación de claves";
+
+/* loco:6572f7d9aba86a89980762dc */
+"thEExpertModeAllowsYouText" = "1. Seleccionar la red\n2. Proporcionar la entropía para la generación de claves";
+
+/* loco:6572f7d9aba86a89980762dd */
+"network" = "Red:";
+
+/* loco:6572f7d9aba86a89980762de */
+"mainNet" = "MainNet";
+
+/* loco:6572f7d9aba86a89980762df */
+"testNet" = "TestNet";
+
+/* loco:6572f7d9aba86a89980762e0 */
+"entropy" = "Entropía:";
+
+/* loco:6572f7d9aba86a89980762e1 */
+"vaults" = "Bóvedas";
+
+/* loco:6572f7d9aba86a89980762e2 */
+"sealed" = "Sellada";
+
+/* loco:6572f7d9aba86a89980762e3 */
+"unsealed" = "Desellada";
+
+/* loco:6572f7d9aba86a89980762e4 */
+"totalBalance" = "Saldo total";
+
+/* loco:6572f7d9aba86a89980762e5 */
+"addFunds" = "Agregar fondos";
+
+/* loco:6572f7d9aba86a89980762e6 */
+"unseal" = "Desellar";
+
+/* loco:6572f7d9aba86a89980762e7 */
+"token" = "Token";
+
+/* loco:6572f7d9aba86a89980762e8 */
+"nft" = "NFT";
+
+/* loco:6572f7d9aba86a89980762e9 */
+"history" = "Historial";
+
+/* loco:6572f7d9aba86a89980762ea */
+"depositAddress" = "Dirección de depósito";
+
+/* loco:6572f7d9aba86a89980762eb */
+"copyToClipboard" = "Copiar al portapapeles";
+
+/* loco:6572f7d9aba86a89980762ec */
+"youOrAnybodyCanDepositFunds" = "Usted o cualquier persona puede depositar fondos en esta bóveda enviando a esta dirección.";
+
+"serviceProvidedByPaybis" = "Este servicio es proporcionado por PAYBIS POLAND Sp. z o.o. Será redirigido a Paybis.com para comprar sus monedas.";
+
+"buyFromPaybis" = "Comprar";
+
+/* loco:6572f7d9aba86a89980762ed */
+"ownershipText" = "Usted no es el propietario de esta tarjeta, por lo tanto no puede realizar operaciones sensibles en las bóvedas como:\n- Crear y sellar\n- Desellar\n- Eliminar\n\nObtenga más información sobre cómo obtener la propiedad haciendo clic aquí.";
+
+/* loco:6572f7d9aba86a89980762ee */
+"warning" = "¡Advertencia!";
+
+/* loco:6572f7d9aba86a89980762ef */
+"youAreAboutToUnseal" = "Está a punto de **desellar** la siguiente bóveda de criptomonedas";
+
+/* loco:6572f7d9aba86a89980762f0 */
+"unsealingThisCryptoVaultWillReveal" = "**Desellar** esta bóveda de criptomonedas revelará la **clave privada** correspondiente.";
+
+/* loco:6572f7d9aba86a89980762f1 */
+"youCanThenTransferTheEntireBalance" = "Luego podrá transferir el saldo completo a otra billetera usando la clave privada revelada.";
+
+/* loco:6572f7d9aba86a89980762f2 */
+"thisActionIsIrreversible" = "Esta acción es irreversible.";
+
+/* loco:6572f7d9aba86a89980762f3 */
+"vaultSuccessfullyUnseal" = "**Bóveda** **desellada** exitosamente";
+
+/* loco:6572f7d9aba86a89980762f4 */
+"youCanNowViewThePrivateKey" = "Ahora puede ver la clave privada correspondiente e importarla a otra billetera.";
+
+/* loco:6572f7d9aba86a89980762f5 */
+"showThePrivateKey" = "Mostrar la clave privada";
+
+/* loco:6572f7d9aba86a89980762f6 */
+"showPrivateKey" = "Mostrar clave privada";
+
+/* loco:6572f7d9aba86a89980762f7 */
+"showPrivateKeyLegacy" = "Mostrar clave privada (Legacy)";
+
+/* loco:6572f7d9aba86a89980762f8 */
+"showPrivateKeyWIF" = "Mostrar clave privada (WIF)";
+
+/* loco:6572f7d9aba86a89980762f9 */
+"showEntropy" = "Mostrar entropía";
+
+/* loco:6572f7d9aba86a89980762fa */
+"howDoiExportPrivateKey" = "¿Cómo exporto mi clave privada?";
+
+/* loco:6572f7d9aba86a89980762fb */
+"backToMyVaults" = "Volver a mis bóvedas";
+
+/* loco:6572f7d9aba86a89980762fc */
+"youAreAboutToReset" = "Está a punto de **restablecer** la siguiente bóveda de criptomonedas.";
+
+/* loco:6572f7d9aba86a89980762fd */
+"resettingThisCryptoVaultWill" = "**Restablecer** esta **bóveda** eliminará completa e irrevocablemente las **claves privadas** correspondientes de su tarjeta.";
+
+/* loco:6572f7d9aba86a89980762fe */
+"afterThatYouWillBeAbleTo" = "Después de eso, podrá **crear una nueva bóveda de criptomonedas**.";
+
+/* loco:6572f7d9aba86a89980762ff */
+"iConfirmThatBackup" = "Confirmo que he realizado una copia de seguridad de la clave privada correspondiente.";
+
+/* loco:6572f7d9aba86a8998076300 */
+"vaultSuccessfullyReset" = "Bóveda restablecida exitosamente.";
+
+/* loco:6572f7d9aba86a8998076301 */
+"youCanNowCreateAndSeal" = "Ahora puede **crear** y **sellar** una nueva bóveda.";
+
+/* loco:6572f7d9aba86a8998076302 */
+"takeTheOwnershipTitle" = "Tomar la propiedad";
+
+/* loco:6572f7d9aba86a8998076303 */
+"takeTheOwnershipDescription" = "Para realizar operaciones sensibles en la tarjeta (sellar-desellar-restablecer), necesita tomar la propiedad.\n\nEste derecho es revocable y transferible en cualquier momento en las opciones de la aplicación.\n\nHaga clic en **Aceptar** para obtener el derecho de propiedad,\no **Cancelar** para renunciar.";
+
+/* loco:6572f7d9aba86a8998076304 */
+"transferOwnershipDescription" = "¡Tenga en cuenta!\n\nEsta operación libera la propiedad de la tarjeta. La próxima persona que escanee la tarjeta se convertirá en su propietario.\n\nSolo el propietario de la tarjeta puede realizar operaciones sensibles (sellar-desellar-restablecer) en el dispositivo móvil.\n\nHaga clic en **Transferir** para continuar,\no **Cancelar** para renunciar.";
+
+/* loco:6572f7d9aba86a8998076305 */
+"transferBtn" = "Transferir";
+
+/* loco:6572f7d9aba86a8998076306 */
+"authenticationSuccess" = "**¡Autenticación de tarjeta exitosa!**\n\nEsta tarjeta ha sido emitida por Satochip S.R.L.\nPuede usarla de forma segura.";
+
+/* loco:6572f7d9aba86a8998076307 */
+"authenticationFailed" = "**¡Autenticación de tarjeta fallida!**\n\nNo se pudo autenticar el emisor de esta tarjeta. No ha sido emitida por Satochip S.R.L.\n\nSi no ha cargado la tarjeta usted mismo, ¡tenga mucho cuidado!";
+
+/* loco:6572f7d9aba86a8998076308 */
+"cardOwnershipStatus" = "Estado de propiedad de la tarjeta";
+
+/* loco:6572f7d9aba86a8998076309 */
+"youAreTheCardOwner" = "Usted es el propietario de la tarjeta";
+
+/* loco:6572f7d9aba86a899807630a */
+"youAreNotTheCardOwner" = "Usted no es el propietario de la tarjeta";
+
+/* loco:6572f7d9aba86a899807630b */
+"cardVersion" = "Versión de la tarjeta";
+
+/* loco:6572f7d9aba86a899807630c */
+"cardAuthenticity" = "Autenticidad de la tarjeta";
+
+/* loco:6572f7d9aba86a899807630d */
+"thisCardIsGenuine" = "Esta tarjeta es auténtica";
+
+/* loco:6572f7d9aba86a899807630e */
+"thisCardIsNotGenuine" = "Esta tarjeta no es auténtica";
+
+/* loco:6572f7d9aba86a899807630f */
+"certDetails" = "Detalles del certificado";
+
+/* loco:6572f7d9aba86a8998076310 */
+"currency" = "Moneda";
+
+/* loco:6572f7d9aba86a8998076311 */
+"starterIntro" = "Introducción inicial";
+
+/* loco:6572f7d9aba86a8998076312 */
+"showLogs" = "Mostrar registros";
+
+/* loco:6572f7d9aba86a8998076313 */
+"resetTheVault" = "Restablecer la bóveda";
+
+/* loco:6572f7d9aba86a8998076314 */
+"showKey" = "Mostrar clave";
+
+/* loco:6572f7d9aba86a8998076315 */
+"resetBtn" = "Restablecer";
+
+/* loco:6572f7d9aba86a8998076316 */
+"accept" = "Aceptar";
+
+/* loco:6572f7d9aba86a8998076317 */
+"cancel" = "Cancelar";
+
+/* loco:6572f7d9aba86a8998076318 */
+"ownership" = "Propiedad";
+
+/* loco:6572f7d9aba86a8998076319 */
+"close" = "Cerrar";
+
+/* loco:6572f7d9aba86a899807631a */
+"cardNeedToBeScannedTitle" = "No hay tarjeta escaneada";
+
+/* loco:6572f7d9aba86a899807631b */
+"cardNeedToBeScannedMessage" = "Necesita escanear una tarjeta para mostrar la información de la misma.";
+
+/* loco:6572f7d9aba86a899807631c */
+"privateKey" = "Clave privada";
+
+/* loco:6572f7d9aba86a899807631d */
+"entropyMode" = "Entropía";
+
+/* loco:6572f7d9aba86a899807631e */
+"nfcCardMismatch" = "¡Tarjeta incorrecta!\n¿Es esta la tarjeta correcta?";
+
+/* loco:6572f7d9aba86a899807631f */
+"nfcOwnershipTransferSuccess" = "¡Transferencia de propiedad iniciada exitosamente!";
+
+/* loco:6572f7d9aba86a8998076320 */
+"nfcOwnershiptTransferFailed" = "Error al transferir la propiedad: ";
+
+/* loco:6572f7d9aba86a8998076321 */
+"nfcErrorOccured" = "Ocurrió un error, por favor intente nuevamente";
+
+/* loco:6572f7d9aba86a8998076322 */
+"nfcHoldSatodime" = "Mantenga su Satodime cerca del iPhone";
+
+/* loco:6572f7d9aba86a8998076323 */
+"nfcPrivkeyRecoverSuccess" = "¡Clave privada de la bóveda recuperada exitosamente!";
+
+/* loco:6572f7d9aba86a8998076324 */
+"nfcPrivkeyRecoverFailed" = "Error al obtener la clave privada de la bóveda: ";
+
+/* loco:6572f7d9aba86a8998076325 */
+"nfcSatodimeNeedSetup" = "¡Satodime necesita configuración!";
+
+/* loco:6572f7d9aba86a8998076326 */
+"nfcNeedsFirstVaults" = "Esta tarjeta necesita configurar una primera bóveda";
+
+/* loco:6572f7d9aba86a8998076327 */
+"nfcVaultsListSuccess" = "¡Bóvedas listadas exitosamente!";
+
+/* loco:6572f7d9aba86a8998076328 */
+"nfcOwnershipAcceptSuccess" = "¡Propiedad de la tarjeta aceptada exitosamente!";
+
+/* loco:6572f7d9aba86a8998076329 */
+"nfcOwnershipAcceptFailed" = "Error al aceptar la propiedad de la tarjeta: ";
+
+/* loco:6572f7d9aba86a899807632a */
+"nfcTransferAlreadyDone" = "¡La transferencia de tarjeta ya se realizó!";
+
+/* loco:6572f7d9aba86a899807632b */
+"nfcVaultSealedSuccess" = "¡Bóveda sellada exitosamente!";
+
+/* loco:6572f7d9aba86a899807632c */
+"nfcVaultSealedFailed" = "Error al sellar la bóveda: ";
+
+/* loco:6572f7d9aba86a899807632d */
+"nfcVaultResetSuccess" = "¡Bóveda restablecida exitosamente!";
+
+/* loco:6572f7d9aba86a899807632e */
+"nfcVaultResetFailed" = "Error al restablecer la ranura de la bóveda: ";
+
+/* loco:6572f7d9aba86a899807632f */
+"nfcVaultUnsealSuccess" = "¡Bóveda desellada exitosamente!";
+
+/* loco:6572f7d9aba86a8998076330 */
+"nfcVaultUnsealFailed" = "Error al desellar la bóveda: ";
+
+/* loco:6572f9165ff7fa65780f8686 */
+"nfcUnlockSecretNotFound" = "Error: no se encontró el secreto de desbloqueo. Usted no es el propietario de esta tarjeta en este dispositivo.";
+
+/* loco:6573104a5c11d3fef8008d32 */
+"nfcSatodimeNeedsSetup" = "¡Satodime necesita configuración!";
+
+/* loco:6578c6ecde274a8cf0038142 */
+"goToTakeOwnershipScreen" = "Ir a la pantalla de configuración de propiedad";
+
+/* loco:6578c8d508742c296e06d5a2 */
+"takeOwnershipAlert" = "Propiedad disponible";
+
+/* loco:6578c9f1cd9f6379820ce7c2 */
+"takeOwnershipText" = "Reclame la propiedad de la tarjeta para tener acceso privilegiado a la tarjeta.";
+
+/* loco:6578cd35a545d3008a09afb2 */
+"notAuthenticText" = "No se pudo autenticar esta tarjeta.\nVaya a la pantalla de información de la tarjeta para obtener más detalles.";
+
+/* loco:6578cdee0e2eac8e5f0c2a52 */
+"goToNotAuthenticScreen" = "Más información";
+
+/* loco:6578ce240e2eac8e5f0c2a54 */
+"notAuthenticTitle" = "Advertencia";
+
+/* loco:657964c59d09bd7f510af894 */
+"switchToExpertMode" = "Cambiar al modo experto";
+
+/* loco:657965cdebf865a8e70bddf2 */
+"enterAnyTextHereToAddEntropy" = "Ingrese texto aquí para agregar entropía";
+
+/* loco:65796e052774061b250611f2 */
+"subcaInfo" = "Info Subca:";
+
+/* loco:65796e760eb980ad090a6b92 */
+"deviceInfo" = "Info del dispositivo:";
+
+/* loco:65798ede0da785d206074be2 */
+"dontHaveASatodime" = "¿Aún no tiene un Satodime?\nHaga clic aquí para comprar uno.";
+
+/* loco:657c5b13f1758b7ad10af992 */
+"exploreBlockchain" = "Explorar";
+
+/* loco:657cb7be221a33fbf202fec2 */
+"cardHasNoOwner" = "La tarjeta no tiene propietario, puede reclamar la propiedad";
+
+/* loco:657f5fe814b1520c5a073f32 */
+"showDeviceCert" = "Mostrar certificado del dispositivo";
+
+/* loco:657f605b974ff85f2406f202 */
+"showSubcaCert" = "Mostrar certificado sub-CA";
+
+/* loco:657f6a5cf716a76fb6031a52 */
+"hideDeviceCert" = "Ocultar certificado del dispositivo";
+
+/* loco:657f6a9927af74feef06dee2 */
+"hideSubcaCert" = "Ocultar certificado sub-CA";
+
+/* loco:65ddae4bdf20291e870b6d12 */
+"noNetworkAlertTitle" = "Error de red";
+
+/* loco:65ddae8f3fd6905a910455f4 */
+"noNetworkAlertMessage" = "Error al obtener datos. Por favor verifique su conexión de red.";
+
+"sendFeedback" = "Enviar comentarios";
+
+"copiedToClipboardAlertMessage" = "¡Copiado!";
+
