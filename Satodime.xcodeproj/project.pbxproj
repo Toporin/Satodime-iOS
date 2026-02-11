@@ -243,6 +243,7 @@
 		D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E176D7C32EF182FC00C52F16 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -717,6 +718,7 @@
 				en,
 				Base,
 				fr,
+				de,
 			);
 			mainGroup = 0DA7B44E299A365900CEE722;
 			packageReferences = (
@@ -930,6 +932,7 @@
 			children = (
 				0DA7B4BD299A81D900CEE722 /* en */,
 				0DA7B4BF299A821000CEE722 /* fr */,
+				E176D7C32EF182FC00C52F16 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
