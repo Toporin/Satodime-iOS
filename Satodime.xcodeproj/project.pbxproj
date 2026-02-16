@@ -163,6 +163,7 @@
 		0DA7B4AC299A4B1B00CEE722 /* SatochipSwift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SatochipSwift; path = ../SatochipSwift; sourceTree = "<group>"; };
 		0DA7B4BD299A81D900CEE722 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DA7B4BF299A821000CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0DA7B4C3299A821200CEE722 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DA7B4C1299A8ADA00CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0DB03FC929A7F813002E56BD /* ShowLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogs.swift; sourceTree = "<group>"; };
 		0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Apikeys-Info-sample.plist"; sourceTree = "<group>"; };
@@ -716,6 +717,7 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 				fr,
 			);
 			mainGroup = 0DA7B44E299A365900CEE722;
@@ -930,6 +932,7 @@
 			children = (
 				0DA7B4BD299A81D900CEE722 /* en */,
 				0DA7B4BF299A821000CEE722 /* fr */,
+				0DA7B4C3299A821200CEE722 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
