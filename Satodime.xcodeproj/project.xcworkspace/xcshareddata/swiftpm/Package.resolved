@@ -1,4 +1,5 @@
 {
+  "originHash" : "ef7ad986c74efe98cbf3b3c1281551d6b023909dd782165ab7de27db3297562e",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -122,8 +123,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Electric-Coin-Company/MnemonicSwift.git",
       "state" : {
-        "revision" : "716a2c32ac2bbd8a1499ac834077df42b75edc85",
-        "version" : "2.2.4"
+        "revision" : "2d7f3e76e904621e111efada6cc9575f39543bb2",
+        "version" : "2.2.5"
       }
     },
     {
@@ -151,6 +152,15 @@
       "state" : {
         "revision" : "f6bbb0788b6d5562d7c3204cc5115caa0df332c3",
         "version" : "12.1.1"
+      }
+    },
+    {
+      "identity" : "satochipswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Toporin/SatochipSwift.git",
+      "state" : {
+        "revision" : "c57b7ebd2b2575c7f9472378b7ca87d0920182cb",
+        "version" : "0.2.2"
       }
     },
     {
@@ -190,12 +200,21 @@
       }
     },
     {
+      "identity" : "swiftcryptotools",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Toporin/SwiftCryptoTools.git",
+      "state" : {
+        "revision" : "a6ec8c35c7e12ec83adec22bc057760766ec5b3b",
+        "version" : "0.4.0"
+      }
+    },
+    {
       "identity" : "swifttls",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Toporin/SwiftTLS.git",
       "state" : {
-        "branch" : "master",
-        "revision" : "b5e05a7afc8088467ff4e819f3d103a96461fe14"
+        "revision" : "b5e05a7afc8088467ff4e819f3d103a96461fe14",
+        "version" : "0.1.0"
       }
     },
     {
@@ -217,5 +236,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -160,7 +160,6 @@
 		0DA7B48C299A37B300CEE722 /* ShowCertificates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCertificates.swift; sourceTree = "<group>"; };
 		0DA7B493299A37B400CEE722 /* VaultItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaultItem.swift; sourceTree = "<group>"; };
 		0DA7B4A7299A38B500CEE722 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0DA7B4AC299A4B1B00CEE722 /* SatochipSwift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SatochipSwift; path = ../SatochipSwift; sourceTree = "<group>"; };
 		0DA7B4BD299A81D900CEE722 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DA7B4BF299A821000CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DA7B4C1299A8ADA00CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -359,7 +358,6 @@
 		0DA7B4AA299A412B00CEE722 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				0DA7B4AC299A4B1B00CEE722 /* SatochipSwift */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -725,8 +723,8 @@
 			mainGroup = 0DA7B44E299A365900CEE722;
 			packageReferences = (
 				0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */,
-				0DE0A93B2AFA9B3100D0845F /* XCLocalSwiftPackageReference "../SwiftCryptoTools" */,
-				0DE0A93E2AFA9B7D00D0845F /* XCLocalSwiftPackageReference "../SatochipSwift" */,
+				0DE0A93B2AFA9B3100D0845F /* XCRemoteSwiftPackageReference "SwiftCryptoTools" */,
+				0DE0A93E2AFA9B7D00D0845F /* XCRemoteSwiftPackageReference "SatochipSwift" */,
 				0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */,
 				0DEC091A2AFA9EB400B5DEAD /* XCRemoteSwiftPackageReference "hstack-snap-to-scroll" */,
 				D0FEDBDF2B8B8F0F00EAD10A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
@@ -1096,7 +1094,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.7;
+				MARKETING_VERSION = 0.2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1141,7 +1139,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.7;
+				MARKETING_VERSION = 0.2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1337,7 +1335,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.7;
+				MARKETING_VERSION = 0.2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1441,17 +1439,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		0DE0A93B2AFA9B3100D0845F /* XCLocalSwiftPackageReference "../SwiftCryptoTools" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../SwiftCryptoTools;
-		};
-		0DE0A93E2AFA9B7D00D0845F /* XCLocalSwiftPackageReference "../SatochipSwift" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../SatochipSwift;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		0DA7B4B4299A4E6400CEE722 /* XCRemoteSwiftPackageReference "QRCode" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1459,6 +1446,22 @@
 			requirement = {
 				kind = exactVersion;
 				version = 12.1.1;
+			};
+		};
+		0DE0A93B2AFA9B3100D0845F /* XCRemoteSwiftPackageReference "SwiftCryptoTools" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Toporin/SwiftCryptoTools.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.0;
+			};
+		};
+		0DE0A93E2AFA9B7D00D0845F /* XCRemoteSwiftPackageReference "SatochipSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Toporin/SatochipSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.2;
 			};
 		};
 		0DE0A9442AFA9D4D00D0845F /* XCRemoteSwiftPackageReference "BigInt" */ = {
@@ -1498,10 +1501,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		0DA7B4B0299A4D6D00CEE722 /* SatochipSwift */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 0DE0A93E2AFA9B7D00D0845F /* XCRemoteSwiftPackageReference "SatochipSwift" */;
 			productName = SatochipSwift;
 		};
 		0DA7B4B2299A4D7E00CEE722 /* SwiftCryptoTools */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 0DE0A93B2AFA9B3100D0845F /* XCRemoteSwiftPackageReference "SwiftCryptoTools" */;
 			productName = SwiftCryptoTools;
 		};
 		0DA7B4B5299A4E6400CEE722 /* QRCode */ = {
@@ -1511,10 +1516,12 @@
 		};
 		0DE0A93C2AFA9B3100D0845F /* SwiftCryptoTools */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 0DE0A93B2AFA9B3100D0845F /* XCRemoteSwiftPackageReference "SwiftCryptoTools" */;
 			productName = SwiftCryptoTools;
 		};
 		0DE0A93F2AFA9B7D00D0845F /* SatochipSwift */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 0DE0A93E2AFA9B7D00D0845F /* XCRemoteSwiftPackageReference "SatochipSwift" */;
 			productName = SatochipSwift;
 		};
 		0DE0A9452AFA9D4D00D0845F /* BigInt */ = {
@@ -1534,6 +1541,7 @@
 		};
 		D0EB4DE42AC079B200EA83F9 /* SwiftCryptoTools */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 0DE0A93B2AFA9B3100D0845F /* XCRemoteSwiftPackageReference "SwiftCryptoTools" */;
 			productName = SwiftCryptoTools;
 		};
 		D0FEDBE02B8B8F0F00EAD10A /* FirebaseCrashlytics */ = {
