@@ -163,8 +163,8 @@
 		0DA7B4AC299A4B1B00CEE722 /* SatochipSwift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SatochipSwift; path = ../SatochipSwift; sourceTree = "<group>"; };
 		0DA7B4BD299A81D900CEE722 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DA7B4BF299A821000CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		0DA7B4C3299A821200CEE722 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DA7B4C1299A8ADA00CEE722 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0DA7B4C3299A821200CEE722 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0DB03FC929A7F813002E56BD /* ShowLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowLogs.swift; sourceTree = "<group>"; };
 		0DB03FE129D21CFD002E56BD /* Apikeys-Info-sample.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Apikeys-Info-sample.plist"; sourceTree = "<group>"; };
 		D017D14C2B867D8800B467D2 /* VerticalCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalCardsView.swift; sourceTree = "<group>"; };
@@ -244,6 +244,7 @@
 		D0F62FD72ACF11FE0027EFE6 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		D0FEDBD82B88ED9900EAD10A /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		D0FEDBDD2B8B8D5800EAD10A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E176D7C32EF182FC00C52F16 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -719,6 +720,7 @@
 				Base,
 				es,
 				fr,
+				de,
 			);
 			mainGroup = 0DA7B44E299A365900CEE722;
 			packageReferences = (
@@ -933,6 +935,7 @@
 				0DA7B4BD299A81D900CEE722 /* en */,
 				0DA7B4BF299A821000CEE722 /* fr */,
 				0DA7B4C3299A821200CEE722 /* es */,
+				E176D7C32EF182FC00C52F16 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1093,7 +1096,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.6;
+				MARKETING_VERSION = 0.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1138,7 +1141,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.6;
+				MARKETING_VERSION = 0.2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1307,11 +1310,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Satodime/Satodime.entitlements;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Satodime/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 68UCR527YD;
+				DEVELOPMENT_TEAM = F75Z9LY9DQ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1334,11 +1337,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.5;
-				MARKETING_VERSION = 0.2.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dlvx.dev.app.Satodime;
+				MARKETING_VERSION = 0.2.7;
+				PRODUCT_BUNDLE_IDENTIFIER = io.satochip.app.Satodime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Satodime DLVX dev";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
